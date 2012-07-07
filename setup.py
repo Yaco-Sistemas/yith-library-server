@@ -7,6 +7,7 @@ README = open(os.path.join(here, 'README.txt')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
+    'pymongo',
     'pyramid',
     'pyramid_debugtoolbar',
     'waitress',
