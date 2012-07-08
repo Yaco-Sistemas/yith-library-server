@@ -38,7 +38,7 @@ in Fedora 17 it is as easy as running these two commands:
 .. code-block:: bash
 
    sudo yum install mongodb mongodb-server
-   systemctl start mongod.service
+   sudo systemctl start mongod.service
 
 By default Yith Library Server will look for a MongoDB server in `localhost`,
 listening on port `27017` and will use a database named `yith-library`.
