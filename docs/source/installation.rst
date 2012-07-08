@@ -33,7 +33,7 @@ Database setup
 
 Yith Library Server uses MongoDB for its storage needs. In modern
 operating systems it is pretty easy to install MongoDB. As an example,
-in Fedora 17 is as easy as running these two commands:
+in Fedora 17 it is as easy as running these two commands:
 
 .. code-block:: bash
 
