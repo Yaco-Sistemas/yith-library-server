@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    installation
+   development
 
 
 Indices and tables
