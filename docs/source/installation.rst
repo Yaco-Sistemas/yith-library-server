@@ -1,6 +1,9 @@
 Installation
 ============
 
+Dependencies
+------------
+
 Yith Library Server is a python 3 application so the first
 thing you need to do is install this version of your favourite
 language. You will also need the development package since some
@@ -44,3 +47,19 @@ By default Yith Library Server will look for a MongoDB server in `localhost`,
 listening on port `27017` and will use a database named `yith-library`.
 Of couse you can change these settings by editing the mongo_uri option in
 either the `development.ini` or `production.init` configuration files.
+
+Running the server
+------------------
+
+In development mode and also for testing purposes you can use the `pserve`
+command included in Yith Library Server. This will use the
+`waitress <http://pypi.python.org/pypi/waitress/>`_ WSGI server.
+
+.. code-block:: bash
+
+   pserve development.ini
+     Starting server in PID 6743.
+     serving on http://0.0.0.0:6543
+
+Now you can open the `http://0.0.0.0:6543 <http://0.0.0.0:6543>`_ URL in your
+browser and start using Yith Library Server.
