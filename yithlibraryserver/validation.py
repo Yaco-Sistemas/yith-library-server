@@ -8,7 +8,12 @@ def validate_password(rawdata, encoding, _id=None):
         data = json.loads(rawdata.decode(encoding))
     except TypeError:
         errors.append('Not valid JSON')
-        return {}, errors  # this is a non recoverable error
+    except ValueError:
+        errors.append('No JSON object could be decoded')
+
+    # if we have errors here, we can't proceed
+    if errors:
+        return {}, errors
 
     password = {}
 
