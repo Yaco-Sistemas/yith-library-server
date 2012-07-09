@@ -39,7 +39,7 @@ class PasswordCollectionRESTView(object):
                                   content_type='application/json')
 
         # add the password to the database
-        _id = self.request.db.passwords.insert(password)
+        _id = self.request.db.passwords.insert(password, safe=True)
         password['_id'] = str(_id)
 
         return password
