@@ -4,6 +4,7 @@ from pyramid.httpexceptions import HTTPBadRequest
 from pyramid.view import view_config, view_defaults
 from pyramid.response import Response
 
+from yithlibraryserver.utils import jsonable
 from yithlibraryserver.validation import validate_password
 
 
@@ -22,25 +23,7 @@ class PasswordCollectionRESTView(object):
 
     @view_config(request_method='GET')
     def get(self):
-        passwords = [
-            {
-                'secret': '1',
-                'service': 'foo',
-                'account': 'pepito',
-                'expiration': 0,
-                'notes': '',
-                'tags': [],
-                },
-            {
-                'secret': '2',
-                'service': 'bar',
-                'account': 'susanita',
-                'expiration': 0,
-                'notes': '',
-                'tags': [],
-                },
-            ]
-        return passwords
+        return [jsonable(p) for p in self.request.db.passwords.find()]
 
     @view_config(request_method='POST')
     def post(self):
