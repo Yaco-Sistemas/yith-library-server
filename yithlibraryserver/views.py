@@ -8,6 +8,13 @@ class PasswordCollectionRESTView(object):
     def __init__(self, request):
         self.request = request
 
+    @view_config(request_method='OPTIONS', renderer='string')
+    def options(self):
+        headers = self.request.response.headers
+        headers['Access-Control-Allow-Methods'] = 'GET, POST'
+        headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept'
+        return ''
+
     @view_config(request_method='GET')
     def get(self):
         passwords = [
@@ -40,6 +47,13 @@ class PasswordRESTView(object):
 
     def __init__(self, request):
         self.request = request
+
+    @view_config(request_method='OPTIONS', renderer='string')
+    def options(self):
+        headers = self.request.response.headers
+        headers['Access-Control-Allow-Methods'] = 'GET, PUT, DELETE'
+        headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept'
+        return ''
 
     @view_config(request_method='GET')
     def get(self):
