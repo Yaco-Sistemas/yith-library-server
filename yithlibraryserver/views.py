@@ -1,5 +1,10 @@
+import json
+
+from pyramid.httpexceptions import HTTPBadRequest
 from pyramid.view import view_config, view_defaults
 from pyramid.response import Response
+
+from yithlibraryserver.validation import validate_password
 
 
 @view_defaults(route_name='password_collection_view', renderer='json')
@@ -39,7 +44,19 @@ class PasswordCollectionRESTView(object):
 
     @view_config(request_method='POST')
     def post(self):
-        return Response('post password collection')
+        password, errors = validate_password(self.request.body,
+                                             self.request.charset)
+
+        if errors:
+            result = {'status': 'failure', 'errors': errors}
+            return HTTPBadRequest(body=json.dumps(result),
+                                  content_type='application/json')
+
+        # add the password to the database
+        _id = self.request.db.passwords.insert(password)
+        password['_id'] = str(_id)
+
+        return {'status': 'success', 'password': password}
 
 
 @view_defaults(route_name='password_view', renderer='json')
