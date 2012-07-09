@@ -2,10 +2,10 @@ import json
 
 import bson
 
-from pyramid.httpexceptions import HTTPBadRequest, HTTPNotFound
+from pyramid.httpexceptions import HTTPBadRequest
 from pyramid.view import view_config, view_defaults
-from pyramid.response import Response
 
+from yithlibraryserver.errors import password_not_found, invalid_password_id
 from yithlibraryserver.utils import jsonable
 from yithlibraryserver.validation import validate_password
 
@@ -65,16 +65,12 @@ class PasswordRESTView(object):
         try:
             _id = bson.ObjectId(self.password_id)
         except bson.errors.InvalidId:
-            result = {'message': 'Invalid password id'}
-            return HTTPBadRequest(body=json.dumps(result),
-                                  content_type='application/json')
+            return invalid_password_id()
 
         password = self.request.db.passwords.find_one(_id)
 
         if password is None:
-            result = {'message': 'Password not found'}
-            return HTTPNotFound(body=json.dumps(result),
-                                content_type='application/json')
+            return password_not_found()
         else:
             return jsonable(password)
 
@@ -83,9 +79,7 @@ class PasswordRESTView(object):
         try:
             _id = bson.ObjectId(self.password_id)
         except bson.errors.InvalidId:
-            result = {'message': 'Invalid password id'}
-            return HTTPBadRequest(body=json.dumps(result),
-                                  content_type='application/json')
+            return invalid_password_id()
 
         password, errors = validate_password(self.request.body,
                                              self.request.charset,
@@ -106,8 +100,18 @@ class PasswordRESTView(object):
         if result['n'] == 1:
             return jsonable(password)
         else:
-            return HTTPNotFound()
+            return password_not_found()
 
     @view_config(request_method='DELETE')
     def delete(self):
-        return Response('delete password')
+        try:
+            _id = bson.ObjectId(self.password_id)
+        except bson.errors.InvalidId:
+            return invalid_password_id()
+
+        result = self.request.db.passwords.remove(_id, safe=True)
+
+        if result['n'] == 1:
+            return ''
+        else:
+            return password_not_found()
