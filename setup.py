@@ -31,7 +31,7 @@ setup(name='yith-library-server',
       include_package_data=True,
       zip_safe=False,
       install_requires=requires,
-      tests_require=requires,
+      tests_require=requires + ['webtest', 'nose', 'coverage'],
       test_suite="yithlibraryserver",
       entry_points = """\
       [paste.app_factory]
