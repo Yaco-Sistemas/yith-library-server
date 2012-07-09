@@ -10,6 +10,19 @@ Running Yith Library Server unit tests is as easy as it could be:
 
    python setup.py test
 
+If you want to get test coverage you will need to install the
+`nose` and `coverage` packages:
+
+.. code-block:: bash
+
+   easy_install nose
+   easy_install coverage
+
+Now you can run the following command to get a coverage report:
+
+.. code-block:: bash
+
+   ../bin/nosetests
 
 Generating the documentation
 ----------------------------
