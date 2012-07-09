@@ -1,6 +1,8 @@
 import json
 
-from pyramid.httpexceptions import HTTPBadRequest
+import bson
+
+from pyramid.httpexceptions import HTTPBadRequest, HTTPNotFound
 from pyramid.view import view_config, view_defaults
 from pyramid.response import Response
 
@@ -13,6 +15,7 @@ class PasswordCollectionRESTView(object):
 
     def __init__(self, request):
         self.request = request
+        self.user = self.request.matchdict['user']
 
     @view_config(request_method='OPTIONS', renderer='string')
     def options(self):
@@ -31,7 +34,7 @@ class PasswordCollectionRESTView(object):
                                              self.request.charset)
 
         if errors:
-            result = {'status': 'failure', 'errors': errors}
+            result = {'message': ','.join(errors)}
             return HTTPBadRequest(body=json.dumps(result),
                                   content_type='application/json')
 
@@ -39,7 +42,7 @@ class PasswordCollectionRESTView(object):
         _id = self.request.db.passwords.insert(password)
         password['_id'] = str(_id)
 
-        return {'status': 'success', 'password': password}
+        return password
 
 
 @view_defaults(route_name='password_view', renderer='json')
@@ -47,6 +50,8 @@ class PasswordRESTView(object):
 
     def __init__(self, request):
         self.request = request
+        self.user = self.request.matchdict['user']
+        self.password_id = self.request.matchdict['password']
 
     @view_config(request_method='OPTIONS', renderer='string')
     def options(self):
@@ -57,7 +62,21 @@ class PasswordRESTView(object):
 
     @view_config(request_method='GET')
     def get(self):
-        return Response('get password')
+        try:
+            _id = bson.ObjectId(self.password_id)
+        except bson.errors.InvalidId:
+            result = {'message': 'Invalid password id'}
+            return HTTPBadRequest(body=json.dumps(result),
+                                  content_type='application/json')
+
+        password = self.request.db.passwords.find_one(_id)
+
+        if password is None:
+            result = {'message': 'Password not found'}
+            return HTTPNotFound(body=json.dumps(result),
+                                content_type='application/json')
+        else:
+            return jsonable(password)
 
     @view_config(request_method='PUT')
     def put(self):
