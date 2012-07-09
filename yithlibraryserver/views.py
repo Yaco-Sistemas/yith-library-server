@@ -26,7 +26,8 @@ class PasswordCollectionRESTView(object):
 
     @view_config(request_method='GET')
     def get(self):
-        return [jsonable(p) for p in self.request.db.passwords.find()]
+        return [jsonable(p)
+                for p in self.request.db.passwords.find({'owner': self.user})]
 
     @view_config(request_method='POST')
     def post(self):
@@ -39,6 +40,7 @@ class PasswordCollectionRESTView(object):
                                   content_type='application/json')
 
         # add the password to the database
+        password['owner'] = self.user
         _id = self.request.db.passwords.insert(password, safe=True)
         password['_id'] = str(_id)
 
@@ -50,7 +52,11 @@ class PasswordRESTView(object):
 
     def __init__(self, request):
         self.request = request
+
+        # the user is actually not used in this view since
+        # the passwords ids are globally unique
         self.user = self.request.matchdict['user']
+
         self.password_id = self.request.matchdict['password']
 
     @view_config(request_method='OPTIONS', renderer='string')
