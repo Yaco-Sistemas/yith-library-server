@@ -14,10 +14,13 @@ def validate_password(rawdata, encoding, _id=None):
 
     # check the password id is the same as in the URL
     if _id is not None:
-        if data['_id'] != str(_id):
-            errors.append('The password id does not match the URL')
+        if '_id' not in data:
+            errors.append('The password id must be in the body')
         else:
-            password['_id'] = _id
+            if data['_id'] != str(_id):
+                errors.append('The password id does not match the URL')
+            else:
+                password['_id'] = _id
 
     # white list submission attributes ignoring anything else
     # first required attributes

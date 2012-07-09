@@ -97,7 +97,9 @@ class PasswordRESTView(object):
                                   content_type='application/json')
 
         # update the password in the database
-        result = self.request.db.passwords.update(_id, password, safe=True)
+        result = self.request.db.passwords.update({'_id': _id},
+                                                  password,
+                                                  safe=True)
 
         # result['n'] is the number of documents updated
         # See http://www.mongodb.org/display/DOCS/getLastError+Command#getLastErrorCommand-ReturnValue
