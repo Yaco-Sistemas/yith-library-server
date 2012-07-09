@@ -80,7 +80,31 @@ class PasswordRESTView(object):
 
     @view_config(request_method='PUT')
     def put(self):
-        return Response('put password')
+        try:
+            _id = bson.ObjectId(self.password_id)
+        except bson.errors.InvalidId:
+            result = {'message': 'Invalid password id'}
+            return HTTPBadRequest(body=json.dumps(result),
+                                  content_type='application/json')
+
+        password, errors = validate_password(self.request.body,
+                                             self.request.charset,
+                                             _id)
+
+        if errors:
+            result = {'message': ','.join(errors)}
+            return HTTPBadRequest(body=json.dumps(result),
+                                  content_type='application/json')
+
+        # update the password in the database
+        result = self.request.db.passwords.update(_id, password, safe=True)
+
+        # result['n'] is the number of documents updated
+        # See http://www.mongodb.org/display/DOCS/getLastError+Command#getLastErrorCommand-ReturnValue
+        if result['n'] == 1:
+            return jsonable(password)
+        else:
+            return HTTPNotFound()
 
     @view_config(request_method='DELETE')
     def delete(self):
