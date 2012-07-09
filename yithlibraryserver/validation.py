@@ -1,13 +1,11 @@
 import json
 
 
-def validate_password(rawdata, encoding, _id=None):
+def validate_password(rawdata, encoding='utf-8', _id=None):
     errors = []
 
     try:
         data = json.loads(rawdata.decode(encoding))
-    except TypeError:
-        errors.append('Not valid JSON')
     except ValueError:
         errors.append('No JSON object could be decoded')
 
