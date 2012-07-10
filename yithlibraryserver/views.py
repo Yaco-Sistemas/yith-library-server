@@ -53,8 +53,6 @@ class PasswordRESTView(object):
     def __init__(self, request):
         self.request = request
 
-        # the user is actually not used in this view since
-        # the passwords ids are globally unique
         self.user = self.request.matchdict['user']
 
         self.password_id = self.request.matchdict['password']
@@ -97,6 +95,7 @@ class PasswordRESTView(object):
                                   content_type='application/json')
 
         # update the password in the database
+        password['owner'] = self.user
         result = self.request.db.passwords.update({'_id': _id},
                                                   password,
                                                   safe=True)
