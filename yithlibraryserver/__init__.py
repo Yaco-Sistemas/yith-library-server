@@ -3,6 +3,7 @@ from pyramid.events import NewRequest
 
 from yithlibraryserver.cors import CORSManager
 from yithlibraryserver.db import MongoDB
+from yithlibraryserver.translogger import TransLogger
 
 
 def main(global_config, **settings):
@@ -10,6 +11,9 @@ def main(global_config, **settings):
     """
     config = Configurator(settings=settings)
     config.add_static_view('static', 'static', cache_max_age=3600)
+
+    # Beaker (sessions) setup
+    config.include('pyramid_beaker')
 
     # Mongodb setup
     mongodb = MongoDB(settings.get('mongo_uri'))
@@ -35,4 +39,4 @@ def main(global_config, **settings):
     config.include('yithlibraryserver.oauth2')
 
     config.scan()
-    return config.make_wsgi_app()
+    return TransLogger(config.make_wsgi_app(), setup_console_handler=False)

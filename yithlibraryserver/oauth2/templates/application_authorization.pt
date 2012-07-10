@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+  <title>Authorize Application</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+</head>
+<body>
+  <h1>Authorize application ${app.name}</h1>
+
+  <p>The application <a href="${app.main_url}">${app.name}</a>
+    is requesting access to the following items:</p>
+
+  <ul>
+    <li tal:repeat="scope scopes">${scope}</li>
+  </ul>
+
+  <p>Do you want to allow this access?</p>
+
+  <form method="post" action="${request.route_url('oauth2_authorize_application', app=app._id)}">
+    <input type="submit" name="submit" value="Yes, I authorize the ${app.name} application" />
+  </form>
+
+  <p>You can revoque this permission in the future.</p>
+</body>
+</html>

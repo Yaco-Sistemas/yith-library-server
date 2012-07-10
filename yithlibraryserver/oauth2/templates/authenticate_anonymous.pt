@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+  <title>Authorize Application</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+</head>
+<body>
+  <h1>Authorize application ${app.name}</h1>
+
+  <p>The application <a href="${app.main_url}">${app.name}</a>
+    is requesting access to the following items:</p>
+
+  <ul>
+    <li tal:repeat="scope scopes">${scope}</li>
+  </ul>
+
+  <p>You need to log in first and then you will be asked to
+    authorize this application.</p>
+
+  <p><a href="${request.route_url('oauth2_authorize_application', app=app._id)}">Ok, I'll log in</a></p>
+</body>
+</html>

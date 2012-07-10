@@ -10,6 +10,7 @@ requires = [
     'deform',
     'pymongo',
     'pyramid',
+    'pyramid_beaker',
     'pyramid_debugtoolbar',
     'waitress',
     ]
