@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+  <title>Applications</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+</head>
+<body>
+  <h1>Applications</h1>
+  <ul>
+    <li tal:repeat="app applications"><a href="${request.route_url('oauth2_application_view', app=app._id)}">${app.name} (${app.main_url})</a></li>
+  </ul>
+
+  <p><a href="${request.route_url('oauth2_application_new')}">Register new application</a></p>
+</body>
+</html>

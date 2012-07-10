@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+  <title>Delete Application</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+</head>
+<body>
+  <h1>Delete Application ${app.name}</h1>
+  <p>Are you sure you want to remove the application ${app.name} with id ${app._id}?</p>
+
+  <form method="post" action="${request.route_url('oauth2_application_delete', app=app._id)}">
+    <input type="submit" name="submit" value="Yes, I am sure" />
+  </form>
+
+  <p><a href="${request.route_url('oauth2_applications')}">No, take me back to the application list</a></p>
+</body>
+</html>
