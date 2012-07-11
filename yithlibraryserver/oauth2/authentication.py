@@ -1,4 +1,5 @@
 import base64
+import uuid
 
 from pyramid.httpexceptions import HTTPUnauthorized
 
@@ -47,15 +48,56 @@ def store_user_authorization(request, user, app):
         )
 
 
-def generate_grant_code(uri, scope, state):
-    grant = 'grant'
+def generate_grant_code(request, uri, scope, state, app, user):
+    code = str(uuid.uuid4())
 
-    parameters = ['code=%s' % grant]
+    parameters = ['code=%s' % code]
     if state:
         parameters.append('state=%s' % state)
+
+    grant = {
+        'code': code,
+        'scope': scope,
+        'client_id': app['client_id'],
+        'user': user,
+        }
+
+    request.db.authorization_codes.remove({
+            'user': user,
+            'scope': scope,
+            'client_id': app['client_id'],
+            }, safe=True)
+    request.db.authorization_codes.insert(grant, safe=True)
 
     return '%s?%s' % (uri, '&'.join(parameters))
 
 
-def generate_access_code():
-    return 'access'
+def find_authorization_code(request, code):
+    return request.db.authorization_codes.find_one({'code': code})
+
+
+def remove_authorization_code(request, grant):
+    request.db.authorization_codes.remove(grant, safe=True)
+
+
+def generate_access_code(request, grant):
+    code = str(uuid.uuid4())
+
+    access = {
+        'code': code,
+        'scope': grant['scope'],
+        'user': grant['user'],
+        'client_id': grant['client_id'],
+        }
+    request.db.access_codes.remove({
+            'scope': grant['scope'],
+            'user': grant['user'],
+            'client_id': grant['client_id'],
+            }, safe=True)
+    request.db.access_codes.insert(access, safe=True)
+
+    return code
+
+
+def find_access_code(request, code):
+    return request.db.access_codes.find_one({'code': code})

@@ -6,6 +6,7 @@ from pyramid.httpexceptions import HTTPBadRequest
 from pyramid.view import view_config, view_defaults
 
 from yithlibraryserver.errors import password_not_found, invalid_password_id
+from yithlibraryserver.security import authorize_user
 from yithlibraryserver.utils import jsonable
 from yithlibraryserver.validation import validate_password
 
@@ -21,16 +22,18 @@ class PasswordCollectionRESTView(object):
     def options(self):
         headers = self.request.response.headers
         headers['Access-Control-Allow-Methods'] = 'GET, POST'
-        headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept'
+        headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization'
         return ''
 
     @view_config(request_method='GET')
     def get(self):
+        authorize_user(self.request, self.user)
         return [jsonable(p)
                 for p in self.request.db.passwords.find({'owner': self.user})]
 
     @view_config(request_method='POST')
     def post(self):
+        authorize_user(self.request, self.user)
         password, errors = validate_password(self.request.body,
                                              self.request.charset)
 
@@ -61,11 +64,12 @@ class PasswordRESTView(object):
     def options(self):
         headers = self.request.response.headers
         headers['Access-Control-Allow-Methods'] = 'GET, PUT, DELETE'
-        headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept'
+        headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization'
         return ''
 
     @view_config(request_method='GET')
     def get(self):
+        authorize_user(self.request, self.user)
         try:
             _id = bson.ObjectId(self.password_id)
         except bson.errors.InvalidId:
@@ -80,6 +84,7 @@ class PasswordRESTView(object):
 
     @view_config(request_method='PUT')
     def put(self):
+        authorize_user(self.request, self.user)
         try:
             _id = bson.ObjectId(self.password_id)
         except bson.errors.InvalidId:
@@ -109,6 +114,7 @@ class PasswordRESTView(object):
 
     @view_config(request_method='DELETE')
     def delete(self):
+        authorize_user(self.request, self.user)
         try:
             _id = bson.ObjectId(self.password_id)
         except bson.errors.InvalidId:

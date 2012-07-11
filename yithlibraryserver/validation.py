@@ -42,5 +42,7 @@ def validate_password(rawdata, encoding='utf-8', _id=None):
     password['expiration'] = data.get('expiration')
     password['notes'] = data.get('notes')
     password['tags'] = data.get('tags')
+    password['last_modification'] = data.get('last_modification')
+    password['creation'] = data.get('creation')
 
     return password, errors
