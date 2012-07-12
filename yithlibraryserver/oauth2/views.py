@@ -25,10 +25,12 @@ DEFAULT_SCOPE = 'passwords'
              permission='view-applications')
 def applications(request):
     user = get_authenticated_user(request)
+    authorized_apps_filter = {'_id': {'$in': user['authorized_apps']}}
+    owned_apps_filter = {'owner': user['_id']}
     return {
         'screen_name': user['screen_name'],
-        'authorized_apps': [str(app) for app in user['authorized_apps']],
-        'applications': request.db.applications.find({'owner': user['_id']})
+        'authorized_apps': request.db.applications.find(authorized_apps_filter),
+        'applications': request.db.applications.find(owned_apps_filter)
         }
 
 

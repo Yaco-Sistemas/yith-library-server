@@ -10,7 +10,7 @@
   <div tal:condition="authorized_apps" tal:omit-tag="">
   <h1>Authorized Applications</h1>
   <ul>
-    <li tal:repeat="app authorized_apps"><a href="${request.route_url('oauth2_revoque_app')}?app=${app}">${app}</a></li>
+    <li tal:repeat="app authorized_apps">${app.name} <a href="">Revoke</a></li>
   </ul>
   </div>
 
