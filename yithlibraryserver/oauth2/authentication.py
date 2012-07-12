@@ -36,13 +36,13 @@ def authenticate_client(request):
 
 
 def is_app_authorized(request, user, app):
-    return str(app['_id']) in user['authorized_apps']
+    return app['_id'] in user['authorized_apps']
 
 
 def store_user_authorization(request, user, app):
     request.db.users.update(
-        {'user': user['_id']},
-        {'$addToSet': {'authorized_apps': str(app['_id'])}},
+        {'_id': user['_id']},
+        {'$addToSet': {'authorized_apps': app['_id']}},
         safe=True,
         )
 

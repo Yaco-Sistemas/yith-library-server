@@ -27,7 +27,7 @@ def applications(request):
     user = get_authenticated_user(request)
     return {
         'screen_name': user['screen_name'],
-        'authorized_apps': user['authorized_apps'],
+        'authorized_apps': [str(app) for app in user['authorized_apps']],
         'applications': request.db.applications.find({'owner': user['_id']})
         }
 
