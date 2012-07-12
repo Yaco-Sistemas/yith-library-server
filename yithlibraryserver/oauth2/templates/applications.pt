@@ -5,7 +5,16 @@
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 </head>
 <body>
-  <h1>Applications</h1>
+  <p>${screen_name} <a href="${request.route_url('logout')}">Log out</a></p>
+
+  <div tal:condition="authorized_apps" tal:omit-tag="">
+  <h1>Authorized Applications</h1>
+  <ul>
+    <li tal:repeat="app authorized_apps"><a href="${request.route_url('oauth2_revoque_app')}?app=${app}">${app}</a></li>
+  </ul>
+  </div>
+
+  <h1>Developer Applications</h1>
   <ul>
     <li tal:repeat="app applications"><a href="${request.route_url('oauth2_application_view', app=app._id)}">${app.name} (${app.main_url})</a></li>
   </ul>
