@@ -36,13 +36,12 @@ def authenticate_client(request):
 
 
 def is_app_authorized(request, user, app):
-    user_obj = request.db.users.find_one({'user': user})
-    return str(app['_id']) in user_obj['authorized_apps']
+    return str(app['_id']) in user['authorized_apps']
 
 
 def store_user_authorization(request, user, app):
     request.db.users.update(
-        {'user': user},
+        {'user': user['_id']},
         {'$addToSet': {'authorized_apps': str(app['_id'])}},
         safe=True,
         )
@@ -59,11 +58,11 @@ def generate_grant_code(request, uri, scope, state, app, user):
         'code': code,
         'scope': scope,
         'client_id': app['client_id'],
-        'user': user,
+        'user': user['_id'],
         }
 
     request.db.authorization_codes.remove({
-            'user': user,
+            'user': user['_id'],
             'scope': scope,
             'client_id': app['client_id'],
             }, safe=True)

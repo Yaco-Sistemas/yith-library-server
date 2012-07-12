@@ -12,6 +12,7 @@ requires = [
     'pyramid',
     'pyramid_beaker',
     'pyramid_debugtoolbar',
+    'requests',
     'waitress',
     ]
 

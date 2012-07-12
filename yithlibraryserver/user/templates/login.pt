@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+  <title>Log in</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+</head>
+<body>
+  <h1>Log in</h1>
+  <a href="${request.route_url('twitter_login')}">Log in with Twitter</a>
+</body>
+</html>

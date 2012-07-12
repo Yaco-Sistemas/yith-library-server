@@ -1,15 +1,23 @@
 from pyramid.config import Configurator
 from pyramid.events import NewRequest
+from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.authorization import ACLAuthorizationPolicy
 
 from yithlibraryserver.cors import CORSManager
 from yithlibraryserver.db import MongoDB
+from yithlibraryserver.security import RootFactory
 from yithlibraryserver.translogger import TransLogger
 
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
-    config = Configurator(settings=settings)
+    config = Configurator(
+        settings=settings,
+        root_factory=RootFactory,
+        authorization_policy=ACLAuthorizationPolicy(),
+        authentication_policy=AuthTktAuthenticationPolicy('seekrit'),
+        )
     config.add_static_view('static', 'static', cache_max_age=3600)
 
     # Beaker (sessions) setup
@@ -37,6 +45,8 @@ def main(global_config, **settings):
     config.add_route('password_view', '/passwords/{user}/{password}')
 
     config.include('yithlibraryserver.oauth2')
+    config.include('yithlibraryserver.user')
+    config.include('yithlibraryserver.twitter')
 
     config.scan()
     return TransLogger(config.make_wsgi_app(), setup_console_handler=False)

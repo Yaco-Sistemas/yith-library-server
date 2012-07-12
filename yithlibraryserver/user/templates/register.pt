@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+  <title>Register new user</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+</head>
+<body>
+  <h1>Welcome to the Yith Library!</h1>
+
+  <p>Hi ${screen_name}! It looks like it's the first time you
+  log into the Yith Library.</p>
+
+  <p>Click on the <strong>register</strong> button to finish
+  the registration process. Don't worry, we will not ask you
+  for a new password. You already have enough of them.</p>
+
+  <form method="post" action="${request.route_url('register_new_user')}">
+    <input type="hidden" name="user_id" value="${user_id}" />
+    <input type="hidden" name="screen_name" value="${screen_name}" />
+    <input type="submit" name="submit" value="Register into Yith Library" />
+  </form>
+
+</body>
+</html>

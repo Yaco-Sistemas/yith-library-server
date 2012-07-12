@@ -14,22 +14,29 @@ from yithlibraryserver.oauth2.authentication import is_app_authorized
 from yithlibraryserver.oauth2.authentication import find_authorization_code
 from yithlibraryserver.oauth2.authentication import remove_authorization_code
 from yithlibraryserver.oauth2.schemas import ApplicationSchema
+from yithlibraryserver.user import get_authenticated_user
 
 
 DEFAULT_SCOPE = 'passwords'
 
 
 @view_config(route_name='oauth2_applications',
-             renderer='templates/applications.pt')
+             renderer='templates/applications.pt',
+             permission='view-applications')
 def applications(request):
+    user = get_authenticated_user(request)
     return {
-        'applications': request.db.applications.find()
+        'screen_name': user['screen_name'],
+        'authorized_apps': user['authorized_apps'],
+        'applications': request.db.applications.find({'owner': user['_id']})
         }
 
 
 @view_config(route_name='oauth2_application_new',
-             renderer='templates/application_new.pt')
+             renderer='templates/application_new.pt',
+             permission='add-application')
 def application_new(request):
+    user = get_authenticated_user(request)
     schema = ApplicationSchema()
     form = Form(schema, buttons=('submit', ))
 
@@ -42,6 +49,7 @@ def application_new(request):
 
         # the data is fine, save into the db
         application = {
+            'owner': user['_id'],
             'name': appstruct['name'],
             'main_url': appstruct['main_url'],
             'callback_url': appstruct['callback_url'],
@@ -56,22 +64,29 @@ def application_new(request):
 
 
 @view_config(route_name='oauth2_application_view',
-             renderer='templates/application_view.pt')
+             renderer='templates/application_view.pt',
+             permission='view-application')
 def application_view(request):
     try:
         app_id = bson.ObjectId(request.matchdict['app'])
     except bson.errors.InvalidId:
         return HTTPBadRequest(body='Invalid application id')
 
+    user = get_authenticated_user(request)
+
     app = request.db.applications.find_one(app_id)
     if app is None:
         return HTTPNotFound()
+
+    if app['owner'] != user['_id']:
+        return HTTPUnauthorized()
 
     return {'app': app}
 
 
 @view_config(route_name='oauth2_application_delete',
-             renderer='templates/application_delete.pt')
+             renderer='templates/application_delete.pt',
+             permission='delete-application')
 def application_delete(request):
     try:
         app_id = bson.ObjectId(request.matchdict['app'])
@@ -81,6 +96,10 @@ def application_delete(request):
     app = request.db.applications.find_one(app_id)
     if app is None:
         return HTTPNotFound()
+
+    user = get_authenticated_user(request)
+    if app['owner'] != user['_id']:
+        return HTTPUnauthorized()
 
     if 'submit' in request.POST:
         request.db.applications.remove(app_id, safe=True)
@@ -119,16 +138,15 @@ def authorization_endpoint(request):
 
     state = request.params.get('state')
 
-    user_is_authenticated = True
-    user = 'fulanito'
+    user = get_authenticated_user(request)
 
-    if user_is_authenticated and is_app_authorized(request, user, app):
+    if user and is_app_authorized(request, user, app):
         if 'authorization_info' in request.session:
             del request.session['authorization_info']
 
         url = generate_grant_code(request, redirect_uri, scope, state, app, user)
         return HTTPFound(location=url)
-    elif user_is_authenticated:
+    elif user:
         request.session['authorization_info'] = {
             'client_id': client_id,
             'redirect_uri': redirect_uri,
@@ -147,12 +165,15 @@ def authorization_endpoint(request):
 
 
 @view_config(route_name='oauth2_authorize_application',
-             renderer='templates/application_authorization.pt')
+             renderer='templates/application_authorization.pt',
+             permission='add-authorized-app')
 def authorize_application(request):
     try:
         authorization_info = request.session['authorization_info']
     except KeyError:
         return HTTPBadRequest()
+
+    user = get_authenticated_user(request)
 
     try:
         app_id = bson.ObjectId(request.matchdict['app'])
@@ -166,7 +187,6 @@ def authorize_application(request):
     scope = authorization_info['scope']
 
     if 'submit' in request.POST:
-        user = 'fulanito'
         store_user_authorization(request, user, app)
 
         redirect_uri = authorization_info['redirect_uri']
