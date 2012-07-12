@@ -16,7 +16,6 @@ class PasswordCollectionRESTView(object):
 
     def __init__(self, request):
         self.request = request
-        self.user = self.request.matchdict['user']
 
     @view_config(request_method='OPTIONS', renderer='string')
     def options(self):
@@ -27,13 +26,14 @@ class PasswordCollectionRESTView(object):
 
     @view_config(request_method='GET')
     def get(self):
-        authorize_user(self.request, self.user)
+        user = authorize_user(self.request)
+        query = {'owner': user['_id']}
         return [jsonable(p)
-                for p in self.request.db.passwords.find({'owner': self.user})]
+                for p in self.request.db.passwords.find(query)]
 
     @view_config(request_method='POST')
     def post(self):
-        authorize_user(self.request, self.user)
+        user = authorize_user(self.request)
         password, errors = validate_password(self.request.body,
                                              self.request.charset)
 
@@ -43,7 +43,7 @@ class PasswordCollectionRESTView(object):
                                   content_type='application/json')
 
         # add the password to the database
-        password['owner'] = self.user
+        password['owner'] = user['_id']
         _id = self.request.db.passwords.insert(password, safe=True)
         password['_id'] = str(_id)
 
@@ -56,8 +56,6 @@ class PasswordRESTView(object):
     def __init__(self, request):
         self.request = request
 
-        self.user = self.request.matchdict['user']
-
         self.password_id = self.request.matchdict['password']
 
     @view_config(request_method='OPTIONS', renderer='string')
@@ -69,7 +67,7 @@ class PasswordRESTView(object):
 
     @view_config(request_method='GET')
     def get(self):
-        authorize_user(self.request, self.user)
+        authorize_user(self.request)
         try:
             _id = bson.ObjectId(self.password_id)
         except bson.errors.InvalidId:
@@ -84,7 +82,7 @@ class PasswordRESTView(object):
 
     @view_config(request_method='PUT')
     def put(self):
-        authorize_user(self.request, self.user)
+        user = authorize_user(self.request)
         try:
             _id = bson.ObjectId(self.password_id)
         except bson.errors.InvalidId:
@@ -100,7 +98,7 @@ class PasswordRESTView(object):
                                   content_type='application/json')
 
         # update the password in the database
-        password['owner'] = self.user
+        password['owner'] = user['_id']
         result = self.request.db.passwords.update({'_id': _id},
                                                   password,
                                                   safe=True)
@@ -114,7 +112,7 @@ class PasswordRESTView(object):
 
     @view_config(request_method='DELETE')
     def delete(self):
-        authorize_user(self.request, self.user)
+        authorize_user(self.request)
         try:
             _id = bson.ObjectId(self.password_id)
         except bson.errors.InvalidId:

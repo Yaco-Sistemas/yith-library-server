@@ -20,7 +20,7 @@ class RootFactory(object):
         self.request = request
 
 
-def authorize_user(request, user):
+def authorize_user(request):
     authorization = request.headers.get('Authorization')
     if authorization is None:
         raise HTTPUnauthorized()
@@ -33,5 +33,9 @@ def authorize_user(request, user):
     if access_code is None:
         raise HTTPUnauthorized()
 
-    if access_code['user'] != user:
+    user_id = access_code['user']
+    user = request.db.users.find_one(user_id)
+    if user is None:
         raise HTTPUnauthorized()
+
+    return user

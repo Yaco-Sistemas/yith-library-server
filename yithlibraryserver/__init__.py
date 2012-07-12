@@ -41,8 +41,8 @@ def main(global_config, **settings):
     config.add_subscriber(add_cors_headers_response, NewRequest)
 
     # Routes
-    config.add_route('password_collection_view', '/passwords/{user}')
-    config.add_route('password_view', '/passwords/{user}/{password}')
+    config.add_route('password_collection_view', '/passwords')
+    config.add_route('password_view', '/passwords/{password}')
 
     config.include('yithlibraryserver.oauth2')
     config.include('yithlibraryserver.user')
