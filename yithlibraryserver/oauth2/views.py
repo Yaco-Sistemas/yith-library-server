@@ -115,7 +115,7 @@ def application_delete(request):
 def authorization_endpoint(request):
     response_type = request.params.get('response_type')
     if response_type is None:
-        return HTTPBadRequest('Missing required response_ẗype')
+        return HTTPBadRequest('Missing required response_type')
 
     if response_type != 'code':
         return HTTPNotImplemented('Only code is supported')
@@ -123,7 +123,7 @@ def authorization_endpoint(request):
     # code grant
     client_id = request.params.get('client_id')
     if client_id is None:
-        return HTTPBadRequest('Missing required client_ẗype')
+        return HTTPBadRequest('Missing required client_type')
 
     app = request.db.applications.find_one({'client_id': client_id})
     if app is None:
