@@ -45,9 +45,9 @@ class PasswordCollectionRESTView(object):
         # add the password to the database
         password['owner'] = user['_id']
         _id = self.request.db.passwords.insert(password, safe=True)
-        password['_id'] = str(_id)
+        password['_id'] = _id
 
-        return password
+        return jsonable(password)
 
 
 @view_defaults(route_name='password_view', renderer='json')

@@ -12,8 +12,23 @@ class ViewTests(unittest.TestCase):
         self.testapp = TestApp(app)
         self.db = app.registry.settings['db_conn']['test-yith-library']
 
+        self.access_code = '1234'
+        self.auth_header = {'Authorization': 'Bearer %s' % self.access_code}
+        user_id = self.db.users.insert({
+                'provider_user_id': 'user1',
+                'screen_name': 'User 1',
+                'authorized_apps': [],
+                }, safe=True)
+        self.db.access_codes.insert({
+                'code': self.access_code,
+                'scope': None,
+                'user': user_id,
+                'client_id': None,
+                }, safe=True)
+
     def tearDown(self):
         self.db.drop_collection('passwords')
+        self.db.drop_collection('access_codes')
 
     def test_password_collection_options(self):
         res = self.testapp.options('/passwords')
@@ -25,18 +40,20 @@ class ViewTests(unittest.TestCase):
                          'Origin, Content-Type, Accept, Authorization')
 
     def test_password_collection_get(self):
-        res = self.testapp.get('/passwords')
+        res = self.testapp.get('/passwords', headers=self.auth_header)
         self.assertEqual(res.status, '200 OK')
         self.assertEqual(res.body, b'[]')
 
     def test_password_collection_post(self):
-        res = self.testapp.post('/passwords', '', status=400)
+        res = self.testapp.post('/passwords', '', headers=self.auth_header,
+                                status=400)
         self.assertEqual(res.status, '400 Bad Request')
         self.assertEqual(res.body,
                          b'{"message": "No JSON object could be decoded"}')
 
-        res = self.testapp.post('/user2',
-                                '{"secret": "s3cr3t", "service": "myservice"}')
+        res = self.testapp.post('/passwords',
+                                '{"secret": "s3cr3t", "service": "myservice"}',
+                                headers=self.auth_header)
 
         self.assertEqual(res.status, '200 OK')
 
@@ -50,12 +67,14 @@ class ViewTests(unittest.TestCase):
                          'Origin, Content-Type, Accept, Authorization')
 
     def test_password_get(self):
-        res = self.testapp.get('/passwords/123456', status=400)
+        res = self.testapp.get('/passwords/123456', headers=self.auth_header,
+                               status=400)
         self.assertEqual(res.status, '400 Bad Request')
         self.assertEqual(res.body,
                          b'{"message": "Invalid password id"}')
 
         res = self.testapp.get('/passwords/000000000000000000000000',
+                               headers=self.auth_header,
                                status=404)
         self.assertEqual(res.status, '404 Not Found')
         self.assertEqual(res.body,
@@ -63,25 +82,27 @@ class ViewTests(unittest.TestCase):
 
 
     def test_password_put(self):
-        res = self.testapp.put('/passwords/123456', status=400)
+        res = self.testapp.put('/passwords/123456', headers=self.auth_header,
+                               status=400)
         self.assertEqual(res.status, '400 Bad Request')
         self.assertEqual(res.body,
                          b'{"message": "Invalid password id"}')
 
         res = self.testapp.put('/passwords/000000000000000000000000',
-                               status=400)
+                               headers=self.auth_header, status=400)
         self.assertEqual(res.status, '400 Bad Request')
         self.assertEqual(res.body,
                          b'{"message": "No JSON object could be decoded"}')
 
     def test_password_delete(self):
-        res = self.testapp.delete('/passwords/123456', status=400)
+        res = self.testapp.delete('/passwords/123456',
+                                  headers=self.auth_header, status=400)
         self.assertEqual(res.status, '400 Bad Request')
         self.assertEqual(res.body,
                          b'{"message": "Invalid password id"}')
 
         res = self.testapp.delete('/passwords/000000000000000000000000',
-                               status=404)
+                                  headers=self.auth_header, status=404)
         self.assertEqual(res.status, '404 Not Found')
         self.assertEqual(res.body,
                          b'{"message": "Password not found"}')
@@ -94,7 +115,8 @@ class ViewTests(unittest.TestCase):
         _id = self.db.passwords.insert(password, safe=True)
         count = self.db.passwords.count()
 
-        res = self.testapp.delete('/passwords/' + str(_id))
+        res = self.testapp.delete('/passwords/' + str(_id),
+                                  headers=self.auth_header)
         self.assertEqual(res.status, '200 OK')
         self.assertEqual(res.body, b'""')
         self.assertEqual(self.db.passwords.count(), count - 1)
