@@ -1,16 +1,10 @@
-import unittest
-
-from webtest import TestApp
-
-from yithlibraryserver import main
+from yithlibraryserver import testing
 
 
-class ViewTests(unittest.TestCase):
+class ViewTests(testing.ViewTests):
 
     def setUp(self):
-        app = main({}, mongo_uri='mongodb://localhost:27017/test-yith-library')
-        self.testapp = TestApp(app)
-        self.db = app.registry.settings['db_conn']['test-yith-library']
+        super(ViewTests, self).setUp()
 
         self.access_code = '1234'
         self.auth_header = {'Authorization': 'Bearer %s' % self.access_code}
