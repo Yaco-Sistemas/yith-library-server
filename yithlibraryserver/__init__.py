@@ -49,4 +49,6 @@ def main(global_config, **settings):
     config.include('yithlibraryserver.twitter')
 
     config.scan()
-    return TransLogger(config.make_wsgi_app(), setup_console_handler=False)
+    app = config.make_wsgi_app()
+    return app
+    #return TransLogger(, setup_console_handler=False)

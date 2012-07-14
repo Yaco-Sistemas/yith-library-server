@@ -48,4 +48,6 @@ class UtilsTests(unittest.TestCase):
                 'expiration': None,
                 'notes': None,
                 'tags': None,
+                'creation': None,
+                'last_modification': None,
                 })
