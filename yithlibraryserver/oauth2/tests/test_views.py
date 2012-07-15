@@ -260,3 +260,36 @@ class ViewTests(testing.ViewTests):
                 'code': code,
                 }, headers=headers, status=401)
         self.assertEqual(res.status, '401 Unauthorized')
+
+    def test_authenticate_anonymous(self):
+        # there is nothing in the session yet
+        res = self.testapp.get('/oauth2/authenticate_anonymous/123456',
+                               status=400)
+        self.assertEqual(res.status, '400 Bad Request')
+
+        # ask for authorization first, so it is stored in the session
+        app_id = self.db.applications.insert({
+                'client_id': '123456',
+                'name': 'Test Application',
+                'main_url': 'http://example.com',
+                'callback_url': 'https://example.com/callback',
+                }, safe=True)
+        res = self.testapp.get('/oauth2/endpoints/authorization', {
+                'response_type': 'code',
+                'client_id': '123456',
+                'redirect_uri': 'https://example.com/callback',
+                })
+
+        res = self.testapp.get('/oauth2/authenticate_anonymous/xx',
+                               status=400)
+        self.assertEqual(res.status, '400 Bad Request')
+        res.mustcontain('Invalid application id')
+
+        res = self.testapp.get('/oauth2/authenticate_anonymous/000000000000000000000000',
+                               status=404)
+        self.assertEqual(res.status, '404 Not Found')
+
+        res = self.testapp.get('/oauth2/authenticate_anonymous/%s' % str(app_id),
+                               status=200)
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Authorize application Test Application')
