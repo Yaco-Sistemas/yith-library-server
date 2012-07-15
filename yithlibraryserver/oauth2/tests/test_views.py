@@ -495,3 +495,62 @@ class ViewTests(testing.ViewTests):
 
         app = self.db.applications.find_one(app_id)
         self.assertEqual(app, None)
+
+    def test_application_view(self):
+        # this view required authentication
+        res = self.testapp.get('/oauth2/applications/new')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Log in')
+
+        # Log in
+        user_id = self.db.users.insert({
+                'provider_user_id': 'twitter1',
+                'screen_name': 'John Doe',
+                'authorized_apps': [],
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+
+        res = self.testapp.get('/oauth2/applications/xxx',
+                               status=400)
+        self.assertEqual(res.status, '400 Bad Request')
+        res.mustcontain('Invalid application id')
+
+        res = self.testapp.get('/oauth2/applications/000000000000000000000000',
+                               status=404)
+        self.assertEqual(res.status, '404 Not Found')
+
+        # create a valid app
+        app_id = self.db.applications.insert({
+                'owner': bson.ObjectId(),
+                'name': 'Test Application',
+                'main_url': 'http://example.com',
+                'callback_url': 'http://example.com/callback',
+                'client_id': '123456',
+                'client_secret': 'secret',
+                }, safe=True)
+
+        res = self.testapp.get('/oauth2/applications/%s' % str(app_id),
+                               status=401)
+        self.assertEqual(res.status, '401 Unauthorized')
+
+        self.db.applications.update({'_id': app_id}, {
+                '$set': {'owner': user_id},
+                }, safe=True)
+        res = self.testapp.get('/oauth2/applications/%s' % str(app_id))
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('View Application')
+        res.mustcontain('Application Test Application')
+        res.mustcontain('Id:')
+        res.mustcontain(str(app_id))
+        res.mustcontain('Name:')
+        res.mustcontain('Test Application')
+        res.mustcontain('Main URL:')
+        res.mustcontain('http://example.com')
+        res.mustcontain('Callback URL:')
+        res.mustcontain('http://example.com/callback')
+        res.mustcontain('Client Id:')
+        res.mustcontain('123456')
+        res.mustcontain('Client Secret:')
+        res.mustcontain('secret')
+        res.mustcontain('Delete application')
+        res.mustcontain('Back to the application list')
