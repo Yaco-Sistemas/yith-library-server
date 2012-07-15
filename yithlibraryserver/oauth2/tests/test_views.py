@@ -1,5 +1,7 @@
 import base64
 
+import bson
+
 from pyramid.security import remember
 
 from webtest import TestRequest
@@ -439,3 +441,57 @@ class ViewTests(testing.ViewTests):
                 })
         self.assertEqual(res.status, '200 OK')
         res.mustcontain('There was a problem with your submission')
+
+    def test_application_delete(self):
+        # this view required authentication
+        res = self.testapp.get('/oauth2/applications/new')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Log in')
+
+        # Log in
+        user_id = self.db.users.insert({
+                'provider_user_id': 'twitter1',
+                'screen_name': 'John Doe',
+                'authorized_apps': [],
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+
+        res = self.testapp.get('/oauth2/applications/xxx/delete',
+                               status=400)
+        self.assertEqual(res.status, '400 Bad Request')
+        res.mustcontain('Invalid application id')
+
+        res = self.testapp.get('/oauth2/applications/000000000000000000000000/delete',
+                               status=404)
+        self.assertEqual(res.status, '404 Not Found')
+
+        # create a valid app
+        app_id = self.db.applications.insert({
+                'owner': bson.ObjectId(),
+                'name': 'Test Application',
+                'client_id': '123456',
+                'callback_url': 'https://example.com/callback',
+                }, safe=True)
+
+        res = self.testapp.get('/oauth2/applications/%s/delete' % str(app_id),
+                               status=401)
+        self.assertEqual(res.status, '401 Unauthorized')
+
+        self.db.applications.update({'_id': app_id}, {
+                '$set': {'owner': user_id},
+                }, safe=True)
+        res = self.testapp.get('/oauth2/applications/%s/delete' % str(app_id))
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Delete Application Test Application')
+        res.mustcontain('Are you sure you want to remove the application')
+        res.mustcontain('Yes, I am sure')
+        res.mustcontain('No, take me back to the application list')
+
+        # now delete it
+        res = self.testapp.post('/oauth2/applications/%s/delete' % str(app_id),
+                                {'submit': 'Yes, I am sure'})
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/oauth2/applications')
+
+        app = self.db.applications.find_one(app_id)
+        self.assertEqual(app, None)
