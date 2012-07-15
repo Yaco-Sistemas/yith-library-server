@@ -94,7 +94,7 @@ class ViewTests(testing.ViewTests):
         # authenticated user who hasn't authorized the app
         user_id = self.db.users.insert({
                 'provider_user_id': 'twitter1',
-                'scree_name': 'John Doe',
+                'screen_name': 'John Doe',
                 'authorized_apps': [],
                 }, safe=True)
         self.set_user_cookie(str(user_id))
@@ -176,7 +176,7 @@ class ViewTests(testing.ViewTests):
         # first we generate an authorization_code
         user_id = self.db.users.insert({
                 'provider_user_id': 'twitter1',
-                'scree_name': 'John Doe',
+                'screen_name': 'John Doe',
                 'authorized_apps': [app_id],
                 }, safe=True)
         self.set_user_cookie(str(user_id))
@@ -236,7 +236,7 @@ class ViewTests(testing.ViewTests):
 
         user_id = self.db.users.insert({
                 'provider_user_id': 'twitter1',
-                'scree_name': 'John Doe',
+                'screen_name': 'John Doe',
                 'authorized_apps': [app_id, app_id2],
                 }, safe=True)
         self.set_user_cookie(str(user_id))
@@ -292,23 +292,21 @@ class ViewTests(testing.ViewTests):
         self.assertEqual(res.status, '404 Not Found')
 
         # valid app id
-        res = self.testapp.get('/oauth2/authenticate_anonymous/%s' % str(app_id),
-                               status=200)
+        res = self.testapp.get('/oauth2/authenticate_anonymous/%s' % str(app_id))
         self.assertEqual(res.status, '200 OK')
         res.mustcontain('Authorize application Test Application')
         res.mustcontain('You need to log in first')
 
     def test_authorize_application(self):
         # this view required authentication
-        res = self.testapp.get('/oauth2/authorizeapp/123456',
-                               status=200)
+        res = self.testapp.get('/oauth2/authorizeapp/123456')
         self.assertEqual(res.status, '200 OK')
         res.mustcontain('Log in')
 
         # Log in
         user_id = self.db.users.insert({
                 'provider_user_id': 'twitter1',
-                'scree_name': 'John Doe',
+                'screen_name': 'John Doe',
                 'authorized_apps': [],
                 }, safe=True)
         self.set_user_cookie(str(user_id))
@@ -364,3 +362,80 @@ class ViewTests(testing.ViewTests):
         code = grant['code']
         location = 'https://example.com/callback?code=%s' % code
         self.assertEqual(res.location, location)
+
+    def test_applications(self):
+        # this view required authentication
+        res = self.testapp.get('/oauth2/applications')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Log in')
+
+        # Log in
+        user_id = self.db.users.insert({
+                'provider_user_id': 'twitter1',
+                'screen_name': 'John Doe',
+                'authorized_apps': [],
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+
+        res = self.testapp.get('/oauth2/applications')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('John Doe')
+        res.mustcontain('Log out')
+        res.mustcontain('Authorized Applications')
+        res.mustcontain('Developer Applications')
+        res.mustcontain('Register new application')
+
+        # TODO: test creating apps and make sure they appear in the output
+
+    def test_application_new(self):
+        # this view required authentication
+        res = self.testapp.get('/oauth2/applications/new')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Log in')
+
+        # Log in
+        user_id = self.db.users.insert({
+                'provider_user_id': 'twitter1',
+                'screen_name': 'John Doe',
+                'authorized_apps': [],
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+
+        res = self.testapp.get('/oauth2/applications/new')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('New Application')
+        res.mustcontain('Name')
+        res.mustcontain('Main Url')
+        res.mustcontain('Callback Url')
+
+
+        res = self.testapp.post('/oauth2/applications/new', {
+                'name': 'Test Application',
+                'main_url': 'http://example.com',
+                'callback_url': 'http://example.com/callback',
+                'submit': 'submit',
+                })
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/oauth2/applications')
+
+        app = self.db.applications.find_one({
+                'name': 'Test Application',
+                'main_url': 'http://example.com',
+                'callback_url': 'http://example.com/callback',
+                })
+        self.assertNotEqual(app, None)
+        self.assertTrue('client_id' in app)
+        self.assertTrue('client_secret' in app)
+        self.assertEqual(app['owner'], user_id)
+        self.assertEqual(app['name'], 'Test Application')
+        self.assertEqual(app['main_url'], 'http://example.com')
+        self.assertEqual(app['callback_url'], 'http://example.com/callback')
+
+        # error if we don't fill all fields
+        res = self.testapp.post('/oauth2/applications/new', {
+                'name': 'Test Application',
+                'callback_url': 'http://example.com/callback',
+                'submit': 'submit',
+                })
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('There was a problem with your submission')
