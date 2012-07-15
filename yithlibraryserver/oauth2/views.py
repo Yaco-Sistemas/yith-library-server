@@ -230,7 +230,7 @@ def token_endpoint(request):
 
     grant_type = request.POST.get('grant_type')
     if grant_type is None:
-        return HTTPBadRequest('Missing required grant_ẗype')
+        return HTTPBadRequest('Missing required grant_type')
 
     if grant_type != 'authorization_code':
         return HTTPNotImplemented('Only authorization_code is supported')
