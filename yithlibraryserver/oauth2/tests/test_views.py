@@ -280,16 +280,87 @@ class ViewTests(testing.ViewTests):
                 'redirect_uri': 'https://example.com/callback',
                 })
 
+        # invalid app id
         res = self.testapp.get('/oauth2/authenticate_anonymous/xx',
                                status=400)
         self.assertEqual(res.status, '400 Bad Request')
         res.mustcontain('Invalid application id')
 
+        # non existing app id
         res = self.testapp.get('/oauth2/authenticate_anonymous/000000000000000000000000',
                                status=404)
         self.assertEqual(res.status, '404 Not Found')
 
+        # valid app id
         res = self.testapp.get('/oauth2/authenticate_anonymous/%s' % str(app_id),
                                status=200)
         self.assertEqual(res.status, '200 OK')
         res.mustcontain('Authorize application Test Application')
+        res.mustcontain('You need to log in first')
+
+    def test_authorize_application(self):
+        # this view required authentication
+        res = self.testapp.get('/oauth2/authorizeapp/123456',
+                               status=200)
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Log in')
+
+        # Log in
+        user_id = self.db.users.insert({
+                'provider_user_id': 'twitter1',
+                'scree_name': 'John Doe',
+                'authorized_apps': [],
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+
+        # there is nothing in the session yet
+        res = self.testapp.get('/oauth2/authorizeapp/123456',
+                               status=400)
+        self.assertEqual(res.status, '400 Bad Request')
+
+        # ask for authorization first, so it is stored in the session
+        app_id = self.db.applications.insert({
+                'client_id': '123456',
+                'name': 'Test Application',
+                'main_url': 'http://example.com',
+                'callback_url': 'https://example.com/callback',
+                }, safe=True)
+        res = self.testapp.get('/oauth2/endpoints/authorization', {
+                'response_type': 'code',
+                'client_id': '123456',
+                })
+
+        # invalid app id
+        res = self.testapp.get('/oauth2/authorizeapp/xx',
+                               status=400)
+        self.assertEqual(res.status, '400 Bad Request')
+        res.mustcontain('Invalid application id')
+
+        # non existing app id
+        res = self.testapp.get('/oauth2/authorizeapp/000000000000000000000000',
+                               status=404)
+        self.assertEqual(res.status, '404 Not Found')
+
+        # valid app id
+        valid_url = '/oauth2/authorizeapp/%s' % str(app_id)
+        res = self.testapp.get(valid_url)
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Authorize application Test Application')
+        res.mustcontain('Do you want to allow this access?')
+        res.mustcontain('Yes, I authorize the Test Application application')
+        res.mustcontain('You can revoke this permission in the future.')
+
+        # do the post
+        res = self.testapp.post(valid_url, {
+                'submit': 'Yes, I authorize the Test Application application',
+                })
+        self.assertEqual(res.status, '302 Found')
+        grant = self.db.authorization_codes.find_one({
+                'scope': DEFAULT_SCOPE,
+                'client_id': '123456',
+                'user': user_id,
+                })
+        self.assertNotEqual(grant, None)
+        code = grant['code']
+        location = 'https://example.com/callback?code=%s' % code
+        self.assertEqual(res.location, location)
