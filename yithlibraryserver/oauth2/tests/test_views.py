@@ -24,10 +24,10 @@ class ViewTests(testing.ViewTests):
 
         self.testapp.reset()
 
-    def set_user_cookie(self, userid):
+    def set_user_cookie(self, user_id):
         request = TestRequest.blank('', {})
         request.registry = self.testapp.app.registry
-        remember_headers = remember(request, userid)
+        remember_headers = remember(request, user_id)
         cookie_value = remember_headers[0][1].split('"')[1]
         self.testapp.cookies['auth_tkt'] = cookie_value
 
@@ -92,12 +92,12 @@ class ViewTests(testing.ViewTests):
         self.assertEqual(res.location, location)
 
         # authenticated user who hasn't authorized the app
-        userid = self.db.users.insert({
+        user_id = self.db.users.insert({
                 'provider_user_id': 'twitter1',
                 'scree_name': 'John Doe',
                 'authorized_apps': [],
                 }, safe=True)
-        self.set_user_cookie(str(userid))
+        self.set_user_cookie(str(user_id))
 
         res = self.testapp.get('/oauth2/endpoints/authorization', {
                 'response_type': 'code',
@@ -110,7 +110,7 @@ class ViewTests(testing.ViewTests):
 
         # authenticated user who has authorized the app
         self.db.users.update(
-            {'_id': userid},
+            {'_id': user_id},
             {'$addToSet': {'authorized_apps': app_id}},
             safe=True,
             )
@@ -124,7 +124,7 @@ class ViewTests(testing.ViewTests):
         grant = self.db.authorization_codes.find_one({
                 'scope': DEFAULT_SCOPE,
                 'client_id': '123456',
-                'user': userid,
+                'user': user_id,
                 })
         self.assertNotEqual(grant, None)
         code = grant['code']
@@ -174,12 +174,12 @@ class ViewTests(testing.ViewTests):
         # 2. Test a valid request
 
         # first we generate an authorization_code
-        userid = self.db.users.insert({
+        user_id = self.db.users.insert({
                 'provider_user_id': 'twitter1',
                 'scree_name': 'John Doe',
                 'authorized_apps': [app_id],
                 }, safe=True)
-        self.set_user_cookie(str(userid))
+        self.set_user_cookie(str(user_id))
         res = self.testapp.get('/oauth2/endpoints/authorization', {
                 'response_type': 'code',
                 'client_id': '123456',
@@ -189,7 +189,7 @@ class ViewTests(testing.ViewTests):
         grant = self.db.authorization_codes.find_one({
                 'scope': DEFAULT_SCOPE,
                 'client_id': '123456',
-                'user': userid,
+                'user': user_id,
                 })
         self.assertNotEqual(grant, None)
         code = grant['code']
@@ -207,7 +207,7 @@ class ViewTests(testing.ViewTests):
         grant = self.db.authorization_codes.find_one({
                 'scope': DEFAULT_SCOPE,
                 'client_id': '123456',
-                'user': userid,
+                'user': user_id,
                 })
         self.assertEqual(grant, None)
 
@@ -234,12 +234,12 @@ class ViewTests(testing.ViewTests):
                 'callback_url': 'https://example.com/callback2',
                 }, safe=True)
 
-        userid = self.db.users.insert({
+        user_id = self.db.users.insert({
                 'provider_user_id': 'twitter1',
                 'scree_name': 'John Doe',
                 'authorized_apps': [app_id, app_id2],
                 }, safe=True)
-        self.set_user_cookie(str(userid))
+        self.set_user_cookie(str(user_id))
         self.testapp.get('/oauth2/endpoints/authorization', {
                 'response_type': 'code',
                 'client_id': '123456',
@@ -247,7 +247,7 @@ class ViewTests(testing.ViewTests):
         grant = self.db.authorization_codes.find_one({
                 'scope': DEFAULT_SCOPE,
                 'client_id': '123456',
-                'user': userid,
+                'user': user_id,
                 })
         code = grant['code']
 
