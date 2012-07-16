@@ -1,7 +1,9 @@
 from yithlibraryserver import testing
 
 
-class ViewTests(testing.ViewTests):
+class ViewTests(testing.TestCase):
+
+    clean_collections = ('passwords', 'access_codes')
 
     def setUp(self):
         super(ViewTests, self).setUp()
@@ -19,10 +21,6 @@ class ViewTests(testing.ViewTests):
                 'user': user_id,
                 'client_id': None,
                 }, safe=True)
-
-    def tearDown(self):
-        self.db.drop_collection('passwords')
-        self.db.drop_collection('access_codes')
 
     def test_password_collection_options(self):
         res = self.testapp.options('/passwords')

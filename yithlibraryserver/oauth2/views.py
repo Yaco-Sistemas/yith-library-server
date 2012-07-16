@@ -7,12 +7,7 @@ from pyramid.view import view_config
 
 from yithlibraryserver.oauth2.application import create_client_id_and_secret
 from yithlibraryserver.oauth2.authentication import authenticate_client
-from yithlibraryserver.oauth2.authentication import generate_access_code
-from yithlibraryserver.oauth2.authentication import generate_grant_code
-from yithlibraryserver.oauth2.authentication import store_user_authorization
-from yithlibraryserver.oauth2.authentication import is_app_authorized
-from yithlibraryserver.oauth2.authentication import find_authorization_code
-from yithlibraryserver.oauth2.authentication import remove_authorization_code
+from yithlibraryserver.oauth2.authorization import Authorizator
 from yithlibraryserver.oauth2.schemas import ApplicationSchema
 from yithlibraryserver.user import get_authenticated_user
 
@@ -142,11 +137,16 @@ def authorization_endpoint(request):
 
     user = get_authenticated_user(request)
 
-    if user and is_app_authorized(request, user, app):
+    authorizator = Authorizator(request.db, app)
+
+    if user and authorizator.is_app_authorized(user):
         if 'authorization_info' in request.session:
             del request.session['authorization_info']
 
-        url = generate_grant_code(request, redirect_uri, scope, state, app, user)
+        code = authorizator.auth_codes.create(
+            user['_id'], app['client_id'], scope)
+        url = authorizator.auth_codes.get_redirect_url(
+            code, redirect_uri, scope, state)
         return HTTPFound(location=url)
     elif user:
         request.session['authorization_info'] = {
@@ -189,13 +189,18 @@ def authorize_application(request):
     scope = authorization_info['scope']
 
     if 'submit' in request.POST:
-        store_user_authorization(request, user, app)
+        authorizator = Authorizator(request.db, app)
+        if not authorizator.is_app_authorized(user):
+            authorizator.store_user_authorization(user)
 
         redirect_uri = authorization_info['redirect_uri']
         state = authorization_info['state']
         del request.session['authorization_info']
 
-        url = generate_grant_code(request, redirect_uri, scope, state, app, user)
+        code = authorizator.auth_codes.create(
+            user['_id'], app['client_id'], scope)
+        url = authorizator.auth_codes.get_redirect_url(
+            code, redirect_uri, scope, state)
         return HTTPFound(location=url)
 
     return {'app': app, 'scopes': scope.split(' ')}
@@ -239,7 +244,9 @@ def token_endpoint(request):
     if code is None:
         return HTTPBadRequest('Missing required code')
 
-    grant = find_authorization_code(request, code)
+    authorizator = Authorizator(request.db, app)
+
+    grant = authorizator.auth_codes.find(code)
     if grant is None:
         return HTTPUnauthorized()
 
@@ -248,11 +255,13 @@ def token_endpoint(request):
     if app['client_id'] != grant['client_id']:
         return HTTPUnauthorized()
 
-    remove_authorization_code(request, grant)
-    access_code = generate_access_code(request, grant)
+    authorizator.auth_codes.remove(grant)
 
     request.response.headers['Cache-Control'] = 'no-store'
     request.response.headers['Pragma'] = 'no-cache'
+
+    access_code = authorizator.access_codes.create(grant['user'], grant)
+
     return {
         'access_code': access_code,
         'token_type': 'bearer',

@@ -2,7 +2,7 @@ from pyramid.httpexceptions import HTTPBadRequest, HTTPUnauthorized
 from pyramid.security import Allow, Authenticated
 
 
-from yithlibraryserver.oauth2.authentication import find_access_code
+from yithlibraryserver.oauth2.authorization import AccessCodes
 
 
 class RootFactory(object):
@@ -29,7 +29,7 @@ def authorize_user(request):
     if method.lower() != 'bearer':
         raise HTTPBadRequest('Authorization method not supported')
 
-    access_code = find_access_code(request, credentials)
+    access_code = AccessCodes(request.db).find(credentials)
     if access_code is None:
         raise HTTPUnauthorized()
 

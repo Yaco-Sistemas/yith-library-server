@@ -1,5 +1,3 @@
-import base64
-
 import bson
 
 from pyramid.security import remember
@@ -8,23 +6,13 @@ from webtest import TestRequest
 
 from yithlibraryserver import testing
 from yithlibraryserver.oauth2.views import DEFAULT_SCOPE
+from yithlibraryserver.oauth2.authentication import auth_basic_encode
 
 
-def auth_basic_encode(user, password):
-    value = '%s:%s' % (user, password)
-    return base64.encodebytes(value.encode('utf-8')).decode('ascii')
+class ViewTests(testing.TestCase):
 
-
-class ViewTests(testing.ViewTests):
-
-    def tearDown(self):
-        super(ViewTests, self).tearDown()
-        self.db.drop_collection('applications')
-        self.db.drop_collection('users')
-        self.db.drop_collection('authorization_codes')
-        self.db.drop_collection('access_codes')
-
-        self.testapp.reset()
+    clean_collections = ('applications', 'users', 'authorization_codes',
+                         'access_codes')
 
     def set_user_cookie(self, user_id):
         request = TestRequest.blank('', {})
