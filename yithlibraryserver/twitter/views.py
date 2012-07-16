@@ -7,7 +7,6 @@ from pyramid.view import view_config
 import requests
 
 from yithlibraryserver.twitter.authorization import auth_header
-from yithlibraryserver.twitter.users import get_user
 
 
 @view_config(route_name='twitter_login', renderer='string')
@@ -77,7 +76,7 @@ def twitter_callback(request):
     user_id = response_args['user_id']
     screen_name = response_args['screen_name']
 
-    user = get_user(request, user_id)
+    user = request.db.users.find_one({'provider_user_id': user_id})
     if user is None:
         remember_headers = remember(request, user_id)
         next_url = request.route_url('register_new_user')
