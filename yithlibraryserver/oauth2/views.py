@@ -146,7 +146,7 @@ def authorization_endpoint(request):
         code = authorizator.auth_codes.create(
             user['_id'], app['client_id'], scope)
         url = authorizator.auth_codes.get_redirect_url(
-            code, redirect_uri, scope, state)
+            code, redirect_uri, state)
         return HTTPFound(location=url)
     elif user:
         request.session['authorization_info'] = {
@@ -200,7 +200,7 @@ def authorize_application(request):
         code = authorizator.auth_codes.create(
             user['_id'], app['client_id'], scope)
         url = authorizator.auth_codes.get_redirect_url(
-            code, redirect_uri, scope, state)
+            code, redirect_uri, state)
         return HTTPFound(location=url)
 
     return {'app': app, 'scopes': scope.split(' ')}

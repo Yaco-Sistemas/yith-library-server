@@ -36,7 +36,7 @@ class AuthorizationCodes(Codes):
 
     collection_name = 'authorization_codes'
 
-    def get_redirect_url(self, code, uri, scope, state=None):
+    def get_redirect_url(self, code, uri, state=None):
         parameters = ['code=%s' % code]
         if state:
             parameters.append('state=%s' % state)
