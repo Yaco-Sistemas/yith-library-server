@@ -7,7 +7,7 @@
 <body>
   <h1>Welcome to the Yith Library!</h1>
 
-  <p>Hi ${screen_name}! It looks like it's the first time you
+  <p><span tal:condition="screen_name" tal:omit-tag="">Hi ${screen_name}! </span>It looks like it's the first time you
   log into the Yith Library.</p>
 
   <p>Click on the <strong>register</strong> button to finish
@@ -15,7 +15,6 @@
   for a new password. You already have enough of them.</p>
 
   <form method="post" action="${request.route_url('register_new_user')}">
-    <input type="hidden" name="user_id" value="${user_id}" />
     <input type="hidden" name="screen_name" value="${screen_name}" />
     <input type="submit" name="submit" value="Register into Yith Library" />
   </form>

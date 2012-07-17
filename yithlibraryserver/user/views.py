@@ -28,7 +28,7 @@ def register_new_user(request):
 
     return {
         'user_id': authenticated_userid(request),
-        'screen_name': request.params['screen_name'],
+        'screen_name': request.params.get('screen_name', '')
         }
 
 
