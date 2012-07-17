@@ -1,6 +1,6 @@
 import urllib.parse
 
-from pyramid.httpexceptions import HTTPFound, HTTPUnauthorized
+from pyramid.httpexceptions import HTTPBadRequest, HTTPFound, HTTPUnauthorized
 from pyramid.security import remember
 from pyramid.view import view_config
 
@@ -45,10 +45,21 @@ def twitter_login(request):
 def twitter_callback(request):
     settings = request.registry.settings
 
-    oauth_token = request.params['oauth_token']
-    oauth_verifier = request.params['oauth_verifier']
+    try:
+        oauth_token = request.params['oauth_token']
+    except KeyError:
+        return HTTPBadRequest('Missing required oauth_token')
 
-    saved_oauth_token = request.session['oauth_token']
+    try:
+        oauth_verifier = request.params['oauth_verifier']
+    except KeyError:
+        return HTTPBadRequest('Missing required oauth_verifier')
+
+    try:
+        saved_oauth_token = request.session['oauth_token']
+    except KeyError:
+        return HTTPBadRequest('No oauth_token was found in the session')
+
     if saved_oauth_token != oauth_token:
         return HTTPUnauthorized("OAuth tokens don't match")
     else:
@@ -62,7 +73,7 @@ def twitter_callback(request):
 
     auth = auth_header('POST', access_token_url, params, settings, oauth_token)
 
-    response = requests.post(access_token_url, #'http://localhost:9000',
+    response = requests.post(access_token_url,
                              data='oauth_verifier=%s' % oauth_verifier,
                              headers={'Authorization': auth})
 
