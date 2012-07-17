@@ -1,9 +1,5 @@
 import bson
 
-from pyramid.security import remember
-
-from webtest import TestRequest
-
 from yithlibraryserver import testing
 from yithlibraryserver.oauth2.views import DEFAULT_SCOPE
 from yithlibraryserver.oauth2.authentication import auth_basic_encode
@@ -13,13 +9,6 @@ class ViewTests(testing.TestCase):
 
     clean_collections = ('applications', 'users', 'authorization_codes',
                          'access_codes')
-
-    def set_user_cookie(self, user_id):
-        request = TestRequest.blank('', {})
-        request.registry = self.testapp.app.registry
-        remember_headers = remember(request, user_id)
-        cookie_value = remember_headers[0][1].split('"')[1]
-        self.testapp.cookies['auth_tkt'] = cookie_value
 
     def test_authorization_endpoint(self):
         # 1. test incorrect requests

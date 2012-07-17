@@ -1,6 +1,8 @@
 import unittest
 
-from webtest import TestApp
+from webtest import TestApp, TestRequest
+
+from pyramid.security import remember
 
 from yithlibraryserver import main
 
@@ -19,3 +21,10 @@ class TestCase(unittest.TestCase):
             self.db.drop_collection(col)
 
         self.testapp.reset()
+
+    def set_user_cookie(self, user_id):
+        request = TestRequest.blank('', {})
+        request.registry = self.testapp.app.registry
+        remember_headers = remember(request, user_id)
+        cookie_value = remember_headers[0][1].split('"')[1]
+        self.testapp.cookies['auth_tkt'] = cookie_value
