@@ -5,28 +5,20 @@ from yithlibraryserver.oauth2.authentication import authenticate_client
 from yithlibraryserver.oauth2.authentication import auth_basic_encode
 
 
-class FakeRequest(object):
+class AuthenticationTests(testing.TestCase):
 
     clean_collections = ('applications', )
 
-    def __init__(self, headers, db=None):
-        self.headers = headers
-        self.authorization = headers.get('Authorization', '').split(' ')
-        self.db = db
-
-
-class AuthenticationTests(testing.TestCase):
-
     def test_authenticate_client(self):
-        request = FakeRequest({})
+        request = testing.FakeRequest({})
         # The authorization header is required
         self.assertRaises(HTTPUnauthorized, authenticate_client, request)
 
-        request = FakeRequest({'Authorization': 'Advanced foobar'})
+        request = testing.FakeRequest({'Authorization': 'Advanced foobar'})
         # Only the basic method is allowed
         self.assertRaises(HTTPUnauthorized, authenticate_client, request)
 
-        request = FakeRequest({
+        request = testing.FakeRequest({
                 'Authorization': 'Basic ' + auth_basic_encode('foo', 'bar'),
                 }, self.db)
         # Invalid user:password
@@ -36,7 +28,7 @@ class AuthenticationTests(testing.TestCase):
                 'client_id': '123456',
                 'client_secret': 'secret',
                 })
-        request = FakeRequest({
+        request = testing.FakeRequest({
                 'Authorization': 'Basic ' + auth_basic_encode('123456', 'secret'),
                 }, self.db)
         res = authenticate_client(request)

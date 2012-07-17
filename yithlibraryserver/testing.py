@@ -7,6 +7,14 @@ from pyramid.security import remember
 from yithlibraryserver import main
 
 
+class FakeRequest(object):
+
+    def __init__(self, headers, db=None):
+        self.headers = headers
+        self.authorization = headers.get('Authorization', '').split(' ')
+        self.db = db
+
+
 class TestCase(unittest.TestCase):
 
     clean_collections = tuple()
