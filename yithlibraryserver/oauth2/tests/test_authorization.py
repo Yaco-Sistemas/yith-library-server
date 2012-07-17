@@ -6,7 +6,7 @@ from yithlibraryserver.oauth2.authorization import Authorizator
 
 class AuthorizationTests(testing.TestCase):
 
-    clean_collections = ('authorization_codes', 'access_codes', 'user')
+    clean_collections = ('authorization_codes', 'access_codes', 'users')
 
     def test_authorization_codes(self):
         codes = AuthorizationCodes(self.db)
