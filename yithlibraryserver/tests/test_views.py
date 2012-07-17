@@ -10,7 +10,7 @@ class ViewTests(testing.TestCase):
 
         self.access_code = '1234'
         self.auth_header = {'Authorization': 'Bearer %s' % self.access_code}
-        user_id = self.db.users.insert({
+        self.user_id = self.db.users.insert({
                 'provider_user_id': 'user1',
                 'screen_name': 'User 1',
                 'authorized_apps': [],
@@ -18,7 +18,7 @@ class ViewTests(testing.TestCase):
         self.db.access_codes.insert({
                 'code': self.access_code,
                 'scope': None,
-                'user': user_id,
+                'user': self.user_id,
                 'client_id': None,
                 }, safe=True)
 
@@ -72,6 +72,20 @@ class ViewTests(testing.TestCase):
         self.assertEqual(res.body,
                          b'{"message": "Password not found"}')
 
+        password_id = self.db.passwords.insert({
+                'service': 'testing',
+                'secret': 's3cr3t',
+                'owner': 'user1',
+                }, safe=True)
+        res = self.testapp.get('/passwords/%s' % str(password_id),
+                               headers=self.auth_header)
+        self.assertEqual(res.status, '200 OK')
+        self.assertEqual(res.json, {
+                'service': 'testing',
+                'secret': 's3cr3t',
+                'owner': 'user1',
+                '_id': str(password_id)
+                })
 
     def test_password_put(self):
         res = self.testapp.put('/passwords/123456', headers=self.auth_header,
@@ -85,6 +99,39 @@ class ViewTests(testing.TestCase):
         self.assertEqual(res.status, '400 Bad Request')
         self.assertEqual(res.body,
                          b'{"message": "No JSON object could be decoded"}')
+
+        password_id = self.db.passwords.insert({
+                'service': 'testing',
+                'secret': 's3cr3t',
+                'owner': 'user1',
+                }, safe=True)
+        data = '{"service": "testing2", "secret": "sup3rs3cr3t", "_id": "%s"}' % str(password_id)
+        res = self.testapp.put('/passwords/%s' % str(password_id),
+                               data, headers=self.auth_header)
+        self.assertEqual(res.status, '200 OK')
+        self.assertEqual(res.json, {
+                'service': 'testing2',
+                'secret': 'sup3rs3cr3t',
+                'owner': str(self.user_id),
+                'account': None,
+                'creation': None,
+                'expiration': None,
+                'last_modification': None,
+                'notes': None,
+                'tags': None,
+                '_id': str(password_id),
+                })
+        password = self.db.passwords.find_one(password_id)
+        self.assertNotEqual(password, None)
+        self.assertEqual(password['service'], 'testing2')
+        self.assertEqual(password['secret'], 'sup3rs3cr3t')
+        self.assertEqual(password['owner'], self.user_id)
+
+        data = '{"service": "testing2", "secret": "sup3rs3cr3t", "_id": "000000000000000000000000"}'
+        res = self.testapp.put('/passwords/000000000000000000000000',
+                               data, headers=self.auth_header, status=404)
+        self.assertEqual(res.status, '404 Not Found')
+        self.assertEqual(res.body, b'{"message": "Password not found"}')
 
     def test_password_delete(self):
         res = self.testapp.delete('/passwords/123456',
