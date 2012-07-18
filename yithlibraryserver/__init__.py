@@ -6,7 +6,6 @@ from pyramid.authorization import ACLAuthorizationPolicy
 from yithlibraryserver.cors import CORSManager
 from yithlibraryserver.db import MongoDB
 from yithlibraryserver.security import RootFactory
-from yithlibraryserver.translogger import TransLogger
 
 
 def main(global_config, **settings):
@@ -49,6 +48,4 @@ def main(global_config, **settings):
     config.include('yithlibraryserver.twitter')
 
     config.scan()
-    app = config.make_wsgi_app()
-    return app
-    #return TransLogger(, setup_console_handler=False)
+    return config.make_wsgi_app()
