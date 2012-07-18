@@ -3,11 +3,12 @@ import hashlib
 import hmac
 import random
 import time
-import urllib.parse
+
+from yithlibraryserver.compat import url_quote
 
 
 def quote(value):
-    return urllib.parse.quote(value, safe='')
+    return url_quote(value, safe='')
 
 
 def nonce(length=8):

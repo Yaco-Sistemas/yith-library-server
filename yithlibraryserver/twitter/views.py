@@ -1,11 +1,10 @@
-import urllib.parse
-
 from pyramid.httpexceptions import HTTPBadRequest, HTTPFound, HTTPUnauthorized
 from pyramid.security import remember
 from pyramid.view import view_config
 
 import requests
 
+from yithlibraryserver.compat import urlparse, url_encode
 from yithlibraryserver.twitter.authorization import auth_header
 
 
@@ -27,7 +26,7 @@ def twitter_login(request):
     if response.status_code != 200:
         return HTTPUnauthorized(response.text)
 
-    response_args = dict(urllib.parse.parse_qsl(response.text))
+    response_args = dict(urlparse.parse_qsl(response.text))
     if response_args['oauth_callback_confirmed'] != 'true':
         return HTTPUnauthorized('oauth_callback_confirmed is not true')
 
@@ -81,7 +80,7 @@ def twitter_callback(request):
         return HTTPUnauthorized(response.text)
 
 
-    response_args = dict(urllib.parse.parse_qsl(response.text))
+    response_args = dict(urlparse.parse_qsl(response.text))
     #oauth_token_secret = response_args['oauth_token_secret']
     oauth_token = response_args['oauth_token']
     user_id = response_args['user_id']
@@ -91,9 +90,7 @@ def twitter_callback(request):
     if user is None:
         remember_headers = remember(request, user_id)
         next_url = request.route_url('register_new_user')
-        next_url += '?' + urllib.parse.urlencode({
-            'screen_name': screen_name,
-            })
+        next_url += '?' + url_encode({'screen_name': screen_name})
         return HTTPFound(location=next_url,
                          headers=remember_headers)
     else:

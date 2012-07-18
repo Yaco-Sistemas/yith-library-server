@@ -1,7 +1,6 @@
-from urllib.parse import urlparse
-
 import pymongo
 
+from yithlibraryserver.compat import urlparse
 
 DEFAULT_MONGODB_HOST = 'localhost'
 DEFAULT_MONGODB_PORT = 27017
@@ -16,7 +15,7 @@ class MongoDB(object):
 
     def __init__(self, db_uri=DEFAULT_MONGODB_URI,
                  connection_factory=pymongo.Connection):
-        self.db_uri = urlparse(db_uri)
+        self.db_uri = urlparse.urlparse(db_uri)
         self.connection = connection_factory(
             host=self.db_uri.hostname or DEFAULT_MONGODB_HOST,
             port=self.db_uri.port or DEFAULT_MONGODB_PORT)
