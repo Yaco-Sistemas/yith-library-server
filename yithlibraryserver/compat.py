@@ -29,8 +29,15 @@ else:
     from urllib import quote as url_quote
     from urllib import urlencode as url_encode
 
-if PY3:
+if PY3: # pragma: no cover
     from base64 import decodebytes, encodebytes
 else:
     from base64 import decodestring as decodebytes
     from base64 import encodestring as encodebytes
+
+if PY3: # pragma: no cover
+    def encode_header(obj):
+        return obj
+else:
+    def encode_header(obj):
+        return obj.encode('utf-8')

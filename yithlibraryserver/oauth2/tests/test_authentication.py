@@ -19,7 +19,7 @@ class AuthenticationTests(testing.TestCase):
         self.assertRaises(HTTPUnauthorized, authenticate_client, request)
 
         request = testing.FakeRequest({
-                'Authorization': 'Basic ' + auth_basic_encode('foo', 'bar'),
+                'Authorization': auth_basic_encode('foo', 'bar'),
                 }, self.db)
         # Invalid user:password
         self.assertRaises(HTTPUnauthorized, authenticate_client, request)
@@ -29,7 +29,7 @@ class AuthenticationTests(testing.TestCase):
                 'client_secret': 'secret',
                 })
         request = testing.FakeRequest({
-                'Authorization': 'Basic ' + auth_basic_encode('123456', 'secret'),
+                'Authorization': auth_basic_encode('123456', 'secret'),
                 }, self.db)
         res = authenticate_client(request)
         self.assertEqual(res['client_id'], '123456')
@@ -37,4 +37,4 @@ class AuthenticationTests(testing.TestCase):
 
     def test_auth_basic_encode(self):
         self.assertEqual(auth_basic_encode('foo', 'bar'),
-                         'Zm9vOmJhcg==\n')
+                         'Basic Zm9vOmJhcg==\n')

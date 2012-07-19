@@ -1,6 +1,6 @@
 from pyramid.httpexceptions import HTTPUnauthorized
 
-from yithlibraryserver.compat import decodebytes, encodebytes
+from yithlibraryserver.compat import decodebytes, encodebytes, encode_header
 
 
 def authenticate_client(request):
@@ -35,4 +35,5 @@ def authenticate_client(request):
 
 def auth_basic_encode(user, password):
     value = '%s:%s' % (user, password)
-    return encodebytes(value.encode('utf-8')).decode('ascii').encode('ascii')
+    value = 'Basic ' + encodebytes(value.encode('utf-8')).decode('utf-8')
+    return encode_header(value)

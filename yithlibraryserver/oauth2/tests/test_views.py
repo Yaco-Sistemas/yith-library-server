@@ -116,7 +116,7 @@ class ViewTests(testing.TestCase):
         self.assertEqual(res.status, '401 Unauthorized')
 
         headers = {
-            'Authorization': 'Basic ' + auth_basic_encode('123456', 'secret'),
+            'Authorization': auth_basic_encode('123456', 'secret'),
             }
 
         res = self.testapp.post('/oauth2/endpoints/token', {}, headers=headers, status=401)
@@ -232,7 +232,7 @@ class ViewTests(testing.TestCase):
 
         # Authorize with app2 credentials
         headers = {
-            'Authorization': 'Basic ' + auth_basic_encode('98765', 'secret2'),
+            'Authorization': auth_basic_encode('98765', 'secret2'),
             }
         res = self.testapp.post('/oauth2/endpoints/token', {
                 'grant_type': 'authorization_code',
