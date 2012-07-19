@@ -11,7 +11,7 @@ if PY3: # pragma: no cover
     text_type = str
     binary_type = bytes
     long = int
-else:
+else: # pragma: no cover
     string_types = basestring,
     integer_types = (int, long)
     class_types = (type, types.ClassType)
@@ -24,20 +24,20 @@ if PY3: # pragma: no cover
     urlparse = parse
     from urllib.parse import quote as url_quote
     from urllib.parse import urlencode as url_encode
-else:
+else: # pragma: no cover
     import urlparse
     from urllib import quote as url_quote
     from urllib import urlencode as url_encode
 
 if PY3: # pragma: no cover
     from base64 import decodebytes, encodebytes
-else:
+else: # pragma: no cover
     from base64 import decodestring as decodebytes
     from base64 import encodestring as encodebytes
 
 if PY3: # pragma: no cover
     def encode_header(obj): # pragma: no cover
         return obj
-else:
+else: # pragma: no cover
     def encode_header(obj): # pragma: no cover
         return obj.encode('utf-8')
