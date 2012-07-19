@@ -36,8 +36,8 @@ else:
     from base64 import encodestring as encodebytes
 
 if PY3: # pragma: no cover
-    def encode_header(obj):
+    def encode_header(obj): # pragma: no cover
         return obj
 else:
-    def encode_header(obj):
+    def encode_header(obj): # pragma: no cover
         return obj.encode('utf-8')
