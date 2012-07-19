@@ -1,6 +1,6 @@
-import base64
-
 from pyramid.httpexceptions import HTTPUnauthorized
+
+from yithlibraryserver.compat import decodebytes, encodebytes
 
 
 def authenticate_client(request):
@@ -18,8 +18,7 @@ def authenticate_client(request):
     if method.lower() != 'basic':
         raise HTTPUnauthorized()
 
-    credentials = bytes(credentials, 'utf-8')
-    credentials = base64.decodebytes(credentials)
+    credentials = decodebytes(credentials.encode('utf-8'))
     credentials = credentials.decode('utf-8')
     client_id, client_secret = credentials.split(':')
 
@@ -36,4 +35,4 @@ def authenticate_client(request):
 
 def auth_basic_encode(user, password):
     value = '%s:%s' % (user, password)
-    return base64.encodebytes(value.encode('utf-8')).decode('ascii')
+    return encodebytes(value.encode('utf-8')).decode('ascii').encode('ascii')

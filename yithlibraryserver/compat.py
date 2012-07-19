@@ -28,3 +28,9 @@ else:
     import urlparse
     from urllib import quote as url_quote
     from urllib import urlencode as url_encode
+
+if PY3:
+    from base64 import decodebytes, encodebytes
+else:
+    from base64 import decodestring as decodebytes
+    from base64 import encodestring as encodebytes
