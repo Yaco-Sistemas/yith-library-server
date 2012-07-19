@@ -1,6 +1,5 @@
 from pyramid.httpexceptions import HTTPBadRequest, HTTPFound, HTTPUnauthorized
 from pyramid.security import remember
-from pyramid.view import view_config
 
 import requests
 
@@ -8,10 +7,9 @@ from yithlibraryserver.compat import urlparse, url_encode
 from yithlibraryserver.twitter.authorization import auth_header
 
 
-@view_config(route_name='twitter_login', renderer='string')
 def twitter_login(request):
     settings = request.registry.settings
-    request_token_url = settings['twitter.request_token_url']
+    request_token_url = settings['twitter_request_token_url']
     oauth_callback_url = request.route_url('twitter_callback')
 
     params = (
@@ -35,12 +33,11 @@ def twitter_login(request):
     request.session['oauth_token'] = oauth_token
 
     authorize_url = '%s?oauth_token=%s' % (
-        settings['twitter.authenticate_url'], oauth_token
+        settings['twitter_authenticate_url'], oauth_token
         )
     return HTTPFound(location=authorize_url)
 
 
-@view_config(route_name='twitter_callback', renderer='string')
 def twitter_callback(request):
     settings = request.registry.settings
 
@@ -64,7 +61,7 @@ def twitter_callback(request):
     else:
         del request.session['oauth_token']
 
-    access_token_url = settings['twitter.access_token_url']
+    access_token_url = settings['twitter_access_token_url']
 
     params = (
         ('oauth_token', oauth_token),

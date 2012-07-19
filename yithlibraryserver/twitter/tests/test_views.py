@@ -10,10 +10,10 @@ class ViewTests(testing.TestCase):
     def test_twitter_login(self):
         settings = self.testapp.app.registry.settings
         # these are invalid Twitter tokens taken from the examples
-        settings['twitter.request_token_url'] = 'https://api.twitter.com/oauth/request_token'
-        settings['twitter.consumer_key'] = 'cChZNFj6T5R0TigYB9yd1w'
-        settings['twitter.consumer_secret'] = 'L8qq9PZyRg6ieKGEKhZolGC0vJWLw8iEJ88DRdyOg'
-        settings['twitter.authenticate_url'] = 'https://api.twitter.com/oauth/authenticate'
+        settings['twitter_request_token_url'] = 'https://api.twitter.com/oauth/request_token'
+        settings['twitter_consumer_key'] = 'cChZNFj6T5R0TigYB9yd1w'
+        settings['twitter_consumer_secret'] = 'L8qq9PZyRg6ieKGEKhZolGC0vJWLw8iEJ88DRdyOg'
+        settings['twitter_authenticate_url'] = 'https://api.twitter.com/oauth/authenticate'
         with patch('requests.post') as fake:
             response = fake.return_value
             response.status_code = 200
@@ -41,11 +41,11 @@ class ViewTests(testing.TestCase):
 
     def test_twitter_callback(self):
         settings = self.testapp.app.registry.settings
-        settings['twitter.request_token_url'] = 'https://api.twitter.com/oauth/request_token'
-        settings['twitter.access_token_url'] = 'https://api.twitter.com/oauth/access_token'
-        settings['twitter.consumer_key'] = 'cChZNFj6T5R0TigYB9yd1w'
-        settings['twitter.consumer_secret'] = 'L8qq9PZyRg6ieKGEKhZolGC0vJWLw8iEJ88DRdyOg'
-        settings['twitter.authenticate_url'] = 'https://api.twitter.com/oauth/authenticate'
+        settings['twitter_request_token_url'] = 'https://api.twitter.com/oauth/request_token'
+        settings['twitter_access_token_url'] = 'https://api.twitter.com/oauth/access_token'
+        settings['twitter_consumer_key'] = 'cChZNFj6T5R0TigYB9yd1w'
+        settings['twitter_consumer_secret'] = 'L8qq9PZyRg6ieKGEKhZolGC0vJWLw8iEJ88DRdyOg'
+        settings['twitter_authenticate_url'] = 'https://api.twitter.com/oauth/authenticate'
 
         res = self.testapp.get('/twitter/callback', status=400)
         self.assertEqual(res.status, '400 Bad Request')

@@ -48,8 +48,8 @@ class AuthorizationTests(unittest.TestCase):
         # this example is taken from
         # https://dev.twitter.com/docs/auth/implementing-sign-twitter
         settings = {
-            'twitter.consumer_key': 'cChZNFj6T5R0TigYB9yd1w',
-            'twitter.consumer_secret': 'L8qq9PZyRg6ieKGEKhZolGC0vJWLw8iEJ88DRdyOg',
+            'twitter_consumer_key': 'cChZNFj6T5R0TigYB9yd1w',
+            'twitter_consumer_secret': 'L8qq9PZyRg6ieKGEKhZolGC0vJWLw8iEJ88DRdyOg',
             }
         params = (
             ('oauth_callback', 'http://localhost/sign-in-with-twitter/'),

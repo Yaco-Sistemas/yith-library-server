@@ -40,7 +40,7 @@ def sign(method, url, original_params, consumer_secret, oauth_token):
 
 def auth_header(method, url, original_params, settings, oauth_token='', nonce_=None, timestamp_=None):
     params = list(original_params) + [
-        ('oauth_consumer_key', settings['twitter.consumer_key']),
+        ('oauth_consumer_key', settings['twitter_consumer_key']),
         ('oauth_nonce', nonce_ or nonce()),
         ('oauth_signature_method', 'HMAC-SHA1'),
         ('oauth_timestamp', str(timestamp_ or timestamp())),
@@ -49,7 +49,7 @@ def auth_header(method, url, original_params, settings, oauth_token='', nonce_=N
     params = [(quote(key), quote(value)) for key, value in params]
 
     signature = sign(method, url, params,
-                     settings['twitter.consumer_secret'], oauth_token)
+                     settings['twitter_consumer_secret'], oauth_token)
     params.append(('oauth_signature', signature))
 
     header = ", ".join(['%s="%s"' % (key, value) for key, value in params])

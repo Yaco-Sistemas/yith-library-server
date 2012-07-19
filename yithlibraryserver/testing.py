@@ -20,7 +20,12 @@ class TestCase(unittest.TestCase):
     clean_collections = tuple()
 
     def setUp(self):
-        app = main({}, mongo_uri='mongodb://localhost:27017/test-yith-library')
+        settings = {
+            'mongo_uri': 'mongodb://localhost:27017/test-yith-library',
+            'twitter_consumer_key': 'key',
+            'twitter_consumer_secret': 'secret',
+            }
+        app = main({}, **settings)
         self.testapp = TestApp(app)
         self.db = app.registry.settings['db_conn']['test-yith-library']
 
