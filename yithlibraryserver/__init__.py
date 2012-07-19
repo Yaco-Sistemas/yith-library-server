@@ -1,3 +1,5 @@
+import os
+
 from pyramid.config import Configurator
 from pyramid.events import NewRequest
 from pyramid.authentication import AuthTktAuthenticationPolicy
@@ -6,6 +8,14 @@ from pyramid.authorization import ACLAuthorizationPolicy
 from yithlibraryserver.cors import CORSManager
 from yithlibraryserver.db import MongoDB
 from yithlibraryserver.security import RootFactory
+
+
+def read_setting_from_env(settings, key):
+    if key in settings and settings:
+        return settings.get(key)
+    else:
+        env_variable = key.upper()
+        return os.environ.get(env_variable)
 
 
 def main(global_config, **settings):
@@ -23,7 +33,7 @@ def main(global_config, **settings):
     config.include('pyramid_beaker')
 
     # Mongodb setup
-    mongodb = MongoDB(settings.get('mongo_uri'))
+    mongodb = MongoDB(read_setting_from_env(settings, 'mongo_uri'))
     config.registry.settings['db_conn'] = mongodb.get_connection()
 
     def add_mongo_db(event):
