@@ -9,7 +9,7 @@ from yithlibraryserver.oauth2.application import create_client_id_and_secret
 from yithlibraryserver.oauth2.authentication import authenticate_client
 from yithlibraryserver.oauth2.authorization import Authorizator
 from yithlibraryserver.oauth2.schemas import ApplicationSchema
-from yithlibraryserver.user import get_authenticated_user
+from yithlibraryserver.user.security import get_authenticated_user
 
 
 DEFAULT_SCOPE = 'passwords'

@@ -6,6 +6,7 @@ from pyramid.security import remember
 
 from yithlibraryserver import main
 
+MONGO_URI = 'mongodb://localhost:27017/test-yith-library'
 
 class FakeRequest(object):
 
@@ -21,7 +22,7 @@ class TestCase(unittest.TestCase):
 
     def setUp(self):
         settings = {
-            'mongo_uri': 'mongodb://localhost:27017/test-yith-library',
+            'mongo_uri': MONGO_URI,
             'twitter_consumer_key': 'key',
             'twitter_consumer_secret': 'secret',
             }

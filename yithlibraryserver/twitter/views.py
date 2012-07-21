@@ -91,6 +91,10 @@ def twitter_callback(request):
         return HTTPFound(location=next_url,
                          headers=remember_headers)
     else:
+        if user['screen_name'] != screen_name:
+            request.db.users.update({'_id': user['_id']},
+                                    {'$set': {'screen_name': screen_name}},
+                                    safe=True)
         remember_headers = remember(request, str(user['_id']))
         next_url = request.route_url('oauth2_applications')
         return HTTPFound(location=next_url,

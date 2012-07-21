@@ -104,9 +104,9 @@ class ViewTests(testing.TestCase):
             self.assertTrue('Set-Cookie' in res.headers)
 
         # good request, twitter is happy now. Existing user
-        self.db.users.insert({
+        user_id = self.db.users.insert({
                 'provider_user_id': 'user1',
-                'screen_name': 'John Doe',
+                'screen_name': 'Johnny',
                 }, safe=True)
         with patch('requests.post') as fake:
             response = fake.return_value
@@ -122,3 +122,8 @@ class ViewTests(testing.TestCase):
             self.assertEqual(res.status, '302 Found')
             self.assertEqual(res.location, 'http://localhost/oauth2/applications')
             self.assertTrue('Set-Cookie' in res.headers)
+
+            # as the response from twitter included a different
+            # screen_name, our user must be updated
+            new_user = self.db.users.find_one({'_id': user_id}, safe=True)
+            self.assertEqual(new_user['screen_name'], 'JohnDoe')
