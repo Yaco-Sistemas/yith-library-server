@@ -1,6 +1,6 @@
 import unittest
 
-from yithlibraryserver.validation import validate_password
+from yithlibraryserver.password.validation import validate_password
 
 
 class UtilsTests(unittest.TestCase):

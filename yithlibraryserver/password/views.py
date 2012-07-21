@@ -8,7 +8,7 @@ from pyramid.view import view_config, view_defaults
 from yithlibraryserver.errors import password_not_found, invalid_password_id
 from yithlibraryserver.security import authorize_user
 from yithlibraryserver.utils import jsonable
-from yithlibraryserver.validation import validate_password
+from yithlibraryserver.password.validation import validate_password
 
 
 @view_defaults(route_name='password_collection_view', renderer='json')
