@@ -46,5 +46,7 @@ def main(global_config, **settings):
     config.include('yithlibraryserver.user')
     config.include('yithlibraryserver.twitter')
 
+    config.add_route('home', '/')
+
     config.scan()
     return config.make_wsgi_app()

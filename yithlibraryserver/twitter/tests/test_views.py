@@ -100,7 +100,7 @@ class ViewTests(testing.TestCase):
 
             res = self.testapp.get(good_url, status=302)
             self.assertEqual(res.status, '302 Found')
-            self.assertEqual(res.location, 'http://localhost/register?screen_name=JohnDoe')
+            self.assertEqual(res.location, 'http://localhost/register?next_url=http%3A%2F%2Flocalhost%2F&screen_name=JohnDoe')
             self.assertTrue('Set-Cookie' in res.headers)
 
         # good request, twitter is happy now. Existing user
@@ -120,10 +120,26 @@ class ViewTests(testing.TestCase):
 
             res = self.testapp.get(good_url, status=302)
             self.assertEqual(res.status, '302 Found')
-            self.assertEqual(res.location, 'http://localhost/oauth2/applications')
+            self.assertEqual(res.location, 'http://localhost/')
             self.assertTrue('Set-Cookie' in res.headers)
 
             # as the response from twitter included a different
             # screen_name, our user must be updated
             new_user = self.db.users.find_one({'_id': user_id}, safe=True)
             self.assertEqual(new_user['screen_name'], 'JohnDoe')
+
+        # good request, existing user, remember next_url
+        with patch('requests.post') as fake:
+            response = fake.return_value
+            response.status_code = 200
+            response.text = 'oauth_callback_confirmed=true&oauth_token=123456789'
+            self.testapp.get('/twitter/login?next_url=http://localhost/foo/bar')
+
+            response = fake.return_value
+            response.status_code = 200
+            response.text = 'oauth_token=xyz&user_id=user1&screen_name=JohnDoe'
+
+            res = self.testapp.get(good_url, status=302)
+            self.assertEqual(res.status, '302 Found')
+            self.assertEqual(res.location, 'http://localhost/foo/bar')
+            self.assertTrue('Set-Cookie' in res.headers)

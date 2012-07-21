@@ -36,10 +36,11 @@ class ViewTests(testing.TestCase):
         self.assertEqual(self.db.users.count(), 0)
         res = self.testapp.post('/register', {
                 'screen_name': 'John',
+                'next_url': 'http://localhost/foo/bar',
                 'submit': 'Register into Yith Library',
                 }, status=302)
         self.assertEqual(res.status, '302 Found')
-        self.assertEqual(res.location, 'http://localhost/oauth2/applications')
+        self.assertEqual(res.location, 'http://localhost/foo/bar')
         self.assertTrue('Set-Cookie' in res.headers)
         self.assertEqual(self.db.users.count(), 1)
 
@@ -49,6 +50,6 @@ class ViewTests(testing.TestCase):
 
         res = self.testapp.get('/logout', status=302)
         self.assertEqual(res.status, '302 Found')
-        self.assertEqual(res.location, 'http://localhost/login')
+        self.assertEqual(res.location, 'http://localhost/')
         self.assertTrue('Set-Cookie' in res.headers)
         self.assertTrue('auth_tkt=""' in res.headers['Set-Cookie'])

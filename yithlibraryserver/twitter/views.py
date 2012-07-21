@@ -31,6 +31,8 @@ def twitter_login(request):
     #oauth_token_secret = response_args['oauth_token_secret']
     oauth_token = response_args['oauth_token']
     request.session['oauth_token'] = oauth_token
+    if 'next_url' in request.params:
+        request.session['next_url'] = request.params['next_url']
 
     authorize_url = '%s?oauth_token=%s' % (
         settings['twitter_authenticate_url'], oauth_token
@@ -83,12 +85,21 @@ def twitter_callback(request):
     user_id = response_args['user_id']
     screen_name = response_args['screen_name']
 
+    if 'next_url' in request.session:
+        next_url = request.session['next_url']
+        del request.session['next_url']
+    else:
+        next_url = request.route_url('home')
+
     user = request.db.users.find_one({'provider_user_id': user_id})
     if user is None:
         remember_headers = remember(request, user_id)
-        next_url = request.route_url('register_new_user')
-        next_url += '?' + url_encode({'screen_name': screen_name})
-        return HTTPFound(location=next_url,
+        register_url = request.route_url('register_new_user')
+        register_url += '?' + url_encode({
+                'screen_name': screen_name,
+                'next_url': next_url,
+                })
+        return HTTPFound(location=register_url,
                          headers=remember_headers)
     else:
         if user['screen_name'] != screen_name:
@@ -96,6 +107,5 @@ def twitter_callback(request):
                                     {'$set': {'screen_name': screen_name}},
                                     safe=True)
         remember_headers = remember(request, str(user['_id']))
-        next_url = request.route_url('oauth2_applications')
         return HTTPFound(location=next_url,
                          headers=remember_headers)

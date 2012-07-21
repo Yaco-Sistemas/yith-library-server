@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:tal="http://xml.zope.org/namespaces/tal">
 <head>
-  <title>Log in</title>
+  <title>Welcome to Yith</title>
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 </head>
 <body>
-  <h1>Log in</h1>
-  <a href="${request.route_url('twitter_login')}?next_url=${next_url}">Log in with Twitter</a>
+  <h1>Welcome to Yith</h1>
+
+  <p><a href="${request.route_url('oauth2_applications')}">Applications</a></p>
 </body>
 </html>
