@@ -10,18 +10,19 @@ class AuthorizationTests(testing.TestCase):
 
     def test_authorize_user(self):
 
-        request = testing.FakeRequest({})
+        request = testing.FakeRequest(headers={})
 
         # The authorization header is required
         self.assertRaises(HTTPUnauthorized, authorize_user, request)
 
-        request = testing.FakeRequest({'Authorization': 'Basic foobar'})
+        request = testing.FakeRequest(
+            headers={'Authorization': 'Basic foobar'})
         # Only the bearer method is allowed
         self.assertRaises(HTTPBadRequest, authorize_user, request)
 
-        request = testing.FakeRequest({
+        request = testing.FakeRequest(headers={
                 'Authorization': 'Bearer 1234',
-                }, self.db)
+                }, db=self.db)
         # Invalid code
         self.assertRaises(HTTPUnauthorized, authorize_user, request)
 
@@ -29,9 +30,9 @@ class AuthorizationTests(testing.TestCase):
                 'code': '1234',
                 'user': 'user1',
                 }, safe=True)
-        request = testing.FakeRequest({
+        request = testing.FakeRequest(headers={
                 'Authorization': 'Bearer 1234',
-                }, self.db)
+                }, db=self.db)
         # Invalid user
         self.assertRaises(HTTPUnauthorized, authorize_user, request)
 
@@ -41,9 +42,9 @@ class AuthorizationTests(testing.TestCase):
         self.db.access_codes.update({'_id': access_code_id}, {
                 '$set': {'user': user_id},
                 }, safe=True)
-        request = testing.FakeRequest({
+        request = testing.FakeRequest(headers={
                 'Authorization': 'Bearer 1234',
-                }, self.db)
+                }, db=self.db)
         # Invalid user
         authorized_user = authorize_user(request)
         self.assertEqual(authorized_user['username'], 'user1')

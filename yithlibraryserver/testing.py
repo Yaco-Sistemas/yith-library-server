@@ -3,17 +3,19 @@ import unittest
 from webtest import TestApp, TestRequest
 
 from pyramid.security import remember
+from pyramid.testing import DummyRequest
 
 from yithlibraryserver import main
 
 MONGO_URI = 'mongodb://localhost:27017/test-yith-library'
 
-class FakeRequest(object):
+class FakeRequest(DummyRequest):
 
-    def __init__(self, headers, db=None):
-        self.headers = headers
-        self.authorization = headers.get('Authorization', '').split(' ')
-        self.db = db
+    def __init__(self, *args, **kwargs):
+        super(FakeRequest, self).__init__(*args, **kwargs)
+        self.authorization = self.headers.get('Authorization', '').split(' ')
+        if 'db' in kwargs:
+            self.db = kwargs['db']
 
 
 class TestCase(unittest.TestCase):

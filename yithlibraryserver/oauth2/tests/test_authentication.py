@@ -10,17 +10,18 @@ class AuthenticationTests(testing.TestCase):
     clean_collections = ('applications', )
 
     def test_authenticate_client(self):
-        request = testing.FakeRequest({})
+        request = testing.FakeRequest(headers={})
         # The authorization header is required
         self.assertRaises(HTTPUnauthorized, authenticate_client, request)
 
-        request = testing.FakeRequest({'Authorization': 'Advanced foobar'})
+        request = testing.FakeRequest(
+            headers={'Authorization': 'Advanced foobar'})
         # Only the basic method is allowed
         self.assertRaises(HTTPUnauthorized, authenticate_client, request)
 
-        request = testing.FakeRequest({
+        request = testing.FakeRequest(headers={
                 'Authorization': auth_basic_encode('foo', 'bar'),
-                }, self.db)
+                }, db=self.db)
         # Invalid user:password
         self.assertRaises(HTTPUnauthorized, authenticate_client, request)
 
@@ -28,9 +29,9 @@ class AuthenticationTests(testing.TestCase):
                 'client_id': '123456',
                 'client_secret': 'secret',
                 })
-        request = testing.FakeRequest({
+        request = testing.FakeRequest(headers={
                 'Authorization': auth_basic_encode('123456', 'secret'),
-                }, self.db)
+                }, db=self.db)
         res = authenticate_client(request)
         self.assertEqual(res['client_id'], '123456')
         self.assertEqual(res['client_secret'], 'secret')
