@@ -10,7 +10,7 @@
 
   <h1>Application ${app.name}</h1>
 
-  <dl>
+  <dl class="dl-horizontal">
     <dt>Id:</dt>
     <dd>${app._id}</dd>
 
