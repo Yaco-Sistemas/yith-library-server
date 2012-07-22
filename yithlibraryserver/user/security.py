@@ -1,7 +1,20 @@
 import bson
 
-from pyramid.security import authenticated_userid
+from pyramid.security import authenticated_userid, unauthenticated_userid
 from pyramid.httpexceptions import HTTPFound
+
+
+def get_user(request):
+    user_id = unauthenticated_userid(request)
+    if user_id is None:
+        return user_id
+
+    try:
+        user = request.db.users.find_one(bson.ObjectId(user_id))
+    except bson.errors.InvalidId:
+        return None
+
+    return user
 
 
 def get_authenticated_user(request):

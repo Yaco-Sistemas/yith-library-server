@@ -8,8 +8,6 @@
 
 <tal:block metal:fill-slot="content">
 
-  <p>${screen_name} <a href="${request.route_url('logout')}">Log out</a></p>
-
   <div tal:condition="authorized_apps" tal:omit-tag="">
   <h1>Authorized Applications</h1>
   <ul>

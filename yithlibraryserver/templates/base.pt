@@ -29,7 +29,24 @@
           <div class="container">
             <a class="brand" href="${request.route_url('home')}">Yith Library</a>
             <ul class="nav">
-              <li><a href="">Applications</a>
+              <li tal:condition="request.user">
+                <a href="${request.route_url('oauth2_applications')}">Applications</a>
+              </li>
+            </ul>
+            <ul class="nav pull-right">
+              <li tal:condition="not request.user">
+                <a href="${request.route_url('login')}">Log in</a>
+              </li>
+              <li tal:condition="request.user" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  ${request.user.screen_name} <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="${request.route_url('logout')}">Log out</a>
+                  </li>
+                </ul>
+              </li>
             </ul>
           </div>
         </div>
@@ -38,5 +55,9 @@
 
     <tal:block metal:define-slot="content"></tal:block>
   </div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src=\'${request.static_url("yithlibraryserver:static/js/libs/jquery-1.7.2.min.js")}\'><\/script>')</script>
+  <script src="${request.static_url('yithlibraryserver:static/js/libs/bootstrap.min.js')}"></script>
 </body>
 </html>
