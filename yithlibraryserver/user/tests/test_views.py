@@ -8,7 +8,7 @@ class ViewTests(testing.TestCase):
     def test_login(self):
         res = self.testapp.get('/login')
         self.assertEqual(res.status, '200 OK')
-        res.mustcontain('Log in with Twitter')
+        res.mustcontain('Sign in with twitter')
         res.mustcontain('/twitter/login')
 
     def test_register_new_user(self):
