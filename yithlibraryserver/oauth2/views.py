@@ -9,7 +9,7 @@ from yithlibraryserver.oauth2.application import create_client_id_and_secret
 from yithlibraryserver.oauth2.authentication import authenticate_client
 from yithlibraryserver.oauth2.authorization import Authorizator
 from yithlibraryserver.oauth2.schemas import ApplicationSchema
-from yithlibraryserver.user.security import get_authenticated_user
+from yithlibraryserver.user.security import assert_authenticated_user_is_registered
 
 
 DEFAULT_SCOPE = 'passwords'
@@ -19,11 +19,11 @@ DEFAULT_SCOPE = 'passwords'
              renderer='templates/applications.pt',
              permission='view-applications')
 def applications(request):
-    user = get_authenticated_user(request)
-    authorized_apps_filter = {'_id': {'$in': user['authorized_apps']}}
-    owned_apps_filter = {'owner': user['_id']}
+    assert_authenticated_user_is_registered(request)
+    authorized_apps_filter = {'_id': {'$in': request.user['authorized_apps']}}
+    owned_apps_filter = {'owner': request.user['_id']}
     return {
-        'screen_name': user['screen_name'],
+        'screen_name': request.user['screen_name'],
         'authorized_apps': request.db.applications.find(authorized_apps_filter),
         'applications': request.db.applications.find(owned_apps_filter)
         }
@@ -33,7 +33,7 @@ def applications(request):
              renderer='templates/application_new.pt',
              permission='add-application')
 def application_new(request):
-    user = get_authenticated_user(request)
+    assert_authenticated_user_is_registered(request)
     schema = ApplicationSchema()
     form = Form(schema, buttons=('submit', ))
 
@@ -46,7 +46,7 @@ def application_new(request):
 
         # the data is fine, save into the db
         application = {
-            'owner': user['_id'],
+            'owner': request.user['_id'],
             'name': appstruct['name'],
             'main_url': appstruct['main_url'],
             'callback_url': appstruct['callback_url'],
@@ -69,13 +69,13 @@ def application_view(request):
     except bson.errors.InvalidId:
         return HTTPBadRequest(body='Invalid application id')
 
-    user = get_authenticated_user(request)
+    assert_authenticated_user_is_registered(request)
 
     app = request.db.applications.find_one(app_id)
     if app is None:
         return HTTPNotFound()
 
-    if app['owner'] != user['_id']:
+    if app['owner'] != request.user['_id']:
         return HTTPUnauthorized()
 
     return {'app': app}
@@ -94,8 +94,8 @@ def application_delete(request):
     if app is None:
         return HTTPNotFound()
 
-    user = get_authenticated_user(request)
-    if app['owner'] != user['_id']:
+    assert_authenticated_user_is_registered(request)
+    if app['owner'] != request.user['_id']:
         return HTTPUnauthorized()
 
     if 'submit' in request.POST:
@@ -135,7 +135,7 @@ def authorization_endpoint(request):
 
     state = request.params.get('state')
 
-    user = get_authenticated_user(request)
+    user = assert_authenticated_user_is_registered(request)
 
     authorizator = Authorizator(request.db, app)
 
@@ -175,7 +175,7 @@ def authorize_application(request):
     except KeyError:
         return HTTPBadRequest()
 
-    user = get_authenticated_user(request)
+    assert_authenticated_user_is_registered(request)
 
     try:
         app_id = bson.ObjectId(request.matchdict['app'])
@@ -190,15 +190,15 @@ def authorize_application(request):
 
     if 'submit' in request.POST:
         authorizator = Authorizator(request.db, app)
-        if not authorizator.is_app_authorized(user):
-            authorizator.store_user_authorization(user)
+        if not authorizator.is_app_authorized(request.user):
+            authorizator.store_user_authorization(request.user)
 
         redirect_uri = authorization_info['redirect_uri']
         state = authorization_info['state']
         del request.session['authorization_info']
 
         code = authorizator.auth_codes.create(
-            user['_id'], app['client_id'], scope)
+            request.user['_id'], app['client_id'], scope)
         url = authorizator.auth_codes.get_redirect_url(
             code, redirect_uri, state)
         return HTTPFound(location=url)

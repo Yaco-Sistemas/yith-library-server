@@ -17,7 +17,7 @@ def get_user(request):
     return user
 
 
-def get_authenticated_user(request):
+def assert_authenticated_user_is_registered(request):
     user_id = authenticated_userid(request)
     try:
         user = request.db.users.find_one(bson.ObjectId(user_id))
