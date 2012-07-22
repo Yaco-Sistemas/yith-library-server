@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:tal="http://xml.zope.org/namespaces/tal">
-<head>
-  <title>Welcome to Yith</title>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-</head>
-<body>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title">Home</tal:block>
+
+<tal:block metal:fill-slot="content">
   <h1>Welcome to Yith</h1>
 
   <p><a href="${request.route_url('oauth2_applications')}">Applications</a></p>
-</body>
+</tal:block>
+
 </html>

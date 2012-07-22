@@ -1,7 +1,8 @@
 from pyramid.config import Configurator
-from pyramid.events import NewRequest
+from pyramid.events import BeforeRender, NewRequest
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
+from pyramid.renderers import get_renderer
 
 from yithlibraryserver.config import read_setting_from_env
 from yithlibraryserver.cors import CORSManager
@@ -47,6 +48,13 @@ def main(global_config, **settings):
     config.include('yithlibraryserver.twitter')
 
     config.add_route('home', '/')
+
+    # Common templates
+    def add_base_template(event):
+        base_renderer = get_renderer('yithlibraryserver:templates/base.pt')
+        event.update({'base': base_renderer.implementation()})
+
+    config.add_subscriber(add_base_template, BeforeRender)
 
     config.scan()
     return config.make_wsgi_app()
