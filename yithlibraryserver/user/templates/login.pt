@@ -9,7 +9,7 @@
 <tal:block metal:fill-slot="content">
 
   <h1>Log in</h1>
-  <a href="${request.route_url('twitter_login')}?next_url=${next_url}">Log in with Twitter</a>
+  <a href="${request.route_url('twitter_login')}?next_url=${next_url}"><img src="${request.static_url('yithlibraryserver:static/img/sign-in-with-twitter-l.png')}" alt="Sign in with twitter" width="151" height="24" /></a>
 
 </tal:block>
 </html>
