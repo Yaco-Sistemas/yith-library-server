@@ -22,7 +22,21 @@
     <![endif]-->
 </head>
 <body>
-  <tal:block metal:define-slot="content">
-  </tal:block>
+  <div class="container">
+    <tal:block metal:define-slot="navbar">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <a class="brand" href="${request.route_url('home')}">Yith Library</a>
+            <ul class="nav">
+              <li><a href="">Applications</a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </tal:block>
+
+    <tal:block metal:define-slot="content"></tal:block>
+  </div>
 </body>
 </html>
