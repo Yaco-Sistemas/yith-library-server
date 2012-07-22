@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:tal="http://xml.zope.org/namespaces/tal">
-<head>
-  <title>Authorize Application</title>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-</head>
-<body>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title">Authorize Application</tal:block>
+
+<tal:block metal:fill-slot="content">
+
   <h1>Authorize application ${app.name}</h1>
 
   <p>The application <a href="${app.main_url}">${app.name}</a>
@@ -21,5 +24,7 @@
   </form>
 
   <p>You can revoke this permission in the future.</p>
-</body>
+
+</tal:block>
+
 </html>

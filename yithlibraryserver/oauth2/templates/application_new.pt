@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:tal="http://xml.zope.org/namespaces/tal">
-<head>
-  <title>New Application</title>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-</head>
-<body>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title">New Application</tal:block>
+
+<tal:block metal:fill-slot="content">
+
   <h1>New Application</h1>
   <div tal:replace="structure form">form</div>
-</body>
+
+</tal:block>
+
 </html>

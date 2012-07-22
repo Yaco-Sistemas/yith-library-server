@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:tal="http://xml.zope.org/namespaces/tal">
-<head>
-  <title>Delete Application</title>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-</head>
-<body>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title">Delete Application</tal:block>
+
+<tal:block metal:fill-slot="content">
+
   <h1>Delete Application ${app.name}</h1>
   <p>Are you sure you want to remove the application ${app.name} with id ${app._id}?</p>
 
@@ -13,5 +16,7 @@
   </form>
 
   <p><a href="${request.route_url('oauth2_applications')}">No, take me back to the application list</a></p>
-</body>
+
+</tal:block>
+
 </html>

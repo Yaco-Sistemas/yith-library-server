@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:tal="http://xml.zope.org/namespaces/tal">
-<head>
-  <title>Applications</title>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-</head>
-<body>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title">Applications</tal:block>
+
+<tal:block metal:fill-slot="content">
+
   <p>${screen_name} <a href="${request.route_url('logout')}">Log out</a></p>
 
   <div tal:condition="authorized_apps" tal:omit-tag="">
@@ -20,5 +23,7 @@
   </ul>
 
   <p><a href="${request.route_url('oauth2_application_new')}">Register new application</a></p>
-</body>
+
+</tal:block>
+
 </html>

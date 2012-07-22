@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:tal="http://xml.zope.org/namespaces/tal">
-<head>
-  <title>Register new user</title>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-</head>
-<body>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title">Register new user</tal:block>
+
+<tal:block metal:fill-slot="content">
+
   <h1>Welcome to the Yith Library!</h1>
 
   <p><span tal:condition="screen_name" tal:omit-tag="">Hi ${screen_name}! </span>It looks like it's the first time you
@@ -20,5 +23,6 @@
     <input type="submit" name="submit" value="Register into Yith Library" />
   </form>
 
-</body>
+</tal:block>
+
 </html>
