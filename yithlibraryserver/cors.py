@@ -1,3 +1,8 @@
+import logging
+
+log = logging.getLogger(__name__)
+
+
 class CORSManager(object):
 
     def __init__(self, allowed_origins):
@@ -7,5 +12,9 @@ class CORSManager(object):
         if 'Origin' in request.headers:
             origin = request.headers['Origin']
             if origin in self.allowed_origins:
+                log.debug('Origin %s is allowed: %s' %
+                          (origin, ' '.join(self.allowed_origins)))
                 response.headers['Access-Control-Allow-Origin'] = origin
-
+            else:
+                log.debug('Origin %s is not allowed: %s' %
+                          (origin, ' '.join(self.allowed_origins)))
