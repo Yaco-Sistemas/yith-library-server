@@ -29,7 +29,7 @@ def main(global_config, **settings):
 
     # CORS support setup
     config.registry.settings['cors_manager'] = CORSManager(
-        settings.get('cors_allowed_origins', ''))
+        read_setting_from_env(settings, 'cors_allowed_origins', ''))
 
     # Routes
     config.include('yithlibraryserver.oauth2')
