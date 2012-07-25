@@ -29,8 +29,14 @@
           <div class="container">
             <a class="brand" href="${request.route_url('home')}">Yith Library</a>
             <ul class="nav">
-              <li tal:condition="request.user">
-                <a href="${request.route_url('oauth2_applications')}">Applications</a>
+              <li>
+                <a href="#">How it works</a>
+              </li>
+              <li>
+                <a href="#">About</a>
+              </li>
+              <li>
+                <a href="#">License</a>
               </li>
             </ul>
             <ul class="nav pull-right">
@@ -43,6 +49,12 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
+                    <a href="#">Passwords</a>
+                  </li>
+                  <li>
+                    <a href="${request.route_url('oauth2_applications')}">Applications</a>
+                  </li>
+                  <li>
                     <a href="${request.route_url('logout')}">Log out</a>
                   </li>
                 </ul>
@@ -54,6 +66,17 @@
     </tal:block>
 
     <tal:block metal:define-slot="content"></tal:block>
+
+    <footer class="container">
+      <ul class="pull-left">
+        <li><a href="#">Terms of use</a> |</li>
+        <li><a href="https://github.com/Yaco-Sistemas/yith-library-web-client" target="_blank">Fork us in GitHub!</a></li>
+      </ul>
+      <ul class="pull-right">
+        <li>Icons from <a href="http://glyphicons.com" target="_blank">Glyphicons Free</a> - <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a></li>
+      </ul>
+    </footer>
+
   </div>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>

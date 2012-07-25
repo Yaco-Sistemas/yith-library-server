@@ -15,6 +15,32 @@
   </p>
   </div>
 
+  <blockquote>
+    <p>I couldn't live a week without a private library.</p>
+    <small>H. P. Lovecraft</small>
+  </blockquote>
+
+  <div class="row">
+    <div class="span4">
+      <h2>Secure</h2>
+      <p>Your passwords are transmitted over the network using the SSL protocol and they are stored on the server encrypted. Even the yithians who runs this service can't read them! Not even with their time machine... unless you decide to share your secrets with them and only them.</p>
+      <p><a href="#">Lear more</a></p>
+    </div>
+
+    <div class="span4">
+      <h2>Easy</h2>
+      <p>It's not as easy as using the same password for everything but you already know you should never do this. The Yith Library is super easy to use: just remember your master password is only stored in your brain and you should always use the same. You can access your passwords from any device!</p>
+      <p><a href="#">Lear more</a></p>
+    </div>
+
+    <div class="span4">
+      <h2>Free</h2>
+      <p>The Yith Library is a free service. We really want the Internet to be a safer place and we believe a free, easy and secure password manager was required for this. Ideally in the future we will need only one credential. Yes, the same one that you will use with your flying car...</p>
+      <p><a href="#">Lear more</a></p>
+    </div>
+
+  </div>
+
 </tal:block>
 
 </html>
