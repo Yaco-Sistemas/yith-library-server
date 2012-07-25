@@ -11,7 +11,7 @@
   <h1>Welcome to Yith Library</h1>
   <p>Yith Library is a web password manager. It will help you to keep your passwords under control in a secure and easy way.</p>
   <p>
-    <a class="btn btn-primary btn-large" href="${request.route_url('oauth2_applications')}">Show me more</a>
+    <a class="btn btn-primary btn-large" href="${request.route_path('oauth2_applications')}">Show me more</a>
   </p>
   </div>
 

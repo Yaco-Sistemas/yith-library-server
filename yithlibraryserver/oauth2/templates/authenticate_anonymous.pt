@@ -20,7 +20,7 @@
   <p>You need to log in first and then you will be asked to
     authorize this application.</p>
 
-  <p><a href="${request.route_url('oauth2_authorize_application', app=app._id)}">Ok, I'll log in</a></p>
+  <p><a href="${request.route_path('oauth2_authorize_application', app=app._id)}">Ok, I'll log in</a></p>
 
 </tal:block>
 

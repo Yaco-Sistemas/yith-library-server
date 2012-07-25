@@ -19,7 +19,7 @@
 
   <p>Do you want to allow this access?</p>
 
-  <form method="post" action="${request.route_url('oauth2_authorize_application', app=app._id)}">
+  <form method="post" action="${request.route_path('oauth2_authorize_application', app=app._id)}">
     <input type="submit" name="submit" value="Yes, I authorize the ${app.name} application" />
   </form>
 

@@ -30,9 +30,9 @@
     <dd><strong>${app.client_secret}</strong></dd>
   </dl>
 
-  <p><a href="${request.route_url('oauth2_application_delete', app=app._id)}">Delete application</a></p>
+  <p><a href="${request.route_path('oauth2_application_delete', app=app._id)}">Delete application</a></p>
 
-  <p><a href="${request.route_url('oauth2_applications')}">Back to the application list</a></p>
+  <p><a href="${request.route_path('oauth2_applications')}">Back to the application list</a></p>
 
 </tal:block>
 

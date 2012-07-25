@@ -17,7 +17,7 @@
   the registration process. Don't worry, we will not ask you
   for a new password. You already have enough of them.</p>
 
-  <form method="post" action="${request.route_url('register_new_user')}">
+  <form method="post" action="${request.route_path('register_new_user')}">
     <input type="hidden" name="screen_name" value="${screen_name}" />
     <input type="hidden" name="next_url" value="${next_url}" />
     <input type="submit" name="submit" value="Register into Yith Library" />
