@@ -13,9 +13,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" href="${request.static_url('yithlibraryserver:static/favicon.ico')}" />
-    <link rel="stylesheet" href="${request.static_url('yithlibraryserver:static/css/bootstrap.css')}">
-    <link rel="stylesheet" href="${request.static_url('yithlibraryserver:static/css/style.css')}">
+    <link rel="shortcut icon" href="${request.static_path('yithlibraryserver:static/favicon.ico')}" />
+    <link rel="stylesheet" href="${request.static_path('yithlibraryserver:static/css/bootstrap.css')}">
+    <link rel="stylesheet" href="${request.static_path('yithlibraryserver:static/css/style.css')}">
 
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -80,7 +80,7 @@
   </div>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src=\'${request.static_url("yithlibraryserver:static/js/libs/jquery-1.7.2.min.js")}\'><\/script>')</script>
-  <script src="${request.static_url('yithlibraryserver:static/js/libs/bootstrap.min.js')}"></script>
+  <script>window.jQuery || document.write('<script src=\'${request.static_path("yithlibraryserver:static/js/libs/jquery-1.7.2.min.js")}\'><\/script>')</script>
+  <script src="${request.static_path('yithlibraryserver:static/js/libs/bootstrap.min.js')}"></script>
 </body>
 </html>
