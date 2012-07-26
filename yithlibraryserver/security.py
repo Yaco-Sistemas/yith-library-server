@@ -10,7 +10,7 @@ class RootFactory(object):
     __acl__ = (
         (Allow, Authenticated, 'user-registration'),
         (Allow, Authenticated, 'view-applications'),
-        (Allow, Authenticated, 'view-application'),
+        (Allow, Authenticated, 'edit-application'),
         (Allow, Authenticated, 'add-application'),
         (Allow, Authenticated, 'delete-application'),
         (Allow, Authenticated, 'add-authorized-app'),
