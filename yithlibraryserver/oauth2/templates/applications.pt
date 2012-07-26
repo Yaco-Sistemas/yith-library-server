@@ -8,10 +8,10 @@
 
 <tal:block metal:fill-slot="content">
 
-  <div tal:condition="authorized_apps" tal:omit-tag="">
+  <div tal:condition="authorized_apps.count() > 0" tal:omit-tag="">
   <h2>Authorized Applications</h2>
   <ul>
-    <li tal:repeat="app authorized_apps">${app.name} <a href="">Revoke</a></li>
+    <li tal:repeat="app authorized_apps">${app.name} <a href="${request.route_path('oauth2_revoke_application', app=app._id)}">Revoke</a></li>
   </ul>
   </div>
 

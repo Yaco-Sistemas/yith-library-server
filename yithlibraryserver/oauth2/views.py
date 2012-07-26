@@ -268,3 +268,27 @@ def token_endpoint(request):
         'expires_in': 3600,
         'scope': grant['scope'],
         }
+
+
+@view_config(route_name='oauth2_revoke_application',
+             renderer='templates/application_revoke_authorization.pt',
+             permission='revoke-authorized-app')
+def revoke_application(request):
+    assert_authenticated_user_is_registered(request)
+
+    try:
+        app_id = bson.ObjectId(request.matchdict['app'])
+    except bson.errors.InvalidId:
+        return HTTPBadRequest(body='Invalid application id')
+
+    app = request.db.applications.find_one(app_id)
+    if app is None:
+        return HTTPNotFound()
+
+    if 'submit' in request.POST:
+        authorizator = Authorizator(request.db, app)
+        authorizator.remove_user_authorization(request.user)
+
+        return HTTPFound(location=request.route_url('oauth2_applications'))
+
+    return {'app': app}

@@ -75,3 +75,10 @@ class Authorizator(object):
             {'$addToSet': {'authorized_apps': self.app['_id']}},
             safe=True,
             )
+
+    def remove_user_authorization(self, user):
+        self.db.users.update(
+            {'_id': user['_id']},
+            {'$pull': {'authorized_apps': self.app['_id']}},
+            safe=True,
+            )
