@@ -37,7 +37,7 @@
       <li class="buttons form-actions">
         <tal:block repeat="button field.buttons">
           <button
-              tal:attributes="disabled button.disabled; class python:'btnText submit btn' + (button.name == 'submit' and ' btn-primary' or '')"
+              tal:attributes="disabled button.disabled; class python:'btnText submit btn ' + button.css_class"
               id="${field.formid+button.name}"
               name="${button.name}"
               type="${button.type}"

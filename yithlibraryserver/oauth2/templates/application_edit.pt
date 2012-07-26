@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title">View Application</tal:block>
+
+<tal:block metal:fill-slot="content">
+
+  <h2>Edit application ${app.name}</h2>
+
+  <div tal:replace="structure form">form</div>
+
+</tal:block>
+
+</html>

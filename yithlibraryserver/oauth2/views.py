@@ -9,6 +9,7 @@ from yithlibraryserver.oauth2.application import create_client_id_and_secret
 from yithlibraryserver.oauth2.authentication import authenticate_client
 from yithlibraryserver.oauth2.authorization import Authorizator
 from yithlibraryserver.oauth2.schemas import ApplicationSchema
+from yithlibraryserver.oauth2.schemas import FullApplicationSchema
 from yithlibraryserver.user.security import assert_authenticated_user_is_registered
 
 
@@ -35,8 +36,11 @@ def applications(request):
 def application_new(request):
     assert_authenticated_user_is_registered(request)
     schema = ApplicationSchema()
-    form = Form(schema, buttons=(Button('submit', 'Create application'),
-                                 Button('cancel', 'Cancel')))
+    button1 = Button('submit', 'Save application')
+    button1.css_class = 'btn-primary'
+    button2 = Button('cancel', 'Cancel')
+    button2.css_class = ''
+    form = Form(schema, buttons=(button1, button2))
     form['main_url'].widget.css_class = 'input-xlarge'
     form['callback_url'].widget.css_class = 'input-xlarge'
 
@@ -65,10 +69,10 @@ def application_new(request):
     return {'form': form.render()}
 
 
-@view_config(route_name='oauth2_application_view',
-             renderer='templates/application_view.pt',
-             permission='view-application')
-def application_view(request):
+@view_config(route_name='oauth2_application_edit',
+             renderer='templates/application_edit.pt',
+             permission='edit-application')
+def application_edit(request):
     try:
         app_id = bson.ObjectId(request.matchdict['app'])
     except bson.errors.InvalidId:
@@ -83,7 +87,47 @@ def application_view(request):
     if app['owner'] != request.user['_id']:
         return HTTPUnauthorized()
 
-    return {'app': app}
+    schema = FullApplicationSchema()
+    button1 = Button('submit', 'Save application')
+    button1.css_class = 'btn-primary'
+    button2 = Button('delete', 'Delete application')
+    button2.css_class = 'btn-danger'
+    button3 = Button('cancel', 'Cancel')
+    button3.css_class = ''
+    form = Form(schema, buttons=(button1, button2, button3))
+
+    form['main_url'].widget.css_class = 'input-xlarge'
+    form['callback_url'].widget.css_class = 'input-xlarge'
+    form['client_id'].widget.css_class = 'input-xlarge'
+    form['client_secret'].widget.css_class = 'input-xlarge'
+
+    if 'submit' in request.POST:
+        controls = request.POST.items()
+        try:
+            appstruct = form.validate(controls)
+        except ValidationFailure as e:
+            return {'form': e.render(app)}
+
+        # the data is fine, save into the db
+        application = {
+            'owner': request.user['_id'],
+            'name': appstruct['name'],
+            'main_url': appstruct['main_url'],
+            'callback_url': appstruct['callback_url'],
+            }
+        create_client_id_and_secret(application)
+
+        # TODO: this is not an insert but an update
+        request.db.applications.insert(application, safe=True)
+        return HTTPFound(location=request.route_url('oauth2_applications'))
+    elif 'delete' in request.POST:
+        return HTTPFound(location=request.route_url('oauth2_application_delete',
+                                                    app=app['_id']))
+    elif 'cancel' in request.POST:
+        return HTTPFound(location=request.route_url('oauth2_applications'))
+
+    # this is a GET
+    return {'form': form.render(app), 'app': app}
 
 
 @view_config(route_name='oauth2_application_delete',

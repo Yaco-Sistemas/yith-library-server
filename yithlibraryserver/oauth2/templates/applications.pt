@@ -27,7 +27,7 @@
     </thead>
     <tbody>
       <tr tal:repeat="app applications">
-        <td><a href="${request.route_path('oauth2_application_view', app=app._id)}">${app.name}</a></td>
+        <td><a href="${request.route_path('oauth2_application_edit', app=app._id)}">${app.name}</a></td>
         <td>${app.main_url}</td>
         <td>${app.callback_url}</td>
         <td>${app.client_id}</td>
