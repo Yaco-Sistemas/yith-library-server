@@ -1,5 +1,5 @@
 import bson
-from deform import Form, ValidationFailure
+from deform import Button, Form, ValidationFailure
 
 from pyramid.httpexceptions import HTTPBadRequest, HTTPFound, HTTPNotFound
 from pyramid.httpexceptions import HTTPNotImplemented, HTTPUnauthorized
@@ -35,7 +35,10 @@ def applications(request):
 def application_new(request):
     assert_authenticated_user_is_registered(request)
     schema = ApplicationSchema()
-    form = Form(schema, buttons=('submit', ))
+    form = Form(schema, buttons=(Button('submit', 'Create application'),
+                                 Button('cancel', 'Cancel')))
+    form['main_url'].widget.css_class = 'input-xlarge'
+    form['callback_url'].widget.css_class = 'input-xlarge'
 
     if 'submit' in request.POST:
         controls = request.POST.items()
@@ -54,6 +57,8 @@ def application_new(request):
         create_client_id_and_secret(application)
 
         request.db.applications.insert(application, safe=True)
+        return HTTPFound(location=request.route_url('oauth2_applications'))
+    elif 'cancel' in request.POST:
         return HTTPFound(location=request.route_url('oauth2_applications'))
 
     # this is a GET

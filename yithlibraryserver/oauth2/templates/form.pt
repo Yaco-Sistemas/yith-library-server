@@ -5,7 +5,7 @@
   enctype="multipart/form-data"
   accept-charset="utf-8"
   i18n:domain="deform"
-  tal:attributes="class field.css_class">
+  tal:attributes="class python:field.css_class + ' form-horizontal'">
 
   <fieldset class="deformFormFieldset">
 
@@ -13,7 +13,7 @@
 
     <input type="hidden" name="_charset_" />
     <input type="hidden" name="__formid__" value="${field.formid}"/>
-    <ul>
+    <ul class="unstyled">
 
       <li class="errorLi" tal:condition="field.error">
         <h3 class="errorMsgLbl" i18n:translate=""
@@ -34,14 +34,13 @@
           tal:replace="structure
                        rndr(tmpl,field=f,cstruct=cstruct.get(f.name, null))"/>
 
-      <li class="buttons">
+      <li class="buttons form-actions">
         <tal:block repeat="button field.buttons">
           <button
-              tal:attributes="disabled button.disabled"
+              tal:attributes="disabled button.disabled; class python:'btnText submit btn' + (button.name == 'submit' and ' btn-primary' or '')"
               id="${field.formid+button.name}"
               name="${button.name}"
               type="${button.type}"
-              class="btnText submit"
               value="${button.value}">
             <span>${button.title}</span>
           </button>
