@@ -1,0 +1,73 @@
+<form
+  id="${field.formid}"
+  action="${field.action}"
+  method="${field.method}"
+  enctype="multipart/form-data"
+  accept-charset="utf-8"
+  i18n:domain="deform"
+  tal:attributes="class field.css_class">
+
+  <fieldset class="deformFormFieldset">
+
+    <legend tal:condition="field.title">${field.title}</legend>
+
+    <input type="hidden" name="_charset_" />
+    <input type="hidden" name="__formid__" value="${field.formid}"/>
+    <ul>
+
+      <li class="errorLi" tal:condition="field.error">
+        <h3 class="errorMsgLbl" i18n:translate=""
+            >There was a problem with your submission</h3>
+        <p class="errorMsg" i18n:translate="" i18n:domain="deform"
+           >Errors have been highlighted below</p>
+        <p class="errorMsg">${field.errormsg}</p>
+      </li>
+
+      <li class="section first" tal:condition="field.description">
+        ${field.description}
+      </li>
+
+      <div
+          tal:define="rndr field.renderer;
+                      tmpl field.widget.item_template"
+          tal:repeat="f field.children"
+          tal:replace="structure
+                       rndr(tmpl,field=f,cstruct=cstruct.get(f.name, null))"/>
+
+      <li class="buttons">
+        <tal:block repeat="button field.buttons">
+          <button
+              tal:attributes="disabled button.disabled"
+              id="${field.formid+button.name}"
+              name="${button.name}"
+              type="${button.type}"
+              class="btnText submit"
+              value="${button.value}">
+            <span>${button.title}</span>
+          </button>
+        </tal:block>
+      </li>
+
+    </ul>
+
+  </fieldset>
+
+<script type="text/javascript" tal:condition="field.use_ajax">
+  deform.addCallback(
+     '${field.formid}',
+     function(oid) {
+       var options = {
+         target: '#' + oid,
+         replaceTarget: true,
+         success: function() {
+           deform.processCallbacks();
+           deform.focusFirstInput();
+         }
+       };
+       var extra_options = ${field.ajax_options} || {};
+       $('#' + oid).ajaxForm($.extend(options, extra_options));
+     }
+  );
+</script>
+
+</form>
