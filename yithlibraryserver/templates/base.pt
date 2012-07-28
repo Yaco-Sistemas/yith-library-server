@@ -65,6 +65,18 @@
       </div>
     </tal:block>
 
+    <div id="messages">
+      <div tal:repeat="queue ('info', 'success', 'error', '')" tal:omit-tag="">
+        <div class="alert alert-${queue}"
+             tal:define="messages request.session.pop_flash(queue)"
+             tal:condition="messages"
+             tal:repeat="message messages">
+          <button class="close" data-dismiss="alert">x</button>
+          ${message}
+        </div>
+      </div>
+    </div>
+
     <tal:block metal:define-slot="content"></tal:block>
 
     <footer class="container">

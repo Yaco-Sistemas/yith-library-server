@@ -24,7 +24,7 @@
     <div class="span6">
       <h2>Developer Applications</h2>
 
-      <table class="table table-stripped table-bordered">
+      <table class="table table-stripped table-bordered" tal:condition="applications.count() > 0">
         <thead>
           <th>Name</th>
           <th>Main URL</th>

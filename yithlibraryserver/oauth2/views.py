@@ -60,6 +60,9 @@ def application_new(request):
             }
         create_client_id_and_secret(application)
 
+        request.session.flash('The application %s was created successfully' %
+                              appstruct['name'], 'success')
+
         request.db.applications.insert(application, safe=True)
         return HTTPFound(location=request.route_url('oauth2_applications'))
     elif 'cancel' in request.POST:
@@ -114,11 +117,16 @@ def application_edit(request):
             'name': appstruct['name'],
             'main_url': appstruct['main_url'],
             'callback_url': appstruct['callback_url'],
+            'client_id': app['client_id'],
+            'client_secret': app['client_secret'],
             }
-        create_client_id_and_secret(application)
 
-        # TODO: this is not an insert but an update
-        request.db.applications.insert(application, safe=True)
+        request.db.applications.update({'_id': app['_id']},
+                                       application, safe=True)
+
+        request.session.flash('The changes were saved successfully',
+                              'success')
+
         return HTTPFound(location=request.route_url('oauth2_applications'))
     elif 'delete' in request.POST:
         return HTTPFound(location=request.route_url('oauth2_application_delete',
@@ -149,6 +157,8 @@ def application_delete(request):
 
     if 'submit' in request.POST:
         request.db.applications.remove(app_id, safe=True)
+        request.session.flash('The application %s was deleted successfully' %
+                              app['name'], 'success')
         return HTTPFound(location=request.route_url('oauth2_applications'))
 
     return {'app': app}
@@ -338,6 +348,8 @@ def revoke_application(request):
         authorizator = Authorizator(request.db, app)
         authorizator.remove_user_authorization(request.user)
 
+        request.session.flash('The access to application %s has been revoked' %
+                              app['name'], 'success')
         return HTTPFound(location=request.route_url('oauth2_applications'))
 
     return {'app': app}
