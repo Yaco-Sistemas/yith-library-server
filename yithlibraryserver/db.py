@@ -34,3 +34,7 @@ class MongoDB(object):
             database.authenticate(self.db_uri.username, self.db_uri.password)
 
         return database
+
+
+def get_db(request):
+    return request.registry.settings['mongodb'].get_database()
