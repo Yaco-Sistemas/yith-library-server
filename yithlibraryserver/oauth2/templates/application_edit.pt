@@ -8,7 +8,7 @@
 
 <tal:block metal:fill-slot="content">
 
-  <h2>Edit application ${app.name}</h2>
+  <h1>Edit application ${app.name}</h1>
 
   <div tal:replace="structure form">form</div>
 

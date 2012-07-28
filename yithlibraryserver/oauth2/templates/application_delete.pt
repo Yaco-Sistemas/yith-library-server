@@ -8,16 +8,13 @@
 
 <tal:block metal:fill-slot="content">
 
-  <div class="hero-unit">
-    <h2>Delete Application ${app.name}</h2>
-    <p>Are you sure you want to remove the application ${app.name} with id ${app._id}?</p>
+  <h1>Delete Application ${app.name}</h1>
+  <p class="well">Are you sure you want to remove the application ${app.name} with id ${app._id}?</p>
 
-    <form method="post" action="${request.route_path('oauth2_application_delete', app=app._id)}">
-      <input class="btn btn-danger" type="submit" name="submit" value="Yes, I am sure" />
-      <a class="btn" href="${request.route_path('oauth2_applications')}">No, take me back to the application list</a>
-    </form>
-
-  </div>
+  <form method="post" action="${request.route_path('oauth2_application_delete', app=app._id)}">
+    <input class="btn btn-danger" type="submit" name="submit" value="Yes, I am sure" />
+    <a class="btn" href="${request.route_path('oauth2_applications')}">No, take me back to the application list</a>
+  </form>
 
 </tal:block>
 

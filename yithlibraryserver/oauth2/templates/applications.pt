@@ -8,35 +8,40 @@
 
 <tal:block metal:fill-slot="content">
 
-  <div tal:condition="authorized_apps.count() > 0" tal:omit-tag="">
-  <h2>Authorized Applications</h2>
-  <ul>
-    <li tal:repeat="app authorized_apps">${app.name} <a href="${request.route_path('oauth2_revoke_application', app=app._id)}">Revoke</a></li>
-  </ul>
+  <h1>Applications overview</h1>
+
+  <div class="row">
+
+    <div class="span6">
+      <div tal:condition="authorized_apps.count() > 0" tal:omit-tag="">
+        <h2>Authorized Applications</h2>
+        <ul>
+          <li tal:repeat="app authorized_apps">${app.name} <a href="${request.route_path('oauth2_revoke_application', app=app._id)}">Revoke</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="span6">
+      <h2>Developer Applications</h2>
+
+      <table class="table table-stripped table-bordered">
+        <thead>
+          <th>Name</th>
+          <th>Main URL</th>
+          <th>Callback URL</th>
+        </thead>
+        <tbody>
+          <tr tal:repeat="app applications">
+            <td><a href="${request.route_path('oauth2_application_edit', app=app._id)}">${app.name}</a></td>
+            <td>${app.main_url}</td>
+            <td>${app.callback_url}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><a class="btn" href="${request.route_path('oauth2_application_new')}">Register new application</a></p>
+    </div>
   </div>
-
-  <h2>Developer Applications</h2>
-
-  <table class="table table-stripped table-bordered">
-    <thead>
-      <th>Name</th>
-      <th>Main URL</th>
-      <th>Callback URL</th>
-      <th>Client Id</th>
-      <th>Client Secret</th>
-    </thead>
-    <tbody>
-      <tr tal:repeat="app applications">
-        <td><a href="${request.route_path('oauth2_application_edit', app=app._id)}">${app.name}</a></td>
-        <td>${app.main_url}</td>
-        <td>${app.callback_url}</td>
-        <td>${app.client_id}</td>
-        <td>${app.client_secret}</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <p><a class="btn" href="${request.route_path('oauth2_application_new')}">Register new application</a></p>
 
 </tal:block>
 
