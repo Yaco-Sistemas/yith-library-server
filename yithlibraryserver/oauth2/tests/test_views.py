@@ -418,6 +418,13 @@ class ViewTests(testing.TestCase):
         self.assertEqual(res.status, '200 OK')
         res.mustcontain('There was a problem with your submission')
 
+        # The user hit the cancel button
+        res = self.testapp.post('/oauth2/applications/new', {
+                'cancel': 'Cancel',
+                })
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/oauth2/applications')
+
     def test_application_delete(self):
         # this view required authentication
         res = self.testapp.get('/oauth2/applications/new')
@@ -529,3 +536,50 @@ class ViewTests(testing.TestCase):
         res.mustcontain('Save application')
         res.mustcontain('Delete application')
         res.mustcontain('Cancel')
+
+        # Let's make some changes
+        old_count = self.db.applications.count()
+        res = self.testapp.post('/oauth2/applications/%s/edit' % str(app_id), {
+                'name': 'Test Application 2',
+                'main_url': 'http://example.com/new',
+                'callback_url': 'http://example.com/new/callback',
+                'client_id': '123456-2',
+                'client_secret': 'secret2',
+                'submit': 'Save changes',
+                })
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/oauth2/applications')
+        new_app = self.db.applications.find_one(app_id)
+        self.assertEqual(new_app['name'], 'Test Application 2')
+        self.assertEqual(new_app['main_url'],
+                         'http://example.com/new')
+        self.assertEqual(new_app['callback_url'],
+                         'http://example.com/new/callback')
+        # the Id and Secret shouldn't change
+        self.assertEqual(new_app['client_id'], '123456')
+        self.assertEqual(new_app['client_secret'], 'secret')
+        self.assertEqual(old_count, self.db.applications.count())
+
+        # Try and invalid change
+        res = self.testapp.post('/oauth2/applications/%s/edit' % str(app_id), {
+                'submit': 'Save changes',
+                })
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('There was a problem with your submission')
+        res.mustcontain('Required')
+
+        # The user hit the delete button
+        res = self.testapp.post('/oauth2/applications/%s/edit' % str(app_id), {
+                'delete': 'Delete',
+                })
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location,
+                         'http://localhost/oauth2/applications/%s/delete'
+                         % str(app_id))
+
+        # The user hit the cancel button
+        res = self.testapp.post('/oauth2/applications/%s/edit' % str(app_id), {
+                'cancel': 'Cancel',
+                })
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/oauth2/applications')

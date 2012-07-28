@@ -109,7 +109,7 @@ def application_edit(request):
         try:
             appstruct = form.validate(controls)
         except ValidationFailure as e:
-            return {'form': e.render(app)}
+            return {'form': e.render(), 'app': app}
 
         # the data is fine, save into the db
         application = {
