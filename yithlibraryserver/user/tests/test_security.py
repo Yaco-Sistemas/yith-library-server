@@ -49,7 +49,7 @@ class SecurityTests(unittest.TestCase):
         try:
             assert_authenticated_user_is_registered(request)
         except HTTPFound as exp:
-            self.assertEqual(exp.location, 'http://example.com/register')
+            self.assertEqual(exp.location, '/register')
 
         user_id = self.db.users.insert({'screen_name': 'John Doe'}, safe=True)
 

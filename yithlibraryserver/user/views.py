@@ -7,10 +7,10 @@ from yithlibraryserver.compat import url_quote
 @view_config(route_name='login', renderer='templates/login.pt')
 @forbidden_view_config(renderer='templates/login.pt')
 def login(request):
-    login_url = request.route_url('login')
+    login_url = request.route_path('login')
     referrer = request.url
     if referrer == login_url:
-        referrer = request.route_url('home')
+        referrer = request.route_path('home')
     came_from = request.params.get('came_from', referrer)
     return {'next_url': url_quote(came_from)}
 
@@ -35,11 +35,11 @@ def register_new_user(request):
     return {
         'user_id': authenticated_userid(request),
         'screen_name': request.params.get('screen_name', ''),
-        'next_url': request.params.get('next_url', request.route_url('home')),
+        'next_url': request.params.get('next_url', request.route_path('home')),
         }
 
 
 @view_config(route_name='logout', renderer='string')
 def logout(request):
-    return HTTPFound(location=request.route_url('home'),
+    return HTTPFound(location=request.route_path('home'),
                      headers=forget(request))

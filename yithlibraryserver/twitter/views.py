@@ -10,7 +10,7 @@ from yithlibraryserver.twitter.authorization import auth_header
 def twitter_login(request):
     settings = request.registry.settings
     request_token_url = settings['twitter_request_token_url']
-    oauth_callback_url = request.route_url('twitter_callback')
+    oauth_callback_url = request.route_path('twitter_callback')
 
     params = (
         ('oauth_callback', oauth_callback_url),
@@ -89,12 +89,12 @@ def twitter_callback(request):
         next_url = request.session['next_url']
         del request.session['next_url']
     else:
-        next_url = request.route_url('home')
+        next_url = request.route_path('home')
 
     user = request.db.users.find_one({'provider_user_id': user_id})
     if user is None:
         remember_headers = remember(request, user_id)
-        register_url = request.route_url('register_new_user')
+        register_url = request.route_path('register_new_user')
         register_url += '?' + url_encode({
                 'screen_name': screen_name,
                 'next_url': next_url,

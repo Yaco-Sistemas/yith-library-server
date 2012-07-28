@@ -22,6 +22,6 @@ def assert_authenticated_user_is_registered(request):
     try:
         user = request.db.users.find_one(bson.ObjectId(user_id))
     except bson.errors.InvalidId:
-        raise HTTPFound(location=request.route_url('register_new_user'))
+        raise HTTPFound(location=request.route_path('register_new_user'))
     else:
         return user

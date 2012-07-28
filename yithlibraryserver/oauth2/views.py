@@ -64,9 +64,9 @@ def application_new(request):
                               appstruct['name'], 'success')
 
         request.db.applications.insert(application, safe=True)
-        return HTTPFound(location=request.route_url('oauth2_applications'))
+        return HTTPFound(location=request.route_path('oauth2_applications'))
     elif 'cancel' in request.POST:
-        return HTTPFound(location=request.route_url('oauth2_applications'))
+        return HTTPFound(location=request.route_path('oauth2_applications'))
 
     # this is a GET
     return {'form': form.render()}
@@ -127,12 +127,12 @@ def application_edit(request):
         request.session.flash('The changes were saved successfully',
                               'success')
 
-        return HTTPFound(location=request.route_url('oauth2_applications'))
+        return HTTPFound(location=request.route_path('oauth2_applications'))
     elif 'delete' in request.POST:
-        return HTTPFound(location=request.route_url('oauth2_application_delete',
+        return HTTPFound(location=request.route_path('oauth2_application_delete',
                                                     app=app['_id']))
     elif 'cancel' in request.POST:
-        return HTTPFound(location=request.route_url('oauth2_applications'))
+        return HTTPFound(location=request.route_path('oauth2_applications'))
 
     # this is a GET
     return {'form': form.render(app), 'app': app}
@@ -159,7 +159,7 @@ def application_delete(request):
         request.db.applications.remove(app_id, safe=True)
         request.session.flash('The application %s was deleted successfully' %
                               app['name'], 'success')
-        return HTTPFound(location=request.route_url('oauth2_applications'))
+        return HTTPFound(location=request.route_path('oauth2_applications'))
 
     return {'app': app}
 
@@ -214,7 +214,7 @@ def authorization_endpoint(request):
             'scope': scope,
             'state': state
             }
-        return HTTPFound(request.route_url('oauth2_authorize_application', app=str(app['_id'])))
+        return HTTPFound(request.route_path('oauth2_authorize_application', app=str(app['_id'])))
     else:
         request.session['authorization_info'] = {
             'client_id': client_id,
@@ -222,7 +222,7 @@ def authorization_endpoint(request):
             'scope': scope,
             'state': state
             }
-        return HTTPFound(request.route_url('oauth2_authenticate_anonymous', app=str(app['_id'])))
+        return HTTPFound(request.route_path('oauth2_authenticate_anonymous', app=str(app['_id'])))
 
 
 @view_config(route_name='oauth2_authorize_application',
@@ -354,6 +354,6 @@ def revoke_application(request):
 
         request.session.flash('The access to application %s has been revoked' %
                               app['name'], 'success')
-        return HTTPFound(location=request.route_url('oauth2_applications'))
+        return HTTPFound(location=request.route_path('oauth2_applications'))
 
     return {'app': app}

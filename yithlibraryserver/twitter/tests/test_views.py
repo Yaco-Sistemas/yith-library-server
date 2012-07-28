@@ -100,7 +100,7 @@ class ViewTests(testing.TestCase):
 
             res = self.testapp.get(good_url, status=302)
             self.assertEqual(res.status, '302 Found')
-            self.assertEqual(res.location, 'http://localhost/register?next_url=http%3A%2F%2Flocalhost%2F&screen_name=JohnDoe')
+            self.assertEqual(res.location, 'http://localhost/register?next_url=%2F&screen_name=JohnDoe')
             self.assertTrue('Set-Cookie' in res.headers)
 
         # good request, twitter is happy now. Existing user
