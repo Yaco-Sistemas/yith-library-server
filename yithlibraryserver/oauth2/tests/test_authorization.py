@@ -67,3 +67,9 @@ class AuthorizationTests(testing.TestCase):
 
         self.assertTrue(authorizator.is_app_authorized(user))
         self.assertEqual(user['authorized_apps'], ['app1'])
+
+        authorizator.remove_user_authorization(user)
+        user = self.db.users.find_one({'name': 'John Doe'})
+
+        self.assertFalse(authorizator.is_app_authorized(user))
+        self.assertFalse('app1' in user['authorized_apps'])
