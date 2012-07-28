@@ -344,8 +344,12 @@ def revoke_application(request):
     if app is None:
         return HTTPNotFound()
 
+    authorizator = Authorizator(request.db, app)
+
+    if not authorizator.is_app_authorized(request.user):
+        return HTTPUnauthorized()
+
     if 'submit' in request.POST:
-        authorizator = Authorizator(request.db, app)
         authorizator.remove_user_authorization(request.user)
 
         request.session.flash('The access to application %s has been revoked' %

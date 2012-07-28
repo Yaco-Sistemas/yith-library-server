@@ -583,3 +583,57 @@ class ViewTests(testing.TestCase):
                 })
         self.assertEqual(res.status, '302 Found')
         self.assertEqual(res.location, 'http://localhost/oauth2/applications')
+
+    def test_revoke_application(self):
+        # this view required authentication
+        res = self.testapp.get('/oauth2/applications/xxx/revoke')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Log in')
+
+        # Log in
+        user_id = self.db.users.insert({
+                'provider_user_id': 'twitter1',
+                'screen_name': 'John Doe',
+                'authorized_apps': [],
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+
+        res = self.testapp.get('/oauth2/applications/xxx/revoke',
+                               status=400)
+        self.assertEqual(res.status, '400 Bad Request')
+        res.mustcontain('Invalid application id')
+
+        res = self.testapp.get(
+            '/oauth2/applications/000000000000000000000000/revoke',
+            status=404)
+        self.assertEqual(res.status, '404 Not Found')
+
+        # create a valid app
+        app_id = self.db.applications.insert({
+                'owner': bson.ObjectId(),
+                'name': 'Test Application',
+                'main_url': 'http://example.com',
+                'callback_url': 'http://example.com/callback',
+                'client_id': '123456',
+                'client_secret': 'secret',
+                }, safe=True)
+
+        res = self.testapp.get('/oauth2/applications/%s/revoke' % str(app_id),
+                               status=401)
+        self.assertEqual(res.status, '401 Unauthorized')
+
+        self.db.users.update({'_id': user_id}, {
+                '$set': {'authorized_apps': [app_id]},
+                }, safe=True)
+
+        res = self.testapp.get('/oauth2/applications/%s/revoke' % str(app_id))
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Revoke authorization to application Test Application')
+
+        res = self.testapp.post('/oauth2/applications/%s/revoke' % str(app_id), {
+                'submit': 'Yes, I am sure',
+                })
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/oauth2/applications')
+        user = self.db.users.find_one(user_id)
+        self.assertEqual(user['authorized_apps'], [])
