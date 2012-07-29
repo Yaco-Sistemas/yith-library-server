@@ -10,7 +10,7 @@ from yithlibraryserver.twitter.authorization import auth_header
 def twitter_login(request):
     settings = request.registry.settings
     request_token_url = settings['twitter_request_token_url']
-    oauth_callback_url = request.route_path('twitter_callback')
+    oauth_callback_url = request.route_url('twitter_callback')
 
     params = (
         ('oauth_callback', oauth_callback_url),
