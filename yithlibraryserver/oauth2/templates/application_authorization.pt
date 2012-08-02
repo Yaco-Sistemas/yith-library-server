@@ -8,22 +8,24 @@
 
 <tal:block metal:fill-slot="content">
 
-  <h1>Authorize application ${app.name}</h1>
+  <div class="hero-unit">
+    <h1>Authorize application</h1>
 
-  <p>The application <a href="${app.main_url}">${app.name}</a>
-    is requesting access to the following items:</p>
+    <p>The application <a href="${app.main_url}">${app.name}</a>
+      is requesting access to the following items:</p>
 
-  <ul>
-    <li tal:repeat="scope scopes">${scope}</li>
-  </ul>
+    <ul>
+      <li tal:repeat="scope scopes">${scope}</li>
+    </ul>
 
-  <p>Do you want to allow this access?</p>
+    <p>Do you want to allow this access?</p>
 
-  <form method="post" action="${request.route_path('oauth2_authorize_application', app=app._id)}">
-    <input type="submit" name="submit" value="Yes, I authorize the ${app.name} application" />
-  </form>
+    <form method="post" action="${request.route_path('oauth2_authorize_application', app=app._id)}">
+      <input class="btn btn-primary btn-large" type="submit" name="submit" value="Yes, I authorize the ${app.name} application" />
+    </form>
 
-  <p>You can revoke this permission in the future.</p>
+    <p>You can revoke this permission in the future.</p>
+  </div>
 
 </tal:block>
 

@@ -8,19 +8,21 @@
 
 <tal:block metal:fill-slot="content">
 
-  <h1>Authorize application ${app.name}</h1>
+  <div class="hero-unit">
+    <h1>Authorize application</h1>
 
-  <p>The application <a href="${app.main_url}">${app.name}</a>
-    is requesting access to the following items:</p>
+    <p>The application <a href="${app.main_url}">${app.name}</a>
+      is requesting access to the following items:</p>
 
-  <ul>
-    <li tal:repeat="scope scopes">${scope}</li>
-  </ul>
+    <ul>
+      <li tal:repeat="scope scopes">${scope}</li>
+    </ul>
 
-  <p>You need to log in first and then you will be asked to
-    authorize this application.</p>
+    <p>You need to log in first and then you will be asked to
+      authorize this application.</p>
 
-  <p><a href="${request.route_path('oauth2_authorize_application', app=app._id)}">Ok, I'll log in</a></p>
+    <p><a class="btn btn-primary btn-large" href="${request.route_path('oauth2_authorize_application', app=app._id)}">Ok, I'll log in</a></p>
+  </div>
 
 </tal:block>
 
