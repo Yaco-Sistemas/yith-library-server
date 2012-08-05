@@ -32,6 +32,7 @@ def main(global_config, **settings):
         read_setting_from_env(settings, 'cors_allowed_origins', ''))
 
     # Routes
+    config.include('yithlibraryserver.facebook')
     config.include('yithlibraryserver.oauth2')
     config.include('yithlibraryserver.password')
     config.include('yithlibraryserver.user')

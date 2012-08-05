@@ -11,5 +11,6 @@
   <h1>Log in</h1>
   <a href="${request.route_path('twitter_login')}?next_url=${next_url}"><img src="${request.static_path('yithlibraryserver:static/img/sign-in-with-twitter-l.png')}" alt="Sign in with twitter" width="151" height="24" /></a>
 
+  <a href="${request.route_path('facebook_login')}?next_url=${next_url}">Log in with Facebook</a>
 </tal:block>
 </html>
