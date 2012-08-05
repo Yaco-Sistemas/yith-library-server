@@ -45,3 +45,7 @@ footer ul {
 footer ul li {
     display: inline;
 }
+
+.thumbnail .caption {
+    text-align: center;
+}
