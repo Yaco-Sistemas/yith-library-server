@@ -8,7 +8,8 @@ def includeme(config):
         ('request_token_url', 'https://api.twitter.com/oauth/request_token'),
         ('authenticate_url', 'https://api.twitter.com/oauth/authenticate'),
         ('access_token_url', 'https://api.twitter.com/oauth/access_token'),
-        ):
+        ('user_info_url', 'https://api.twitter.com/1/users/show.json'),
+       ):
         option = 'twitter_%s' % key
         settings[option] = read_setting_from_env(settings, option, default)
 
