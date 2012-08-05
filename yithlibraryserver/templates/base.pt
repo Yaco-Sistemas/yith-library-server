@@ -45,7 +45,7 @@
               </li>
               <li tal:condition="request.user" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  ${request.user.screen_name} <b class="caret"></b>
+                  ${request.user.first_name} <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
                   <li>
