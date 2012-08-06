@@ -165,7 +165,7 @@ def application_delete(request):
 
 
 @view_config(route_name='oauth2_authorization_endpoint',
-             renderer='string')
+             renderer='string', permission='add-authorized-app')
 def authorization_endpoint(request):
     response_type = request.params.get('response_type')
     if response_type is None:
@@ -198,7 +198,7 @@ def authorization_endpoint(request):
 
     authorizator = Authorizator(request.db, app)
 
-    if user and authorizator.is_app_authorized(user):
+    if authorizator.is_app_authorized(user):
         if 'authorization_info' in request.session:
             del request.session['authorization_info']
 
@@ -207,14 +207,6 @@ def authorization_endpoint(request):
         url = authorizator.auth_codes.get_redirect_url(
             code, redirect_uri, state)
         return HTTPFound(location=url)
-    elif user:
-        request.session['authorization_info'] = {
-            'client_id': client_id,
-            'redirect_uri': redirect_uri,
-            'scope': scope,
-            'state': state
-            }
-        return HTTPFound(request.route_path('oauth2_authorize_application', app=str(app['_id'])))
     else:
         request.session['authorization_info'] = {
             'client_id': client_id,
@@ -222,7 +214,7 @@ def authorization_endpoint(request):
             'scope': scope,
             'state': state
             }
-        return HTTPFound(request.route_path('oauth2_authenticate_anonymous', app=str(app['_id'])))
+        return HTTPFound(request.route_path('oauth2_authorize_application', app=str(app['_id'])))
 
 
 @view_config(route_name='oauth2_authorize_application',
@@ -261,28 +253,6 @@ def authorize_application(request):
         url = authorizator.auth_codes.get_redirect_url(
             code, redirect_uri, state)
         return HTTPFound(location=url)
-
-    return {'app': app, 'scopes': scope.split(' ')}
-
-
-@view_config(route_name='oauth2_authenticate_anonymous',
-             renderer='templates/authenticate_anonymous.pt')
-def authenticate_anonymous(request):
-    try:
-        authorization_info = request.session['authorization_info']
-    except KeyError:
-        return HTTPBadRequest()
-
-    try:
-        app_id = bson.ObjectId(request.matchdict['app'])
-    except bson.errors.InvalidId:
-        return HTTPBadRequest(body='Invalid application id')
-
-    app = request.db.applications.find_one(app_id)
-    if app is None:
-        return HTTPNotFound()
-
-    scope = authorization_info['scope']
 
     return {'app': app, 'scopes': scope.split(' ')}
 
