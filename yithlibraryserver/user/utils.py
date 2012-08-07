@@ -10,7 +10,7 @@ def split_name(name):
     return first_name, last_name
 
 
-def update_user(request, user, user_info):
+def update_user(db, user, user_info):
     changes = {}
     for attribute in ('screen_name', 'first_name', 'last_name', 'email'):
         if attribute in user_info and user_info[attribute]:
@@ -22,5 +22,5 @@ def update_user(request, user, user_info):
                 changes[attribute] = user_info[attribute]
 
     if changes:
-        request.db.users.update({'_id': user['_id']}, {'$set': changes},
+        db.users.update({'_id': user['_id']}, {'$set': changes},
                                 safe=True)

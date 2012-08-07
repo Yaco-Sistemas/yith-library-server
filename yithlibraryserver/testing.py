@@ -2,6 +2,7 @@ import unittest
 
 from webtest import TestApp, TestRequest
 
+from pyramid.interfaces import ISessionFactory
 from pyramid.security import remember
 from pyramid.testing import DummyRequest
 
@@ -27,6 +28,8 @@ class TestCase(unittest.TestCase):
             'mongo_uri': MONGO_URI,
             'twitter_consumer_key': 'key',
             'twitter_consumer_secret': 'secret',
+            'facebook_app_id': 'id',
+            'facebook_app_secret': 'secret',
             }
         app = main({}, **settings)
         self.testapp = TestApp(app)
@@ -44,3 +47,12 @@ class TestCase(unittest.TestCase):
         remember_headers = remember(request, user_id)
         cookie_value = remember_headers[0][1].split('"')[1]
         self.testapp.cookies['auth_tkt'] = cookie_value
+
+    def add_to_session(self, data):
+        session_factory = self.testapp.app.registry.queryUtility(ISessionFactory)
+        request = DummyRequest()
+        session = session_factory(request)
+        for key, value in data.items():
+            session[key] = value
+        session.persist()
+        self.testapp.cookies['beaker.session.id'] = session._sess.id

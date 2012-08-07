@@ -6,8 +6,7 @@ from yithlibraryserver.compat import url_encode
 from yithlibraryserver.twitter.authorization import auth_header
 
 
-def get_user_info(request, user_id, oauth_token):
-    settings = request.registry.settings
+def get_user_info(settings, user_id, oauth_token):
     user_info_url = settings['twitter_user_info_url']
 
     params = (

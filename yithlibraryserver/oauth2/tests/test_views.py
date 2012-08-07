@@ -11,6 +11,21 @@ class ViewTests(testing.TestCase):
                          'access_codes')
 
     def test_authorization_endpoint(self):
+        # this view required authentication
+        res = self.testapp.get('/oauth2/endpoints/authorization')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Log in')
+
+        # Log in
+        user_id = self.db.users.insert({
+                'twitter_id': 'twitter1',
+                'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'authorized_apps': [],
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+
         # 1. test incorrect requests
         res = self.testapp.get('/oauth2/endpoints/authorization',
                                status=400)
@@ -39,6 +54,8 @@ class ViewTests(testing.TestCase):
         # create a valid app
         app_id = self.db.applications.insert({
                 'client_id': '123456',
+                'name': 'Example',
+                'main_url': 'https://example.com',
                 'callback_url': 'https://example.com/callback',
                 }, safe=True)
 
@@ -51,55 +68,26 @@ class ViewTests(testing.TestCase):
         res.mustcontain('Redirect URI does not match registered callback URL')
 
         # 2. Valid requests
-        # anonymous user
-        res = self.testapp.get('/oauth2/endpoints/authorization', {
-                'response_type': 'code',
-                'client_id': '123456',
-                'redirect_uri': 'https://example.com/callback',
-                })
-        self.assertEqual(res.status, '302 Found')
-        location = 'http://localhost/oauth2/authenticate_anonymous/%s' % app_id
-        self.assertEqual(res.location, location)
-
-        res = self.testapp.get('/oauth2/endpoints/authorization', {
-                'response_type': 'code',
-                'client_id': '123456',
-                # redirect_uri is optional
-                })
-        self.assertEqual(res.status, '302 Found')
-        location = 'http://localhost/oauth2/authenticate_anonymous/%s' % app_id
-        self.assertEqual(res.location, location)
-
         # authenticated user who hasn't authorized the app
-        user_id = self.db.users.insert({
-                'provider_user_id': 'twitter1',
-                'screen_name': 'John Doe',
-                'authorized_apps': [],
-                }, safe=True)
-        self.set_user_cookie(str(user_id))
-
         res = self.testapp.get('/oauth2/endpoints/authorization', {
                 'response_type': 'code',
                 'client_id': '123456',
                 'redirect_uri': 'https://example.com/callback',
                 })
-        self.assertEqual(res.status, '302 Found')
-        location = 'http://localhost/oauth2/authorizeapp/%s' % app_id
-        self.assertEqual(res.location, location)
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Authorize application')
+        res.mustcontain('Do you want to allow this access?')
+        res.mustcontain('Yes, I authorize the Example application')
 
-        # authenticated user who has authorized the app
-        self.db.users.update(
-            {'_id': user_id},
-            {'$addToSet': {'authorized_apps': app_id}},
-            safe=True,
-            )
-
-        res = self.testapp.get('/oauth2/endpoints/authorization', {
+        res = self.testapp.post('/oauth2/endpoints/authorization', {
+                'submit': 'Authorize',
                 'response_type': 'code',
                 'client_id': '123456',
                 'redirect_uri': 'https://example.com/callback',
                 })
         self.assertEqual(res.status, '302 Found')
+        user = self.db.users.find_one({'_id': user_id})
+        self.assertEqual(user['authorized_apps'], [app_id])
         grant = self.db.authorization_codes.find_one({
                 'scope': DEFAULT_SCOPE,
                 'client_id': '123456',
@@ -107,6 +95,25 @@ class ViewTests(testing.TestCase):
                 })
         self.assertNotEqual(grant, None)
         code = grant['code']
+        location = 'https://example.com/callback?code=%s' % code
+        self.assertEqual(res.location, location)
+
+        # authenticate user who has already authorize the app
+        res = self.testapp.get('/oauth2/endpoints/authorization', {
+                'response_type': 'code',
+                'client_id': '123456',
+                'redirect_uri': 'https://example.com/callback',
+                })
+        self.assertEqual(res.status, '302 Found')
+        new_grant = self.db.authorization_codes.find_one({
+                'scope': DEFAULT_SCOPE,
+                'client_id': '123456',
+                'user': user_id,
+                })
+        self.assertNotEqual(new_grant, None)
+        self.assertNotEqual(new_grant['_id'], grant['_id'])
+        self.assertNotEqual(new_grant['code'], grant['code'])
+        code = new_grant['code']
         location = 'https://example.com/callback?code=%s' % code
         self.assertEqual(res.location, location)
 
@@ -126,6 +133,8 @@ class ViewTests(testing.TestCase):
                 'client_id': '123456',
                 'client_secret': 'secret',
                 'callback_url': 'https://example.com/callback',
+                'name': 'Example',
+                'main_url': 'https://example.com',
                 }, safe=True)
 
         res = self.testapp.post('/oauth2/endpoints/token', {}, headers=headers, status=400)
@@ -154,8 +163,10 @@ class ViewTests(testing.TestCase):
 
         # first we generate an authorization_code
         user_id = self.db.users.insert({
-                'provider_user_id': 'twitter1',
+                'twitter_id': 'twitter1',
                 'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
                 'authorized_apps': [app_id],
                 }, safe=True)
         self.set_user_cookie(str(user_id))
@@ -205,17 +216,23 @@ class ViewTests(testing.TestCase):
                 'client_id': '123456',
                 'client_secret': 'secret',
                 'callback_url': 'https://example.com/callback',
+                'name': 'Example',
+                'main_url': 'https://example.com',
                 }, safe=True)
 
         app_id2 = self.db.applications.insert({
                 'client_id': '98765',
                 'client_secret': 'secret2',
                 'callback_url': 'https://example.com/callback2',
+                'name': 'Example2',
+                'main_url': 'https://example.com',
                 }, safe=True)
 
         user_id = self.db.users.insert({
-                'provider_user_id': 'twitter1',
+                'twitter_id': 'twitter1',
                 'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
                 'authorized_apps': [app_id, app_id2],
                 }, safe=True)
         self.set_user_cookie(str(user_id))
@@ -240,108 +257,6 @@ class ViewTests(testing.TestCase):
                 }, headers=headers, status=401)
         self.assertEqual(res.status, '401 Unauthorized')
 
-    def test_authenticate_anonymous(self):
-        # there is nothing in the session yet
-        res = self.testapp.get('/oauth2/authenticate_anonymous/123456',
-                               status=400)
-        self.assertEqual(res.status, '400 Bad Request')
-
-        # ask for authorization first, so it is stored in the session
-        app_id = self.db.applications.insert({
-                'client_id': '123456',
-                'name': 'Test Application',
-                'main_url': 'http://example.com',
-                'callback_url': 'https://example.com/callback',
-                }, safe=True)
-        res = self.testapp.get('/oauth2/endpoints/authorization', {
-                'response_type': 'code',
-                'client_id': '123456',
-                'redirect_uri': 'https://example.com/callback',
-                })
-
-        # invalid app id
-        res = self.testapp.get('/oauth2/authenticate_anonymous/xx',
-                               status=400)
-        self.assertEqual(res.status, '400 Bad Request')
-        res.mustcontain('Invalid application id')
-
-        # non existing app id
-        res = self.testapp.get('/oauth2/authenticate_anonymous/000000000000000000000000',
-                               status=404)
-        self.assertEqual(res.status, '404 Not Found')
-
-        # valid app id
-        res = self.testapp.get('/oauth2/authenticate_anonymous/%s' % str(app_id))
-        self.assertEqual(res.status, '200 OK')
-        res.mustcontain('Authorize application Test Application')
-        res.mustcontain('You need to log in first')
-
-    def test_authorize_application(self):
-        # this view required authentication
-        res = self.testapp.get('/oauth2/authorizeapp/123456')
-        self.assertEqual(res.status, '200 OK')
-        res.mustcontain('Log in')
-
-        # Log in
-        user_id = self.db.users.insert({
-                'provider_user_id': 'twitter1',
-                'screen_name': 'John Doe',
-                'authorized_apps': [],
-                }, safe=True)
-        self.set_user_cookie(str(user_id))
-
-        # there is nothing in the session yet
-        res = self.testapp.get('/oauth2/authorizeapp/123456',
-                               status=400)
-        self.assertEqual(res.status, '400 Bad Request')
-
-        # ask for authorization first, so it is stored in the session
-        app_id = self.db.applications.insert({
-                'client_id': '123456',
-                'name': 'Test Application',
-                'main_url': 'http://example.com',
-                'callback_url': 'https://example.com/callback',
-                }, safe=True)
-        res = self.testapp.get('/oauth2/endpoints/authorization', {
-                'response_type': 'code',
-                'client_id': '123456',
-                })
-
-        # invalid app id
-        res = self.testapp.get('/oauth2/authorizeapp/xx',
-                               status=400)
-        self.assertEqual(res.status, '400 Bad Request')
-        res.mustcontain('Invalid application id')
-
-        # non existing app id
-        res = self.testapp.get('/oauth2/authorizeapp/000000000000000000000000',
-                               status=404)
-        self.assertEqual(res.status, '404 Not Found')
-
-        # valid app id
-        valid_url = '/oauth2/authorizeapp/%s' % str(app_id)
-        res = self.testapp.get(valid_url)
-        self.assertEqual(res.status, '200 OK')
-        res.mustcontain('Authorize application Test Application')
-        res.mustcontain('Do you want to allow this access?')
-        res.mustcontain('Yes, I authorize the Test Application application')
-        res.mustcontain('You can revoke this permission in the future.')
-
-        # do the post
-        res = self.testapp.post(valid_url, {
-                'submit': 'Yes, I authorize the Test Application application',
-                })
-        self.assertEqual(res.status, '302 Found')
-        grant = self.db.authorization_codes.find_one({
-                'scope': DEFAULT_SCOPE,
-                'client_id': '123456',
-                'user': user_id,
-                })
-        self.assertNotEqual(grant, None)
-        code = grant['code']
-        location = 'https://example.com/callback?code=%s' % code
-        self.assertEqual(res.location, location)
-
     def test_applications(self):
         # this view required authentication
         res = self.testapp.get('/oauth2/applications')
@@ -350,15 +265,17 @@ class ViewTests(testing.TestCase):
 
         # Log in
         user_id = self.db.users.insert({
-                'provider_user_id': 'twitter1',
+                'twitter_id': 'twitter1',
                 'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
                 'authorized_apps': [],
                 }, safe=True)
         self.set_user_cookie(str(user_id))
 
         res = self.testapp.get('/oauth2/applications')
         self.assertEqual(res.status, '200 OK')
-        res.mustcontain('John Doe')
+        res.mustcontain('John')
         res.mustcontain('Log out')
         res.mustcontain('Developer Applications')
         res.mustcontain('Register new application')
@@ -373,8 +290,10 @@ class ViewTests(testing.TestCase):
 
         # Log in
         user_id = self.db.users.insert({
-                'provider_user_id': 'twitter1',
+                'twitter_id': 'twitter1',
                 'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
                 'authorized_apps': [],
                 }, safe=True)
         self.set_user_cookie(str(user_id))
@@ -433,8 +352,10 @@ class ViewTests(testing.TestCase):
 
         # Log in
         user_id = self.db.users.insert({
-                'provider_user_id': 'twitter1',
+                'twitter_id': 'twitter1',
                 'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
                 'authorized_apps': [],
                 }, safe=True)
         self.set_user_cookie(str(user_id))
@@ -487,8 +408,10 @@ class ViewTests(testing.TestCase):
 
         # Log in
         user_id = self.db.users.insert({
-                'provider_user_id': 'twitter1',
+                'twitter_id': 'twitter1',
                 'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
                 'authorized_apps': [],
                 }, safe=True)
         self.set_user_cookie(str(user_id))
@@ -592,8 +515,10 @@ class ViewTests(testing.TestCase):
 
         # Log in
         user_id = self.db.users.insert({
-                'provider_user_id': 'twitter1',
+                'twitter_id': 'twitter1',
                 'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
                 'authorized_apps': [],
                 }, safe=True)
         self.set_user_cookie(str(user_id))

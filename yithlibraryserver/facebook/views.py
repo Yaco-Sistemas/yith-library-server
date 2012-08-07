@@ -98,7 +98,7 @@ def facebook_callback(request):
         request.session['next_url'] = next_url
         return HTTPFound(location=request.route_path('register_new_user'))
     else:
-        update_user(request, user, info)
+        update_user(request.db, user, info)
         remember_headers = remember(request, str(user['_id']))
         return HTTPFound(location=next_url,
                          headers=remember_headers)

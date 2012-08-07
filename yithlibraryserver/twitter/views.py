@@ -87,7 +87,7 @@ def twitter_callback(request):
     user_id = response_args['user_id']
     screen_name = response_args['screen_name']
 
-    info = get_user_info(request, user_id, oauth_token)
+    info = get_user_info(settings, user_id, oauth_token)
     first_name, last_name = split_name(info['name'])
 
     if 'next_url' in request.session:
@@ -108,7 +108,7 @@ def twitter_callback(request):
         request.session['next_url'] = next_url
         return HTTPFound(location=request.route_path('register_new_user'))
     else:
-        update_user(request, user, {
+        update_user(request.db, user, {
                 'screen_name': screen_name,
                 'first_name': first_name,
                 'last_name': last_name,

@@ -12,7 +12,7 @@ from yithlibraryserver.user.schemas import UserSchema
 @forbidden_view_config(renderer='templates/login.pt')
 def login(request):
     login_url = request.route_path('login')
-    referrer = request.url
+    referrer = request.path
     if referrer == login_url:
         referrer = request.route_path('home')
     came_from = request.params.get('came_from', referrer)
