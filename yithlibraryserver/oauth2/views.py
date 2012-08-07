@@ -165,7 +165,8 @@ def application_delete(request):
 
 
 @view_config(route_name='oauth2_authorization_endpoint',
-             renderer='string', permission='add-authorized-app')
+             renderer='templates/application_authorization.pt',
+             permission='add-authorized-app')
 def authorization_endpoint(request):
     response_type = request.params.get('response_type')
     if response_type is None:
@@ -174,7 +175,6 @@ def authorization_endpoint(request):
     if response_type != 'code':
         return HTTPNotImplemented('Only code is supported')
 
-    # code grant
     client_id = request.params.get('client_id')
     if client_id is None:
         return HTTPBadRequest('Missing required client_type')
@@ -198,55 +198,9 @@ def authorization_endpoint(request):
 
     authorizator = Authorizator(request.db, app)
 
-    if authorizator.is_app_authorized(user):
-        if 'authorization_info' in request.session:
-            del request.session['authorization_info']
-
-        code = authorizator.auth_codes.create(
-            user['_id'], app['client_id'], scope)
-        url = authorizator.auth_codes.get_redirect_url(
-            code, redirect_uri, state)
-        return HTTPFound(location=url)
-    else:
-        request.session['authorization_info'] = {
-            'client_id': client_id,
-            'redirect_uri': redirect_uri,
-            'scope': scope,
-            'state': state
-            }
-        return HTTPFound(request.route_path('oauth2_authorize_application', app=str(app['_id'])))
-
-
-@view_config(route_name='oauth2_authorize_application',
-             renderer='templates/application_authorization.pt',
-             permission='add-authorized-app')
-def authorize_application(request):
-    try:
-        authorization_info = request.session['authorization_info']
-    except KeyError:
-        return HTTPBadRequest()
-
-    assert_authenticated_user_is_registered(request)
-
-    try:
-        app_id = bson.ObjectId(request.matchdict['app'])
-    except bson.errors.InvalidId:
-        return HTTPBadRequest(body='Invalid application id')
-
-    app = request.db.applications.find_one(app_id)
-    if app is None:
-        return HTTPNotFound()
-
-    scope = authorization_info['scope']
-
     if 'submit' in request.POST:
-        authorizator = Authorizator(request.db, app)
         if not authorizator.is_app_authorized(request.user):
             authorizator.store_user_authorization(request.user)
-
-        redirect_uri = authorization_info['redirect_uri']
-        state = authorization_info['state']
-        del request.session['authorization_info']
 
         code = authorizator.auth_codes.create(
             request.user['_id'], app['client_id'], scope)
@@ -254,7 +208,24 @@ def authorize_application(request):
             code, redirect_uri, state)
         return HTTPFound(location=url)
 
-    return {'app': app, 'scopes': scope.split(' ')}
+    else:
+        if authorizator.is_app_authorized(user):
+            code = authorizator.auth_codes.create(
+                user['_id'], app['client_id'], scope)
+            url = authorizator.auth_codes.get_redirect_url(
+                code, redirect_uri, state)
+            return HTTPFound(location=url)
+
+        else:
+            return {
+                'response_type': response_type,
+                'client_id': client_id,
+                'redirect_uri': redirect_uri,
+                'scope': scope,
+                'state': state,
+                'app': app,
+                'scopes': scope.split(' '),
+                }
 
 
 @view_config(route_name='oauth2_token_endpoint',
