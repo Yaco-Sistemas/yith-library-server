@@ -13,6 +13,8 @@ from yithlibraryserver.user.schemas import UserSchema
 def login(request):
     login_url = request.route_path('login')
     referrer = request.path
+    if request.query_string:
+        referrer += '?' + request.query_string
     if referrer == login_url:
         referrer = request.route_path('home')
     came_from = request.params.get('came_from', referrer)

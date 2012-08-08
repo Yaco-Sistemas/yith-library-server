@@ -3,6 +3,7 @@ from deform import ValidationFailure
 from mock import patch
 
 from yithlibraryserver import testing
+from yithlibraryserver.compat import url_quote
 
 
 class DummyValidationFailure(ValidationFailure):
@@ -16,10 +17,17 @@ class ViewTests(testing.TestCase):
     clean_collections = ('users', )
 
     def test_login(self):
+        res = self.testapp.get('/login?param1=value1&param2=value2')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Log in with Twitter')
+        res.mustcontain('/twitter/login')
+        res.mustcontain(url_quote('param1=value1&param2=value2'))
+
         res = self.testapp.get('/login')
         self.assertEqual(res.status, '200 OK')
         res.mustcontain('Log in with Twitter')
         res.mustcontain('/twitter/login')
+        res.mustcontain('next_url=/')
 
     def test_register_new_user(self):
         res = self.testapp.get('/register', status=400)
