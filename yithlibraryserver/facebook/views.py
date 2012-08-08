@@ -76,7 +76,7 @@ def facebook_callback(request):
     #expires = response_args['expires']
 
     # get basic information about the user
-    info = get_user_info(request, access_token)
+    info = get_user_info(settings, access_token)
     user_id = info['id']
 
     if 'next_url' in request.session:

@@ -5,9 +5,7 @@ from pyramid.httpexceptions import HTTPUnauthorized
 from yithlibraryserver.compat import url_encode
 
 
-def get_user_info(request, access_token):
-    settings = request.registry.settings
-
+def get_user_info(settings, access_token):
     basic_information_url = '%s?%s' % (
         settings['facebook_basic_information_url'],
         url_encode({'access_token': access_token}),
