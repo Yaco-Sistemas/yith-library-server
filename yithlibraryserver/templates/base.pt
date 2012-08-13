@@ -49,6 +49,9 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
+                    <a href="${request.route_path('user_profile')}">Profile</a>
+                  </li>
+                  <li>
                     <a href="#">Passwords</a>
                   </li>
                   <li>

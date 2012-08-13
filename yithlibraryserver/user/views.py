@@ -88,3 +88,46 @@ def register_new_user(request):
 def logout(request):
     return HTTPFound(location=request.route_path('home'),
                      headers=forget(request))
+
+
+@view_config(route_name='user_profile',
+             renderer='templates/profile.pt',
+             permission='edit-profile')
+def profile(request):
+    schema = UserSchema()
+    button1 = Button('submit', 'Save changes')
+    button1.css_class = 'btn-primary'
+    button2 = Button('cancel', 'Cancel')
+    button2.css_class = ''
+
+    form = Form(schema, buttons=(button1, button2))
+
+    if 'submit' in request.POST:
+
+        controls = request.POST.items()
+        try:
+            appstruct = form.validate(controls)
+        except ValidationFailure as e:
+            return {'form': e.render()}
+
+        result = request.db.users.update({'_id': request.user['_id']}, {
+                    '$set': {
+                        'first_name': appstruct['first_name'],
+                        'last_name': appstruct['last_name'],
+                        'email': appstruct['email'],
+                        },
+                    }, safe=True)
+
+        if result['n'] == 1:
+            request.session.flash('The changes were saved successfully',
+                                  'success')
+        else:
+            request.session.flash('There were an error while saving your changes',
+                                  'error')
+        return HTTPFound(location=request.route_path('user_profile'))
+    elif 'cancel' in request.POST:
+        return HTTPFound(location=request.route_path('user_profile'))
+
+    return {
+        'form': form.render(request.user),
+        }
