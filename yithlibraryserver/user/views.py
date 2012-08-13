@@ -121,10 +121,11 @@ def profile(request):
         if result['n'] == 1:
             request.session.flash('The changes were saved successfully',
                                   'success')
+            return HTTPFound(location=request.route_path('user_profile'))
         else:
             request.session.flash('There were an error while saving your changes',
                                   'error')
-        return HTTPFound(location=request.route_path('user_profile'))
+            return {'form': appstruct}
     elif 'cancel' in request.POST:
         return HTTPFound(location=request.route_path('user_profile'))
 

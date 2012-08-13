@@ -12,6 +12,24 @@ class DummyValidationFailure(ValidationFailure):
         return 'dummy error'
 
 
+class BadCollection(object):
+
+    def __init__(self, user):
+        self.user = user
+
+    def find_one(self, *args, **kwargs):
+        return self.user
+
+    def update(self, *args, **kwargs):
+        return {'n': 0}
+
+
+class BadDB(object):
+
+    def __init__(self, user):
+        self.users = BadCollection(user)
+
+
 class ViewTests(testing.TestCase):
 
     clean_collections = ('users', )
@@ -130,3 +148,72 @@ class ViewTests(testing.TestCase):
         self.assertEqual(res.location, 'http://localhost/')
         self.assertTrue('Set-Cookie' in res.headers)
         self.assertTrue('auth_tkt=""' in res.headers['Set-Cookie'])
+
+    def test_user_profile(self):
+        # this view required authentication
+        res = self.testapp.get('/profile')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Log in')
+
+        # Log in
+        user_id = self.db.users.insert({
+                'twitter_id': 'twitter1',
+                'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': '',
+                'authorized_apps': [],
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+
+        res = self.testapp.get('/profile')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Profile')
+        res.mustcontain('John')
+        res.mustcontain('Doe')
+        res.mustcontain('Save changes')
+        res.mustcontain('Cancel')
+
+        res = self.testapp.post('/profile', {
+                'submit': 'Save changes',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': 'john@example.com',
+                })
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/profile')
+        # check that the user has changed
+        new_user = self.db.users.find_one({'_id': user_id})
+        self.assertEqual(new_user['first_name'], 'John')
+        self.assertEqual(new_user['last_name'], 'Doe')
+        self.assertEqual(new_user['email'], 'john@example.com')
+
+        # click on the cancel button
+        res = self.testapp.post('/profile', {
+                'cancel': 'Cancel',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': 'john@example.com',
+                })
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/profile')
+
+        # make the form fail
+        with patch('deform.Form.validate') as fake:
+            fake.side_effect = DummyValidationFailure('f', 'c', 'e')
+            res = self.testapp.post('/profile', {
+                    'submit': 'Save Changes',
+                    })
+            self.assertEqual(res.status, '200 OK')
+
+        # make the db fail
+        with patch('yithlibraryserver.db.MongoDB.get_database') as fake:
+            fake.return_value = BadDB(new_user)
+            res = self.testapp.post('/profile', {
+                    'submit': 'Save changes',
+                    'first_name': 'John',
+                    'last_name': 'Doe',
+                    'email': 'john@example.com',
+                    })
+            self.assertEqual(res.status, '200 OK')
+            res.mustcontain('There were an error while saving your changes')
