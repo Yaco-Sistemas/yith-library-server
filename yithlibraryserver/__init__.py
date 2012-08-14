@@ -22,6 +22,10 @@ def main(global_config, **settings):
     # Beaker (sessions) setup
     config.include('pyramid_beaker')
 
+    # Mailer setup
+    config.include('pyramid_mailer')
+    config.include('pyramid_tm')
+
     # Mongodb setup
     mongodb = MongoDB(read_setting_from_env(settings, 'mongo_uri'))
     config.registry.settings['mongodb'] = mongodb

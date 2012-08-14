@@ -4,6 +4,9 @@ from pyramid.httpexceptions import HTTPBadRequest, HTTPFound
 from pyramid.security import remember, forget
 from pyramid.view import view_config, forbidden_view_config
 
+from pyramid_mailer import get_mailer
+from pyramid_mailer.message import Message
+
 from yithlibraryserver.compat import url_quote
 from yithlibraryserver.user.schemas import UserSchema
 
@@ -53,12 +56,19 @@ def register_new_user(request):
         provider = user_info['provider']
         provider_key = provider + '_id'
 
+        if (appstruct['email'] != ''
+            and appstruct['email'] == user_info['email']):
+            email_verified = True
+        else:
+            email_verified = False
+
         _id = request.db.users.insert({
                 provider_key: user_info[provider_key],
                 'screen_name': user_info.get('screen_name', ''),
                 'first_name': appstruct['first_name'],
                 'last_name': appstruct['last_name'],
                 'email': appstruct['email'],
+                'email_verified': email_verified,
                 'authorized_apps': [],
                 }, safe=True)
 
@@ -132,3 +142,24 @@ def profile(request):
     return {
         'form': form.render(request.user),
         }
+
+
+@view_config(route_name='user_send_email_verification_code',
+             renderer='json',
+             permission='edit-profile')
+def send_email_verification_code(request):
+
+    if not request.user['email']:
+        return {'status': 'bad',
+                'error': 'You have not an email in your profile'}
+
+    if 'submit' in request.POST:
+        body = 'This is a test'
+        message = Message(subject='Yith Library email verification',
+                          recipients=request.user['email'],
+                          body=body)
+
+        get_mailer(request).send(message)
+        return {'status': 'ok', 'error': None}
+    else:
+        return {'status': 'bad', 'error': 'Not a post'}

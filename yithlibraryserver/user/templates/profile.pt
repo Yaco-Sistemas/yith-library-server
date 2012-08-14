@@ -10,7 +10,23 @@
 
   <h1>Profile</h1>
 
-  <div tal:replace="structure form">form</div>
+  <div class="row">
+
+    <div class="span6" tal:content="structure form">form</div>
+
+    <div class="span6" tal:condition="request.user.email">
+      <p tal:condition="request.user.email_verified">
+        Congratulations, your email is verified.
+      </p>
+      <div tal:condition="not request.user.email_verified">
+        <p>Your email is not verified so you can not link
+          your different accounts.</p>
+        <form method="post" action="${request.route_path('user_send_email_verification_code')}">
+          <input class="btn btn-primary" type="submit" name="submit" value="Verify your email" />
+        </form>
+      </div>
+    </div>
+  </div>
 
 </tal:block>
 

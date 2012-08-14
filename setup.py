@@ -10,8 +10,10 @@ requires = [
     'deform',
     'pymongo',
     'pyramid',
-    'pyramid_beaker==1.6.4',
+    'pyramid_beaker==0.7',
     'pyramid_debugtoolbar',
+    'pyramid_mailer==0.9',
+    'pyramid_tm==0.5',
     'requests',
     'waitress',
     ]
