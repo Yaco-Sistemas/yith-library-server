@@ -45,7 +45,7 @@ class EmailVerificationCode(object):
                       {'link': link, 'user': user},
                       request=request)
         message = Message(subject='Please verify your email address',
-                          recipients=user['email'],
+                          recipients=[user['email']],
                           body=body)
 
         get_mailer(request).send(message)
