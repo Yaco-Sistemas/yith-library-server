@@ -22,8 +22,9 @@ def set_unverified_emails():
     try:
         db = settings['mongodb'].get_database()
         for user in db.users.find():
-            print '%s %s' % (user.get('first_name', ''),
-                             user.get('last_name', ''))
+            print '%s %s %s' % (user['_id'],
+                                user.get('first_name', ''),
+                                user.get('last_name', ''))
 
     finally:
         closer()
