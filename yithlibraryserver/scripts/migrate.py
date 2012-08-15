@@ -28,5 +28,5 @@ def set_unverified_emails():
         closer()
 
 
-if __name__ == '__main_':
+if __name__ == '__main__':
     set_unverified_emails()
