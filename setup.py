@@ -41,6 +41,8 @@ setup(name='yith-library-server',
       entry_points = """\
       [paste.app_factory]
       main = yithlibraryserver:main
+      [console_scripts]
+      migrate_set_unverified_emails = yithlibraryserver.scripts.migrate:set_unverified_emails
       """,
       )
 
