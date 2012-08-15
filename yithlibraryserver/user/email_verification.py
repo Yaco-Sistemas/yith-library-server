@@ -1,3 +1,5 @@
+import uuid
+
 from pyramid.renderers import render
 
 from pyramid_mailer import get_mailer
@@ -13,7 +15,7 @@ class EmailVerificationCode(object):
             self.code = code
 
     def _generate_code(self):
-        return '1234'
+        return str(uuid.uuid4())
 
     def store(self, db, user):
         result = db.users.update({'_id': user['_id']}, {
