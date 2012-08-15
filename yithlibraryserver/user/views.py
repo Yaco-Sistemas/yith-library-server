@@ -161,7 +161,8 @@ def send_email_verification_code(request):
     if 'submit' in request.POST:
         evc = EmailVerificationCode()
         if evc.store(request.db, request.user):
-            evc.send(request, request.user)
+            link = request.route_url('user_verify_email')
+            evc.send(request, request.user, link)
             return {'status': 'ok', 'error': None}
         else:
             return {

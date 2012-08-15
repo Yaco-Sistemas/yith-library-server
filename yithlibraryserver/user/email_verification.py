@@ -40,9 +40,8 @@ class EmailVerificationCode(object):
                 })
         return result is not None
 
-    def send(self, request, user):
-        link = request.route_url('user_verify_email')
-        link += '?code=%s&email=%s' % (self.code, user['email'])
+    def send(self, request, user, url):
+        link = '%s?code=%s&email=%s' % (url, self.code, user['email'])
         text_body = render('yithlibraryserver.user:templates/email_verification_code.txt',
                            {'link': link, 'user': user},
                            request=request)
@@ -55,4 +54,3 @@ class EmailVerificationCode(object):
                           html=html_body)
 
         get_mailer(request).send(message)
-

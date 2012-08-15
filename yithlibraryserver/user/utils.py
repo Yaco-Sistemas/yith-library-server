@@ -24,4 +24,3 @@ def update_user(db, user, user_info):
     if changes:
         db.users.update({'_id': user['_id']}, {'$set': changes},
                                 safe=True)
-
