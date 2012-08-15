@@ -43,12 +43,16 @@ class EmailVerificationCode(object):
     def send(self, request, user):
         link = request.route_url('user_verify_email')
         link += '?code=%s&email=%s' % (self.code, user['email'])
-        body = render('yithlibraryserver.user:templates/email_verification_code.txt',
-                      {'link': link, 'user': user},
-                      request=request)
+        text_body = render('yithlibraryserver.user:templates/email_verification_code.txt',
+                           {'link': link, 'user': user},
+                           request=request)
+        html_body = render('yithlibraryserver.user:templates/email_verification_code.pt',
+                           {'link': link, 'user': user},
+                           request=request)
         message = Message(subject='Please verify your email address',
                           recipients=[user['email']],
-                          body=body)
+                          body=text_body,
+                          html=html_body)
 
         get_mailer(request).send(message)
 

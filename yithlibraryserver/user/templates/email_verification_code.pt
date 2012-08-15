@@ -1,0 +1,9 @@
+<p>Hi ${user.first_name}</p>
+
+<p>Yith Library needs to verify your email address before you can
+link your accounts. Please verify your email address by clicking
+the link below.</p>
+
+<a href="${link}">Verify your email address</a>
+
+<p>- The Yith Library team</p>

@@ -4,6 +4,6 @@ Yith Library needs to verify your email address before you can
 link your accounts. Please verify your email address by clicking
 the link below.
 
-<a href="${link}">Verify your email address</a>
+${link}
 
 - The Yith Library team
