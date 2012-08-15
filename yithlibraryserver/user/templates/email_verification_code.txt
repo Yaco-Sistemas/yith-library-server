@@ -1,0 +1,9 @@
+Hi ${user.first_name}
+
+Yith Library needs to verify your email address before you can
+link your accounts. Please verify your email address by clicking
+the link below.
+
+<a href="${link}">Verify your email address</a>
+
+- The Yith Library team

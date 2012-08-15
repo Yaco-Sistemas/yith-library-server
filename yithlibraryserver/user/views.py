@@ -4,10 +4,8 @@ from pyramid.httpexceptions import HTTPBadRequest, HTTPFound
 from pyramid.security import remember, forget
 from pyramid.view import view_config, forbidden_view_config
 
-from pyramid_mailer import get_mailer
-from pyramid_mailer.message import Message
-
 from yithlibraryserver.compat import url_quote
+from yithlibraryserver.user.email_verification import EmailVerificationCode
 from yithlibraryserver.user.schemas import UserSchema
 
 
@@ -120,13 +118,18 @@ def profile(request):
         except ValidationFailure as e:
             return {'form': e.render()}
 
-        result = request.db.users.update({'_id': request.user['_id']}, {
-                    '$set': {
-                        'first_name': appstruct['first_name'],
-                        'last_name': appstruct['last_name'],
-                        'email': appstruct['email'],
-                        },
-                    }, safe=True)
+        changes = {
+            'first_name': appstruct['first_name'],
+            'last_name': appstruct['last_name'],
+            'email': appstruct['email'],
+            }
+
+        if request.user['email'] != appstruct['email']:
+            changes['email_verified'] = False
+
+        result = request.db.users.update({'_id': request.user['_id']},
+                                         {'$set': changes},
+                                         safe=True)
 
         if result['n'] == 1:
             request.session.flash('The changes were saved successfully',
@@ -150,16 +153,46 @@ def profile(request):
 def send_email_verification_code(request):
 
     if not request.user['email']:
-        return {'status': 'bad',
-                'error': 'You have not an email in your profile'}
+        return {
+            'status': 'bad',
+            'error': 'You have not an email in your profile',
+            }
 
     if 'submit' in request.POST:
-        body = 'This is a test'
-        message = Message(subject='Yith Library email verification',
-                          recipients=request.user['email'],
-                          body=body)
-
-        get_mailer(request).send(message)
-        return {'status': 'ok', 'error': None}
+        evc = EmailVerificationCode()
+        if evc.store(request.db, request.user):
+            evc.send(request, request.user)
+            return {'status': 'ok', 'error': None}
+        else:
+            return {
+                'status': 'bad',
+                'error': 'There were problems storing the verification code',
+                }
     else:
         return {'status': 'bad', 'error': 'Not a post'}
+
+
+@view_config(route_name='user_verify_email',
+             renderer='templates/verify_email.pt')
+def verify_email(request):
+    code = request.params['code']
+    email = request.params['email']
+
+    evc = EmailVerificationCode(code)
+    if evc.verify(request.db, email):
+        request.session.flash(
+            'Congratulations, your email has been succesfully verified',
+            'success',
+            )
+        evc.remove(request.db, email, True)
+        return {
+            'verified': True,
+            }
+    else:
+        request.session.flash(
+            'Sorry, your verification code is not correct or has expired',
+            'error',
+            )
+        return {
+            'verified': False,
+            }

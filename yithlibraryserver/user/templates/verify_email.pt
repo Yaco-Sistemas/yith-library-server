@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title">Email verification</tal:block>
+
+<tal:block metal:fill-slot="content">
+
+  <h1>Email verification</h1>
+
+  <div tal:condition="verified">
+    <p>Now you can link several accounts to identify yourself.</p>
+
+    <p>Go to your <a href="${request.route_path('user_profile')}">profile page</a>
+     and follow the instructions.</p>
+  </div>
+
+  <div tal:condition="not verified">
+    <p>It looks that your verification code is not correct. Please go to your
+    <a href="${request.route_path('user_profile')}">profile page</a> and
+    generate a new one.</p>
+  </div>
+
+</tal:block>
+
+</html>

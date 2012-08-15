@@ -21,13 +21,70 @@
       <div tal:condition="not request.user.email_verified">
         <p>Your email is not verified so you can not link
           your different accounts.</p>
-        <form method="post" action="${request.route_path('user_send_email_verification_code')}">
-          <input class="btn btn-primary" type="submit" name="submit" value="Verify your email" />
-        </form>
+        <a id="open-email-verification-dialog" href="#email-verification-dialog" class="btn btn-primary" data-toggle="modal">Verify your email address</a>
       </div>
     </div>
   </div>
 
+
+  <div class="modal hide" id="email-verification-dialog">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">×</button>
+      <h3>Email verification</h3>
+    </div>
+    <div class="modal-body">
+      <p>An email with a verification link will be sent to your email address
+        to verify that you are the legitimate owner of the email address
+        <strong>${request.user.email}</strong>.</p>
+      <p>All you need to do is click on the <i>Send verification email</i>
+        button, go to your inbox and follow the instructions in the email.</p>
+      <div class="alert alert-info hide">
+        <p>The email message with the verification link has been sent. <strong>Go and check your inbox!</strong></p>
+      </div>
+      <div class="alert alert-error hide">
+        <p>There was an error sending the verification link to your email address. <strong></strong></p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn" data-dismiss="modal">Close</a>
+      <a id="send-verification-email" href="#" class="btn btn-primary">Send verification email</a>
+    </div>
+  </div>
+
+</tal:block>
+
+
+<tal:block metal:fill-slot="extra-scripts">
+  <script type="text/javascript">
+    (function ($) {
+      "use strict";
+      $(document).ready(function () {
+        $("#send-verification-email").click(function () {
+          var $button = $(this);
+          if ($button.hasClass("disabled")) {
+            return;
+          }
+          $button.addClass("disabled");
+          $.ajax({
+            type: 'POST',
+            url: '${request.route_path("user_send_email_verification_code")}',
+            data: {submit: 'Send verification code'},
+            dataType: 'json',
+            success: function (data, textStatus, jqXHR) {
+              if (data.status === 'ok') {
+                $("#email-verification-dialog .alert-info").removeClass("hide");
+                $("#open-email-verification-dialog").addClass("hide");
+              } else {
+                $("#email-verification-dialog .alert-error").removeClass("hide").find("strong").text(data.error);
+                $("#email-verification-dialog .alert-info").addClass("hide");
+                $button.removeClass("disabled");
+              }
+            }
+          });
+        });
+      });
+    })(jQuery);
+  </script>
 </tal:block>
 
 </html>
