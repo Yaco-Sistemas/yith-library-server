@@ -11,6 +11,11 @@ from yithlibraryserver.security import RootFactory
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
+    # read pyramid_mailer options
+    for key in ('host', 'port', 'username', 'password'):
+        option = 'mail_' + key
+        settings[option] = read_setting_from_env(settings, option)
+
     config = Configurator(
         settings=settings,
         root_factory=RootFactory,
