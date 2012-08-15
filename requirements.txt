@@ -27,5 +27,6 @@ translationstring==1.1
 venusian==1.0a6
 waitress==0.8.1
 wsgiref==0.1.2
+-e git+git@github.com:Yaco-Sistemas/yith-library-server.git@15d943f9314abc47e6ee6e1a787a324f96fbc038#egg=yith_library_server-dev
 zope.deprecation==4.0.0
 zope.interface==4.0.1
