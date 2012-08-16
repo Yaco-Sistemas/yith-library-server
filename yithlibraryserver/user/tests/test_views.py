@@ -2,8 +2,10 @@ from deform import ValidationFailure
 
 from mock import patch
 
-from yithlibraryserver import testing
+from pyramid_mailer import get_mailer
+
 from yithlibraryserver.compat import url_quote
+from yithlibraryserver.testing import TestCase
 
 
 class DummyValidationFailure(ValidationFailure):
@@ -30,7 +32,7 @@ class BadDB(object):
         self.users = BadCollection(user)
 
 
-class ViewTests(testing.TestCase):
+class ViewTests(TestCase):
 
     clean_collections = ('users', )
 
@@ -82,6 +84,45 @@ class ViewTests(testing.TestCase):
         self.assertEqual(res.status, '302 Found')
         self.assertEqual(res.location, 'http://localhost/foo/bar')
         self.assertEqual(self.db.users.count(), 1)
+        user = self.db.users.find_one({'first_name': 'John'})
+        self.assertFalse(user is None)
+        self.assertEqual(user['first_name'], 'John')
+        self.assertEqual(user['last_name'], 'Doe')
+        self.assertEqual(user['email'], 'john@example.com')
+        self.assertEqual(user['email_verified'], True)
+        self.assertEqual(user['authorized_apps'], [])
+
+        # the next_url and user_info keys are cleared at this point
+        self.add_to_session({
+                'next_url': 'http://localhost/foo/bar',
+                'user_info': {
+                    'provider': 'myprovider',
+                    'myprovider_id': '1234',
+                    'screen_name': 'John Doe',
+                    'first_name': 'John',
+                    'last_name': 'Doe',
+                    'email': 'john@example.com',
+                    },
+                })
+
+        # if no email is provided at registration, the email is
+        # not verified
+        res = self.testapp.post('/register', {
+                'first_name': 'John2',
+                'last_name': 'Doe2',
+                'email': '',
+                'submit': 'Register into Yith Library',
+                }, status=302)
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/foo/bar')
+        self.assertEqual(self.db.users.count(), 2)
+        user = self.db.users.find_one({'first_name': 'John2'})
+        self.assertFalse(user is None)
+        self.assertEqual(user['first_name'], 'John2')
+        self.assertEqual(user['last_name'], 'Doe2')
+        self.assertEqual(user['email'], '')
+        self.assertEqual(user['email_verified'], False)
+        self.assertEqual(user['authorized_apps'], [])
 
         # the next_url and user_info keys are cleared at this point
         self.add_to_session({
@@ -217,3 +258,72 @@ class ViewTests(testing.TestCase):
                     })
             self.assertEqual(res.status, '200 OK')
             res.mustcontain('There were an error while saving your changes')
+
+    def test_send_email_verification_code(self):
+        # this view required authentication
+        res = self.testapp.get('/send-email-verification-code')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Log in')
+
+        # Log in
+        user_id = self.db.users.insert({
+                'twitter_id': 'twitter1',
+                'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': '',
+                'authorized_apps': [],
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+
+        # the user has no email so an error is expected
+        res = self.testapp.get('/send-email-verification-code')
+        self.assertEqual(res.status, '200 OK')
+        self.assertEqual(res.json, {
+                'status': 'bad',
+                'error': 'You have not an email in your profile',
+                })
+
+        # let's give the user an email
+        self.db.users.update({'_id': user_id},
+                             {'$set': {'email': 'john@example.com'}},
+                             safe=True)
+
+        # the request must be a post
+        res = self.testapp.get('/send-email-verification-code')
+        self.assertEqual(res.status, '200 OK')
+        self.assertEqual(res.json, {
+                'status': 'bad',
+                'error': 'Not a post',
+                })
+
+
+        # now a good request
+        res = self.testapp.post('/send-email-verification-code', {
+                'submit': 'Send verification code'})
+        self.assertEqual(res.status, '200 OK')
+        self.assertEqual(res.json, {
+                'status': 'ok',
+                'error': None,
+                })
+        res.request.registry = self.testapp.app.registry
+        mailer = get_mailer(res.request)
+        self.assertEqual(len(mailer.outbox), 1)
+        self.assertEqual(mailer.outbox[0].subject,
+                         'Please verify your email address')
+        self.assertEqual(mailer.outbox[0].recipients,
+                         ['john@example.com'])
+
+        # simulate a db failure
+        with patch('yithlibraryserver.user.email_verification.EmailVerificationCode.store') as fake:
+            fake.return_value = False
+            res = self.testapp.post('/send-email-verification-code', {
+                    'submit': 'Send verification code'})
+            self.assertEqual(res.status, '200 OK')
+            self.assertEqual(res.json, {
+                    'status': 'bad',
+                    'error': 'There were problems storing the verification code',
+                    })
+
+    def test_verify_email(self):
+        pass

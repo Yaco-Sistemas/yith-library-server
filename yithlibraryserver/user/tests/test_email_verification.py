@@ -1,6 +1,5 @@
 from pyramid import testing
 from pyramid.testing import DummyRequest
-from pyramid.request import Request
 
 from pyramid_mailer import get_mailer
 
@@ -10,6 +9,7 @@ from yithlibraryserver.user.email_verification import EmailVerificationCode
 class EmailVerificationCodeTests(TestCase):
 
     clean_collections = ('users', )
+
     def setUp(self):
         self.config = testing.setUp()
         self.config.include('pyramid_mailer.testing')

@@ -151,7 +151,6 @@ def profile(request):
              renderer='json',
              permission='edit-profile')
 def send_email_verification_code(request):
-
     if not request.user['email']:
         return {
             'status': 'bad',

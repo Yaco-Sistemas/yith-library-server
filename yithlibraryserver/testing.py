@@ -30,6 +30,7 @@ class TestCase(unittest.TestCase):
             'twitter_consumer_secret': 'secret',
             'facebook_app_id': 'id',
             'facebook_app_secret': 'secret',
+            'testing': True,
             }
         app = main({}, **settings)
         self.testapp = TestApp(app)

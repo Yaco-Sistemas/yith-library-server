@@ -28,7 +28,10 @@ def main(global_config, **settings):
     config.include('pyramid_beaker')
 
     # Mailer setup
-    config.include('pyramid_mailer')
+    if 'testing' in settings and settings['testing'] is True:
+        config.include('pyramid_mailer.testing')
+    else:
+        config.include('pyramid_mailer')
     config.include('pyramid_tm')
 
     # Mongodb setup
