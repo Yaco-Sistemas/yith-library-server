@@ -175,13 +175,20 @@ def send_email_verification_code(request):
 @view_config(route_name='user_verify_email',
              renderer='templates/verify_email.pt')
 def verify_email(request):
-    code = request.params['code']
-    email = request.params['email']
+    try:
+        code = request.params['code']
+    except KeyError:
+        return HTTPBadRequest('Missing code parameter')
+
+    try:
+        email = request.params['email']
+    except KeyError:
+        return HTTPBadRequest('Missing email parameter')
 
     evc = EmailVerificationCode(code)
     if evc.verify(request.db, email):
         request.session.flash(
-            'Congratulations, your email has been succesfully verified',
+            'Congratulations, your email has been successfully verified',
             'success',
             )
         evc.remove(request.db, email, True)

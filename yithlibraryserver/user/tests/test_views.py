@@ -326,4 +326,32 @@ class ViewTests(TestCase):
                     })
 
     def test_verify_email(self):
-        pass
+        res = self.testapp.get('/verify-email', status=400)
+        self.assertEqual(res.status, '400 Bad Request')
+        res.mustcontain('Missing code parameter')
+
+        res = self.testapp.get('/verify-email?code=1234', status=400)
+        self.assertEqual(res.status, '400 Bad Request')
+        res.mustcontain('Missing email parameter')
+
+        res = self.testapp.get('/verify-email?code=1234&email=john@example.com')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Sorry, your verification code is not correct or has expired')
+
+        user_id = self.db.users.insert({
+                'twitter_id': 'twitter1',
+                'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': 'john@example.com',
+                'email_verification_code': '1234',
+                'authorized_apps': [],
+                }, safe=True)
+
+        res = self.testapp.get('/verify-email?code=1234&email=john@example.com')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Congratulations, your email has been successfully verified')
+
+        user = self.db.users.find_one({'_id': user_id})
+        self.assertEqual(user['email_verified'], True)
+        self.assertFalse('email_verification_code' in user)
