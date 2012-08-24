@@ -17,8 +17,8 @@ class ViewTests(testing.TestCase):
         self.assertEqual(url.netloc, 'www.facebook.com')
         self.assertEqual(url.path, '/dialog/oauth/')
         query = urlparse.parse_qs(url.query)
-        self.assertEqual(query.keys(),
-                         ['scope', 'state', 'redirect_uri', 'client_id'])
+        self.assertEqual(tuple(query.keys()),
+                         ('scope', 'state', 'redirect_uri', 'client_id'))
         self.assertEqual(query['scope'], ['email'])
         self.assertEqual(query['redirect_uri'],
                          ['http://localhost/facebook/callback'])
