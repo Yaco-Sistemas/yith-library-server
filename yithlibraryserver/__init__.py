@@ -45,6 +45,7 @@ def main(global_config, **settings):
 
     # Routes
     config.include('yithlibraryserver.facebook')
+    config.include('yithlibraryserver.google')
     config.include('yithlibraryserver.oauth2')
     config.include('yithlibraryserver.password')
     config.include('yithlibraryserver.user')

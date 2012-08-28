@@ -31,6 +31,18 @@
         </div>
       </div>
     </li>
+
+    <li class="span3">
+      <div class="thumbnail">
+        <a href="${request.route_path('google_login')}?next_url=${next_url}">
+          <img src="${request.static_path('yithlibraryserver:static/img/facebook-logo.png')}" alt="" />
+        </a>
+        <div class="caption">
+          <a class="btn btn-primary" href="${request.route_path('google_login')}?next_url=${next_url}">Log in with Google</a>
+        </div>
+      </div>
+    </li>
+
   </ul>
 
 </tal:block>
