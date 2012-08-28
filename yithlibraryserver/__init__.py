@@ -30,7 +30,7 @@ def main(global_config, **settings):
     # Mailer setup
     if 'testing' in settings and settings['testing'] is True:
         config.include('pyramid_mailer.testing')
-    else:
+    else:  # pragma: no cover
         config.include('pyramid_mailer')
     config.include('pyramid_tm')
 
