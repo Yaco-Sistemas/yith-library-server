@@ -1,17 +1,22 @@
 from pyramid.httpexceptions import HTTPFound
-from pyramid.security import remember
 
 from openid.consumer import consumer
 from openid.extensions import ax
 from openid.store.filestore import FileOpenIDStore
 
 from yithlibraryserver.compat import urlparse
-from yithlibraryserver.user.utils import update_user
+from yithlibraryserver.user.utils import register_or_update
 
 def _get_consumer(request):
     settings = request.registry.settings
     store = FileOpenIDStore(settings['google_openid_store_path'])
     return consumer.Consumer(request.session, store)
+
+
+def _get_google_id(url):
+    parts = urlparse.urlparse(url)
+    query = dict(urlparse.parse_qsl(parts.query))
+    return query['id']
 
 
 AX_ATTRS = {
@@ -50,15 +55,7 @@ def google_callback(request):
     info = con.complete(request.GET, request.url)
     if info.status == consumer.SUCCESS:
         fr = ax.FetchResponse.fromSuccessResponse(info)
-        user_id = info.getDisplayIdentifier()
-
-        if 'next_url' in request.session:
-            next_url = request.session['next_url']
-            del request.session['next_url']
-        else:
-            next_url = request.route_path('home')
-
-        user = request.db.users.find_one({'google_id': user_id})
+        user_id = _get_google_id(info.getDisplayIdentifier())
         info = {
                 'provider': 'google',
                 'google_id': user_id,
@@ -66,14 +63,7 @@ def google_callback(request):
                 'last_name': fr.getSingle(AX_ATTRS['last_name']),
                 'email': fr.getSingle(AX_ATTRS['email']),
             }
-        if user is None:
-            request.session['user_info'] = info
-            request.session['next_url'] = next_url
-            return HTTPFound(location=request.route_path('register_new_user'))
-        else:
-            update_user(request.db, user, info)
-            remember_headers = remember(request, str(user['_id']))
-            return HTTPFound(location=next_url, headers=remember_headers)
+        return register_or_update(request, 'google', user_id, info)
 
     elif info.status == consumer.CANCEL:
         return 'canceled'
