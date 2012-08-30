@@ -63,7 +63,8 @@ def google_callback(request):
                 'last_name': fr.getSingle(AX_ATTRS['last_name']),
                 'email': fr.getSingle(AX_ATTRS['email']),
             }
-        return register_or_update(request, 'google', user_id, info)
+        return register_or_update(request, 'google', user_id, info,
+                                  default_url=request.route_path('home'))
 
     elif info.status == consumer.CANCEL:
         return 'canceled'

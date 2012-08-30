@@ -6,6 +6,7 @@ from yithlibraryserver.db import MongoDB
 from yithlibraryserver.testing import MONGO_URI
 
 from yithlibraryserver.user.utils import split_name, update_user
+from yithlibraryserver.user.utils import register_or_update
 
 
 class UtilsTests(unittest.TestCase):
@@ -59,3 +60,59 @@ class UtilsTests(unittest.TestCase):
         update_user(self.db, user, {'first_name': ''})
         updated_user = self.db.users.find_one({'_id': user_id})
         self.assertEqual(updated_user['first_name'], 'John')
+
+    def test_register_or_update(self):
+        request = testing.DummyRequest()
+        request.db = self.db
+        request.session = {}
+        response = register_or_update(request, 'skynet', 1, {
+                'screen_name': 'JohnDoe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'invented_attribute': 'foo',  # this will not be in the output
+                }, '/next')
+        self.assertEqual(response.status, '302 Found')
+        self.assertEqual(response.location, '/register')
+        self.assertEqual(request.session['next_url'], '/next')
+        self.assertEqual(request.session['user_info'], {
+                'screen_name': 'JohnDoe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': '',
+                })
+
+        # try with an existing user
+        user_id = self.db.users.insert({
+                'skynet_id': 1,
+                'screen_name': 'JohnDoe',
+                'first_name': 'John',
+                'last_name': '',
+                }, safe=True)
+
+        request = testing.DummyRequest()
+        request.db = self.db
+        request.session = {}
+        response = register_or_update(request, 'skynet', 1, {
+                'screen_name': 'JohnDoe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': 'john@example.com',
+                }, '/next')
+        self.assertEqual(response.status, '302 Found')
+        self.assertEqual(response.location, '/next')
+        user = self.db.users.find_one({'_id': user_id})
+        self.assertEqual(user['email'], 'john@example.com')
+        self.assertEqual(user['last_name'], 'Doe')
+
+        # maybe there is a next_url in the session
+        request = testing.DummyRequest()
+        request.db = self.db
+        request.session = {'next_url': '/foo'}
+        response = register_or_update(request, 'skynet', 1, {
+                'screen_name': 'JohnDoe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': 'john@example.com',
+                }, '/next')
+        self.assertEqual(response.status, '302 Found')
+        self.assertEqual(response.location, '/foo')

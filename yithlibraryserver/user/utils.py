@@ -30,18 +30,21 @@ def update_user(db, user, user_info):
                                 safe=True)
 
 
-def register_or_update(request, provider, user_id, info):
+def register_or_update(request, provider, user_id, info, default_url='/'):
     provider_key = '%s_id' % provider
     user = request.db.users.find_one({provider_key: user_id})
     if user is None:
 
+        new_info = {}
         for attribute in ('screen_name', 'first_name', 'last_name', 'email'):
-            if attribute not in info:
-                info[attribute] = ''
+            if attribute in info:
+                new_info[attribute] = info[attribute]
+            else:
+                new_info[attribute] = ''
 
-        request.session['user_info'] = info
+        request.session['user_info'] = new_info
         if 'next_url' not in request.session:
-            request.session['next_url'] = request.route_path('home')
+            request.session['next_url'] = default_url
         return HTTPFound(location=request.route_path('register_new_user'))
     else:
         update_user(request.db, user, info)
@@ -49,7 +52,7 @@ def register_or_update(request, provider, user_id, info):
             next_url = request.session['next_url']
             del request.session['next_url']
         else:
-            next_url = request.route_path('home')
+            next_url = default_url
 
         remember_headers = remember(request, str(user['_id']))
         return HTTPFound(location=next_url, headers=remember_headers)
