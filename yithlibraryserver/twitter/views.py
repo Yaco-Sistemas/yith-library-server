@@ -1,12 +1,11 @@
 from pyramid.httpexceptions import HTTPBadRequest, HTTPFound, HTTPUnauthorized
-from pyramid.security import remember
 
 import requests
 
 from yithlibraryserver.compat import urlparse
 from yithlibraryserver.twitter.authorization import auth_header
 from yithlibraryserver.twitter.information import get_user_info
-from yithlibraryserver.user.utils import split_name, update_user
+from yithlibraryserver.user.utils import split_name, register_or_update
 
 
 def twitter_login(request):
@@ -80,39 +79,16 @@ def twitter_callback(request):
     if response.status_code != 200:
         return HTTPUnauthorized(response.text)
 
-
     response_args = dict(urlparse.parse_qsl(response.text))
     #oauth_token_secret = response_args['oauth_token_secret']
     oauth_token = response_args['oauth_token']
     user_id = response_args['user_id']
-    screen_name = response_args['screen_name']
 
     info = get_user_info(settings, user_id, oauth_token)
     first_name, last_name = split_name(info['name'])
 
-    if 'next_url' in request.session:
-        next_url = request.session['next_url']
-        del request.session['next_url']
-    else:
-        next_url = request.route_path('home')
-
-    user = request.db.users.find_one({'twitter_id': user_id})
-    if user is None:
-        request.session['user_info'] = {
-            'provider': 'twitter',
-            'twitter_id': user_id,
-            'screen_name': screen_name,
+    return register_or_update(request, 'twitter', user_id, {
+            'screen_name': response_args['screen_name'],
             'first_name': first_name,
             'last_name': last_name,
-            }
-        request.session['next_url'] = next_url
-        return HTTPFound(location=request.route_path('register_new_user'))
-    else:
-        update_user(request.db, user, {
-                'screen_name': screen_name,
-                'first_name': first_name,
-                'last_name': last_name,
-                })
-        remember_headers = remember(request, str(user['_id']))
-        return HTTPFound(location=next_url,
-                         headers=remember_headers)
+            }, request.route_path('home'))
