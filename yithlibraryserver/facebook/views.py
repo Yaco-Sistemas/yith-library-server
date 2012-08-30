@@ -1,13 +1,12 @@
 import uuid
 
 from pyramid.httpexceptions import HTTPBadRequest, HTTPFound, HTTPUnauthorized
-from pyramid.security import remember
 
 import requests
 
 from yithlibraryserver.compat import urlparse, url_encode
 from yithlibraryserver.facebook.information import get_user_info
-from yithlibraryserver.user.utils import update_user
+from yithlibraryserver.user.utils import register_or_update
 
 
 def facebook_login(request):
@@ -79,26 +78,5 @@ def facebook_callback(request):
     info = get_user_info(settings, access_token)
     user_id = info['id']
 
-    if 'next_url' in request.session:
-        next_url = request.session['next_url']
-        del request.session['next_url']
-    else:
-        next_url = request.route_path('home')
-
-    user = request.db.users.find_one({'facebook_id': user_id})
-    if user is None:
-        request.session['user_info'] = {
-            'provider': 'facebook',
-            'facebook_id': user_id,
-            'screen_name': info['username'],
-            'first_name': info['first_name'],
-            'last_name': info['last_name'],
-            'email': info['email'],
-            }
-        request.session['next_url'] = next_url
-        return HTTPFound(location=request.route_path('register_new_user'))
-    else:
-        update_user(request.db, user, info)
-        remember_headers = remember(request, str(user['_id']))
-        return HTTPFound(location=next_url,
-                         headers=remember_headers)
+    return register_or_update(request, 'facebook', user_id, info,
+                              request.route_path('home'))
