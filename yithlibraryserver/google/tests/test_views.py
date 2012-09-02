@@ -2,6 +2,7 @@ from mock import patch
 
 from openid.association import Association
 from openid.consumer.consumer import AuthRequest
+from openid.consumer.consumer import SUCCESS, CANCEL, FAILURE, SETUP_NEEDED
 from openid.consumer.discover import OpenIDServiceEndpoint
 
 from yithlibraryserver import testing
@@ -19,6 +20,20 @@ def get_association():
     lifetime = 46799
     assoc_type = 'HMAC-SHA1'
     return Association(ASSOC_HANDLE, secret, issued, lifetime, assoc_type)
+
+
+class DummyInfo(object):
+
+    def __init__(self, status, identifier=None, response=None):
+        self.status = status
+        self.identifier = identifier
+        self.response = response
+
+    def getDisplayIdentifier(self):
+        return self.identifier
+
+    def extensionResponse(self, uri, signed):
+        return self.response
 
 
 class ViewTests(testing.TestCase):
@@ -74,3 +89,60 @@ class ViewTests(testing.TestCase):
                              ['http://axschema.org/namePerson/last'])
             self.assertEqual(query['openid.ax.type.ext2'],
                              ['http://axschema.org/contact/email'])
+
+    def test_google_callback(self):
+
+        with patch('openid.consumer.consumer.Consumer.complete') as fake:
+            fake.return_value = DummyInfo(CANCEL)
+            res = self.testapp.get('/google/callback')
+            self.assertEqual(res.text, 'canceled')
+
+            fake.return_value = DummyInfo(FAILURE)
+            res = self.testapp.get('/google/callback')
+            self.assertEqual(res.text, 'failure')
+
+            fake.return_value = DummyInfo(SETUP_NEEDED)
+            res = self.testapp.get('/google/callback')
+            self.assertEqual(res.text, 'setup needed')
+
+            fake.return_value = DummyInfo('other')
+            res = self.testapp.get('/google/callback')
+            self.assertEqual(res.text, 'unknown failure')
+
+            fake.return_value = DummyInfo(
+                SUCCESS,
+                'https://www.google.com/accounts/o8/id?id=1234',
+                {'value.ext2': 'john@example.com',
+                 'value.ext0': 'John',
+                 'value.ext1': 'Doe',
+                 'type.ext0': 'http://axschema.org/namePerson/first',
+                 'type.ext1': 'http://axschema.org/namePerson/last',
+                 'type.ext2': 'http://axschema.org/contact/email',
+                 'mode': 'fetch_response'}
+                )
+            res = self.testapp.get('/google/callback')
+            self.assertEqual(res.status, '302 Found')
+            self.assertEqual(res.location, 'http://localhost/register')
+
+            # do the same login but with an existing user
+            self.db.users.insert({
+                    'google_id': '1234',
+                    'first_name': 'John',
+                    'last_name': 'Doe',
+                    }, safe=True)
+
+            fake.return_value = DummyInfo(
+                SUCCESS,
+                'https://www.google.com/accounts/o8/id?id=1234',
+                {'value.ext2': 'john@example.com',
+                 'value.ext0': 'John',
+                 'value.ext1': 'Doe',
+                 'type.ext0': 'http://axschema.org/namePerson/first',
+                 'type.ext1': 'http://axschema.org/namePerson/last',
+                 'type.ext2': 'http://axschema.org/contact/email',
+                 'mode': 'fetch_response'}
+                )
+            res = self.testapp.get('/google/callback')
+            self.assertEqual(res.status, '302 Found')
+            self.assertEqual(res.location, 'http://localhost/')
+            self.assertTrue('Set-Cookie' in res.headers)
