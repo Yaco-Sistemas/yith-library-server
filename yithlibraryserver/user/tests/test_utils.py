@@ -79,6 +79,8 @@ class UtilsTests(unittest.TestCase):
                 'first_name': 'John',
                 'last_name': 'Doe',
                 'email': '',
+                'provider': 'skynet',
+                'skynet_id': 1,
                 })
 
         # try with an existing user
