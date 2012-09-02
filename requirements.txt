@@ -19,6 +19,7 @@ pyramid-beaker==0.7
 pyramid-debugtoolbar==1.0.2
 pyramid-mailer==0.9
 pyramid-tm==0.5
+python-openid==2.2.5
 repoze.lru==0.6
 repoze.sendmail==3.2
 requests==0.13.3
