@@ -35,7 +35,7 @@ def register_or_update(request, provider, user_id, info, default_url='/'):
     user = request.db.users.find_one({provider_key: user_id})
     if user is None:
 
-        new_info = {}
+        new_info = {'provider': provider, provider_key: user_id}
         for attribute in ('screen_name', 'first_name', 'last_name', 'email'):
             if attribute in info:
                 new_info[attribute] = info[attribute]
