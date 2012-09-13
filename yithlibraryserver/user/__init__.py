@@ -6,3 +6,4 @@ def includeme(config):
     config.add_route('user_send_email_verification_code',
                      '/send-email-verification-code')
     config.add_route('user_verify_email', '/verify-email')
+    config.add_route('user_merge_accounts', '/merge-accounts')

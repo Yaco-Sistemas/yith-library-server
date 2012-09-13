@@ -15,13 +15,26 @@
     <div class="span6" tal:content="structure form">form</div>
 
     <div class="span6" tal:condition="request.user.email">
-      <p tal:condition="request.user.email_verified">
-        Congratulations, your email is verified.
-      </p>
       <div tal:condition="not request.user.email_verified">
         <p>Your email is not verified so you can not link
           your different accounts.</p>
         <a id="open-email-verification-dialog" href="#email-verification-dialog" class="btn btn-primary" data-toggle="modal">Verify your email address</a>
+      </div>
+      <div tal:condition="request.user.email_verified">
+        <p>You are registered with the following accounts:</p>
+        <ul class="unstyled">
+          <li tal:repeat="account accounts">
+            <img tal:repeat="provider account['providers']" src="${request.static_path('yithlibraryserver:static/img/' + provider + '-mini-logo.png')}" alt="${provider}" width="32" height="32" />
+            <span class="badge" title="${account['passwords']} passwords" tal:content="account['passwords']">Number of passwords</span>
+          </li>
+        </ul>
+        <div tal:condition="has_several_accounts">
+          <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h4>Account merging is possible!</h4>
+            If you merge your accounts you will be able to access your passwords in a unified way: no matter which provider you use to log in you will always see the same set of passwords.</div>
+          <a class="btn btn-primary" href='${request.route_path("user_merge_accounts")}'>Merge my accounts ...</a>
+        </div>
       </div>
     </div>
   </div>

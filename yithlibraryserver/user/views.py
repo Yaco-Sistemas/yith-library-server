@@ -5,6 +5,7 @@ from pyramid.security import remember, forget
 from pyramid.view import view_config, forbidden_view_config
 
 from yithlibraryserver.compat import url_quote
+from yithlibraryserver.user.accounts import get_accounts, merge_accounts
 from yithlibraryserver.user.email_verification import EmailVerificationCode
 from yithlibraryserver.user.schemas import UserSchema
 
@@ -110,13 +111,19 @@ def profile(request):
 
     form = Form(schema, buttons=(button1, button2))
 
+    context = {
+        'accounts': get_accounts(request.db, request.user),
+    }
+    context['has_several_accounts'] = len(context['accounts']) > 1
+
     if 'submit' in request.POST:
 
         controls = request.POST.items()
         try:
             appstruct = form.validate(controls)
         except ValidationFailure as e:
-            return {'form': e.render()}
+            context['form'] = e.render()
+            return context
 
         changes = {
             'first_name': appstruct['first_name'],
@@ -138,13 +145,13 @@ def profile(request):
         else:
             request.session.flash('There were an error while saving your changes',
                                   'error')
-            return {'form': appstruct}
+            context['form'] = appstruct
+            return context
     elif 'cancel' in request.POST:
         return HTTPFound(location=request.route_path('user_profile'))
 
-    return {
-        'form': form.render(request.user),
-        }
+    context['form'] = form.render(request.user)
+    return context
 
 
 @view_config(route_name='user_send_email_verification_code',
@@ -203,3 +210,38 @@ def verify_email(request):
         return {
             'verified': False,
             }
+
+
+@view_config(route_name='user_merge_accounts',
+             renderer='templates/merge_accounts.pt')
+def account_merging(request):
+    available_accounts = get_accounts(request.db, request.user)
+    if not len(available_accounts) > 1:
+        return HTTPBadRequest('You do not have enought accounts to merge')
+
+    if 'submit' in request.POST:
+
+        accounts_to_merge = [account.replace('account-', '')
+                             for account in request.POST.keys()
+                             if account != 'submit']
+        if len(accounts_to_merge) > 1:
+            merged = merge_accounts(request.db, request.user, accounts_to_merge)
+            if merged > 0:
+                request.session.flash(
+                    'Congratulations, %d of your accounts have been merged into the current one' % merged,
+                    'success',
+                    )
+            else:
+                request.session.flash(
+                    'Sorry, your accounts were not merged',
+                    'error',
+                    )
+
+        return HTTPFound(location=request.route_path('user_profile'))
+
+    elif 'cancel' in request.POST:
+        return HTTPFound(location=request.route_path('user_profile'))
+
+    return {
+        'accounts': available_accounts,
+        }

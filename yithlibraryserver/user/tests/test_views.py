@@ -14,13 +14,25 @@ class DummyValidationFailure(ValidationFailure):
         return 'dummy error'
 
 
+class BadCursor(list):
+
+    def count(self):
+        return len(self)
+
+
 class BadCollection(object):
 
-    def __init__(self, user):
+    def __init__(self, user=None):
         self.user = user
 
     def find_one(self, *args, **kwargs):
         return self.user
+
+    def find(self, *args, **kwargs):
+        if self.user is None:
+            return BadCursor()
+        else:
+            return BadCursor([self.user])
 
     def update(self, *args, **kwargs):
         return {'n': 0}
@@ -30,6 +42,7 @@ class BadDB(object):
 
     def __init__(self, user):
         self.users = BadCollection(user)
+        self.passwords = BadCollection()
 
 
 class ViewTests(TestCase):

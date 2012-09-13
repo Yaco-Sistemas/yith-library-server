@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title">Merge accounts</tal:block>
+
+<tal:block metal:fill-slot="content">
+
+  <h1>Merge accounts</h1>
+
+  <p>Please, select the accounts you want to merge:</p>
+
+  <form action="" method="post">
+    <fieldset>
+      <ul class="unstyled">
+        <li tal:repeat="account accounts">
+          <input type="checkbox" checked="checked" name="account-${account['id']}" id="account-${account['id']}"/>
+          <label for="account-${account['id']}"><img tal:repeat="provider account['providers']" src="${request.static_path('yithlibraryserver:static/img/' + provider + '-mini-logo.png')}" alt="${provider}" width="32" height="32" /></label>
+          <span class="badge" tal:content="account['passwords']">Number of passwords</span>
+        </li>
+        <li class="buttons form-actions">
+          <button class="btnText submit btn btn-primary" value="submit" type="submit" name="submit">Merge my accounts</button>
+          <button class="btnText submit btn" value="cancel" type="submit" name="cancel">Cancel</button>
+        </li>
+      </ul>
+    </fieldset>
+  </form>
+
+
+</tal:block>
+</html>
