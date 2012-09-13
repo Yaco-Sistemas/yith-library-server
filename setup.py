@@ -7,16 +7,16 @@ README = open(os.path.join(here, 'README.rst')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 
 requires = [
-    'deform',
-    'pymongo',
-    'pyramid',
+    'deform==0.9.5',
+    'pymongo==2.3',
+    'pyramid==1.3.2',
     'pyramid_beaker==0.7',
-    'pyramid_debugtoolbar',
+    'pyramid_debugtoolbar==1.0.2',
     'pyramid_mailer==0.9',
     'pyramid_tm==0.5',
     'python-openid==2.2.5',
-    'requests',
-    'waitress',
+    'requests==0.14.0',
+    'waitress==0.8.1',
     ]
 
 setup(name='yith-library-server',
