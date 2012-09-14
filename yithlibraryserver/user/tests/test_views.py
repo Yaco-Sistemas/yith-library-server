@@ -272,6 +272,44 @@ class ViewTests(TestCase):
             self.assertEqual(res.status, '200 OK')
             res.mustcontain('There were an error while saving your changes')
 
+    def test_destroy(self):
+        # this view required authentication
+        res = self.testapp.get('/destroy')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Log in')
+
+        # Log in
+        user_id = self.db.users.insert({
+                'twitter_id': 'twitter1',
+                'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': '',
+                'authorized_apps': [],
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+
+        res = self.testapp.get('/destroy')
+        res.mustcontain('Destroy account')
+        res.mustcontain('Do you really want to destroy your account?')
+        res.mustcontain('You will not be able to undo this operation')
+
+        res = self.testapp.post('/destroy', {
+                'cancel': 'Cancel',
+                }, status=302)
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/profile')
+
+        res = self.testapp.post('/destroy', {
+                'submit': 'Yes, I am sure. Destroy my account',
+                }, status=302)
+        self.assertEqual(res.location, 'http://localhost/')
+        self.assertTrue('Set-Cookie' in res.headers)
+        self.assertTrue('auth_tkt=""' in res.headers['Set-Cookie'])
+
+        user = self.db.users.find_one({'_id': user_id})
+        self.assertEqual(None, user)
+
     def test_send_email_verification_code(self):
         # this view required authentication
         res = self.testapp.get('/send-email-verification-code')

@@ -12,7 +12,10 @@
 
   <div class="row">
 
-    <div class="span6" tal:content="structure form">form</div>
+    <div class="span6">
+      <h4>Personal information</h4>
+      <form tal:replace="structure form">form</form>
+    </div>
 
     <div class="span6" tal:condition="request.user.email">
       <div tal:condition="not request.user.email_verified">
@@ -21,6 +24,7 @@
         <a id="open-email-verification-dialog" href="#email-verification-dialog" class="btn btn-primary" data-toggle="modal">Verify your email address</a>
       </div>
       <div tal:condition="request.user.email_verified">
+        <h4>Identity providers</h4>
         <p>You are registered with the following accounts:</p>
         <ul class="unstyled">
           <li tal:repeat="account accounts">
@@ -36,6 +40,17 @@
           <a class="btn btn-primary" href='${request.route_path("user_merge_accounts")}'>Merge my accounts ...</a>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="span6">
+      <h4>I am tired of using Yith Library</h4>
+      <p>We are very sorry to hear that, but hey, it's your decission!</p>
+      <a href="${request.route_path('user_destroy')}" class="btn btn-danger">
+        Destroy my account ...
+      </a>
     </div>
   </div>
 

@@ -7,7 +7,9 @@ from pyramid.view import view_config, forbidden_view_config
 from yithlibraryserver.compat import url_quote
 from yithlibraryserver.user.accounts import get_accounts, merge_accounts
 from yithlibraryserver.user.email_verification import EmailVerificationCode
-from yithlibraryserver.user.schemas import UserSchema
+from yithlibraryserver.user.schemas import UserSchema, AccountDestroySchema
+from yithlibraryserver.user.utils import delete_user
+from yithlibraryserver.password.models import PasswordsManager
 
 
 @view_config(route_name='login', renderer='templates/login.pt')
@@ -97,6 +99,45 @@ def register_new_user(request):
 def logout(request):
     return HTTPFound(location=request.route_path('home'),
                      headers=forget(request))
+
+
+@view_config(route_name='user_destroy',
+             renderer='templates/destroy.pt',
+             permission='destroy-account')
+def destroy(request):
+    schema = AccountDestroySchema()
+    button1 = Button('submit', 'Yes, I am sure. Destroy my account')
+    button1.css_class = 'btn-danger'
+    button2 = Button('cancel', 'Cancel')
+    button2.css_class = ''
+
+    form = Form(schema, buttons=(button1, button2))
+
+    passwords_manager = PasswordsManager(request.db)
+
+    if 'submit' in request.POST:
+        # TODO: send an email to the admins with the reason
+        passwords_manager.delete(request.user)
+        # TODO: remove user's applications
+        delete_user(request.db, request.user)
+        request.session.flash(
+            'Your account has been removed. Have a nice day!',
+            'success',
+            )
+        return HTTPFound(location=request.route_path('home'),
+                         headers=forget(request))
+
+    elif 'cancel' in request.POST:
+        request.session.flash(
+            'Thanks for reconsidering removing your account!',
+            'info',
+            )
+        return HTTPFound(location=request.route_path('user_profile'))
+
+    return {
+        'passwords': passwords_manager.retrieve(request.user).count(),
+        'form': form.render()
+        }
 
 
 @view_config(route_name='user_profile',

@@ -16,6 +16,7 @@ class RootFactory(object):
         (Allow, Authenticated, 'add-authorized-app'),
         (Allow, Authenticated, 'revoke-authorized-app'),
         (Allow, Authenticated, 'edit-profile'),
+        (Allow, Authenticated, 'destroy-account'),
         )
 
     def __init__(self, request):

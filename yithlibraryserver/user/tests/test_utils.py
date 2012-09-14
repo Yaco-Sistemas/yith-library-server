@@ -5,7 +5,7 @@ from pyramid import testing
 from yithlibraryserver.db import MongoDB
 from yithlibraryserver.testing import MONGO_URI
 
-from yithlibraryserver.user.utils import split_name, update_user
+from yithlibraryserver.user.utils import split_name, delete_user, update_user
 from yithlibraryserver.user.utils import register_or_update
 
 
@@ -30,6 +30,19 @@ class UtilsTests(unittest.TestCase):
                           ('John', 'M Doe'))
         self.assertEquals(split_name(''),
                           ('', ''))
+
+    def test_delete_user(self):
+        user_id = self.db.users.insert({
+                'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': '',
+                }, safe=True)
+        user = self.db.users.find_one({'_id': user_id}, safe=True)
+        n_users = self.db.users.count()
+        self.assertTrue(delete_user(self.db, user))
+        refreshed_user = self.db.users.find_one({'_id': user_id}, safe=True)
+        self.assertEqual(None, refreshed_user)
+        self.assertEqual(n_users - 1, self.db.users.count())
 
     def test_update_user(self):
         user_id = self.db.users.insert({

@@ -14,6 +14,11 @@ def split_name(name):
     return first_name, last_name
 
 
+def delete_user(db, user):
+    result = db.users.remove(user['_id'], safe=True)
+    return result['n'] == 1
+
+
 def update_user(db, user, user_info):
     changes = {}
     for attribute in ('screen_name', 'first_name', 'last_name', 'email'):

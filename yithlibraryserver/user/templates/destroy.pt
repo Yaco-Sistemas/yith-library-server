@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title">Destroy account</tal:block>
+
+<tal:block metal:fill-slot="content">
+
+  <h1>Destroy account</h1>
+
+  <p tal:condition="passwords">${ request.user.first_name }, you already have <strong>${ passwords } passwords</strong></p>
+
+  <div class="alert alert-danger">
+    <h4>Do you really want to destroy your account?</h4>
+
+    <p>All your personal information and passwords will be removed from this server.</p>
+
+    <p>You will not be able to undo this operation. Think about it.</p>
+  </div>
+
+  <form tal:replace="structure form">form</form>
+
+</tal:block>
+</html>
