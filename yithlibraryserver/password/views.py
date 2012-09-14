@@ -8,6 +8,7 @@ from pyramid.view import view_config, view_defaults
 from yithlibraryserver.errors import password_not_found, invalid_password_id
 from yithlibraryserver.security import authorize_user
 from yithlibraryserver.utils import jsonable
+from yithlibraryserver.password.models import PasswordsManager
 from yithlibraryserver.password.validation import validate_password
 
 
@@ -16,6 +17,7 @@ class PasswordCollectionRESTView(object):
 
     def __init__(self, request):
         self.request = request
+        self.passwords_manager = PasswordsManager(request.db)
 
     @view_config(request_method='OPTIONS', renderer='string')
     def options(self):
@@ -27,9 +29,7 @@ class PasswordCollectionRESTView(object):
     @view_config(request_method='GET')
     def get(self):
         user = authorize_user(self.request)
-        query = {'owner': user['_id']}
-        return [jsonable(p)
-                for p in self.request.db.passwords.find(query)]
+        return [jsonable(p) for p in self.passwords_manager.retrieve(user)]
 
     @view_config(request_method='POST')
     def post(self):
@@ -42,12 +42,7 @@ class PasswordCollectionRESTView(object):
             return HTTPBadRequest(body=json.dumps(result),
                                   content_type='application/json')
 
-        # add the password to the database
-        password['owner'] = user['_id']
-        _id = self.request.db.passwords.insert(password, safe=True)
-        password['_id'] = _id
-
-        return jsonable(password)
+        return jsonable(self.passwords_manager.create(user, password))
 
 
 @view_defaults(route_name='password_view', renderer='json')
@@ -55,7 +50,7 @@ class PasswordRESTView(object):
 
     def __init__(self, request):
         self.request = request
-
+        self.passwords_manager = PasswordsManager(request.db)
         self.password_id = self.request.matchdict['password']
 
     @view_config(request_method='OPTIONS', renderer='string')
@@ -67,13 +62,13 @@ class PasswordRESTView(object):
 
     @view_config(request_method='GET')
     def get(self):
-        authorize_user(self.request)
+        user = authorize_user(self.request)
         try:
             _id = bson.ObjectId(self.password_id)
         except bson.errors.InvalidId:
             return invalid_password_id()
 
-        password = self.request.db.passwords.find_one(_id)
+        password = self.passwords_manager.retrieve(user, _id)
 
         if password is None:
             return password_not_found()
@@ -97,30 +92,21 @@ class PasswordRESTView(object):
             return HTTPBadRequest(body=json.dumps(result),
                                   content_type='application/json')
 
-        # update the password in the database
-        password['owner'] = user['_id']
-        result = self.request.db.passwords.update({'_id': _id},
-                                                  password,
-                                                  safe=True)
-
-        # result['n'] is the number of documents updated
-        # See http://www.mongodb.org/display/DOCS/getLastError+Command#getLastErrorCommand-ReturnValue
-        if result['n'] == 1:
-            return jsonable(password)
-        else:
+        result = self.passwords_manager.update(user, _id, password)
+        if result is None:
             return password_not_found()
+        else:
+            return jsonable(result)
 
     @view_config(request_method='DELETE')
     def delete(self):
-        authorize_user(self.request)
+        user = authorize_user(self.request)
         try:
             _id = bson.ObjectId(self.password_id)
         except bson.errors.InvalidId:
             return invalid_password_id()
 
-        result = self.request.db.passwords.remove(_id, safe=True)
-
-        if result['n'] == 1:
+        if self.passwords_manager.delete(user, _id):
             return ''
         else:
             return password_not_found()

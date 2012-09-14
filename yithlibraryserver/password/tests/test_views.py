@@ -75,7 +75,7 @@ class ViewTests(testing.TestCase):
         password_id = self.db.passwords.insert({
                 'service': 'testing',
                 'secret': 's3cr3t',
-                'owner': 'user1',
+                'owner': self.user_id,
                 }, safe=True)
         res = self.testapp.get('/passwords/%s' % str(password_id),
                                headers=self.auth_header)
@@ -83,8 +83,8 @@ class ViewTests(testing.TestCase):
         self.assertEqual(res.json, {
                 'service': 'testing',
                 'secret': 's3cr3t',
-                'owner': 'user1',
-                '_id': str(password_id)
+                'owner': str(self.user_id),
+                '_id': str(password_id),
                 })
 
     def test_password_put(self):
@@ -103,7 +103,7 @@ class ViewTests(testing.TestCase):
         password_id = self.db.passwords.insert({
                 'service': 'testing',
                 'secret': 's3cr3t',
-                'owner': 'user1',
+                'owner': self.user_id,
                 }, safe=True)
         data = '{"service": "testing2", "secret": "sup3rs3cr3t", "_id": "%s"}' % str(password_id)
         res = self.testapp.put('/passwords/%s' % str(password_id),
@@ -149,7 +149,7 @@ class ViewTests(testing.TestCase):
         password = {
             'secret': 's3cr3t',
             'service': 'myservice',
-            'owner': 'user6',
+            'owner': self.user_id,
             }
         _id = self.db.passwords.insert(password, safe=True)
         count = self.db.passwords.count()
