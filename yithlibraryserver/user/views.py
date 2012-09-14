@@ -213,11 +213,12 @@ def verify_email(request):
 
 
 @view_config(route_name='user_merge_accounts',
-             renderer='templates/merge_accounts.pt')
+             renderer='templates/merge_accounts.pt',
+             permission='edit-profile')
 def account_merging(request):
     available_accounts = get_accounts(request.db, request.user)
     if not len(available_accounts) > 1:
-        return HTTPBadRequest('You do not have enought accounts to merge')
+        return HTTPBadRequest('You do not have enough accounts to merge')
 
     if 'submit' in request.POST:
 

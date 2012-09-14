@@ -118,7 +118,7 @@ class AccountTests(unittest.TestCase):
 
         # merge with invented users does nothing neither
         self.assertEquals(0, merge_accounts(self.db, master_user,
-                                            [str('000000000000000000000000')]))
+                                            ['000000000000000000000000']))
         master_user_reloaded = self.db.users.find_one({'_id': master_id},
                                                       safe=True)
         self.assertEquals(master_user, master_user_reloaded)

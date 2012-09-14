@@ -47,7 +47,7 @@ class BadDB(object):
 
 class ViewTests(TestCase):
 
-    clean_collections = ('users', )
+    clean_collections = ('users', 'passwords', )
 
     def test_login(self):
         res = self.testapp.get('/login?param1=value1&param2=value2')
@@ -368,3 +368,110 @@ class ViewTests(TestCase):
         user = self.db.users.find_one({'_id': user_id})
         self.assertEqual(user['email_verified'], True)
         self.assertFalse('email_verification_code' in user)
+
+    def test_account_merging(self):
+        # this view required authentication
+        res = self.testapp.get('/merge-accounts')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Log in')
+
+        # Log in
+        user1_id = self.db.users.insert({
+                'twitter_id': 'twitter1',
+                'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': 'john@example.com',
+                'email_verified': True,
+                'authorized_apps': ['app1', 'app2'],
+                }, safe=True)
+        self.set_user_cookie(str(user1_id))
+        self.db.passwords.insert({
+                'owner': user1_id,
+                'password': 'secret1',
+                })
+
+        # one account is not enough for merging
+        res = self.testapp.get('/merge-accounts', status=400)
+        self.assertEqual(res.status, '400 Bad Request')
+        res.mustcontain('You do not have enough accounts to merge')
+
+        # so let's create another account with the same email
+        user2_id = self.db.users.insert({
+                'google_id': 'google1',
+                'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': 'john@example.com',
+                'email_verified': True,
+                'authorized_apps': ['app2', 'app3'],
+                }, safe=True)
+        self.db.passwords.insert({
+                'owner': user2_id,
+                'password': 'secret2',
+                })
+
+        # now the profile view should say I can merge my accounts
+        res = self.testapp.get('/profile')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('You are registered with the following accounts')
+        res.mustcontain('Account merging is possible!')
+        res.mustcontain('Merge my accounts ...')
+
+        # and the merge account view ask me to select the accounts
+        res = self.testapp.get('/merge-accounts')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Please, select the accounts you want to merge')
+        res.mustcontain('Merge my accounts')
+
+        # if the user hits cancel nothing happens
+        res = self.testapp.post('/merge-accounts', {
+                'account-%s' % str(user1_id): 'on',
+                'account-%s' % str(user2_id): 'on',
+                'cancel': 'Cancel',
+                }, status=302)
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/profile')
+        self.assertEqual(2, self.db.users.count())
+        self.assertEqual(1, self.db.passwords.find(
+                {'owner': user1_id}, safe=True).count())
+        self.assertEqual(1, self.db.passwords.find(
+                {'owner': user2_id}, safe=True).count())
+
+        # if only one account is selected or fake accounts
+        # are selected nothing is merged
+        res = self.testapp.post('/merge-accounts', {
+                'account-%s' % str(user1_id): 'on',
+                'account-000000000000000000000000': 'on',
+                'submit': 'Merge my accounts',
+                }, status=302)
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/profile')
+        self.assertEqual(2, self.db.users.count())
+        self.assertEqual(1, self.db.passwords.find(
+                {'owner': user1_id}, safe=True).count())
+        self.assertEqual(1, self.db.passwords.find(
+                {'owner': user2_id}, safe=True).count())
+
+        # let's merge them
+        res = self.testapp.post('/merge-accounts', {
+                'account-%s' % str(user1_id): 'on',
+                'account-%s' % str(user2_id): 'on',
+                'submit': 'Merge my accounts',
+                }, status=302)
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/profile')
+
+        # the accounts have been merged
+        self.assertEqual(1, self.db.users.count())
+        user1_refreshed = self.db.users.find_one({'_id': user1_id}, safe=True)
+        self.assertEqual(user1_refreshed['google_id'], 'google1')
+        self.assertEqual(user1_refreshed['authorized_apps'],
+                         ['app1', 'app2', 'app3'])
+
+        user2_refreshed = self.db.users.find_one({'_id': user2_id}, safe=True)
+        self.assertEqual(user2_refreshed, None)
+
+        self.assertEqual(2, self.db.passwords.find(
+                {'owner': user1_id}, safe=True).count())
+
