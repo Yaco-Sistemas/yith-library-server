@@ -53,7 +53,7 @@ def merge_users(db, user1, user2):
             '$set': {
                 'owner': user1['_id'],
                 },
-            }, safe=True)
+            }, multi=True, safe=True)
 
     # copy authorized_apps from user2 to user1
     updates = {

@@ -159,7 +159,11 @@ class AccountTests(unittest.TestCase):
                 }, safe=True)
         self.db.passwords.insert({
                 'owner': user1_id,
-                'password1': 'secret1',
+                'password': 'secret1',
+                }, safe=True)
+        self.db.passwords.insert({
+                'owner': user1_id,
+                'password': 'secret2',
                 }, safe=True)
         user1 = self.db.users.find_one({'_id': user1_id}, safe=True)
 
@@ -170,12 +174,16 @@ class AccountTests(unittest.TestCase):
                 }, safe=True)
         self.db.passwords.insert({
                 'owner': user2_id,
-                'password2': 'secret2',
+                'password': 'secret3',
+                }, safe=True)
+        self.db.passwords.insert({
+                'owner': user2_id,
+                'password': 'secret4',
                 }, safe=True)
         user2 = self.db.users.find_one({'_id': user2_id}, safe=True)
 
         merge_users(self.db, user1, user2)
-        self.assertEquals(2, self.db.passwords.find(
+        self.assertEquals(4, self.db.passwords.find(
                 {'owner': user1_id}, safe=True).count())
         self.assertEquals(0, self.db.passwords.find(
                 {'owner': user2_id}, safe=True).count())
