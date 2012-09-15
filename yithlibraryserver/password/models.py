@@ -61,4 +61,4 @@ class PasswordsManager(object):
             query['_id'] = _id
 
         result = self.db.passwords.remove(query, safe=True)
-        return result['n'] == 1
+        return result['n'] > 0
