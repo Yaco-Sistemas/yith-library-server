@@ -1,13 +1,17 @@
 import unittest
 
 from pyramid import testing
+from pyramid.testing import DummyRequest
+
+from pyramid_mailer import get_mailer
 
 from yithlibraryserver.db import MongoDB
 from yithlibraryserver.user.accounts import get_available_providers
 from yithlibraryserver.user.accounts import get_providers, get_n_passwords
 from yithlibraryserver.user.accounts import get_accounts, merge_accounts
 from yithlibraryserver.user.accounts import merge_users
-from yithlibraryserver.testing import MONGO_URI
+from yithlibraryserver.user.accounts import notify_admins_of_account_removal
+from yithlibraryserver.testing import MONGO_URI, TestCase
 
 
 class AccountTests(unittest.TestCase):
@@ -196,3 +200,30 @@ class AccountTests(unittest.TestCase):
                 'google_id': 4321,
                 'authorized_apps': ['a', 'b', 'c'],
                 })
+
+
+class AccountRemovalNotificationTests(TestCase):
+
+    def setUp(self):
+        self.config = testing.setUp()
+        self.config.include('pyramid_mailer.testing')
+        self.config.include('yithlibraryserver')
+        super(AccountRemovalNotificationTests, self).setUp()
+
+    def test_notify_admins_of_account_removal(self):
+        request = DummyRequest()
+        mailer = get_mailer(request)
+        self.assertEqual(len(mailer.outbox), 0)
+
+        user = {'first_name': 'John', 'last_name': 'Doe',
+                'email': 'john@example.com'}
+        reason = 'I do not trust free services'
+        admin_emails = ['admin1@example.com', 'admin2@example.com']
+        notify_admins_of_account_removal(request, user, reason, admin_emails)
+
+        self.assertEqual(len(mailer.outbox), 1)
+        self.assertEqual(mailer.outbox[0].subject,
+                        'A user has destroyed his Yith Library account')
+        self.assertEqual(mailer.outbox[0].recipients, admin_emails)
+        self.assertTrue('John Doe <john@example.com' in mailer.outbox[0].body)
+        self.assertTrue('I do not trust free services' in mailer.outbox[0].body)

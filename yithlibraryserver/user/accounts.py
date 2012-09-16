@@ -82,13 +82,7 @@ def merge_users(db, user1, user2):
     db.users.remove(user2['_id'])
 
 
-def notify_admins_of_account_removal(request, user, reason):
-    settings = request.registry.settings
-    admin_emails = settings['admin_emails']
-
-    if not admin_emails:
-        return
-
+def notify_admins_of_account_removal(request, user, reason, admin_emails):
     home_link = request.route_url('home')
     reason = reason or 'no reason was given'
 

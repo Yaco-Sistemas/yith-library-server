@@ -31,6 +31,7 @@ class TestCase(unittest.TestCase):
             'facebook_app_id': 'id',
             'facebook_app_secret': 'secret',
             'testing': True,
+            'admin_emails': 'admin1@example.com admin2@example.com'
             }
         app = main({}, **settings)
         self.testapp = TestApp(app)

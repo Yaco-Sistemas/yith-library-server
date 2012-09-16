@@ -57,10 +57,14 @@ def main(global_config, **settings):
     config.include('yithlibraryserver.user')
     config.include('yithlibraryserver.twitter')
 
-    config.add_route('home', '/')
+    includeme(config)
 
     # Subscribers
     config.include('yithlibraryserver.subscribers')
 
     config.scan()
     return config.make_wsgi_app()
+
+
+def includeme(config):
+    config.add_route('home', '/')
