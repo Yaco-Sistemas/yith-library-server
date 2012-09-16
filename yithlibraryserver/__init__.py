@@ -16,6 +16,12 @@ def main(global_config, **settings):
         option = 'mail_' + key
         settings[option] = read_setting_from_env(settings, option)
 
+    # read admin_emails option
+    settings['admin_emails'] = read_setting_from_env(settings, 'admin_emails')
+    if settings['admin_emails'] is not None:
+        settings['admin_emails'] = settings['admin_emails'].split()
+
+    # main config object
     config = Configurator(
         settings=settings,
         root_factory=RootFactory,

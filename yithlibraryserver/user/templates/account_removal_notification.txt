@@ -1,0 +1,9 @@
+The user ${user.first_name} ${user.last_name} <${user.email}>
+just destroyed his Yith Library account.
+
+The reason given for this sad event was:
+
+${reason}
+
+You are receiving this email because you are an administrator
+of the Yith Library instance at ${home_link}

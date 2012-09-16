@@ -6,6 +6,7 @@ from pyramid.view import view_config, forbidden_view_config
 
 from yithlibraryserver.compat import url_quote
 from yithlibraryserver.user.accounts import get_accounts, merge_accounts
+from yithlibraryserver.user.accounts import notify_admins_of_account_removal
 from yithlibraryserver.user.email_verification import EmailVerificationCode
 from yithlibraryserver.user.schemas import UserSchema, AccountDestroySchema
 from yithlibraryserver.user.utils import delete_user
@@ -114,12 +115,26 @@ def destroy(request):
     form = Form(schema, buttons=(button1, button2))
 
     passwords_manager = PasswordsManager(request.db)
+    context = {
+        'passwords': passwords_manager.retrieve(request.user).count(),
+        }
 
     if 'submit' in request.POST:
-        # TODO: send an email to the admins with the reason
+
+        controls = request.POST.items()
+        try:
+            appstruct = form.validate(controls)
+        except ValidationFailure as e:
+            context['form'] = e.render()
+            return context
+
+        reason = appstruct['reason']
+        notify_admins_of_account_removal(request, request.user, reason)
+
         passwords_manager.delete(request.user)
         # TODO: remove user's applications
         delete_user(request.db, request.user)
+
         request.session.flash(
             'Your account has been removed. Have a nice day!',
             'success',
@@ -134,10 +149,8 @@ def destroy(request):
             )
         return HTTPFound(location=request.route_path('user_profile'))
 
-    return {
-        'passwords': passwords_manager.retrieve(request.user).count(),
-        'form': form.render()
-        }
+    context['form'] = form.render()
+    return context
 
 
 @view_config(route_name='user_profile',

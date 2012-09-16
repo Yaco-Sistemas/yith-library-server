@@ -45,6 +45,9 @@ class EmailVerificationCode(object):
         text_body = render('yithlibraryserver.user:templates/email_verification_code.txt',
                            {'link': link, 'user': user},
                            request=request)
+        # chamaleon txt templates are rendered as utf-8 bytestrings
+        text_body = unicode(text_body, 'utf-8')
+
         html_body = render('yithlibraryserver.user:templates/email_verification_code.pt',
                            {'link': link, 'user': user},
                            request=request)

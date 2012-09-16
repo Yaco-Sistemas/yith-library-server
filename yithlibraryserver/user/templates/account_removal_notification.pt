@@ -1,0 +1,11 @@
+<p>The user ${user.first_name} ${user.last_name} <${user.email}>
+just destroyed his/her Yith Library account.</p>
+
+<p>The reason given for this sad event was:</p>
+
+<blockquote>
+${reason}
+</blockquote>
+
+<p>You are receiving this email because you are an administrator
+of the Yith Library instance at <a href="${home_link}">${home_link}</a></p>
