@@ -294,13 +294,25 @@ class ViewTests(TestCase):
         res.mustcontain('Do you really want to destroy your account?')
         res.mustcontain('You will not be able to undo this operation')
 
+        # simulate a cancel
         res = self.testapp.post('/destroy', {
                 'cancel': 'Cancel',
                 }, status=302)
         self.assertEqual(res.status, '302 Found')
         self.assertEqual(res.location, 'http://localhost/profile')
 
+        # make the form fail
+        with patch('deform.Form.validate') as fake:
+            fake.side_effect = DummyValidationFailure('f', 'c', 'e')
+            res = self.testapp.post('/destroy', {
+                    'reason': '',
+                    'submit': 'Yes, I am sure. Destroy my account',
+                    })
+            self.assertEqual(res.status, '200 OK')
+
+        # now the real one
         res = self.testapp.post('/destroy', {
+                'reason': 'I do not need a password manager',
                 'submit': 'Yes, I am sure. Destroy my account',
                 }, status=302)
         self.assertEqual(res.location, 'http://localhost/')
@@ -309,6 +321,16 @@ class ViewTests(TestCase):
 
         user = self.db.users.find_one({'_id': user_id})
         self.assertEqual(None, user)
+
+        res.request.registry = self.testapp.app.registry
+        mailer = get_mailer(res.request)
+        self.assertEqual(len(mailer.outbox), 1)
+        self.assertEqual(mailer.outbox[0].subject,
+                         'A user has destroyed his Yith Library account')
+        self.assertEqual(mailer.outbox[0].recipients,
+                         ['admin1@example.com', 'admin2@example.com'])
+        self.assertTrue('I do not need a password manager' in mailer.outbox[0].body)
+
 
     def test_send_email_verification_code(self):
         # this view required authentication
