@@ -1,6 +1,6 @@
 # Yith Library Server is a password storage server.
 # Copyright (C) 2012 Yaco Sistemas
-# Copyright (C) 2012 Alejandro Blanco Escudero <korosu.itai@gmail.com>
+# Copyright (C) 2012 Alejandro Blanco Escudero <alejandro.b.e@gmail.com>
 # Copyright (C) 2012 Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>
 #
 # This file is part of Yith Library Server.
