@@ -10,12 +10,15 @@ def get_available_providers():
     return ('facebook', 'google', 'twitter')
 
 
-def get_providers(user):
+def get_providers(user, current):
     result = []
     for provider in get_available_providers():
         key = provider + '_id'
         if key in user and user[key] is not None:
-            result.append(provider)
+            result.append({
+                    'name': provider,
+                    'is_current': current == provider,
+                    })
     return result
 
 
@@ -23,14 +26,21 @@ def get_n_passwords(db, user):
     return db.passwords.find({'owner': user['_id']}, safe=True).count()
 
 
-def get_accounts(db, user):
+def get_accounts(db, user, current_provider):
     email = user.get('email', None)
     results = db.users.find({'email_verified': True, 'email': email},
                             safe=True)
-    return [{'providers': get_providers(user),
-             'passwords': get_n_passwords(db, user),
-             'id': str(user['_id'])}
-            for user in results]
+    accounts = []
+    for user in results:
+        providers = get_providers(user, current_provider)
+        is_current = current_provider in [p['name'] for p in providers]
+        accounts.append({
+            'providers': providers,
+            'is_current': is_current,
+            'passwords': get_n_passwords(db, user),
+            'id': str(user['_id']),
+            })
+    return accounts
 
 
 def merge_accounts(db, master_user, accounts):

@@ -59,5 +59,6 @@ def register_or_update(request, provider, user_id, info, default_url='/'):
         else:
             next_url = default_url
 
+        request.session['current_provider'] = provider
         remember_headers = remember(request, str(user['_id']))
         return HTTPFound(location=next_url, headers=remember_headers)

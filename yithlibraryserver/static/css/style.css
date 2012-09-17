@@ -49,3 +49,11 @@ footer ul li {
 .thumbnail .caption {
     text-align: center;
 }
+
+.provider {
+    padding: 1px;
+    border: 1px solid transparent;
+}
+.current {
+    border-color: #333333;
+}

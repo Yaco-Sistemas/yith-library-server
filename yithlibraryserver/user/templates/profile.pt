@@ -28,8 +28,15 @@
         <p>You are registered with the following accounts:</p>
         <ul class="unstyled">
           <li tal:repeat="account accounts">
-            <img tal:repeat="provider account['providers']" src="${request.static_path('yithlibraryserver:static/img/' + provider + '-mini-logo.png')}" alt="${provider}" width="32" height="32" />
+            <div tal:omit-tag="" tal:repeat="provider account['providers']">
+              <img tal:attributes="class 'current provider' if provider['is_current'] else 'provider'"
+                   src="${request.static_path('yithlibraryserver:static/img/' + provider['name'] + '-mini-logo.png')}"
+                   alt="${provider['name']}"
+                   width="32"
+                   height="32" />
+            </div>
             <span class="badge" title="${account['passwords']} passwords" tal:content="account['passwords']">Number of passwords</span>
+            <span class="badge badge-inverse" tal:condition="account['is_current']">Current</span>
           </li>
         </ul>
         <div tal:condition="has_several_accounts">

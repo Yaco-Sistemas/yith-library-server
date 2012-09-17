@@ -17,8 +17,15 @@
       <ul class="unstyled">
         <li tal:repeat="account accounts">
           <input type="checkbox" checked="checked" name="account-${account['id']}" id="account-${account['id']}"/>
-          <label for="account-${account['id']}"><img tal:repeat="provider account['providers']" src="${request.static_path('yithlibraryserver:static/img/' + provider + '-mini-logo.png')}" alt="${provider}" width="32" height="32" /></label>
+          <label for="account-${account['id']}">
+            <img tal:repeat="provider account['providers']"
+                 tal:attributes="class 'current provider' if provider['is_current'] else 'provider'"
+                 src="${request.static_path('yithlibraryserver:static/img/' + provider['name'] + '-mini-logo.png')}"
+                 alt="${provider['name']}"
+                 width="32"
+                 height="32" /></label>
           <span class="badge" tal:content="account['passwords']">Number of passwords</span>
+          <span class="badge badge-inverse" tal:condition="account['is_current']">Current</span>
         </li>
         <li class="buttons form-actions">
           <button class="btnText submit btn btn-primary" value="submit" type="submit" name="submit">Merge my accounts</button>

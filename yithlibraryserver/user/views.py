@@ -78,6 +78,7 @@ def register_new_user(request):
         if 'next_url' in request.session:
             del request.session['next_url']
 
+        request.session['current_provider'] = provider
         return HTTPFound(location=next_url,
                          headers=remember(request, str(_id)))
     elif 'cancel' in request.POST:
@@ -168,8 +169,9 @@ def profile(request):
 
     form = Form(schema, buttons=(button1, button2))
 
+    current_provider = request.session.get('current_provider', None)
     context = {
-        'accounts': get_accounts(request.db, request.user),
+        'accounts': get_accounts(request.db, request.user, current_provider),
     }
     context['has_several_accounts'] = len(context['accounts']) > 1
 
@@ -273,7 +275,9 @@ def verify_email(request):
              renderer='templates/merge_accounts.pt',
              permission='edit-profile')
 def account_merging(request):
-    available_accounts = get_accounts(request.db, request.user)
+    current_provider = request.session.get('current_provider', None)
+    available_accounts = get_accounts(request.db, request.user,
+                                      current_provider)
     if not len(available_accounts) > 1:
         return HTTPBadRequest('You do not have enough accounts to merge')
 
