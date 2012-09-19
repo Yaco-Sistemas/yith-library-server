@@ -18,19 +18,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-import os.path
-
 from yithlibraryserver import read_setting_from_env
 
 
 def includeme(config):
     settings = config.registry.settings
 
-    here = os.path.abspath(os.path.dirname(__file__))
-
     for key, default in (
-        ('openid_url', 'https://www.google.com/accounts/o8/id'),
-        ('openid_store_path', os.path.join(here, 'openid-store')),
+        ('client_id', None),
+        ('client_secret', None),
+        ('auth_uri', 'https://accounts.google.com/o/oauth2/auth'),
+        ('token_uri', 'https://accounts.google.com/o/oauth2/token'),
+        ('user_info_uri', 'https://www.googleapis.com/oauth2/v1/userinfo'),
         ):
 
         option = 'google_%s' % key
