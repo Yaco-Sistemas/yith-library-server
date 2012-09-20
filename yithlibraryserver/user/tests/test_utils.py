@@ -42,14 +42,14 @@ class UtilsTests(unittest.TestCase):
         self.db.drop_collection('users')
 
     def test_split_name(self):
-        self.assertEquals(split_name('John Doe'),
-                          ('John', 'Doe'))
-        self.assertEquals(split_name('John'),
-                          ('John', ''))
-        self.assertEquals(split_name('John M Doe'),
-                          ('John', 'M Doe'))
-        self.assertEquals(split_name(''),
-                          ('', ''))
+        self.assertEqual(split_name('John Doe'),
+                         ('John', 'Doe'))
+        self.assertEqual(split_name('John'),
+                         ('John', ''))
+        self.assertEqual(split_name('John M Doe'),
+                         ('John', 'M Doe'))
+        self.assertEqual(split_name(''),
+                         ('', ''))
 
     def test_delete_user(self):
         user_id = self.db.users.insert({

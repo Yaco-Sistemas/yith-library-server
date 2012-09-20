@@ -47,14 +47,14 @@ class AccountTests(unittest.TestCase):
         self.db.drop_collection('passwords')
 
     def test_get_available_providers(self):
-        self.assertEquals(('facebook', 'google', 'twitter'),
-                          get_available_providers())
+        self.assertEqual(('facebook', 'google', 'twitter'),
+                         get_available_providers())
 
     def test_get_providers(self):
-        self.assertEquals([], get_providers({}, ''))
-        self.assertEquals([{'name': 'facebook', 'is_current': True}],
-                          get_providers({'facebook_id': 1234}, 'facebook'))
-        self.assertEquals([{
+        self.assertEqual([], get_providers({}, ''))
+        self.assertEqual([{'name': 'facebook', 'is_current': True}],
+                         get_providers({'facebook_id': 1234}, 'facebook'))
+        self.assertEqual([{
                     'name': 'facebook',
                     'is_current': True,
                     }, {
@@ -67,39 +67,39 @@ class AccountTests(unittest.TestCase):
                           get_providers({'facebook_id': 1234,
                                          'google_id': 4321,
                                          'twitter_id': 6789}, 'facebook'))
-        self.assertEquals([], get_providers({'myspace_id': 1234}, ''))
+        self.assertEqual([], get_providers({'myspace_id': 1234}, ''))
 
     def test_n_passwords(self):
-        self.assertEquals(0, get_n_passwords(self.db, {'_id': 1}))
+        self.assertEqual(0, get_n_passwords(self.db, {'_id': 1}))
 
         self.db.passwords.insert({'password': 'secret', 'owner': 1}, safe=True)
-        self.assertEquals(1, get_n_passwords(self.db, {'_id': 1}))
+        self.assertEqual(1, get_n_passwords(self.db, {'_id': 1}))
 
         self.db.passwords.insert({'password2': 'secret2', 'owner': 1}, safe=True)
-        self.assertEquals(2, get_n_passwords(self.db, {'_id': 1}))
+        self.assertEqual(2, get_n_passwords(self.db, {'_id': 1}))
         self.db.passwords.insert({'password2': 'secret2', 'owner': 2}, safe=True)
-        self.assertEquals(2, get_n_passwords(self.db, {'_id': 1}))
+        self.assertEqual(2, get_n_passwords(self.db, {'_id': 1}))
 
     def test_get_accounts(self):
-        self.assertEquals([], get_accounts(self.db, {}, ''))
-        self.assertEquals([], get_accounts(self.db,
-                                           {'email': 'john@example.com'}, ''))
+        self.assertEqual([], get_accounts(self.db, {}, ''))
+        self.assertEqual([], get_accounts(self.db,
+                                          {'email': 'john@example.com'}, ''))
 
         user_id = self.db.users.insert({'email': 'john@example.com'},
                                        safe=True)
-        self.assertEquals([], get_accounts(self.db,
-                                           {'email': 'john@example.com'}, ''))
+        self.assertEqual([], get_accounts(self.db,
+                                          {'email': 'john@example.com'}, ''))
 
         self.db.users.update({'email': 'john@example.com'}, {
                 '$set': {'twitter_id': 1234},
                 }, safe=True)
-        self.assertEquals([], get_accounts(self.db,
-                                           {'email': 'john@example.com'}, ''))
+        self.assertEqual([], get_accounts(self.db,
+                                          {'email': 'john@example.com'}, ''))
 
         self.db.users.update({'email': 'john@example.com'}, {
                 '$set': {'email_verified': True},
                 }, safe=True)
-        self.assertEquals([{
+        self.assertEqual([{
                     'providers': [{
                             'name': 'twitter',
                             'is_current': True,
@@ -117,7 +117,7 @@ class AccountTests(unittest.TestCase):
         self.db.users.update({'email': 'john@example.com'}, {
                 '$set': {'twitter_id': 1234},
                 }, safe=True)
-        self.assertEquals([{
+        self.assertEqual([{
                     'providers': [{
                             'name': 'twitter',
                             'is_current': False,
@@ -133,7 +133,7 @@ class AccountTests(unittest.TestCase):
         self.db.users.update({'email': 'john@example.com'}, {
                 '$set': {'google_id': 4321},
                 }, safe=True)
-        self.assertEquals([{
+        self.assertEqual([{
                     'providers': [{
                             'name': 'google',
                             'is_current': True,
@@ -150,7 +150,7 @@ class AccountTests(unittest.TestCase):
                                        'google'))
 
     def test_merge_accounts(self):
-        self.assertEquals(0, merge_accounts(self.db, {}, []))
+        self.assertEqual(0, merge_accounts(self.db, {}, []))
 
         master_id = self.db.users.insert({
                 'email': 'john@example.com',
@@ -165,21 +165,21 @@ class AccountTests(unittest.TestCase):
                 }, safe=True)
 
         # merging with itself does nothing
-        self.assertEquals(1, self.db.users.count())
-        self.assertEquals(0, merge_accounts(self.db, master_user,
+        self.assertEqual(1, self.db.users.count())
+        self.assertEqual(0, merge_accounts(self.db, master_user,
                                             [str(master_id)]))
         master_user_reloaded = self.db.users.find_one({'_id': master_id},
                                                       safe=True)
-        self.assertEquals(master_user, master_user_reloaded)
-        self.assertEquals(1, self.db.users.count())
+        self.assertEqual(master_user, master_user_reloaded)
+        self.assertEqual(1, self.db.users.count())
 
         # merge with invented users does nothing neither
-        self.assertEquals(0, merge_accounts(self.db, master_user,
-                                            ['000000000000000000000000']))
+        self.assertEqual(0, merge_accounts(self.db, master_user,
+                                           ['000000000000000000000000']))
         master_user_reloaded = self.db.users.find_one({'_id': master_id},
                                                       safe=True)
-        self.assertEquals(master_user, master_user_reloaded)
-        self.assertEquals(1, self.db.users.count())
+        self.assertEqual(master_user, master_user_reloaded)
+        self.assertEqual(1, self.db.users.count())
 
         # let's create valid users
         other_id = self.db.users.insert({
@@ -187,26 +187,26 @@ class AccountTests(unittest.TestCase):
                 'google_id': 4321,
                 'authorized_apps': ['b', 'c'],
                 }, safe=True)
-        self.assertEquals(2, self.db.users.count())
+        self.assertEqual(2, self.db.users.count())
         self.db.passwords.insert({
                 'owner': other_id,
                 'password2': 'secret2',
                 }, safe=True)
 
-        self.assertEquals(1, merge_accounts(self.db, master_user,
-                                            [str(other_id)]))
+        self.assertEqual(1, merge_accounts(self.db, master_user,
+                                           [str(other_id)]))
         master_user_reloaded = self.db.users.find_one({'_id': master_id},
                                                       safe=True)
-        self.assertEquals({
+        self.assertEqual({
                 '_id': master_id,
                 'email': 'john@example.com',
                 'twitter_id': 1234,
                 'google_id': 4321,
                 'authorized_apps': ['a', 'b', 'c'],
                 }, master_user_reloaded)
-        self.assertEquals(1, self.db.users.count())
-        self.assertEquals(2,
-                          self.db.passwords.find({'owner': master_id}).count())
+        self.assertEqual(1, self.db.users.count())
+        self.assertEqual(2,
+                         self.db.passwords.find({'owner': master_id}).count())
 
     def test_merge_users(self):
         user1_id = self.db.users.insert({
@@ -240,13 +240,13 @@ class AccountTests(unittest.TestCase):
         user2 = self.db.users.find_one({'_id': user2_id}, safe=True)
 
         merge_users(self.db, user1, user2)
-        self.assertEquals(4, self.db.passwords.find(
+        self.assertEqual(4, self.db.passwords.find(
                 {'owner': user1_id}, safe=True).count())
-        self.assertEquals(0, self.db.passwords.find(
+        self.assertEqual(0, self.db.passwords.find(
                 {'owner': user2_id}, safe=True).count())
-        self.assertEquals(None, self.db.users.find_one({'_id': user2_id}))
+        self.assertEqual(None, self.db.users.find_one({'_id': user2_id}))
         user1_refreshed = self.db.users.find_one({'_id': user1_id}, safe=True)
-        self.assertEquals(user1_refreshed, {
+        self.assertEqual(user1_refreshed, {
                 '_id': user1_id,
                 'email': 'john@example.com',
                 'twitter_id': 1234,
