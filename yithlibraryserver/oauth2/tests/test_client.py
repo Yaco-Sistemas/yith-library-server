@@ -22,6 +22,7 @@ from mock import patch
 
 from pyramid.testing import DummyRequest
 
+from yithlibraryserver.oauth2.client import get_user_info
 from yithlibraryserver.oauth2.client import oauth2_step1, oauth2_step2
 
 
@@ -109,3 +110,25 @@ class Oauth2ClientTests(unittest.TestCase):
                                     client_id, client_secret,
                                     redirect_url, scope)
             self.assertEqual(response, 'qwerty')
+
+    def test_get_user_info(self):
+        with patch('requests.get') as fake:
+            fake.return_value.status_code = 401
+            fake.return_value.text = 'Unauthorized request'
+
+            response = get_user_info('http://example.com/info', 'qwerty')
+            self.assertEqual(response.status, '401 Unauthorized')
+            self.assertEqual(response.message, 'Unauthorized request')
+
+        with patch('requests.get') as fake:
+            fake.return_value.status_code = 200
+            fake.return_value.json = {
+                'name': 'John',
+                'surname': 'Doe',
+                }
+
+            response = get_user_info('http://example.com/info', 'qwerty')
+            self.assertEqual(response, {
+                    'name': 'John',
+                    'surname': 'Doe',
+                    })
