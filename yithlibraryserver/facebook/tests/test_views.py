@@ -37,32 +37,15 @@ class ViewTests(testing.TestCase):
         self.assertEqual(url.netloc, 'www.facebook.com')
         self.assertEqual(url.path, '/dialog/oauth/')
         query = urlparse.parse_qs(url.query)
-        self.assertEqual(tuple(query.keys()),
-                         ('scope', 'state', 'redirect_uri', 'client_id'))
+        self.assertEqual(tuple(query.keys()), (
+                'scope', 'state', 'redirect_uri', 'response_type', 'client_id',
+                ))
         self.assertEqual(query['scope'], ['email'])
         self.assertEqual(query['redirect_uri'],
                          ['http://localhost/facebook/callback'])
         self.assertEqual(query['client_id'], ['id'])
 
     def test_facebook_callback(self):
-        # bad requests
-        res = self.testapp.get('/facebook/callback', status=400)
-        self.assertEqual(res.status, '400 Bad Request')
-        res.mustcontain('Missing required code')
-
-        res = self.testapp.get('/facebook/callback', {
-                'code': '1234',
-                }, status=400)
-        self.assertEqual(res.status, '400 Bad Request')
-        res.mustcontain('Missing required state')
-
-        res = self.testapp.get('/facebook/callback', {
-                'code': '1234',
-                'state': 'mystate',
-                }, status=401)
-        self.assertEqual(res.status, '401 Unauthorized')
-        res.mustcontain('Missing internal state. You may be a victim of CSRF')
-
         # call the login to fill the session
         res = self.testapp.get('/facebook/login', {
                 'next_url': 'https://localhost/foo/bar',
@@ -72,137 +55,24 @@ class ViewTests(testing.TestCase):
         query = urlparse.parse_qs(url.query)
         state = query['state'][0]
 
-        res = self.testapp.get('/facebook/callback', {
-                'code': '1234',
-                'state': 'mystate',
-                }, status=401)
-        self.assertEqual(res.status, '401 Unauthorized')
-        res.mustcontain('State parameter does not match internal state. You may be a victim of CSRF')
+        with patch('requests.post') as fake_post:
+            fake_post.return_value.status_code = 200
+            fake_post.return_value.json = {
+                'access_token': '1234',
+                }
+            with patch('requests.get') as fake_get:
+                fake_get.return_value.status_code = 200
+                fake_get.return_value.json = {
+                    'id': '789',
+                    'username': 'john.doe',
+                    'first_name': 'John',
+                    'last_name': 'Doe',
+                    'email': 'john@example.com',
+                    }
 
-        with patch('requests.get') as fake:
-            response = fake.return_value
-            response.status_code = 401
-            response.text = 'Facebook does not want us'
-            res = self.testapp.get('/facebook/callback', {
-                    'code': '1234',
-                    'state': state,
-                    }, status=401)
-            self.assertEqual(res.status, '401 Unauthorized')
-            res.mustcontain('Facebook does not want us')
-
-        res = self.testapp.get('/facebook/login', {
-                'next_url': 'https://localhost/foo/bar',
-                })
-        self.assertEqual(res.status, '302 Found')
-        url = urlparse.urlparse(res.location)
-        query = urlparse.parse_qs(url.query)
-        state = query['state'][0]
-
-        with patch('requests.get') as fake:
-            # simulate different return values
-            def side_effect(*args):
-
-                def second_call(*args):
-                    fake.return_value.status_code = 200
-                    fake.return_value.json = {
-                        'id': '789',
-                        'username': 'john.doe',
-                        'first_name': 'John',
-                        'last_name': 'Doe',
-                        'email': 'john@example.com',
-                        }
-                    return fake.return_value
-
-                fake.return_value.status_code = 200
-                fake.return_value.text = 'access_token=xyz&expires=1000'
-                fake.side_effect = second_call
-                return fake.return_value
-            fake.side_effect  = side_effect
-
-            res = self.testapp.get('/facebook/callback', {
+                res = self.testapp.get('/facebook/callback', {
                     'code': '1234',
                     'state': state,
                     })
-            self.assertEqual(res.status, '302 Found')
-            self.assertEqual(res.location, 'http://localhost/register')
-
-        # do the same login but with an existing user
-        self.db.users.insert({
-                'facebook_id': '789',
-                'screen_name': 'John Doe',
-                'first_name': 'John',
-                'last_name': 'Doe',
-                }, safe=True)
-
-        res = self.testapp.get('/facebook/login', {
-                'next_url': 'https://localhost/foo/bar',
-                })
-        self.assertEqual(res.status, '302 Found')
-        url = urlparse.urlparse(res.location)
-        query = urlparse.parse_qs(url.query)
-        state = query['state'][0]
-
-        with patch('requests.get') as fake:
-            # simulate different return values
-            def side_effect2(*args):
-
-                def second_call2(*args):
-                    fake.return_value.status_code = 200
-                    fake.return_value.json = {
-                        'id': '789',
-                        'username': 'john.doe',
-                        'first_name': 'John',
-                        'last_name': 'Doe',
-                        'email': 'john@example.com',
-                        }
-                    return fake.return_value
-
-                fake.return_value.status_code = 200
-                fake.return_value.text = 'access_token=xyz&expires=1000'
-                fake.side_effect = second_call2
-                return fake.return_value
-            fake.side_effect  = side_effect2
-
-            res = self.testapp.get('/facebook/callback', {
-                    'code': '1234',
-                    'state': state,
-                    })
-            self.assertEqual(res.status, '302 Found')
-            self.assertEqual(res.location, 'https://localhost/foo/bar')
-            self.assertTrue('Set-Cookie' in res.headers)
-
-        # and the same thing without setting a next_url in the login view
-        res = self.testapp.get('/facebook/login')
-        self.assertEqual(res.status, '302 Found')
-        url = urlparse.urlparse(res.location)
-        query = urlparse.parse_qs(url.query)
-        state = query['state'][0]
-
-        with patch('requests.get') as fake:
-            # simulate different return values
-            def side_effect3(*args):
-
-                def second_call3(*args):
-                    fake.return_value.status_code = 200
-                    fake.return_value.json = {
-                        'id': '789',
-                        'username': 'john.doe',
-                        'first_name': 'John',
-                        'last_name': 'Doe',
-                        'email': 'john@example.com',
-                        }
-                    return fake.return_value
-
-                fake.return_value.status_code = 200
-                fake.return_value.text = 'access_token=xyz&expires=1000'
-                fake.side_effect = second_call3
-                return fake.return_value
-            fake.side_effect  = side_effect3
-
-            res = self.testapp.get('/facebook/callback', {
-                    'code': '1234',
-                    'state': state,
-                    })
-            self.assertEqual(res.status, '302 Found')
-            self.assertEqual(res.location, 'http://localhost/')
-            self.assertTrue('Set-Cookie' in res.headers)
+                self.assertEqual(res.status, '302 Found')
+                self.assertEqual(res.location, 'http://localhost/register')

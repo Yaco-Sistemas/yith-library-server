@@ -50,6 +50,8 @@ class TestCase(unittest.TestCase):
             'twitter_consumer_secret': 'secret',
             'facebook_app_id': 'id',
             'facebook_app_secret': 'secret',
+            'google_client_id': 'id',
+            'google_client_secret': 'secret',
             'testing': True,
             'admin_emails': 'admin1@example.com admin2@example.com'
             }
