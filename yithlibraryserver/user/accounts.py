@@ -122,7 +122,7 @@ def notify_admins_of_account_removal(request, user, reason, admin_emails):
         request=request,
         )
     # chamaleon txt templates are rendered as utf-8 bytestrings
-    text_body = unicode(text_body, 'utf-8')
+    text_body = text_body.decode('utf-8')
 
     html_body = render(
         'yithlibraryserver.user:templates/account_removal_notification.pt',
