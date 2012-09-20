@@ -34,7 +34,6 @@ requires = [
     'pyramid_debugtoolbar==1.0.2',
     'pyramid_mailer==0.9',
     'pyramid_tm==0.5',
-    'python-openid==2.2.5',
     'requests==0.14.0',
     'waitress==0.8.1',
     ]
