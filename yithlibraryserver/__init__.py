@@ -18,6 +18,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
+
 from pyramid.config import Configurator
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
@@ -82,7 +84,7 @@ def main(global_config, **settings):
     # Subscribers
     config.include('yithlibraryserver.subscribers')
 
-    config.scan()
+    config.scan(ignore=[re.compile('.*tests.*').search, '.testing'])
     return config.make_wsgi_app()
 
 
