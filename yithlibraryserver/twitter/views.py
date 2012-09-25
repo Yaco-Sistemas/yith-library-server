@@ -26,6 +26,7 @@ from yithlibraryserver.compat import urlparse
 from yithlibraryserver.twitter.authorization import auth_header
 from yithlibraryserver.twitter.information import get_user_info
 from yithlibraryserver.user.utils import split_name, register_or_update
+from yithlibraryserver.user.utils import user_from_provider_id
 
 
 def twitter_login(request):
@@ -103,12 +104,22 @@ def twitter_callback(request):
     #oauth_token_secret = response_args['oauth_token_secret']
     oauth_token = response_args['oauth_token']
     user_id = response_args['user_id']
+    screen_name = response_args['screen_name']
 
-    info = get_user_info(settings, user_id, oauth_token)
-    first_name, last_name = split_name(info['name'])
-
-    return register_or_update(request, 'twitter', user_id, {
-            'screen_name': response_args['screen_name'],
+    existing_user = user_from_provider_id(request.db, 'twitter', user_id)
+    if existing_user is None:
+        # fetch Twitter info only if this is the first time for
+        # the user sice Twitter has very strong limits for using
+        # its APIs
+        twitter_info = get_user_info(settings, user_id, oauth_token)
+        first_name, last_name = split_name(twitter_info['name'])
+        info = {
+            'screen_name': screen_name,
             'first_name': first_name,
             'last_name': last_name,
-            }, request.route_path('home'))
+            }
+    else:
+        info = {}
+
+    return register_or_update(request, 'twitter', user_id, info,
+                              request.route_path('home'))

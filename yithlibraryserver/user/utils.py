@@ -55,9 +55,18 @@ def update_user(db, user, user_info):
                                 safe=True)
 
 
+def _get_provider_key(provider):
+    return '%s_id' % provider
+
+
+def user_from_provider_id(db, provider, user_id):
+    provider_key = _get_provider_key(provider)
+    return db.users.find_one({provider_key: user_id})
+
+
 def register_or_update(request, provider, user_id, info, default_url='/'):
-    provider_key = '%s_id' % provider
-    user = request.db.users.find_one({provider_key: user_id})
+    provider_key = _get_provider_key(provider)
+    user = user_from_provider_id(request.db, provider, user_id)
     if user is None:
 
         new_info = {'provider': provider, provider_key: user_id}

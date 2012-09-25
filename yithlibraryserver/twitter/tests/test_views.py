@@ -152,10 +152,10 @@ class ViewTests(testing.TestCase):
                 self.assertEqual(res.location, 'http://localhost/')
                 self.assertTrue('Set-Cookie' in res.headers)
 
-                # as the response from twitter included a different
-                # screen_name, our user must be updated
+                # even if the response from twitter included a different
+                # screen_name, our user will not be updated
                 new_user = self.db.users.find_one({'_id': user_id}, safe=True)
-                self.assertEqual(new_user['screen_name'], 'JohnDoe')
+                self.assertEqual(new_user['screen_name'], 'Johnny')
 
         # good request, existing user, remember next_url
         with patch('requests.post') as fake:
