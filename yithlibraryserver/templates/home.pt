@@ -51,7 +51,7 @@
 
   <p>That's why you should use a different password for every single service in order to have decent security. If this sounds difficult that's because it is really difficult. Human's memory is not that good and even if it was, we have better things to store in our brains.</p>
 
-  <p>Enter Yith Library! You can create as many passwords as you need and they will be available to you anytime, from any device. You can also store more information for each password such as expiration dates, notes, tags and much more. It's free, super secure and fun. Learn more about <a href="${request.route_path('how')}">how it works.</a></p>
+  <p>Enter Yith Library! You can create as many passwords as you need and they will be available to you anytime, from any device. You can also store more information for each password such as expiration dates, notes, tags and much more. It's free, super secure and fun. Learn more about <a href="#">how it works.</a></p>
 
   <p>We hope we get rid of passwords in the future since they are very complicated both for users and for developers. But we are not there yet and until we are, Yith Library can help you to manage this nightmare.</p>
 
