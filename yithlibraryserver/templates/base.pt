@@ -28,20 +28,6 @@
         <div class="navbar-inner">
           <div class="container">
             <a class="brand" href="${request.route_path('home')}">Yith Library</a>
-            <ul class="nav">
-              <li>
-                <a href="${request.route_path('why')}">Why you sould use it</a>
-              </li>
-              <li>
-                <a href="${request.route_path('how')}">How it works</a>
-              </li>
-              <li>
-                <a href="#">About</a>
-              </li>
-              <li>
-                <a href="#">License</a>
-              </li>
-            </ul>
             <ul class="nav pull-right">
               <li tal:condition="not request.user">
                 <a href="${request.route_path('login')}">Log in</a>

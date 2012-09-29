@@ -90,5 +90,3 @@ def main(global_config, **settings):
 
 def includeme(config):
     config.add_route('home', '/')
-    config.add_route('why', '/why')
-    config.add_route('how', '/how')

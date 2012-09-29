@@ -45,6 +45,63 @@
 
   </div>
 
+  <h2>Why a password manager</h2>
+
+  <p>Today, most Internet services forces you to use an username and a password as your credentials to identify you. Using the same password for all our Internet services is a bad idea: if any of those service's security is compromised and an attacker can see the passwords used at that service, well, that means the attacker can access all the services you use with the same password. Scary, isn't it?</p>
+
+  <p>That's why you should use a different password for every single service in order to have decent security. If this sounds difficult that's because it is really difficult. Human's memory is not that good and even if it was, we have better things to store in our brains.</p>
+
+  <p>Enter Yith Library! You can create as many passwords as you need and they will be available to you anytime, from any device. You can also store more information for each password such as expiration dates, notes, tags and much more. It's free, super secure and fun. Learn more about <a href="${request.route_path('how')}">how it works.</a></p>
+
+  <p>We hope we get rid of passwords in the future since they are very complicated both for users and for developers. But we are not there yet and until we are, Yith Library can help you to manage this nightmare.</p>
+
+  <h2>How it works</h2>
+
+  <h3>Overview</h3>
+
+  <ol>
+    <li>When you access the Yith Library the server sends your ciphered password collection to your browser using secure protocols.</li>
+    <li>Yith Library asks you for the master password everytime you open an existing password or create a new one.</li>
+    <li>After making changes, the data is sent back to the server where it's persisted and it is ready to fetch from your other devices.</li>
+  </ol>
+
+  <h3 id="secure">It's secure</h3>
+
+  <ul>
+    <li>All traffic is encrypted. No more eavesdropping.</li>
+    <li>All data is cyphered. Only you can access your secrets.</li>
+    <li>We use secure protocols and algorithms: SSL, Oauth2, ...</li>
+  </ul>
+
+  <h3 id="easy">It's easy</h3>
+
+  <ol>
+    <li><a href="${request.route_path('login')}">Sign in</a></li>
+    <li>Create some passwords</li>
+    <li>Retrieve them anytime, anywhere</li>
+  </ol>
+
+  <h3 id="free">It's free</h3>
+
+  <ol>
+    <li>Free as in freedom: you can use Yith Library any way you want. You can run your own server or clients. You can modify it. You can distribute it. We are happy with all of these.</li>
+    <li>Free as in beer: you can use our server and clients without paying a dime. If you like it a lot, we are happy to accept donations.</li>
+  </ol>
+
+  <h3 id="master-password">The master password</h3>
+
+  <p>The master password is the only thing you will need to remember when using Yith Library. This secret is used to encrypt all your other passwords so only you can access them. That means several things:</p>
+
+  <ul>
+    <li>The server doesn't know your passwords. Many people says this but for us, it's so important that's one of the reasons the source code is free and open so everybody can actually check that's true. Those not trusting our servers can even run their own servers fetching the code.</li>
+    <li>The only place the master password is stored is in your brain. Even your browser will forget about it as soon as it uses it to decypher a password.</li>
+    <li>As a consequence, it is very important that you remember your master password. There is no 'I forget my password' link.</li>
+    <li>It is also very important that your master password is hard to guess, since that is the key that opens all your doors.</li>
+  </ul>
+
+  <p>Of course you can change your master password anytime you want and all your passwords will be recyphered automatically.</p>
+
+
 </tal:block>
 
 </html>
