@@ -37,7 +37,7 @@
     </div>
 
     <div class="span4">
-      <img class="pull-left" src="${request.static_path('yithlibraryserver:static/img/liberty.png')}" width="64" height="48" />
+      <img class="pull-left" src="${request.static_path('yithlibraryserver:static/img/condor.png')}" width="64" height="48" />
       <h2>Free</h2>
       <p>The Yith Library is a free service. We really want the Internet to be a safer place and we believe a free, easy and secure password manager was required for this. Ideally in the future we will need only one credential. Yes, the same one that you will use with your flying car...</p>
       <p><a href="#">Lear more</a></p>
