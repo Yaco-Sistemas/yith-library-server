@@ -37,9 +37,9 @@ class ViewTests(testing.TestCase):
         self.assertEqual(url.netloc, 'accounts.google.com')
         self.assertEqual(url.path, '/o/oauth2/auth')
         query = urlparse.parse_qs(url.query)
-        self.assertEqual(tuple(query.keys()), (
-                'scope', 'state', 'redirect_uri', 'response_type', 'client_id',
-                ))
+        self.assertEqual(sorted(query.keys()), [
+                'client_id', 'redirect_uri', 'response_type', 'scope', 'state',
+                ])
         scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
 
         self.assertEqual(query['scope'], [scope])
