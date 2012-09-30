@@ -68,23 +68,35 @@ footer ul li {
 .carousel .item {
     width: 50%;
     height: 340px;
-    padding-left: 10%;
-    padding-right: 40%;
-    padding-top: 14%;
+    padding: 13% 40% 6% 10%;
 }
 
 .carousel .item#slide1 {
-    background: transparent url(../img/yithian.png) no-repeat top right;
+    background: transparent url(../img/yithian.png) no-repeat 90% center;
 }
 
-.carousel .item#slide2 {
-    background: transparent url(../img/lovecraft.png) no-repeat top right;
+.carousel .item#slide2:before {
+    content: url(../img/password-list-screenhost.png);
+    position: absolute;
+    -moz-transform: translate(30em, -4em) rotate(-10deg);
+    -webkit-transform: translate(30em, -4em) rotate(-10deg);
+
+    box-shadow: 6px 6px 10px #cccccc;
+}
+
+.carousel .item#slide3 {
+    background: transparent url(../img/devices.png) no-repeat 90% center;
+}
+
+.carousel .item#slide4 {
+    background: transparent url(../img/lovecraft.png) no-repeat 90% center;
 }
 
 .carousel .item h1 {
     margin: 0;
     font-size: 400%;
     line-height: 1.5em;
+    width: 8em;
 }
 
 .carousel .item small {

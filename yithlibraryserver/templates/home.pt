@@ -13,12 +13,30 @@
     <div class="carousel-inner">
       <div id="slide1" class="active item">
         <h1><small>Welcome to the</small> Yith Library</h1>
+        <a href="#" class="btn btn-info btn-large">Try it for free</a>
         <div class="carousel-caption">
           <h4>Web password manager</h4>
           <p>Yith Library is a web password manager. It will help you to keep your passwords under control in a secure and easy way.</p>
         </div>
       </div>
       <div id="slide2" class="item">
+        <h1><small>Managing your passwords can be</small> Secure, easy and free!</h1>
+        <a href="#" class="btn btn-info btn-large">Learn more</a>
+        <div class="carousel-caption">
+          <h4>Lots of useful features</h4>
+          <p>Social authentication, simmetric encryption, multiple clients, tags, notes and other metadata in each password, and many more!</p>
+        </div>
+      </div>
+      <div id="slide3" class="item">
+        <h1><small>Access your passwords from</small> Any device</h1>
+        <a href="#" class="btn btn-info btn-large">Download the app for your phone</a>
+        <div class="carousel-caption">
+          <h4>Your passwords are really important</h4>
+          <p>You should be able to access your passwords at home, on the run, in a foreign country without Internet connection... Anytime, anywhere!</p>
+        </div>
+      </div>
+      <div id="slide4" class="item">
+        <h1>Testimonials</h1>
         <blockquote>
           <h2>I couldn't live a week without a private library. <small>H. P. Lovecraft</small></h2>
         </blockquote>
