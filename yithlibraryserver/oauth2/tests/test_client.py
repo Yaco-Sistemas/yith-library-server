@@ -22,6 +22,7 @@ from mock import patch
 
 from pyramid.testing import DummyRequest
 
+from yithlibraryserver.compat import urlparse
 from yithlibraryserver.oauth2.client import get_user_info
 from yithlibraryserver.oauth2.client import oauth2_step1, oauth2_step2
 
@@ -43,12 +44,18 @@ class Oauth2ClientTests(unittest.TestCase):
                 scope='scope1 scope2'
                 )
             self.assertEqual(response.status, '302 Found')
-            self.assertEqual(
-                response.location,
-                'http://example.com/oauth2/auth?scope=scope1+scope2&state=random-string&redirect_uri=http%3A%2F%2Flocalhost%2Foauth2%2Fcallback&response_type=code&client_id=1234',
-                )
-            self.assertEqual(request.session['next_url'],
-                             'http://localhost/')
+            url = urlparse.urlparse(response.location)
+            self.assertEqual(url.netloc, 'example.com')
+            self.assertEqual(url.path, '/oauth2/auth')
+            query = urlparse.parse_qs(url.query)
+            self.assertEqual(query, {
+                    'scope': ['scope1 scope2'],
+                    'state': ['random-string'],
+                    'redirect_uri': ['http://localhost/oauth2/callback'],
+                    'response_type': ['code'],
+                    'client_id': ['1234'],
+                    })
+            self.assertEqual(request.session['next_url'], 'http://localhost/')
 
     def test_oauth2_step2(self):
         token_uri = 'http://example.com/oauth2/token'
