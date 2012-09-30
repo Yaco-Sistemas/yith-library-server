@@ -7,19 +7,32 @@
 <tal:block metal:fill-slot="header-title">Home</tal:block>
 
 <tal:block metal:fill-slot="content">
-  <div class="hero-unit">
-    <h1>Welcome to Yith Library</h1>
-    <p>Yith Library is a web password manager. It will help you to keep your passwords under control in a secure and easy way.</p>
-    <p>
-      <a class="btn btn-primary btn-large" href="${request.route_path('oauth2_applications')}">Show me more</a>
-    </p>
-  </div>
 
-  <blockquote>
-    <img class="pull-left" src="${request.static_path('yithlibraryserver:static/img/lovecraft.jpg')}" />
-    <p>I couldn't live a week without a private library.</p>
-    <small>H. P. Lovecraft</small>
-  </blockquote>
+  <div id="mainCarousel" class="carousel slide">
+    <!-- Carousel items -->
+    <div class="carousel-inner">
+      <div id="slide1" class="active item">
+        <h1><small>Welcome to the</small> Yith Library</h1>
+        <div class="carousel-caption">
+          <h4>Web password manager</h4>
+          <p>Yith Library is a web password manager. It will help you to keep your passwords under control in a secure and easy way.</p>
+        </div>
+      </div>
+      <div id="slide2" class="item">
+        <blockquote>
+          <h2>I couldn't live a week without a private library. <small>H. P. Lovecraft</small></h2>
+        </blockquote>
+        <div class="carousel-caption">
+          <h4>About the great library of Yith</h4>
+          <p>Those captive minds who cooperated with the Great Race were allowed to wander the Yithian cities at will and to browse the Yithians' gigantic library, which contained metallic cases with books, made of an incredibly long-lasting material, that recorded the histories of uncounted alien races, including humanity.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carousel nav -->
+    <a class="carousel-control left" href="#mainCarousel" data-slide="prev">&lsaquo;</a>
+    <a class="carousel-control right" href="#mainCarousel" data-slide="next">&rsaquo;</a>
+  </div>
 
   <div class="row">
     <div class="span4">
@@ -102,6 +115,17 @@
   <p>Of course you can change your master password anytime you want and all your passwords will be recyphered automatically.</p>
 
 
+</tal:block>
+
+<tal:block metal:fill-slot="extra-scripts">
+  <script type="text/javascript">
+    (function ($) {
+      "use strict";
+      $(document).ready(function () {
+        $("#mainCarousel").carousel({interval: false});
+      });
+    })(jQuery);
+  </script>
 </tal:block>
 
 </html>

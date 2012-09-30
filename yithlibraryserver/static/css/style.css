@@ -57,3 +57,36 @@ footer ul li {
 .current {
     border-color: #333333;
 }
+
+.carousel .carousel-inner {
+    background-image:    -moz-linear-gradient(top, #cccccc, #ffffff);
+    background-image:     -ms-linear-gradient(top, #cccccc, #ffffff);
+    background-image:      -o-linear-gradient(top, #cccccc, #ffffff);
+    background-image: -webkit-linear-gradient(top, #cccccc, #ffffff);
+}
+
+.carousel .item {
+    width: 50%;
+    height: 340px;
+    padding-left: 10%;
+    padding-right: 40%;
+    padding-top: 14%;
+}
+
+.carousel .item#slide1 {
+    background: transparent url(../img/yithian.png) no-repeat top right;
+}
+
+.carousel .item#slide2 {
+    background: transparent url(../img/lovecraft.png) no-repeat top right;
+}
+
+.carousel .item h1 {
+    margin: 0;
+    font-size: 400%;
+    line-height: 1.5em;
+}
+
+.carousel .item small {
+    display: block;
+}
