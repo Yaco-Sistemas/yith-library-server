@@ -43,6 +43,9 @@ def main(global_config, **settings):
     if settings['admin_emails'] is not None:
         settings['admin_emails'] = settings['admin_emails'].split()
 
+    # read Google Analytics code
+    settings['google_analytics_code'] = read_setting_from_env(settings, 'google_analytics_code', None)
+
     # main config object
     config = Configurator(
         settings=settings,
