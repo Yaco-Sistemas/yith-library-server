@@ -1,6 +1,4 @@
 # Yith Library Server is a password storage server.
-# Copyright (C) 2012 Yaco Sistemas
-# Copyright (C) 2012 Alejandro Blanco Escudero <alejandro.b.e@gmail.com>
 # Copyright (C) 2012 Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>
 #
 # This file is part of Yith Library Server.
@@ -18,18 +16,32 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
+import unittest
+
+from pyramid import testing
+
 from yithlibraryserver.user.idp import add_identity_provider
 
 
-def includeme(config):
-    config.add_directive('add_identity_provider', add_identity_provider)
+class IdentityProviderTests(unittest.TestCase):
 
-    config.add_route('login', '/login')
-    config.add_route('register_new_user', '/register')
-    config.add_route('logout', '/logout')
-    config.add_route('user_destroy', '/destroy')
-    config.add_route('user_profile', '/profile')
-    config.add_route('user_send_email_verification_code',
-                     '/send-email-verification-code')
-    config.add_route('user_verify_email', '/verify-email')
-    config.add_route('user_merge_accounts', '/merge-accounts')
+    def setUp(self):
+        self.config = testing.setUp()
+
+    def tearDown(self):
+        testing.tearDown()
+
+    def test_add_identity_provider(self):
+        self.config.add_directive('add_identity_provider',
+                                  add_identity_provider)
+
+        self.config.add_identity_provider('provider1')
+
+        request = testing.DummyRequest()
+
+        self.assertTrue(hasattr(request.registry, 'identity_providers'))
+        self.assertEquals(len(request.registry.identity_providers), 1)
+        idp1 = request.registry.identity_providers[0]
+        self.assertEquals(idp1.route_path, 'provider1_login')
+        self.assertEquals(idp1.image_path, 'yithlibraryserver:static/img/provider1-logo.png')
+        self.assertEquals(idp1.message, 'Log in with Provider1')

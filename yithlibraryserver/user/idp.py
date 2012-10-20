@@ -41,4 +41,8 @@ class IdentityProvider(object):
 
 def add_identity_provider(config, name):
     log.debug('Registering identity provider "%s"' % name) 
+
+    if not hasattr(config.registry, 'identity_providers'):
+        config.registry.identity_providers = []
+
     config.registry.identity_providers.append(IdentityProvider(name))
