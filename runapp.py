@@ -30,4 +30,4 @@ if __name__ == "__main__":
     setup_logging('production.ini')
     app = loadapp('config:production.ini', relative_to='.')
 
-    serve(app, host='0.0.0.0', port=port, scheme=scheme)
+    serve(app, host='0.0.0.0', port=port, url_scheme=scheme)
