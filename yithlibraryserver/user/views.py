@@ -43,7 +43,10 @@ def login(request):
     if referrer == login_url:
         referrer = request.route_path('home')
     came_from = request.params.get('came_from', referrer)
-    return {'next_url': url_quote(came_from)}
+    return {
+        'identity_providers': request.registry.identity_providers,
+        'next_url': url_quote(came_from),
+        }
 
 
 @view_config(route_name='register_new_user',

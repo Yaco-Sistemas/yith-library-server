@@ -35,10 +35,14 @@ def includeme(config):
         option = 'google_%s' % key
         settings[option] = read_setting_from_env(settings, option, default)
 
-    config.add_route('google_login', '/google/login')
-    config.add_view('.views.google_login',
-                    route_name='google_login', renderer='string')
+    if settings['google_client_id'] and settings['google_client_secret']:
 
-    config.add_route('google_callback', '/google/callback')
-    config.add_view('.views.google_callback',
-                    route_name='google_callback', renderer='string')
+        config.add_route('google_login', '/google/login')
+        config.add_view('.views.google_login',
+                        route_name='google_login', renderer='string')
+
+        config.add_route('google_callback', '/google/callback')
+        config.add_view('.views.google_callback',
+                        route_name='google_callback', renderer='string')
+
+        config.add_identity_provider('google')

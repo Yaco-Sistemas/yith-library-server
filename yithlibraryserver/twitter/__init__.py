@@ -40,3 +40,5 @@ def includeme(config):
         config.add_route('twitter_callback', '/twitter/callback')
         config.add_view('.views.twitter_callback',
                         route_name='twitter_callback', renderer='string')
+
+        config.add_identity_provider('twitter')

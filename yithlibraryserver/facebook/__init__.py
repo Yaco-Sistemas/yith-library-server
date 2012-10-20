@@ -39,3 +39,5 @@ def includeme(config):
         config.add_route('facebook_callback', '/facebook/callback')
         config.add_view('.views.facebook_callback',
                         route_name='facebook_callback', renderer='string')
+
+        config.add_identity_provider('facebook')

@@ -1,6 +1,4 @@
 # Yith Library Server is a password storage server.
-# Copyright (C) 2012 Yaco Sistemas
-# Copyright (C) 2012 Alejandro Blanco Escudero <alejandro.b.e@gmail.com>
 # Copyright (C) 2012 Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>
 #
 # This file is part of Yith Library Server.
@@ -18,19 +16,29 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-from yithlibraryserver.user.idp import add_identity_provider
+import logging
+
+log = logging.getLogger(__name__)
 
 
-def includeme(config):
-    config.registry.identity_providers = []
-    config.add_directive('add_identity_provider', add_identity_provider)
+class IdentityProvider(object):
 
-    config.add_route('login', '/login')
-    config.add_route('register_new_user', '/register')
-    config.add_route('logout', '/logout')
-    config.add_route('user_destroy', '/destroy')
-    config.add_route('user_profile', '/profile')
-    config.add_route('user_send_email_verification_code',
-                     '/send-email-verification-code')
-    config.add_route('user_verify_email', '/verify-email')
-    config.add_route('user_merge_accounts', '/merge-accounts')
+    def __init__(self, name):
+        self.name = name
+
+    @property
+    def route_path(self):
+        return '%s_login' % self.name
+
+    @property
+    def image_path(self):
+        return 'yithlibraryserver:static/img/%s-logo.png' % self.name
+
+    @property
+    def message(self):
+        return 'Log in with %s' % self.name.capitalize()
+
+
+def add_identity_provider(config, name):
+    log.debug('Registering identity provider "%s"' % name) 
+    config.registry.identity_providers.append(IdentityProvider(name))

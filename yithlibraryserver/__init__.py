@@ -75,12 +75,16 @@ def main(global_config, **settings):
         read_setting_from_env(settings, 'cors_allowed_origins', ''))
 
     # Routes
-    config.include('yithlibraryserver.facebook')
-    config.include('yithlibraryserver.google')
     config.include('yithlibraryserver.oauth2')
     config.include('yithlibraryserver.password')
+
+    # the user package needs to be included before twitter,
+    # facebook and google
     config.include('yithlibraryserver.user')
+
     config.include('yithlibraryserver.twitter')
+    config.include('yithlibraryserver.facebook')
+    config.include('yithlibraryserver.google')
 
     includeme(config)
 

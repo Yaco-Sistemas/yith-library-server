@@ -10,35 +10,14 @@
 
   <h1>Log in</h1>
   <ul class="thumbnails">
-    <li class="span3">
-      <div class="thumbnail">
-        <a href="${request.route_path('twitter_login')}?next_url=${next_url}">
-          <img src="${request.static_path('yithlibraryserver:static/img/twitter-logo.png')}" alt="" />
-        </a>
-        <div class="caption">
-          <a class="btn btn-primary" href="${request.route_path('twitter_login')}?next_url=${next_url}">Log in with Twitter</a>
-        </div>
-      </div>
-    </li>
 
-    <li class="span3">
+    <li class="span3" tal:repeat="idp identity_providers">
       <div class="thumbnail">
-        <a href="${request.route_path('facebook_login')}?next_url=${next_url}">
-          <img src="${request.static_path('yithlibraryserver:static/img/facebook-logo.png')}" alt="" />
-        </a>
+	<a href="${request.route_path(idp.route_path)}?next_url=${next_url}">
+	  <img src="${request.static_path(idp.image_path)}" alt="" />
+	</a>
         <div class="caption">
-          <a class="btn btn-primary" href="${request.route_path('facebook_login')}?next_url=${next_url}">Log in with Facebook</a>
-        </div>
-      </div>
-    </li>
-
-    <li class="span3">
-      <div class="thumbnail">
-        <a href="${request.route_path('google_login')}?next_url=${next_url}">
-          <img src="${request.static_path('yithlibraryserver:static/img/google-logo.png')}" alt="" />
-        </a>
-        <div class="caption">
-          <a class="btn btn-primary" href="${request.route_path('google_login')}?next_url=${next_url}">Log in with Google</a>
+          <a class="btn btn-primary" href="${request.route_path(idp.route_path)}?next_url=${next_url}">${idp.message}</a>
         </div>
       </div>
     </li>
