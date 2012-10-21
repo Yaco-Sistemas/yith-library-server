@@ -14,8 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="shortcut icon" href="${request.static_path('yithlibraryserver:static/favicon.ico')}" />
-    <link rel="stylesheet" href="${request.static_path('yithlibraryserver:static/css/bootstrap.css')}">
-    <link rel="stylesheet" href="${request.static_path('yithlibraryserver:static/css/bootstrap-responsive.css')}">
+    <link rel="stylesheet" href="${request.static_path('yithlibraryserver:static/css/bootstrap.min.css')}">
+    <link rel="stylesheet" href="${request.static_path('yithlibraryserver:static/css/bootstrap-responsive.min.css')}">
     <link rel="stylesheet" href="${request.static_path('yithlibraryserver:static/css/style.css')}">
 
     <!--[if lt IE 9]>
