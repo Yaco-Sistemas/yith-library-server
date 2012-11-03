@@ -17,12 +17,12 @@
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import StringIO
 import sys
 import tempfile
 import unittest
 
 from yithlibraryserver.db import MongoDB
+from yithlibraryserver.compat import StringIO
 from yithlibraryserver.testing import MONGO_URI
 from yithlibraryserver.scripts.reports import usage
 
@@ -42,7 +42,7 @@ class ReportTests(unittest.TestCase):
 
     def setUp(self):
         fd, self.conf_file_path = tempfile.mkstemp()
-        os.write(fd, CONFIG)
+        os.write(fd, CONFIG.encode('ascii'))
         mdb = MongoDB(MONGO_URI)
         self.db = mdb.get_database()
 
@@ -58,7 +58,7 @@ class ReportTests(unittest.TestCase):
 
         # Replace sys argv and stdout
         sys.argv = []
-        sys.stdout = StringIO.StringIO()
+        sys.stdout = StringIO('')
 
         # Call usage with no arguments
         result = usage()
@@ -68,7 +68,7 @@ class ReportTests(unittest.TestCase):
 
         # Call usage with a config file but an empty database
         sys.argv = ['notused', self.conf_file_path]
-        sys.stdout = StringIO.StringIO()
+        sys.stdout = StringIO()
         result = usage()
         self.assertEqual(result, None)
         stdout = sys.stdout.getvalue()
@@ -112,7 +112,7 @@ class ReportTests(unittest.TestCase):
                 'owner': u3_id,
                 })
         sys.argv = ['notused', self.conf_file_path]
-        sys.stdout = StringIO.StringIO()
+        sys.stdout = StringIO()
         result = usage()
         self.assertEqual(result, None)
         stdout = sys.stdout.getvalue()

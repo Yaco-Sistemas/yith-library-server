@@ -58,14 +58,13 @@ def usage():
         db = settings['mongodb'].get_database()
         for user in db.users.find():
             info = _get_user_info(db, user)
-            output = ('%s (%s)\n'
-                      '\tPasswords: %d\n'
-                      '\tProviders: %s\n'
-                      '\tVerified: %s\n' % (
+            print('%s (%s)\n'
+                  '\tPasswords: %d\n'
+                  '\tProviders: %s\n'
+                  '\tVerified: %s\n' % (
                     info['display_name'], user['_id'],
                     info['passwords'], info['providers'], info['verified'],
                     ))
-            print(output.encode('utf-8'))
 
     finally:
         closer()

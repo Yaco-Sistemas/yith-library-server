@@ -61,3 +61,8 @@ if PY3: # pragma: no cover
 else: # pragma: no cover
     def encode_header(obj): # pragma: no cover
         return obj.encode('utf-8')
+
+if PY3: # pragma: no cover
+    from io import StringIO
+else: # pragma: no cover
+    from StringIO import StringIO
