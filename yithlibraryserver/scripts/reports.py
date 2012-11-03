@@ -1,6 +1,4 @@
 # Yith Library Server is a password storage server.
-# Copyright (C) 2012 Yaco Sistemas
-# Copyright (C) 2012 Alejandro Blanco Escudero <alejandro.b.e@gmail.com>
 # Copyright (C) 2012 Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>
 #
 # This file is part of Yith Library Server.
@@ -24,8 +22,25 @@ import sys
 
 from pyramid.paster import bootstrap
 
-def set_unverified_emails():
-    description = "Update the users to have unverified emails."
+from yithlibraryserver.user.accounts import get_available_providers
+from yithlibraryserver.user.accounts import get_n_passwords
+
+
+def _get_user_info(db, user):
+    return {
+        'display_name': '%s %s <%s>' % (
+            user.get('first_name', ''),
+            user.get('last_name', ''),
+            user.get('email', '')),
+        'passwords': get_n_passwords(db, user),
+        'providers': ', '.join([prov for prov in get_available_providers()
+                                if ('%s_id' % prov) in user]),
+        'verified': user.get('email_verified', False),
+        }
+
+
+def usage():
+    description = "Report users and their password number."
     usage = "usage: %prog config_uri"
     parser = optparse.OptionParser(
         usage=usage,
@@ -42,19 +57,14 @@ def set_unverified_emails():
     try:
         db = settings['mongodb'].get_database()
         for user in db.users.find():
-            print('%s %s %s %s \tG: %s \tF: %s \tT: %s' % (
-                    user['_id'],
-                    user.get('first_name', ''),
-                    user.get('last_name', ''),
-                    user.get('email', ''),
-                    user.get('google_id', ''),
-                    user.get('facebook_id', ''),
-                    user.get('twitter_id', ''),
+            info = _get_user_info(db, user)
+            print('%s (%s)\n'
+                  '\tPasswords: %d\n'
+                  '\tProviders: %s\n'
+                  '\tVerified: %s\n' % (
+                    info['display_name'], user['_id'],
+                    info['passwords'], info['providers'], info['verified'],
                     ))
 
     finally:
         closer()
-
-
-if __name__ == '__main__':
-    set_unverified_emails()

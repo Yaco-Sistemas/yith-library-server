@@ -62,7 +62,7 @@ setup(name='yith-library-server',
       [paste.app_factory]
       main = yithlibraryserver:main
       [console_scripts]
-      migrate_set_unverified_emails = yithlibraryserver.scripts.migrate:set_unverified_emails
+      yith_usage_report = yithlibraryserver.scripts.reports:usage
       """,
       )
 
