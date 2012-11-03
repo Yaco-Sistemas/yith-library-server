@@ -40,7 +40,7 @@ def _get_user_info(db, user):
 
 
 def usage():
-    description = "Report users and their password number."
+    description = "Report information about users and their passwords."
     usage = "usage: %prog config_uri"
     parser = optparse.OptionParser(
         usage=usage,
