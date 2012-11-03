@@ -137,4 +137,3 @@ John3 Doe3 <john3@example.com> (%s)
         # Restore sys.values
         sys.argv = old_args
         sys.stdout = old_stdout
-
