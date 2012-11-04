@@ -324,6 +324,7 @@ class ViewTests(testing.TestCase):
         res.mustcontain('Name')
         res.mustcontain('Main Url')
         res.mustcontain('Callback Url')
+        res.mustcontain('Production Ready')
 
 
         res = self.testapp.post('/oauth2/applications/new', {
@@ -347,6 +348,7 @@ class ViewTests(testing.TestCase):
         self.assertEqual(app['name'], 'Test Application')
         self.assertEqual(app['main_url'], 'http://example.com')
         self.assertEqual(app['callback_url'], 'http://example.com/callback')
+        self.assertEqual(app['production_ready'], False)
 
         # error if we don't fill all fields
         res = self.testapp.post('/oauth2/applications/new', {
@@ -395,6 +397,7 @@ class ViewTests(testing.TestCase):
                 'name': 'Test Application',
                 'client_id': '123456',
                 'callback_url': 'https://example.com/callback',
+                'production_ready': False,
                 }, safe=True)
 
         res = self.testapp.get('/oauth2/applications/%s/delete' % str(app_id),
@@ -452,6 +455,7 @@ class ViewTests(testing.TestCase):
                 'name': 'Test Application',
                 'main_url': 'http://example.com',
                 'callback_url': 'http://example.com/callback',
+                'production_ready': False,
                 'client_id': '123456',
                 'client_secret': 'secret',
                 }, safe=True)
@@ -472,6 +476,7 @@ class ViewTests(testing.TestCase):
         res.mustcontain('http://example.com')
         res.mustcontain('Callback Url')
         res.mustcontain('http://example.com/callback')
+        res.mustcontain('Production Ready')
         res.mustcontain('Client Id')
         res.mustcontain('123456')
         res.mustcontain('Client Secret')
@@ -486,6 +491,7 @@ class ViewTests(testing.TestCase):
                 'name': 'Test Application 2',
                 'main_url': 'http://example.com/new',
                 'callback_url': 'http://example.com/new/callback',
+                'production_ready': 'true',
                 'client_id': '123456-2',
                 'client_secret': 'secret2',
                 'submit': 'Save changes',
@@ -498,6 +504,7 @@ class ViewTests(testing.TestCase):
                          'http://example.com/new')
         self.assertEqual(new_app['callback_url'],
                          'http://example.com/new/callback')
+        self.assertEqual(new_app['production_ready'], True)
         # the Id and Secret shouldn't change
         self.assertEqual(new_app['client_id'], '123456')
         self.assertEqual(new_app['client_secret'], 'secret')

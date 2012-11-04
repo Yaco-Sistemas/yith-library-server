@@ -77,6 +77,7 @@ def application_new(request):
             'name': appstruct['name'],
             'main_url': appstruct['main_url'],
             'callback_url': appstruct['callback_url'],
+            'production_ready': appstruct['production_ready'],
             }
         create_client_id_and_secret(application)
 
@@ -137,6 +138,7 @@ def application_edit(request):
             'name': appstruct['name'],
             'main_url': appstruct['main_url'],
             'callback_url': appstruct['callback_url'],
+            'production_ready': appstruct['production_ready'],
             'client_id': app['client_id'],
             'client_secret': app['client_secret'],
             }
