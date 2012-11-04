@@ -24,7 +24,7 @@ import unittest
 from yithlibraryserver.db import MongoDB
 from yithlibraryserver.compat import StringIO
 from yithlibraryserver.testing import MONGO_URI
-from yithlibraryserver.scripts.reports import usage
+from yithlibraryserver.scripts.reports import usage, applications
 
 CONFIG = """[app:main]
 use = egg:yith-library-server
@@ -50,6 +50,7 @@ class ReportTests(unittest.TestCase):
         os.unlink(self.conf_file_path)
         self.db.drop_collection('users')
         self.db.drop_collection('passwords')
+        self.db.drop_collection('applications')
 
     def test_usage(self):
         # Save sys values
@@ -132,6 +133,71 @@ John3 Doe3 <john3@example.com> (%s)
 	Verified: True
 
 """ % (u1_id, u2_id, u3_id)
+        self.assertEqual(stdout, expected_output)
+
+        # Restore sys.values
+        sys.argv = old_args
+        sys.stdout = old_stdout
+
+    def test_applications(self):
+        # Save sys values
+        old_args = sys.argv[:]
+        old_stdout = sys.stdout
+
+        # Replace sys argv and stdout
+        sys.argv = []
+        sys.stdout = StringIO('')
+
+        # Call applications with no arguments
+        result = applications()
+        self.assertEqual(result, 2)
+        stdout = sys.stdout.getvalue()
+        self.assertEqual(stdout, 'You must provide at least one argument\n')
+
+        # Call applications with a config file but an empty database
+        sys.argv = ['notused', self.conf_file_path]
+        sys.stdout = StringIO()
+        result = applications()
+        self.assertEqual(result, None)
+        stdout = sys.stdout.getvalue()
+        self.assertEqual(stdout, '')
+
+        # Add some data to the database
+        u1_id = self.db.users.insert({
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': 'john@example.com',
+                })
+        self.db.applications.insert({
+                'name': 'Test application 1',
+                'owner': u1_id,
+                'main_url': 'http://example.com/',
+                'callback_url': 'http://example.com/callback',
+                })
+        self.db.applications.insert({
+                'name': 'Test application 2',
+                'owner': '000000000000000000000000',
+                'main_url': 'http://2.example.com/',
+                'callback_url': 'http://2.example.com/callback',
+                })
+        sys.argv = ['notused', self.conf_file_path]
+        sys.stdout = StringIO()
+        result = applications()
+        self.assertEqual(result, None)
+        stdout = sys.stdout.getvalue()
+        expected_output = """Test application 1
+	Owner: John Doe <john@example.com>
+	Main URL: http://example.com/
+	Callback URL: http://example.com/callback
+	Users: 0
+
+Test application 2
+	Owner: Unknown owner (000000000000000000000000)
+	Main URL: http://2.example.com/
+	Callback URL: http://2.example.com/callback
+	Users: 0
+
+"""
         self.assertEqual(stdout, expected_output)
 
         # Restore sys.values

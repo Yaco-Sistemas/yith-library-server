@@ -26,12 +26,14 @@ from yithlibraryserver.user.accounts import get_available_providers
 from yithlibraryserver.user.accounts import get_n_passwords
 
 
+def _get_user_display_name(user):
+    return '%s %s <%s>' % (user.get('first_name', ''),
+                           user.get('last_name', ''),
+                           user.get('email', ''))
+
 def _get_user_info(db, user):
     return {
-        'display_name': '%s %s <%s>' % (
-            user.get('first_name', ''),
-            user.get('last_name', ''),
-            user.get('email', '')),
+        'display_name': _get_user_display_name(user),
         'passwords': get_n_passwords(db, user),
         'providers': ', '.join([prov for prov in get_available_providers()
                                 if ('%s_id' % prov) in user]),
@@ -64,6 +66,56 @@ def usage():
                   '\tVerified: %s\n' % (
                     info['display_name'], user['_id'],
                     info['passwords'], info['providers'], info['verified'],
+                    ))
+
+    finally:
+        closer()
+
+def _get_app_info(db, app):
+    user = db.users.find_one({'_id': app['owner']})
+    if user is None:
+        owner = 'Unknown owner (%s)' % app['owner']
+    else:
+        owner = _get_user_display_name(user)
+
+    return {
+        'name': app['name'],
+        'owner': owner,
+        'main_url': app['main_url'],
+        'callback_url': app['callback_url'],
+        'users': db.users.find({
+                'authorized_apps': {'$in': [app['_id']]},
+                }).count()
+        }
+
+
+def applications():
+    description = "Report information about oauth2 client applications."
+    usage = "applications: %prog config_uri"
+    parser = optparse.OptionParser(
+        usage=usage,
+        description=textwrap.dedent(description)
+        )
+    options, args = parser.parse_args(sys.argv[1:])
+    if not len(args) >= 1:
+        print('You must provide at least one argument')
+        return 2
+    config_uri = args[0]
+    env = bootstrap(config_uri)
+    settings, closer = env['registry'].settings, env['closer']
+
+    try:
+        db = settings['mongodb'].get_database()
+        for app in db.applications.find():
+            info = _get_app_info(db, app)
+            print('%s\n'
+                  '\tOwner: %s\n'
+                  '\tMain URL: %s\n'
+                  '\tCallback URL: %s\n'
+                  '\tUsers: %d\n' % (
+                    info['name'], info['owner'],
+                    info['main_url'], info['callback_url'],
+                    info['users'],
                     ))
 
     finally:

@@ -63,6 +63,7 @@ setup(name='yith-library-server',
       main = yithlibraryserver:main
       [console_scripts]
       yith_usage_report = yithlibraryserver.scripts.reports:usage
+      yith_apps_report = yithlibraryserver.scripts.reports:applications
       """,
       )
 
