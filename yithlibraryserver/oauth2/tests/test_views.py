@@ -589,3 +589,32 @@ class ViewTests(testing.TestCase):
         self.assertEqual(res.location, 'http://localhost/oauth2/applications')
         user = self.db.users.find_one(user_id)
         self.assertEqual(user['authorized_apps'], [])
+
+    def test_clients(self):
+        res = self.testapp.get('/oauth2/clients')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Available clients')
+
+        # create a couple of apps
+        self.db.applications.insert({
+                'client_id': '123456',
+                'name': 'Example app 1',
+                'main_url': 'https://example.com',
+                'callback_url': 'https://example.com/callback',
+                'production_ready': True,
+                }, safe=True)
+        self.db.applications.insert({
+                'client_id': '654321',
+                'name': 'Example app 2',
+                'main_url': 'https://2.example.com',
+                'callback_url': 'https://2.example.com/callback',
+                'production_ready': False,
+                }, safe=True)
+
+        res = self.testapp.get('/oauth2/clients')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain(
+            'Available clients', 'Example app 1', 'https://example.com',
+            no=('Example app 2', 'https://2.example.com'),
+            )
+

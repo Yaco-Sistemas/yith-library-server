@@ -42,7 +42,7 @@
                     <a href="${request.route_path('user_profile')}">Profile</a>
                   </li>
                   <li>
-                    <a href="#">Passwords</a>
+                    <a href="${request.route_path('oauth2_clients')}">Passwords</a>
                   </li>
                   <li>
                     <a href="${request.route_path('oauth2_applications')}">Applications</a>

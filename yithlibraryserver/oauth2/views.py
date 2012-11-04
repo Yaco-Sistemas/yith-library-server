@@ -320,3 +320,9 @@ def revoke_application(request):
         return HTTPFound(location=request.route_path('oauth2_applications'))
 
     return {'app': app}
+
+
+@view_config(route_name='oauth2_clients',
+             renderer='templates/clients.pt')
+def clients(request):
+    return {'apps': request.db.applications.find({'production_ready': True})}

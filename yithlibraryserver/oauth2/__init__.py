@@ -39,3 +39,5 @@ def includeme(config):
     config.add_route('oauth2_token_endpoint', '/oauth2/endpoints/token')
 
     config.add_route('oauth2_revoke_application', '/oauth2/applications/{app}/revoke')
+
+    config.add_route('oauth2_clients', '/oauth2/clients')

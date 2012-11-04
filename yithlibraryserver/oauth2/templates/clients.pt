@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title">Available Clients</tal:block>
+
+<tal:block metal:fill-slot="content">
+
+  <h1>Available clients</h1>
+
+  <p>There are several clients to access your passwords
+    collection. You can use the one that fits your needs better</p>
+
+  <ul>
+    <li tal:repeat="app apps"><a href="${app.main_url}">${app.name}</a></li>
+  </ul>
+
+</tal:block>
+
+</html>
