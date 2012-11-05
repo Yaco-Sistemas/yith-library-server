@@ -61,10 +61,6 @@ def application_new(request):
     button2 = Button('cancel', 'Cancel')
     button2.css_class = ''
     form = Form(schema, buttons=(button1, button2))
-    form['main_url'].widget.css_class = 'input-xlarge'
-    form['callback_url'].widget.css_class = 'input-xlarge'
-    form['image_url'].widget.css_class = 'input-xlarge'
-    form['description'].widget.css_class = 'input-xlarge'
 
     if 'submit' in request.POST:
         controls = request.POST.items()
@@ -123,13 +119,6 @@ def application_edit(request):
     button3 = Button('cancel', 'Cancel')
     button3.css_class = ''
     form = Form(schema, buttons=(button1, button2, button3))
-
-    form['main_url'].widget.css_class = 'input-xlarge'
-    form['callback_url'].widget.css_class = 'input-xlarge'
-    form['image_url'].widget.css_class = 'input-xlarge'
-    form['description'].widget.css_class = 'input-xlarge'
-    form['client_id'].widget.css_class = 'input-xlarge'
-    form['client_secret'].widget.css_class = 'input-xlarge'
 
     if 'submit' in request.POST:
         controls = request.POST.items()

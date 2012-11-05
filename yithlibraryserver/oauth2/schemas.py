@@ -19,17 +19,31 @@
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
 import colander
-from deform.widget import TextInputWidget
+from deform.widget import TextAreaWidget, TextInputWidget
 
 
 class ApplicationSchema(colander.MappingSchema):
 
     name = colander.SchemaNode(colander.String())
-    main_url = colander.SchemaNode(colander.String())
-    callback_url = colander.SchemaNode(colander.String())
+    main_url = colander.SchemaNode(
+        colander.String(),
+        widget=TextInputWidget(css_class='input-xlarge'),        
+        )
+    callback_url = colander.SchemaNode(
+        colander.String(),
+        widget=TextInputWidget(css_class='input-xlarge'),        
+        )
     production_ready = colander.SchemaNode(colander.Boolean(), missing=False)
-    image_url = colander.SchemaNode(colander.String(), missing='')
-    description = colander.SchemaNode(colander.String(), missing='')
+    image_url = colander.SchemaNode(
+        colander.String(),
+        missing='',
+        widget=TextInputWidget(css_class='input-xlarge'),
+        )
+    description = colander.SchemaNode(
+        colander.String(),
+        missing='',
+        widget=TextAreaWidget(css_class='input-xlarge'),
+        )
 
 
 class ReadOnlyTextInputWidget(TextInputWidget):
@@ -40,7 +54,11 @@ class ReadOnlyTextInputWidget(TextInputWidget):
 
 class FullApplicationSchema(ApplicationSchema):
 
-    client_id = colander.SchemaNode(colander.String(),
-                                    widget=ReadOnlyTextInputWidget())
-    client_secret = colander.SchemaNode(colander.String(),
-                                        widget=ReadOnlyTextInputWidget())
+    client_id = colander.SchemaNode(
+        colander.String(),
+        widget=ReadOnlyTextInputWidget(css_class='input-xlarge'),
+        )
+    client_secret = colander.SchemaNode(
+        colander.String(),
+        widget=ReadOnlyTextInputWidget(css_class='input-xlarge'),
+        )
