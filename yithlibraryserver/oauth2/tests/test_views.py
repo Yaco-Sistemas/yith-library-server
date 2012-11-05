@@ -325,7 +325,8 @@ class ViewTests(testing.TestCase):
         res.mustcontain('Main Url')
         res.mustcontain('Callback Url')
         res.mustcontain('Production Ready')
-
+        res.mustcontain('Image Url')
+        res.mustcontain('Description')
 
         res = self.testapp.post('/oauth2/applications/new', {
                 'name': 'Test Application',
@@ -349,6 +350,8 @@ class ViewTests(testing.TestCase):
         self.assertEqual(app['main_url'], 'http://example.com')
         self.assertEqual(app['callback_url'], 'http://example.com/callback')
         self.assertEqual(app['production_ready'], False)
+        self.assertEqual(app['image_url'], '')
+        self.assertEqual(app['description'], '')
 
         # error if we don't fill all fields
         res = self.testapp.post('/oauth2/applications/new', {
@@ -456,6 +459,8 @@ class ViewTests(testing.TestCase):
                 'main_url': 'http://example.com',
                 'callback_url': 'http://example.com/callback',
                 'production_ready': False,
+                'image_url': 'http://example.com/image.png',
+                'description': 'example description',
                 'client_id': '123456',
                 'client_secret': 'secret',
                 }, safe=True)
@@ -477,6 +482,10 @@ class ViewTests(testing.TestCase):
         res.mustcontain('Callback Url')
         res.mustcontain('http://example.com/callback')
         res.mustcontain('Production Ready')
+        res.mustcontain('Image Url')
+        res.mustcontain('http://example.com/image.png')
+        res.mustcontain('Description')
+        res.mustcontain('example description')
         res.mustcontain('Client Id')
         res.mustcontain('123456')
         res.mustcontain('Client Secret')
@@ -492,6 +501,8 @@ class ViewTests(testing.TestCase):
                 'main_url': 'http://example.com/new',
                 'callback_url': 'http://example.com/new/callback',
                 'production_ready': 'true',
+                'image_url': 'http://example.com/image2.png',
+                'description': 'example description 2',
                 'client_id': '123456-2',
                 'client_secret': 'secret2',
                 'submit': 'Save changes',
@@ -505,6 +516,8 @@ class ViewTests(testing.TestCase):
         self.assertEqual(new_app['callback_url'],
                          'http://example.com/new/callback')
         self.assertEqual(new_app['production_ready'], True)
+        self.assertEqual(new_app['image_url'], 'http://example.com/image2.png')
+        self.assertEqual(new_app['description'], 'example description 2')
         # the Id and Secret shouldn't change
         self.assertEqual(new_app['client_id'], '123456')
         self.assertEqual(new_app['client_secret'], 'secret')
