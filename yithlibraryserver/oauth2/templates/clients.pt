@@ -13,8 +13,17 @@
   <p>There are several clients to access your passwords
     collection. You can use the one that fits your needs better</p>
 
-  <ul>
-    <li tal:repeat="app apps"><a href="${app.main_url}">${app.name}</a></li>
+  <ul class="thumbnails">
+    <li class="span4" tal:repeat="app apps">
+      <div class="thumbnail">
+	<img tal:condition="app.image_url" src="${app.image_url}" width="200" height="200" alt="" />
+	<div class="caption">
+	  <h3>${app.name}</h3>
+	  <p tal:condition="app.description">${app.description}</p>
+	  <a class="btn btn-primary" href="${app.main_url}">Access</a>
+	</div>
+      </div>
+    </li>
   </ul>
 
 </tal:block>

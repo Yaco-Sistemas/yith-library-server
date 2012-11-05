@@ -615,6 +615,8 @@ class ViewTests(testing.TestCase):
                 'main_url': 'https://example.com',
                 'callback_url': 'https://example.com/callback',
                 'production_ready': True,
+                'image_url': 'https://example.com/image.png',
+                'description': 'example description',
                 }, safe=True)
         self.db.applications.insert({
                 'client_id': '654321',
@@ -628,6 +630,7 @@ class ViewTests(testing.TestCase):
         self.assertEqual(res.status, '200 OK')
         res.mustcontain(
             'Available clients', 'Example app 1', 'https://example.com',
+            'https://example.com/image.png', 'example description',
             no=('Example app 2', 'https://2.example.com'),
             )
 
