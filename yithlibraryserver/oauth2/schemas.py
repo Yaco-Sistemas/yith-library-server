@@ -28,6 +28,8 @@ class ApplicationSchema(colander.MappingSchema):
     main_url = colander.SchemaNode(colander.String())
     callback_url = colander.SchemaNode(colander.String())
     production_ready = colander.SchemaNode(colander.Boolean(), missing=False)
+    image_url = colander.SchemaNode(colander.String(), missing='')
+    description = colander.SchemaNode(colander.String(), missing='')
 
 
 class ReadOnlyTextInputWidget(TextInputWidget):

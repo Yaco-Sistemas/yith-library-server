@@ -63,6 +63,8 @@ def application_new(request):
     form = Form(schema, buttons=(button1, button2))
     form['main_url'].widget.css_class = 'input-xlarge'
     form['callback_url'].widget.css_class = 'input-xlarge'
+    form['image_url'].widget.css_class = 'input-xlarge'
+    form['description'].widget.css_class = 'input-xlarge'
 
     if 'submit' in request.POST:
         controls = request.POST.items()
@@ -78,6 +80,8 @@ def application_new(request):
             'main_url': appstruct['main_url'],
             'callback_url': appstruct['callback_url'],
             'production_ready': appstruct['production_ready'],
+            'image_url': appstruct['image_url'],
+            'description': appstruct['description'],
             }
         create_client_id_and_secret(application)
 
@@ -122,6 +126,8 @@ def application_edit(request):
 
     form['main_url'].widget.css_class = 'input-xlarge'
     form['callback_url'].widget.css_class = 'input-xlarge'
+    form['image_url'].widget.css_class = 'input-xlarge'
+    form['description'].widget.css_class = 'input-xlarge'
     form['client_id'].widget.css_class = 'input-xlarge'
     form['client_secret'].widget.css_class = 'input-xlarge'
 
@@ -139,6 +145,8 @@ def application_edit(request):
             'main_url': appstruct['main_url'],
             'callback_url': appstruct['callback_url'],
             'production_ready': appstruct['production_ready'],
+            'image_url': appstruct['image_url'],
+            'description': appstruct['description'],
             'client_id': app['client_id'],
             'client_secret': app['client_secret'],
             }
