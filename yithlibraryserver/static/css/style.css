@@ -54,6 +54,10 @@ footer ul li {
     border-color: #333333;
 }
 
+.btn small {
+    display: block;
+}
+
 .carousel .carousel-inner {
     background-image:    -moz-linear-gradient(top, #cccccc, #ffffff);
     background-image:     -ms-linear-gradient(top, #cccccc, #ffffff);

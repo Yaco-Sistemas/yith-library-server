@@ -8,142 +8,160 @@
 
 <tal:block metal:fill-slot="content">
 
-  <div id="mainCarousel" class="carousel slide">
-    <!-- Carousel items -->
-    <div class="carousel-inner">
-      <div id="slide1" class="active item">
-        <h1><small>Welcome to the</small> Yith Library</h1>
-        <a href="#" class="btn btn-info btn-large">Try it for free</a>
-        <div class="carousel-caption">
-          <h4>Web password manager</h4>
-          <p>Yith Library is a web password manager. It will help you to keep your passwords under control in a secure and easy way.</p>
-        </div>
-      </div>
-      <div id="slide2" class="item">
-        <h1><small>Managing your passwords can be</small> Secure, easy and free!</h1>
-        <a href="#" class="btn btn-info btn-large">Learn more</a>
-        <div class="carousel-caption">
-          <h4>Lots of useful features</h4>
-          <p>Social authentication, simmetric encryption, multiple clients, tags, notes and other metadata in each password, and many more!</p>
-        </div>
-      </div>
-      <div id="slide3" class="item">
-        <h1><small>Access your passwords from</small> Any device</h1>
-        <a href="#" class="btn btn-info btn-large">Download the app for your phone</a>
-        <div class="carousel-caption">
-          <h4>Your passwords are really important</h4>
-          <p>You should be able to access your passwords at home, on the run, in a foreign country without Internet connection... Anytime, anywhere!</p>
-        </div>
-      </div>
-      <div id="slide4" class="item">
-        <h1>Testimonials</h1>
-        <blockquote>
-          <h2>I couldn't live a week without a private library. <small>H. P. Lovecraft</small></h2>
-        </blockquote>
-        <div class="carousel-caption">
-          <h4>About the great library of Yith</h4>
-          <p>Those captive minds who cooperated with the Great Race were allowed to wander the Yithian cities at will and to browse the Yithians' gigantic library, which contained metallic cases with books, made of an incredibly long-lasting material, that recorded the histories of uncounted alien races, including humanity.</p>
-        </div>
-      </div>
+  <div class="hero-unit">
+    <h1>Web password manager</h1>
+    <p>Yith Library is a web password manager. It will help you to keep your
+      secrets under control in a secure and easy way. Your online data is
+      too valuable to avoid protecting it seriously.</p>
+    <p>
+      <a class="btn btn-primary btn-large">
+	<strong>Start using it today</strong>
+	<small>at no cost</small>
+      </a>
+    </p>
+  </div>
+  
+  <div class="row">
+    <div class="span12">
+      <h2>Why do you need a password manager?</h2>
     </div>
-
-    <!-- Carousel nav -->
-    <a class="carousel-control left" href="#mainCarousel" data-slide="prev">&lsaquo;</a>
-    <a class="carousel-control right" href="#mainCarousel" data-slide="next">&rsaquo;</a>
   </div>
 
   <div class="row">
-    <div class="span4">
-      <img class="pull-left" src="${request.static_path('yithlibraryserver:static/img/safe-deposit-box.png')}" width="64" height="48" />
-      <h2>Secure</h2>
-      <p>Your passwords are transmitted over the network using the SSL protocol and they are stored on the server encrypted. Even the yithians who runs this service can't read them! Not even with their time machine... unless you decide to share your secrets with them and only them.</p>
-      <p><a href="#">Learn more</a></p>
+    <div class="span6">
     </div>
 
-    <div class="span4">
-      <img class="pull-left" src="${request.static_path('yithlibraryserver:static/img/hand-button.png')}" width="64" height="48" />
-      <h2>Easy</h2>
-      <p>It's not as easy as using the same password for everything but you already know you should never do this. The Yith Library is super easy to use: just remember your master password is only stored in your brain and you should always use the same. You can access your passwords from any device!</p>
-      <p><a href="#">Learn more</a></p>
+    <div class="span6">
+      <h3>Using one <strong>password</strong> for everything is a bad idea</h3>
+      <p>Today, most Internet services force you to use an username and a
+	password as your credentials to identify you. As we are not very good
+	remembering a lot of different passwords, usually we use only one. But
+	what if one of those service's security is compromised and an attacker
+	can see the passwords used at that service? Well, that means the
+	attacker can access all the services you use with the same password.
+	Scary, isn't it?
+      </p>
     </div>
-
-    <div class="span4">
-      <img class="pull-left" src="${request.static_path('yithlibraryserver:static/img/condor.png')}" width="64" height="48" />
-      <h2>Free</h2>
-      <p>The Yith Library is a free service. We really want the Internet to be a safer place and we believe a free, easy and secure password manager was required for this. Ideally in the future we will need only one credential. Yes, the same one that you will use with your flying car...</p>
-      <p><a href="#">Learn more</a></p>
-    </div>
-
   </div>
 
-  <h2>Why a password manager</h2>
+  <div class="row">
+    <div class="span6">
+      <h3>Manage your passwords <strong>easily</strong></h3>
+      <p>It's not as easy as using the same password for everything but you
+	already know you should never do this. The Yith Library is super easy
+	to use: just remember your master password is only stored in your
+	brain and you should always use the same. You can access your
+	passwords from any device!
+      </p>
+    </div>
 
-  <p>Today, most Internet services forces you to use an username and a password as your credentials to identify you. Using the same password for all our Internet services is a bad idea: if any of those service's security is compromised and an attacker can see the passwords used at that service, well, that means the attacker can access all the services you use with the same password. Scary, isn't it?</p>
+    <div class="span6">
+    </div>
+  </div>
 
-  <p>That's why you should use a different password for every single service in order to have decent security. If this sounds difficult that's because it is really difficult. Human's memory is not that good and even if it was, we have better things to store in our brains.</p>
+  <div class="row">
+    <div class="span6">
+    </div>
 
-  <p>Enter Yith Library! You can create as many passwords as you need and they will be available to you anytime, from any device. You can also store more information for each password such as expiration dates, notes, tags and much more. It's free, super secure and fun. Learn more about <a href="#">how it works.</a></p>
+    <div class="span6">
+      <h3>Keep your secrets <strong>secure</strong></h3>
+      <p>Your passwords are transmitted over the network using the SSL
+	protocol and they are stored on the server encrypted. Even the
+	yithians who runs this service can't read them! Not even with
+	their time machine... 
+      </p>
+    </div>
+  </div>
 
-  <p>We hope we get rid of passwords in the future since they are very complicated both for users and for developers. But we are not there yet and until we are, Yith Library can help you to manage this nightmare.</p>
+  <div class="row">
+    <div class="span6">
+      <h3>Yith Library is a <strong>free</strong> service</h3>
+      <div class="row">
+	<div class="span3">
+	  <p><strong>Free as in freedom</strong></p>
+	  <ul class="unstyled">
+	    <li>You can use it any way you want</li>
+	    <li>You can run your own server or clients</li>
+	    <li>You can modify it</li>
+	    <li>You can distribute it</li>
+	    <li>We are happy with all of this</li>
+	  </ul>
+	</div>
+	<div class="span3">
+	  <p><strong>Free as in beer</strong></p>
+	  <ul class="unstyled">
+	    <li>You can use our server and clients without paying a dime</li>
+	    <li>If you like it a lot, we are happy to accept donations</li>
+	  </ul>
+	</div>
+      </div>
+    </div>
+  </div>
 
-  <h2>How it works</h2>
+  <div class="row">
+    <div class="span6">
+      <h3>How it works</h3>
+      <ol>
+	<li>When you access the Yith Library the server sends your
+	  ciphered password collection to your browser using secure
+	  protocols such as SSL. This means that nobody can sniff
+	  this traffic and see your ciphered secrets.</li>
+	<li>Yith Library asks you for the master password everytime you
+	  open an existing password or create a new one. As the
+	  browser does not keep the master password in memory, it
+	  is safe against malicious programs or plugins.</li>
+	<li>After making changes, the data is sent back to the server
+	  where it's persisted and it is ready to fetch from your other 
+	  devices. As  it is also stored your browser cache you can
+	  also read it when offline.</li>
+      </ol>
+    </div>
 
-  <h3>Overview</h3>
+    <div class="span6">
+    </div>
+  </div>
 
-  <ol>
-    <li>When you access the Yith Library the server sends your ciphered password collection to your browser using secure protocols.</li>
-    <li>Yith Library asks you for the master password everytime you open an existing password or create a new one.</li>
-    <li>After making changes, the data is sent back to the server where it's persisted and it is ready to fetch from your other devices.</li>
-  </ol>
+  <div class="row">
+    <div class="span6">
+    </div>
 
-  <h3 id="secure">It's secure</h3>
+    <div class="span6">
+      <h3>Access your data from <strong>any device</strong></h3>
+      <p>Your passwords are a very critical piece of data since they are
+	the keys that open your digital accounts. You should be able to
+	access them at home, on the run, in a foreign country without
+	Internet connection... Anytime, anywhere!</p>
+    </div>
+  </div>
 
-  <ul>
-    <li>All traffic is encrypted. No more eavesdropping.</li>
-    <li>All data is cyphered. Only you can access your secrets.</li>
-    <li>We use secure protocols and algorithms: SSL, Oauth2, ...</li>
-  </ul>
+  <div class="row">
+    <div class="span6">
+      <h3>About the great library of Yith</h3>
+      <p><em>Those captive minds who cooperated with the Great Race were
+	  allowed to wander the Yithian cities at will and to browse the
+	  Yithians' gigantic library, which contained metallic cases with
+	  books, made of an incredibly long-lasting material, that recorded
+	  the histories of uncounted alien races, including humanity.</em></p>
+    </div>
 
-  <h3 id="easy">It's easy</h3>
+    <div class="span6">
+      <blockquote>
+        <h4>I couldn't live a week without a private library. <small>H. P. Lovecraft</small></h4>
+      </blockquote>
+    </div>
+  </div>
 
-  <ol>
-    <li><a href="${request.route_path('login')}">Sign in</a></li>
-    <li>Create some passwords</li>
-    <li>Retrieve them anytime, anywhere</li>
-  </ol>
+  <div class="row">
+    <div class="span2 offset5">
+      <p>
+	<a class="btn btn-primary btn-large btn-block">
+	  <strong>Start using it today</strong>
+	  <small>at no cost</small>
+	</a>
+      </p>
+    </div>
+  </div>
 
-  <h3 id="free">It's free</h3>
-
-  <ol>
-    <li>Free as in freedom: you can use Yith Library any way you want. You can run your own server or clients. You can modify it. You can distribute it. We are happy with all of these.</li>
-    <li>Free as in beer: you can use our server and clients without paying a dime. If you like it a lot, we are happy to accept donations.</li>
-  </ol>
-
-  <h3 id="master-password">The master password</h3>
-
-  <p>The master password is the only thing you will need to remember when using Yith Library. This secret is used to encrypt all your other passwords so only you can access them. That means several things:</p>
-
-  <ul>
-    <li>The server doesn't know your passwords. Many people says this but for us, it's so important that's one of the reasons the source code is free and open so everybody can actually check that's true. Those not trusting our servers can even run their own servers fetching the code.</li>
-    <li>The only place the master password is stored is in your brain. Even your browser will forget about it as soon as it uses it to decypher a password.</li>
-    <li>As a consequence, it is very important that you remember your master password. There is no 'I forget my password' link.</li>
-    <li>It is also very important that your master password is hard to guess, since that is the key that opens all your doors.</li>
-  </ul>
-
-  <p>Of course you can change your master password anytime you want and all your passwords will be recyphered automatically.</p>
-
-
-</tal:block>
-
-<tal:block metal:fill-slot="extra-scripts">
-  <script type="text/javascript">
-    (function ($) {
-      "use strict";
-      $(document).ready(function () {
-        $("#mainCarousel").carousel({interval: false});
-      });
-    })(jQuery);
-  </script>
 </tal:block>
 
 </html>
