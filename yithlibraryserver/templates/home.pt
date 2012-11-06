@@ -47,7 +47,7 @@
 
   <div class="row row-no-margin marketing-block marketing-block-left">
     <div class="span6">
-      <h3>Manage your passwords <strong>easily</strong></h3>
+      <h3 style="margin-top: 34px">Manage your passwords <strong>easily</strong></h3>
       <p>It's not as easy as using the same password for everything but you
 	already know you should never do this. The Yith Library is super easy
 	to use: just remember your master password is only stored in your
@@ -67,7 +67,7 @@
     </div>
 
     <div class="span6">
-      <h3>Keep your secrets <strong>secure</strong></h3>
+      <h3 style="margin-top: 42px">Keep your secrets <strong>secure</strong></h3>
       <p>Your passwords are transmitted over the network using the SSL
 	protocol and they are stored on the server encrypted. Even the
 	yithians who runs this service can't read them! Not even with
@@ -135,7 +135,7 @@
     </div>
 
     <div class="span6">
-      <h3>Access your data from <strong>any device</strong></h3>
+      <h3 style="margin-top: 42px">Access your data from <strong>any device</strong></h3>
       <p>Your passwords are a very critical piece of data since they are
 	the keys that open your digital accounts. You should be able to
 	access them at home, on the run, in a foreign country without
@@ -145,7 +145,7 @@
 
   <div class="row row-no-margin marketing-block marketing-block-right marketing-block-left marketing-block-last">
     <div class="span6">
-      <h3>About the great library of Yith</h3>
+      <h3 style="margin-top: 34px">About the great library of Yith</h3>
       <p><em>Those captive minds who cooperated with the Great Race were
 	  allowed to wander the Yithian cities at will and to browse the
 	  Yithians' gigantic library, which contained metallic cases with
