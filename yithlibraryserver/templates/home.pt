@@ -29,6 +29,7 @@
 
   <div class="row">
     <div class="span6">
+      <img src="${request.static_path('yithlibraryserver:static/img/lock.png')}" width="175" height="175" alt="" />
     </div>
 
     <div class="span6">
@@ -56,11 +57,13 @@
     </div>
 
     <div class="span6">
+      <img src="${request.static_path('yithlibraryserver:static/img/hand-button.png')}" width="175" height="175" alt="" />
     </div>
   </div>
 
   <div class="row">
     <div class="span6">
+      <img src="${request.static_path('yithlibraryserver:static/img/safe-deposit-box.png')}" width="175" height="175" alt="" />
     </div>
 
     <div class="span6">
@@ -96,6 +99,10 @@
 	</div>
       </div>
     </div>
+
+    <div class="span6">
+      <img src="${request.static_path('yithlibraryserver:static/img/condor.png')}" width="175" height="175" alt="" />
+    </div>
   </div>
 
   <div class="row">
@@ -118,11 +125,13 @@
     </div>
 
     <div class="span6">
+      <img src="${request.static_path('yithlibraryserver:static/img/password-list-screenshot.png')}" width="353" height="300" alt="" />
     </div>
   </div>
 
   <div class="row">
     <div class="span6">
+      <img src="${request.static_path('yithlibraryserver:static/img/devices.png')}" width="470" height="175" alt="A smartphone, a tablet, a laptop, a desktop and a washing machine!" />
     </div>
 
     <div class="span6">
@@ -145,6 +154,7 @@
     </div>
 
     <div class="span6">
+      <img class="pull-right" src="${request.static_path('yithlibraryserver:static/img/lovecraft.jpg')}" width="113" height="150" alt="Picture of Howard Phillips Lovecraft" />
       <blockquote>
         <h4>I couldn't live a week without a private library. <small>H. P. Lovecraft</small></h4>
       </blockquote>
