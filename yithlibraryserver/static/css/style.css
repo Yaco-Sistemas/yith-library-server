@@ -54,51 +54,135 @@ footer ul li {
     border-color: #333333;
 }
 
+/* Home page styles */
+
 .btn small {
     display: block;
 }
 
-.carousel .carousel-inner {
-    background-image:    -moz-linear-gradient(top, #cccccc, #ffffff);
-    background-image:     -ms-linear-gradient(top, #cccccc, #ffffff);
-    background-image:      -o-linear-gradient(top, #cccccc, #ffffff);
-    background-image: -webkit-linear-gradient(top, #cccccc, #ffffff);
+.main-banner {
+    padding-right: 40%;
+    background: #eeeeee url(../img/yithian.png) no-repeat center right;
+    border: 1px solid #d4d4d4;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
 }
 
-.carousel .item {
-    width: 50%;
-    height: 340px;
-    padding: 13% 40% 6% 10%;
+.main-banner h1 {
+    font-size: 40px;
+    letter-spacing: normal;
+    margin: 10px 0;
 }
 
-.carousel .item#slide1 {
-    background: transparent url(../img/yithian.png) no-repeat 90% center;
+.main-banner p, .main-banner .btn {
+    margin: 10px 0;
 }
 
-.carousel .item#slide2:before {
-    content: url(../img/password-list-screenhost.png);
-    position: absolute;
-    -moz-transform: translate(30em, -4em) rotate(-10deg);
-    -webkit-transform: translate(30em, -4em) rotate(-10deg);
-
-    box-shadow: 6px 6px 10px #cccccc;
-}
-
-.carousel .item#slide3 {
-    background: transparent url(../img/devices.png) no-repeat 90% center;
-}
-
-.carousel .item#slide4 {
-    background: transparent url(../img/lovecraft.png) no-repeat 90% center;
-}
-
-.carousel .item h1 {
+.block-header {
+    color: #ffffff;
+    background-color: #3f3f3f;
     margin: 0;
-    font-size: 400%;
-    line-height: 1.5em;
-    width: 8em;
+    padding: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
 }
 
-.carousel .item small {
-    display: block;
+.row-no-margin {
+    margin: 0;
+}
+
+.marketing-block {
+    border-left: 1px solid #d4d4d4;
+    border-right: 1px solid #d4d4d4;
+    border-bottom: 1px solid #eeeeee;
+    margin: 0;
+    height: 200px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.067);
+}
+
+.marketing-block.marketing-block-first {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-top: 1px solid #d4d4d4;
+}
+
+.marketing-block.marketing-block-last {
+    border-bottom: 1px solid #d4d4d4;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.marketing-block h3, .marketing-block p,
+.marketing-block ul, .marketing-block ol,
+.marketing-block blockquote {
+    text-align: left;
+}
+
+.marketing-block [class*="span"] {
+    float: left;
+    min-height: 1px;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+.marketing-block img {
+    margin: 12px 0;
+}
+
+.marketing-block .unstyled {
+    margin-left: 12px;
+}
+
+.marketing-block-big {
+    height: 340px;
+    background-image: none;
+}
+
+.marketing-block-big img {
+    box-shadow: 6px 6px 10px #cccccc;
+    border: 1px solid #bbb;
+}
+
+.marketing-block-right {
+    background-image:    -moz-linear-gradient(-45deg, #ffffff, #eeeeee);
+    background-image:     -ms-linear-gradient(-45deg, #ffffff, #eeeeee);
+    background-image:      -o-linear-gradient(-45deg, #ffffff, #eeeeee);
+    background-image: -webkit-linear-gradient(-45deg, #ffffff, #eeeeee);
+}
+
+.marketing-block-left {
+    background-image:    -moz-linear-gradient(-45deg, #eeeeee, #ffffff);
+    background-image:     -ms-linear-gradient(-45deg, #eeeeee, #ffffff);
+    background-image:      -o-linear-gradient(-45deg, #eeeeee, #ffffff);
+    background-image: -webkit-linear-gradient(-45deg, #eeeeee, #ffffff);
+}
+
+.marketing-block-right h3, .marketing-block-right p {
+    padding-right: 12px;
+}
+
+.marketing-block-left h3, .marketing-block-left p {
+    padding-left: 12px;
+}
+
+.marketing-block blockquote {
+    margin-top: 75px;
+    padding-left: 12px;
+    margin-left: 12px;
+    border-left: 5px solid #dddddd;
+}
+
+.fancy-list li {
+    padding-left: 20px;
+    margin: 20px 0 20px 20px;
+}
+
+.fancy-list li:before {
+    content: ' \25CF';
+    font-size: 100px;
+    color: #bbbbbb;
+    float: left;
+    margin-top: -6px;
+    margin-left: -64px;
 }

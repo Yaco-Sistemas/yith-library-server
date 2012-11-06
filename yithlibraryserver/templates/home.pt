@@ -8,7 +8,7 @@
 
 <tal:block metal:fill-slot="content">
 
-  <div class="hero-unit">
+  <div class="hero-unit main-banner">
     <h1>Web password manager</h1>
     <p>Yith Library is a web password manager. It will help you to keep your
       secrets under control in a secure and easy way. Your online data is
@@ -21,13 +21,13 @@
     </p>
   </div>
   
-  <div class="row">
+  <div class="row block-header">
     <div class="span12">
       <h2>Why do you need a password manager?</h2>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row row-no-margin marketing-block marketing-block-right">
     <div class="span6">
       <img src="${request.static_path('yithlibraryserver:static/img/lock.png')}" width="175" height="175" alt="" />
     </div>
@@ -45,7 +45,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row row-no-margin marketing-block marketing-block-left">
     <div class="span6">
       <h3>Manage your passwords <strong>easily</strong></h3>
       <p>It's not as easy as using the same password for everything but you
@@ -61,7 +61,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row row-no-margin marketing-block marketing-block-right">
     <div class="span6">
       <img src="${request.static_path('yithlibraryserver:static/img/safe-deposit-box.png')}" width="175" height="175" alt="" />
     </div>
@@ -76,10 +76,10 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row row-no-margin marketing-block marketing-block-left marketing-block-last">
     <div class="span6">
       <h3>Yith Library is a <strong>free</strong> service</h3>
-      <div class="row">
+      <div class="row row-no-margin">
 	<div class="span3">
 	  <p><strong>Free as in freedom</strong></p>
 	  <ul class="unstyled">
@@ -105,10 +105,10 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row row-no-margin marketing-block marketing-block-left marketing-block-big marketing-block-first marketing-block-last">
     <div class="span6">
       <h3>How it works</h3>
-      <ol>
+      <ol class="fancy-list">
 	<li>When you access the Yith Library the server sends your
 	  ciphered password collection to your browser using secure
 	  protocols such as SSL. This means that nobody can sniff
@@ -119,7 +119,7 @@
 	  is safe against malicious programs or plugins.</li>
 	<li>After making changes, the data is sent back to the server
 	  where it's persisted and it is ready to fetch from your other 
-	  devices. As  it is also stored your browser cache you can
+	  devices. As  it is also stored in your browser cache you can
 	  also read it when offline.</li>
       </ol>
     </div>
@@ -129,7 +129,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row row-no-margin marketing-block marketing-block-right marketing-block-first">
     <div class="span6">
       <img src="${request.static_path('yithlibraryserver:static/img/devices.png')}" width="470" height="175" alt="A smartphone, a tablet, a laptop, a desktop and a washing machine!" />
     </div>
@@ -143,7 +143,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row row-no-margin marketing-block marketing-block-right marketing-block-left marketing-block-last">
     <div class="span6">
       <h3>About the great library of Yith</h3>
       <p><em>Those captive minds who cooperated with the Great Race were
