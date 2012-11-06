@@ -14,7 +14,7 @@
       secrets under control in a secure and easy way. Your online data is
       too valuable to avoid protecting it seriously.</p>
     <p>
-      <a class="btn btn-primary btn-large">
+      <a class="btn btn-primary btn-large" href="${request.route_path('login')}">
 	<strong>Start using it today</strong>
 	<small>at no cost</small>
       </a>
@@ -164,7 +164,7 @@
   <div class="row">
     <div class="span2 offset5">
       <p>
-	<a class="btn btn-primary btn-large btn-block">
+	<a class="btn btn-primary btn-large btn-block" href="${request.route_path('login')}">
 	  <strong>Start using it today</strong>
 	  <small>at no cost</small>
 	</a>
