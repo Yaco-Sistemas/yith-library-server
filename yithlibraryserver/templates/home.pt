@@ -52,7 +52,7 @@
 	already know you should never do that. The Yith Library is super easy
 	to use: just remember your master password is only stored in your
 	brain and you should always use the same one. You can access your
-	passwords from any device!
+	passwords from <a href="${request.route_path('oauth2_clients')}">any device!</a>
       </p>
     </div>
 
@@ -85,7 +85,7 @@
 	  <ul class="unstyled">
 	    <li>You can use it any way you want</li>
 	    <li>You can run your own server or clients</li>
-	    <li>You can modify it</li>
+	    <li><a href="https://github.com/Yaco-Sistemas/yith-library-server" target="_blank">You can modify it</a></li>
 	    <li>You can distribute it</li>
 	    <li>We are happy with all of this</li>
 	  </ul>
@@ -139,7 +139,7 @@
       <p>Your passwords are a very critical piece of data since they are
 	the keys that open your digital accounts. You should be able to
 	access them at home, on the run, in a foreign country without
-	Internet connection... Anytime, anywhere!</p>
+	Internet connection... <a href="${request.route_path('oauth2_clients')}">Anytime, anywhere!</a></p>
     </div>
   </div>
 
