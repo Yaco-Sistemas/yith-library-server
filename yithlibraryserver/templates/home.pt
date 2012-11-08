@@ -10,8 +10,8 @@
 
   <div class="hero-unit main-banner">
     <h1>Web password manager</h1>
-    <p>Yith Library is a web password manager. It will help you to keep your
-      secrets under control in a secure and easy way. Your online data is
+    <p>Yith Library is an online password manager. It will help you to keep 
+      your secrets under control in a secure and easy way. Your online data is
       too valuable to avoid protecting it seriously.</p>
     <p>
       <a class="btn btn-primary btn-large" href="${request.route_path('login')}">
@@ -35,11 +35,11 @@
     <div class="span6">
       <h3>Using one <strong>password</strong> for everything is a bad idea</h3>
       <p>Today, most Internet services force you to use an username and a
-	password as your credentials to identify you. As we are not very good
-	remembering a lot of different passwords, usually we use only one. But
-	what if one of those service's security is compromised and an attacker
-	can see the passwords used at that service? Well, that means the
-	attacker can access all the services you use with the same password.
+	password as your credentials to identify yourself. Since we are not very
+	good at remembering a lot of different passwords, we usually use only one. 
+	But what if one of those service's security is compromised and an attacker
+	can get the passwords used at that service? Well, that means the
+	attacker can access all the services where you use the same password.
 	Scary, isn't it?
       </p>
     </div>
@@ -49,9 +49,9 @@
     <div class="span6">
       <h3 style="margin-top: 34px">Manage your passwords <strong>easily</strong></h3>
       <p>It's not as easy as using the same password for everything but you
-	already know you should never do this. The Yith Library is super easy
+	already know you should never do that. The Yith Library is super easy
 	to use: just remember your master password is only stored in your
-	brain and you should always use the same. You can access your
+	brain and you should always use the same one. You can access your
 	passwords from any device!
       </p>
     </div>
@@ -70,8 +70,8 @@
       <h3 style="margin-top: 42px">Keep your secrets <strong>secure</strong></h3>
       <p>Your passwords are transmitted over the network using the SSL
 	protocol and they are stored on the server encrypted. Even the
-	yithians who runs this service can't read them! Not even with
-	their time machine... 
+	yithians who run this service can't read them! Not even with
+	their time machine...
       </p>
     </div>
   </div>
@@ -118,9 +118,9 @@
 	  browser does not keep the master password in memory, it
 	  is safe against malicious programs or plugins.</li>
 	<li>After making changes, the data is sent back to the server
-	  where it's persisted and it is ready to fetch from your other 
-	  devices. As  it is also stored in your browser cache you can
-	  also read it when offline.</li>
+	  where it's persisted and it is ready to be fetch from your other 
+	  devices. Since it is also stored in your browser cache you can
+	  read them offline.</li>
       </ol>
     </div>
 
