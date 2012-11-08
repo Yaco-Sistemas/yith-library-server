@@ -36,7 +36,7 @@
       <h3>Using one <strong>password</strong> for everything is a bad idea</h3>
       <p>Today, most Internet services force you to use an username and a
 	password as your credentials to identify yourself. Since we are not very
-	good at remembering a lot of different passwords, we usually use only one. 
+	good at remembering a lot of different passwords, we usually have only one. 
 	But what if one of those service's security is compromised and an attacker
 	can get the passwords used at that service? Well, that means the
 	attacker can access all the services where you use the same password.
@@ -118,9 +118,9 @@
 	  browser does not keep the master password in memory, it
 	  is safe against malicious programs or plugins.</li>
 	<li>After making changes, the data is sent back to the server
-	  where it's persisted and it is ready to be fetch from your other 
-	  devices. Since it is also stored in your browser cache you can
-	  read them offline.</li>
+	  where it's persisted and it is ready to be fetched from your 
+	  other devices. Since it is also stored in your browser cache 
+	  you can read them offline.</li>
       </ol>
     </div>
 
