@@ -151,12 +151,14 @@
     (function($) {
         $(document).ready(function () {
             var credits_dialog = $("#credits").modal({ show: false });
-            $("#creditsButton").click(function () {
+            $("#creditsButton").click(function (event) {
                 credits_dialog.modal("show");
+                event.preventDefault();
             });
             var tos_dialog = $("#terms-of-service").modal({ show: false });
-            $("#tosButton").click(function () {
+            $("#tosButton").click(function (event) {
                 tos_dialog.modal("show");
+                event.preventDefault();
             });
             $("[rel=popover]").popover({trigger: 'hover'}).click(function (event) {
                 event.preventDefault();
