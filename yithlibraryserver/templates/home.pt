@@ -113,10 +113,12 @@
 	  ciphered password collection to your browser using secure
 	  protocols such as SSL. This means that nobody can sniff
 	  this traffic and see your ciphered secrets.</li>
-	<li>Yith Library asks you for the master password everytime you
-	  open an existing password or create a new one. As the
-	  browser does not keep the master password in memory, it
-	  is safe against malicious programs or plugins.</li>
+	<li>Yith Library asks you for the
+	  <a href="#" class="master-password" rel="popover" title="About the master password" data-content="The master password is the only thing you will need to remember when using Yith Library. This secret is used to encrypt all your other passwords so only you can access them. You can change it any time you want but be careful since there is no 'I forgot my password' link.">master password</a>
+	  everytime you open an existing password or create a new
+	  one. As the browser does not keep the master password in
+	  memory, it is safe against malicious programs or
+	  plugins.</li>
 	<li>After making changes, the data is sent back to the server
 	  where it's persisted and it is ready to be fetched from your 
 	  other devices. Since it is also stored in your browser cache 

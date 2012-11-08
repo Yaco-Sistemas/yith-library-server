@@ -158,6 +158,9 @@
             $("#tosButton").click(function () {
                 tos_dialog.modal("show");
             });
+            $("[rel=popover]").popover({trigger: 'hover'}).click(function (event) {
+                event.preventDefault();
+            });;
         });
     }(jQuery));
   </script>
