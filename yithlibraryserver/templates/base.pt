@@ -74,7 +74,7 @@
 
     <footer class="container">
       <ul class="pull-left">
-        <li><a href="#">Terms of use</a> |</li>
+        <li><a href="#" id="tosButton">Terms of use</a> |</li>
         <li><a href="https://github.com/Yaco-Sistemas/yith-library-server" target="_blank">Fork us in GitHub!</a></li>
       </ul>
       <ul class="pull-right">
@@ -82,6 +82,31 @@
       </ul>
     </footer>
 
+  </div>
+
+  <div class="modal hide" id="terms-of-service">
+    <div class="modal-header">
+      <button class="close" data-dismiss="modal">&times;</button>
+      <h3>Terms of Service</h3>
+    </div>
+    <div class="modal-body">
+      <p>Yith Library Server is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.</p>
+
+      <p>Yith Library Server is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.</p>
+
+      <p>You can read the GNU Affero General Public License at
+	<a href="http://www.gnu.org/licenses/agpl.html">http://www.gnu.org/licenses/agpl.html</a></p>
+
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>
+    </div>
   </div>
 
   <div class="modal hide" id="credits">
@@ -128,6 +153,10 @@
             var credits_dialog = $("#credits").modal({ show: false });
             $("#creditsButton").click(function () {
                 credits_dialog.modal("show");
+            });
+            var tos_dialog = $("#terms-of-service").modal({ show: false });
+            $("#tosButton").click(function () {
+                tos_dialog.modal("show");
             });
         });
     }(jQuery));
