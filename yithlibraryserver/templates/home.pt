@@ -127,7 +127,7 @@
     </div>
 
     <div class="span6">
-      <img src="${request.static_path('yithlibraryserver:static/img/password-list-screenshot.png')}" width="353" height="300" alt="" />
+      <img src="${request.static_path('yithlibraryserver:static/img/password-list-screenshot-mini.png')}" width="455" height="300" alt="" />
     </div>
   </div>
 
