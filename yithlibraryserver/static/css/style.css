@@ -28,6 +28,7 @@ h1 {
 }
 
 footer {
+    margin-top: 20px;
     border-top: 1px solid #DDD;
     padding: 5px 10px 3px 10px;
     background-color: #F9F9F9;
@@ -110,7 +111,7 @@ footer ul li {
     border-bottom: 1px solid #d4d4d4;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
-    margin-bottom: 12px;
+    margin-bottom: 30px;
 }
 
 .marketing-block h3, .marketing-block p,
