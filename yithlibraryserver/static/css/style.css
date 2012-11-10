@@ -92,11 +92,12 @@ footer ul li {
 }
 
 .marketing-block {
+    clear: both;
     border-left: 1px solid #d4d4d4;
     border-right: 1px solid #d4d4d4;
     border-bottom: 1px solid #eeeeee;
     margin: 0;
-    height: 200px;
+    padding: 10px 0;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.067);
 }
