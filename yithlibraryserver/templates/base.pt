@@ -74,7 +74,7 @@
 
     <footer class="container">
       <ul class="pull-left">
-        <li><a href="#" id="tosButton">Terms of use</a> |</li>
+        <li><a href="#" id="tosButton">Terms of service</a> |</li>
         <li><a href="https://github.com/Yaco-Sistemas/yith-library-server" target="_blank">Fork us in GitHub!</a></li>
       </ul>
       <ul class="pull-right">
