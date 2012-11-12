@@ -23,6 +23,7 @@ import re
 from pyramid.config import Configurator
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
+from pyramid.exceptions import ConfigurationError
 
 from yithlibraryserver.config import read_setting_from_env
 from yithlibraryserver.cors import CORSManager
@@ -46,12 +47,20 @@ def main(global_config, **settings):
     # read Google Analytics code
     settings['google_analytics_code'] = read_setting_from_env(settings, 'google_analytics_code', None)
 
+    # read the auth secret
+    settings['auth_tk_secret'] = read_setting_from_env(settings, 'auth_tk_secret', None)
+    if settings['auth_tk_secret'] is None:
+        raise ConfigurationError('The auth_tk_secret configuration option is required')
+
     # main config object
     config = Configurator(
         settings=settings,
         root_factory=RootFactory,
         authorization_policy=ACLAuthorizationPolicy(),
-        authentication_policy=AuthTktAuthenticationPolicy('seekrit', wild_domain=False),
+        authentication_policy=AuthTktAuthenticationPolicy(
+            settings['auth_tk_secret'],
+            wild_domain=False,
+            ),
         )
     config.add_static_view('static', 'static', cache_max_age=3600)
 
