@@ -51,7 +51,7 @@ def main(global_config, **settings):
         settings=settings,
         root_factory=RootFactory,
         authorization_policy=ACLAuthorizationPolicy(),
-        authentication_policy=AuthTktAuthenticationPolicy('seekrit'),
+        authentication_policy=AuthTktAuthenticationPolicy('seekrit', wild_domain=False),
         )
     config.add_static_view('static', 'static', cache_max_age=3600)
 
