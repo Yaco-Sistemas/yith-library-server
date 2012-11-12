@@ -52,6 +52,11 @@ def main(global_config, **settings):
     if settings['auth_tk_secret'] is None:
         raise ConfigurationError('The auth_tk_secret configuration option is required')
 
+    # read the Mongodb URI
+    settings['mongo_uri'] = read_setting_from_env(settings, 'mongo_uri', None)
+    if settings['mongo_uri'] is None:
+        raise ConfigurationError('The mongo_uri configuration option is required')
+
     # main config object
     config = Configurator(
         settings=settings,
@@ -75,10 +80,7 @@ def main(global_config, **settings):
     config.include('pyramid_tm')
 
     # Mongodb setup
-    mongo_uri = read_setting_from_env(settings, 'mongo_uri', None)
-    if mongo_uri is None:
-        raise ConfigurationError('The mongo_uri configuration option is required')
-    mongodb = MongoDB(mongo_uri)
+    mongodb = MongoDB(settings['mongo_uri'])
     config.registry.settings['mongodb'] = mongodb
     config.registry.settings['db_conn'] = mongodb.get_connection()
 
