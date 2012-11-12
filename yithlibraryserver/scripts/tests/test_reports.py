@@ -29,6 +29,7 @@ from yithlibraryserver.scripts.reports import usage, applications
 CONFIG = """[app:main]
 use = egg:yith-library-server
 mongo_uri = %s
+auth_tk_secret = 123456
 testing = True
 
 [server:main]

@@ -46,6 +46,7 @@ class TestCase(unittest.TestCase):
     def setUp(self):
         settings = {
             'mongo_uri': MONGO_URI,
+            'auth_tk_secret': '123456',
             'twitter_consumer_key': 'key',
             'twitter_consumer_secret': 'secret',
             'facebook_app_id': 'id',
