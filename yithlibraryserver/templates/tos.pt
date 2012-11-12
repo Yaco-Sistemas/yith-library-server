@@ -61,9 +61,11 @@
 
       <h2>Cookies usage. No tracking</h2>
 
-      <p>We use cookies for the sole purpose of managing a session for you.</p>
+      <p>We use cookies for the sole purpose of managing a session for you
+	(<em>beaker.session.id</em>) and remembering your identity after you
+	succesfully finish the authentication process (<em>auth_tkt</em>).</p>
 
-      <p>Optionally and if you allow it we use Google Analytics to learn more about
+      <p>Optionally and if you allow it, we use Google Analytics to learn more about
 	our users. This way we can optimize Yith Library and priorize our changes
 	so you are served better. Knowing our users habits also helps us to
 	scale our infrastructure better.</p>
@@ -80,11 +82,11 @@
 	fun and because we believe a web password manager is needed to make the
 	Internet a safer place.</p>
 
-      <p>Sorry if some of these terms are a little imprecise and sloppy. We are
-	hackers, not lawyers. If in doubt, <a href="#">just drop us a line</a>.</p>
-
     </div>
   </div>
+
+  <p class="well">Sorry if some of these terms are a little imprecise and sloppy. We are
+    hackers, not lawyers. If in doubt, <a href="#">just drop us a line</a>.</p>
 
 </tal:block>
 
