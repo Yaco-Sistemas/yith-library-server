@@ -21,6 +21,9 @@
 import os
 import unittest
 
+from pyramid.exceptions import ConfigurationError
+
+from yithlibraryserver import main
 from yithlibraryserver.config import read_setting_from_env
 
 
@@ -40,3 +43,22 @@ class ConfigTests(unittest.TestCase):
 
         os.environ['FOO_BAR'] = '2'
         self.assertEqual('2', read_setting_from_env(settings, 'foo_bar'))
+
+    def test_required_settings(self):
+        settings = {}
+        self.assertRaises(ConfigurationError, main, {}, **settings)
+
+        settings = {
+            'auth_tk_secret': '1234',
+            }
+        self.assertRaises(ConfigurationError, main, {}, **settings)
+
+        settings = {
+            'auth_tk_secret': '1234',
+            'mongo_uri': 'mongodb://localhost:27017/test',
+            }
+        app = main({}, **settings)
+        self.assertEqual(settings['auth_tk_secret'],
+                         app.registry.settings['auth_tk_secret'])
+        self.assertEqual(settings['mongo_uri'],
+                         app.registry.settings['mongo_uri'])

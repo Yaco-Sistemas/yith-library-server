@@ -75,7 +75,10 @@ def main(global_config, **settings):
     config.include('pyramid_tm')
 
     # Mongodb setup
-    mongodb = MongoDB(read_setting_from_env(settings, 'mongo_uri'))
+    mongo_uri = read_setting_from_env(settings, 'mongo_uri', None)
+    if mongo_uri is None:
+        raise ConfigurationError('The mongo_uri configuration option is required')
+    mongodb = MongoDB(mongo_uri)
     config.registry.settings['mongodb'] = mongodb
     config.registry.settings['db_conn'] = mongodb.get_connection()
 
