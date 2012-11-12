@@ -26,3 +26,7 @@ class ViewTests(testing.TestCase):
     def test_home(self):
         res = self.testapp.get('/')
         self.assertEqual(res.status, '200 OK')
+
+    def test_tos(self):
+        res = self.testapp.get('/tos')
+        self.assertEqual(res.status, '200 OK')
