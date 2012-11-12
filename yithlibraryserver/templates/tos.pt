@@ -44,7 +44,8 @@
 
       <h2>Data ownership</h2>
 
-      <p>You own your personal data and all the passwords stored in your account.</p>
+      <p>You own your personal data and all the passwords stored in your account
+	belongs only to you.</p>
 
       <p>You can export such data in a machine readable format any time you want. If
 	you want, we will send you a backup of your passwords once a month.</p>
@@ -76,7 +77,7 @@
 	whenever you want. It's a sad event for us but you must have the rights
 	to make that decission.</p>
 
-      <h2>No data selling</h2>
+      <h2>We won't sell your data, ever</h2>
 
       <p>We don't sell your data to any third party company. We do this just for
 	fun and because we believe a web password manager is needed to make the
