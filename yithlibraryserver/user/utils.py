@@ -17,6 +17,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
+import datetime
 
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember
@@ -50,9 +51,9 @@ def update_user(db, user, user_info):
             else:
                 changes[attribute] = user_info[attribute]
 
-    if changes:
-        db.users.update({'_id': user['_id']}, {'$set': changes},
-                                safe=True)
+    changes['last_login'] = datetime.datetime.utcnow()
+
+    db.users.update({'_id': user['_id']}, {'$set': changes}, safe=True)
 
 
 def _get_provider_key(provider):

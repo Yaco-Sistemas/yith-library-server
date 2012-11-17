@@ -15,7 +15,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
-
+import datetime
 import os
 import sys
 import tempfile
@@ -102,6 +102,8 @@ class ReportTests(unittest.TestCase):
                 'twitter_id': '1234',
                 'facebook_id': '5678',
                 'google_id': 'abcd',
+                'date_joined': datetime.datetime(2012, 12, 12, 12, 12, 12),
+                'last_login': datetime.datetime(2012, 12, 12, 12, 12, 12),
                 })
         self.db.passwords.insert({
                 'service': 'service1',
@@ -122,16 +124,22 @@ class ReportTests(unittest.TestCase):
 	Passwords: 0
 	Providers: 
 	Verified: False
+	Date joined: Unknown
+	Last login: Unknown
 
 John2 Doe2 <john2@example.com> (%s)
 	Passwords: 1
 	Providers: twitter
 	Verified: True
+	Date joined: Unknown
+	Last login: Unknown
 
 John3 Doe3 <john3@example.com> (%s)
 	Passwords: 2
 	Providers: facebook, google, twitter
 	Verified: True
+	Date joined: 2012-12-12 12:12:12+00:00
+	Last login: 2012-12-12 12:12:12+00:00
 
 """ % (u1_id, u2_id, u3_id)
         self.assertEqual(stdout, expected_output)

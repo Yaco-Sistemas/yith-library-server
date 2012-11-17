@@ -38,6 +38,8 @@ def _get_user_info(db, user):
         'providers': ', '.join([prov for prov in get_available_providers()
                                 if ('%s_id' % prov) in user]),
         'verified': user.get('email_verified', False),
+        'date_joined': user.get('date_joined', 'Unknown'),
+        'last_login': user.get('last_login', 'Unknown'),
         }
 
 
@@ -63,9 +65,12 @@ def usage():
             print('%s (%s)\n'
                   '\tPasswords: %d\n'
                   '\tProviders: %s\n'
-                  '\tVerified: %s\n' % (
+                  '\tVerified: %s\n'
+                  '\tDate joined: %s\n'
+                  '\tLast login: %s\n' % (
                     info['display_name'], user['_id'],
                     info['passwords'], info['providers'], info['verified'],
+                    info['date_joined'], info['last_login'],
                     ))
 
     finally:

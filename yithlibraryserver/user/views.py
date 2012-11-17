@@ -17,6 +17,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
+import datetime
 
 from deform import Button, Form, ValidationFailure
 
@@ -87,6 +88,7 @@ def register_new_user(request):
         else:
             email_verified = False
 
+        now = datetime.datetime.utcnow()
         _id = request.db.users.insert({
                 provider_key: user_info[provider_key],
                 'screen_name': user_info.get('screen_name', ''),
@@ -95,6 +97,8 @@ def register_new_user(request):
                 'email': appstruct['email'],
                 'email_verified': email_verified,
                 'authorized_apps': [],
+                'date_joined': now,
+                'last_login': now,
                 }, safe=True)
 
         del request.session['user_info']
