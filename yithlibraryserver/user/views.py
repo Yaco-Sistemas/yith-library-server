@@ -101,6 +101,13 @@ def register_new_user(request):
                 'last_login': now,
                 }, safe=True)
 
+        if not email_verified and appstruct['email'] != '':
+            evc = EmailVerificationCode()
+            user = request.db.users.find_one({'_id': _id})
+            if evc.store(request.db, user):
+                link = request.route_url('user_verify_email')
+                evc.send(request, user, link)
+
         del request.session['user_info']
         if 'next_url' in request.session:
             del request.session['next_url']

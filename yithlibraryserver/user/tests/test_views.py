@@ -166,6 +166,49 @@ class ViewTests(TestCase):
                     'screen_name': 'John Doe',
                     'first_name': 'John',
                     'last_name': 'Doe',
+                    'email': '',
+                    },
+                })
+
+        # if an email is provided at registration, but
+        # there is no email in the session (the provider
+        # did not gave it to us) the email is not verified
+        # and a verification email is sent
+        res = self.testapp.post('/register', {
+                'first_name': 'John2',
+                'last_name': 'Doe2',
+                'email': 'john@example.com',
+                'submit': 'Register into Yith Library',
+                }, status=302)
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/foo/bar')
+        self.assertEqual(self.db.users.count(), 3)
+        user = self.db.users.find_one({'first_name': 'John2'})
+        self.assertFalse(user is None)
+        self.assertEqual(user['first_name'], 'John2')
+        self.assertEqual(user['last_name'], 'Doe2')
+        self.assertEqual(user['email'], '')
+        self.assertEqual(user['email_verified'], False)
+        self.assertEqual(user['authorized_apps'], [])
+
+        # check that the email was sent
+        res.request.registry = self.testapp.app.registry
+        mailer = get_mailer(res.request)
+        self.assertEqual(len(mailer.outbox), 1)
+        self.assertEqual(mailer.outbox[0].subject,
+                         'Please verify your email address')
+        self.assertEqual(mailer.outbox[0].recipients,
+                         ['john@example.com'])
+
+        # the next_url and user_info keys are cleared at this point
+        self.add_to_session({
+                'next_url': 'http://localhost/foo/bar',
+                'user_info': {
+                    'provider': 'myprovider',
+                    'myprovider_id': '1234',
+                    'screen_name': 'John Doe',
+                    'first_name': 'John',
+                    'last_name': 'Doe',
                     'email': 'john@example.com',
                     },
                 })
