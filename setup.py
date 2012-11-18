@@ -38,6 +38,13 @@ requires = [
     'waitress==0.8.2',
     ]
 
+test_requires = [
+    'WebTest==1.4.2',
+    'mock==1.0.1',
+    'nose==1.2.1',
+    'coverage==3.5.2',
+    ]
+
 setup(name='yith-library-server',
       version='0.0',
       description='yith-library-server',
@@ -56,7 +63,7 @@ setup(name='yith-library-server',
       include_package_data=True,
       zip_safe=False,
       install_requires=requires,
-      tests_require=requires + ['webtest', 'mock', 'nose', 'coverage'],
+      tests_require=requires + test_requires,
       test_suite="yithlibraryserver",
       entry_points = """\
       [paste.app_factory]
