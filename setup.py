@@ -40,7 +40,7 @@ requires = [
 
 test_requires = [
     'WebTest==1.4.2',
-    'mock==1.0.1',
+    'mock==1.0.0',
     'nose==1.2.1',
     'coverage==3.5.2',
     ]
