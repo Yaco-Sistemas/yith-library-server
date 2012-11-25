@@ -22,7 +22,6 @@ from pyramid.events import BeforeRender, NewRequest
 from pyramid.renderers import get_renderer
 
 from yithlibraryserver.db import get_db
-from yithlibraryserver.user.security import get_user
 
 
 def add_cors_headers_response(event):
@@ -41,7 +40,6 @@ def add_base_template(event):
 
 def includeme(config):
     config.set_request_property(get_db, 'db', reify=True)
-    config.set_request_property(get_user, 'user', reify=True)
 
     config.add_subscriber(add_cors_headers_response, NewRequest)
     config.add_subscriber(add_base_template, BeforeRender)
