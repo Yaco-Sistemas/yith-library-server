@@ -18,6 +18,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
+from yithlibraryserver.user.analytics import get_google_analytics
 from yithlibraryserver.user.idp import add_identity_provider
 from yithlibraryserver.user.security import get_user
 
@@ -26,6 +27,8 @@ def includeme(config):
     config.add_directive('add_identity_provider', add_identity_provider)
 
     config.set_request_property(get_user, 'user', reify=True)
+    config.set_request_property(get_google_analytics,
+                                'google_analytics', reify=True)
 
     config.add_route('login', '/login')
     config.add_route('register_new_user', '/register')
@@ -36,3 +39,4 @@ def includeme(config):
                      '/send-email-verification-code')
     config.add_route('user_verify_email', '/verify-email')
     config.add_route('user_merge_accounts', '/merge-accounts')
+    config.add_route('user_google_analytics_preference', '/google-analytics-preference')

@@ -25,6 +25,13 @@
 <body>
   <div class="container">
     <tal:block metal:define-slot="navbar">
+      <div class="alert" tal:condition="request.google_analytics.enabled and request.google_analytics.first_time">
+        <p><strong>Welcome, new visitor!</strong> We are using cookies to get statistics about the usage of Yith Library. This is completely optional and we want to ask you if this is ok with you.</p>
+        <form id="google-analytics-preference-form" action="${request.route_path('user_google_analytics_preference')}" method="POST">
+          <input type="submit" class="btn btn-success" name="yes" value="Ok, I can handle one more cookie" />
+          <input type="submit" class="btn btn-danger" name="no" value="No, I don't want to be tracked" />
+        <form>
+      </div>
       <div class="navbar">
         <div class="navbar-inner">
           <div class="container">
@@ -122,8 +129,9 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src=\'${request.static_path("yithlibraryserver:static/js/libs/jquery-1.7.2.min.js")}\'><\/script>')</script>
   <script src="${request.static_path('yithlibraryserver:static/js/libs/bootstrap.js')}"></script>
+  <script src="${request.static_path('yithlibraryserver:static/js/jquery.google_analytics.js')}"></script>
   <script type="text/javascript">
-    (function($) {
+    (function ($) {
         $(document).ready(function () {
             var credits_dialog = $("#credits").modal({ show: false });
             $("#creditsButton").click(function (event) {
@@ -132,23 +140,19 @@
             });
             $("[rel=popover]").popover({trigger: 'hover'}).click(function (event) {
                 event.preventDefault();
-            });;
+            });
         });
     }(jQuery));
   </script>
-  <script type="text/javascript" tal:condition="request.registry.settings['google_analytics_code']">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', '${request.registry.settings['google_analytics_code']}']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'),
-          s = document.getElementsByTagName('script')[0];
-      ga.type = 'text/javascript';
-      ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(ga, s);
-    })();
+  <script type="text/javascript" tal:condition="request.google_analytics.enabled">
+    (function ($) {
+        $.google_analytics.init('${request.registry.settings['google_analytics_code']}');
+    }(jQuery));
+  </script>
+  <script type="text/javascript" tal:condition="request.google_analytics.enabled and request.google_analytics.show">
+    (function ($) {
+        $.google_analytics.show();
+    }(jQuery));
   </script>
 
   <tal:block metal:define-slot="extra-scripts"></tal:block>

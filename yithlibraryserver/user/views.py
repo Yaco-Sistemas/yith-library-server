@@ -341,3 +341,18 @@ def account_merging(request):
     return {
         'accounts': available_accounts,
         }
+
+
+@view_config(route_name='user_google_analytics_preference', renderer='json')
+def google_analytics_preference(request):
+    result = {}
+    if 'yes' in request.POST:
+        request.google_analytics.allow(True)
+        result['allow'] = True
+    elif 'no' in request.POST:
+        request.google_analytics.allow(False)
+        result['allow'] = False
+    else:
+        return HTTPBadRequest('Missing preference in the POST data')
+
+    return result

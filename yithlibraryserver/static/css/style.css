@@ -188,3 +188,8 @@ footer ul li {
     margin-top: -6px;
     margin-left: -64px;
 }
+
+.alert form {
+    text-align: center;
+    margin: 0;
+}
