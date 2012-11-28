@@ -144,16 +144,19 @@
         });
     }(jQuery));
   </script>
-  <script type="text/javascript" tal:condition="request.google_analytics.enabled">
+  <div tal:omit-tag="" tal:condition="request.google_analytics.enabled">
+    <script type="text/javascript" tal:condition="request.google_analytics.show">
+    (function ($) {
+        $.google_analytics.init('${request.registry.settings['google_analytics_code']}');
+        $.google_analytics.show();
+    }(jQuery));
+    </script>
+    <script type="text/javascript" tal:condition="not request.google_analytics.show">
     (function ($) {
         $.google_analytics.init('${request.registry.settings['google_analytics_code']}');
     }(jQuery));
-  </script>
-  <script type="text/javascript" tal:condition="request.google_analytics.enabled and request.google_analytics.show">
-    (function ($) {
-        $.google_analytics.show();
-    }(jQuery));
-  </script>
+    </script>
+  </div>
 
   <tal:block metal:define-slot="extra-scripts"></tal:block>
 
