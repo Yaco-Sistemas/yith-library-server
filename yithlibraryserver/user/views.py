@@ -26,6 +26,7 @@ from pyramid.security import remember, forget
 from pyramid.view import view_config, forbidden_view_config
 
 from yithlibraryserver.compat import url_quote
+from yithlibraryserver.user import analytics
 from yithlibraryserver.user.accounts import get_accounts, merge_accounts
 from yithlibraryserver.user.accounts import notify_admins_of_account_removal
 from yithlibraryserver.user.email_verification import EmailVerificationCode
@@ -89,6 +90,7 @@ def register_new_user(request):
             email_verified = False
 
         now = datetime.datetime.utcnow()
+        allow_analytics = request.google_analytics.show_in_session()
         _id = request.db.users.insert({
                 provider_key: user_info[provider_key],
                 'screen_name': user_info.get('screen_name', ''),
@@ -99,6 +101,7 @@ def register_new_user(request):
                 'authorized_apps': [],
                 'date_joined': now,
                 'last_login': now,
+                analytics.USER_ATTR: allow_analytics,
                 }, safe=True)
 
         if not email_verified and appstruct['email'] != '':

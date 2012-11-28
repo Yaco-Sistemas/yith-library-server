@@ -33,13 +33,19 @@ class GoogleAnalytics(object):
     def first_time(self):
         return SESSION_KEY not in self.request.session
 
+    def show_in_session(self):
+        return self.request.session.get(SESSION_KEY, False)
+
+    def show_in_user(self, user):
+        return getattr(user, USER_ATTR, False)
+
     @property
     def show(self):
         user = self.request.user
         if user is None:
-            return self.request.session.get(SESSION_KEY, False)
+            return self.show_in_session()
         else:
-            return getattr(user, USER_ATTR, False)
+            return self.show_in_user(user)
 
     def allow(self, value):
         user = self.request.user
