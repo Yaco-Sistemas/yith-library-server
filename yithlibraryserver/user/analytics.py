@@ -60,7 +60,8 @@ class GoogleAnalytics(object):
             user[USER_ATTR] = value
 
     def clean_session(self):
-        del self.request.session[SESSION_KEY]
+        if SESSION_KEY in self.request.session:
+            del self.request.session[SESSION_KEY]
 
 
 def get_google_analytics(request):
