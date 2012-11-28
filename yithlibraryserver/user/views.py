@@ -104,6 +104,8 @@ def register_new_user(request):
                 analytics.USER_ATTR: allow_analytics,
                 }, safe=True)
 
+        request.google_analytics.clean_session()
+
         if not email_verified and appstruct['email'] != '':
             evc = EmailVerificationCode()
             user = request.db.users.find_one({'_id': _id})

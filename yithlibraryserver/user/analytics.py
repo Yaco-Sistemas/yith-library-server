@@ -31,7 +31,12 @@ class GoogleAnalytics(object):
 
     @property
     def first_time(self):
-        return SESSION_KEY not in self.request.session
+        key_not_in_session = SESSION_KEY not in self.request.session
+        user = self.request.user
+        if user is None:
+            return key_not_in_session
+        else:
+            return key_not_in_session and USER_ATTR not in user
 
     def show_in_session(self):
         return self.request.session.get(SESSION_KEY, False)
@@ -53,6 +58,9 @@ class GoogleAnalytics(object):
             self.request.session[SESSION_KEY] = value
         else:
             setattr(user, USER_ATTR, value)
+
+    def clean_session(self):
+        del self.request.session[SESSION_KEY]
 
 
 def get_google_analytics(request):
