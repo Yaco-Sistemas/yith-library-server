@@ -42,7 +42,7 @@ class GoogleAnalytics(object):
         return self.request.session.get(SESSION_KEY, False)
 
     def show_in_user(self, user):
-        return getattr(user, USER_ATTR, False)
+        return user.get(USER_ATTR, False)
 
     @property
     def show(self):
@@ -57,7 +57,7 @@ class GoogleAnalytics(object):
         if user is None:
             self.request.session[SESSION_KEY] = value
         else:
-            setattr(user, USER_ATTR, value)
+            user[USER_ATTR] = value
 
     def clean_session(self):
         del self.request.session[SESSION_KEY]
