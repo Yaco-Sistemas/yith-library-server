@@ -132,6 +132,7 @@
   <script src="${request.static_path('yithlibraryserver:static/js/jquery.google_analytics.js')}"></script>
   <script type="text/javascript">
     (function ($) {
+        "use strict";
         $(document).ready(function () {
             var credits_dialog = $("#credits").modal({ show: false });
             $("#creditsButton").click(function (event) {
@@ -147,12 +148,14 @@
   <div tal:omit-tag="" tal:condition="request.google_analytics.enabled">
     <script type="text/javascript" tal:condition="request.google_analytics.show">
     (function ($) {
+        "use strict";
         $.google_analytics.init('${request.registry.settings['google_analytics_code']}');
         $.google_analytics.show();
     }(jQuery));
     </script>
     <script type="text/javascript" tal:condition="not request.google_analytics.show">
     (function ($) {
+        "use strict";
         $.google_analytics.init('${request.registry.settings['google_analytics_code']}');
     }(jQuery));
     </script>
