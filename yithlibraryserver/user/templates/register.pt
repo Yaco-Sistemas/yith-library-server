@@ -16,7 +16,7 @@
   the registration process. Don't worry, we will not ask you
   for a new password. You already have enough of them.</p>
 
-  <div tal:replace="structure form">form</div>
+  <form tal:replace="structure form">form</form>
 
 </tal:block>
 
