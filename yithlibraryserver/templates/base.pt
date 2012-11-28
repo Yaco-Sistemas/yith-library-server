@@ -30,7 +30,7 @@
         <form id="google-analytics-preference-form" action="${request.route_path('user_google_analytics_preference')}" method="POST">
           <input type="submit" class="btn btn-success" name="yes" value="Ok, I can handle one more cookie" />
           <input type="submit" class="btn btn-danger" name="no" value="No, I don't want to be tracked" />
-        <form>
+        </form>
       </div>
       <div class="navbar">
         <div class="navbar-inner">
