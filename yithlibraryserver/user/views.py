@@ -90,8 +90,8 @@ def register_new_user(request):
             email_verified = False
 
         now = datetime.datetime.utcnow()
-        allow_analytics = request.google_analytics.show_in_session()
-        _id = request.db.users.insert({
+
+        user_attrs = {
                 provider_key: user_info[provider_key],
                 'screen_name': user_info.get('screen_name', ''),
                 'first_name': appstruct['first_name'],
@@ -101,10 +101,14 @@ def register_new_user(request):
                 'authorized_apps': [],
                 'date_joined': now,
                 'last_login': now,
-                analytics.USER_ATTR: allow_analytics,
-                }, safe=True)
+            }
 
-        request.google_analytics.clean_session()
+        if request.google_analytics.is_in_session():
+            allow_analytics = request.google_analytics.show_in_session()
+            user_attrs[analytics.USER_ATTR] = allow_analytics
+            request.google_analytics.clean_session()
+
+        _id = request.db.users.insert(user_attrs, safe=True)
 
         if not email_verified and appstruct['email'] != '':
             evc = EmailVerificationCode()
@@ -350,14 +354,19 @@ def account_merging(request):
 
 @view_config(route_name='user_google_analytics_preference', renderer='json')
 def google_analytics_preference(request):
-    result = {}
     if 'yes' in request.POST:
-        request.google_analytics.allow(True)
-        result['allow'] = True
+        allow = True
     elif 'no' in request.POST:
-        request.google_analytics.allow(False)
-        result['allow'] = False
+        allow = False
     else:
         return HTTPBadRequest('Missing preference in the POST data')
 
-    return result
+    if request.user is None:
+        request.session[analytics.SESSION_KEY] = allow
+    else:
+        changes = request.google_analytics.get_user_attr(allow)
+        request.db.users.update({'_id': request.user['_id']},
+                                {'$set': changes},
+                                safe=True)
+
+    return {'allow': allow}

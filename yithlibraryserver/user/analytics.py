@@ -31,18 +31,22 @@ class GoogleAnalytics(object):
 
     @property
     def first_time(self):
-        key_not_in_session = SESSION_KEY not in self.request.session
-        user = self.request.user
-        if user is None:
-            return key_not_in_session
+        if self.request.user is None:
+            return SESSION_KEY not in self.request.session
         else:
-            return key_not_in_session and USER_ATTR not in user
+            return USER_ATTR not in self.request.user
 
     def show_in_session(self):
         return self.request.session.get(SESSION_KEY, False)
 
     def show_in_user(self, user):
         return user.get(USER_ATTR, False)
+
+    def is_in_session(self):
+        return SESSION_KEY in self.request.session
+
+    def is_stored_in_user(self, user):
+        return USER_ATTR in user
 
     @property
     def show(self):
@@ -52,16 +56,12 @@ class GoogleAnalytics(object):
         else:
             return self.show_in_user(user)
 
-    def allow(self, value):
-        user = self.request.user
-        if user is None:
-            self.request.session[SESSION_KEY] = value
-        else:
-            user[USER_ATTR] = value
-
     def clean_session(self):
         if SESSION_KEY in self.request.session:
             del self.request.session[SESSION_KEY]
+
+    def get_user_attr(self, value):
+        return {USER_ATTR: value}
 
 
 def get_google_analytics(request):

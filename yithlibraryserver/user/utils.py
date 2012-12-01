@@ -40,7 +40,7 @@ def delete_user(db, user):
     return result['n'] == 1
 
 
-def update_user(db, user, user_info):
+def update_user(db, user, user_info, other_changes):
     changes = {}
     for attribute in ('screen_name', 'first_name', 'last_name', 'email'):
         if attribute in user_info and user_info[attribute]:
@@ -51,7 +51,7 @@ def update_user(db, user, user_info):
             else:
                 changes[attribute] = user_info[attribute]
 
-    changes['last_login'] = datetime.datetime.utcnow()
+    changes.update(other_changes)
 
     db.users.update({'_id': user['_id']}, {'$set': changes}, safe=True)
 
@@ -82,7 +82,16 @@ def register_or_update(request, provider, user_id, info, default_url='/'):
             request.session['next_url'] = default_url
         return HTTPFound(location=request.route_path('register_new_user'))
     else:
-        update_user(request.db, user, info)
+        changes = {'last_login': datetime.datetime.utcnow()}
+
+        ga = request.google_analytics
+        if ga.is_in_session():
+            if not ga.is_stored_in_user(user):
+                changes.update(ga.get_user_attr(ga.show_in_session()))
+            ga.clean_session()
+
+        update_user(request.db, user, info, changes)
+
         if 'next_url' in request.session:
             next_url = request.session['next_url']
             del request.session['next_url']

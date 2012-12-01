@@ -25,6 +25,7 @@ from pyramid import testing
 from yithlibraryserver.db import MongoDB
 from yithlibraryserver.testing import MONGO_URI
 
+from yithlibraryserver.user.analytics import GoogleAnalytics
 from yithlibraryserver.user.utils import split_name, delete_user, update_user
 from yithlibraryserver.user.utils import register_or_update
 
@@ -71,7 +72,7 @@ class UtilsTests(unittest.TestCase):
                 'last_name': '',
                 }, safe=True)
         user = self.db.users.find_one({'_id': user_id})
-        update_user(self.db, user, {})
+        update_user(self.db, user, {}, {})
 
         updated_user = self.db.users.find_one({'_id': user_id})
         # the user has not changed
@@ -80,24 +81,35 @@ class UtilsTests(unittest.TestCase):
         self.assertEqual(updated_user['last_name'], user['last_name'])
 
         # update the last_name
-        update_user(self.db, user, {'last_name': 'Doe'})
+        update_user(self.db, user, {'last_name': 'Doe'}, {})
         updated_user = self.db.users.find_one({'_id': user_id})
         self.assertEqual(updated_user['last_name'], 'Doe')
 
         # add an email attribute
-        update_user(self.db, user, {'email': 'john@example.com'})
+        update_user(self.db, user, {'email': 'john@example.com'}, {})
         updated_user = self.db.users.find_one({'_id': user_id})
         self.assertEqual(updated_user['email'], 'john@example.com')
 
         # if an attribute has no value, no update happens
-        update_user(self.db, user, {'first_name': ''})
+        update_user(self.db, user, {'first_name': ''}, {})
         updated_user = self.db.users.find_one({'_id': user_id})
         self.assertEqual(updated_user['first_name'], 'John')
+
+        # update a non existing attribute
+        update_user(self.db, user, {'foo': 'bar'}, {})
+        updated_user = self.db.users.find_one({'_id': user_id})
+        self.assertFalse('foo' in updated_user)
+
+        # update the same attribute within the last parameter
+        update_user(self.db, user, {}, {'foo': 'bar'})
+        updated_user = self.db.users.find_one({'_id': user_id})
+        self.assertEqual(updated_user['foo'], 'bar')
 
     def test_register_or_update(self):
         request = testing.DummyRequest()
         request.db = self.db
         request.session = {}
+        request.google_analytics = GoogleAnalytics(request)
         response = register_or_update(request, 'skynet', 1, {
                 'screen_name': 'JohnDoe',
                 'first_name': 'John',
@@ -127,6 +139,7 @@ class UtilsTests(unittest.TestCase):
         request = testing.DummyRequest()
         request.db = self.db
         request.session = {}
+        request.google_analytics = GoogleAnalytics(request)
         response = register_or_update(request, 'skynet', 1, {
                 'screen_name': 'JohnDoe',
                 'first_name': 'John',
@@ -143,6 +156,7 @@ class UtilsTests(unittest.TestCase):
         request = testing.DummyRequest()
         request.db = self.db
         request.session = {'next_url': '/foo'}
+        request.google_analytics = GoogleAnalytics(request)
         response = register_or_update(request, 'skynet', 1, {
                 'screen_name': 'JohnDoe',
                 'first_name': 'John',
