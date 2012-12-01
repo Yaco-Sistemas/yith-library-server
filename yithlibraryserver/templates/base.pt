@@ -142,6 +142,9 @@
             $("[rel=popover]").popover({trigger: 'hover'}).click(function (event) {
                 event.preventDefault();
             });
+            $("[rel=tooltip]").tooltip().click(function (event) {
+                event.preventDefault();
+            });
         });
     }(jQuery));
   </script>

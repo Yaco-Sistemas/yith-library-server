@@ -94,7 +94,7 @@
 	  <p><strong>Free as in beer</strong></p>
 	  <ul class="unstyled">
 	    <li>You can use our server and clients without paying a dime</li>
-	    <li>If you like it a lot, we are happy to accept donations</li>
+	    <li>If you like it a lot, we are happy to accept <a href="#" rel="tooltip" title="Coming soon">donations</a></li>
 	  </ul>
 	</div>
       </div>
