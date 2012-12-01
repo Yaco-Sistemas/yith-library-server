@@ -26,7 +26,7 @@
   <div class="container">
     <tal:block metal:define-slot="navbar">
       <div class="alert" tal:condition="request.google_analytics.enabled and request.google_analytics.first_time">
-        <p><strong>Welcome, new visitor!</strong> We are using cookies to get statistics about the usage of Yith Library. This is completely optional and we want to ask you if this is ok with you.</p>
+        <p><strong>Welcome, <span tal:condition="not request.user">new visitor!</span><span tal:condition="request.user">${request.user.first_name}</span>.</strong> We are using cookies to get statistics about the usage of Yith Library. This is completely optional and we want to ask you if this is ok with you.</p>
         <form id="google-analytics-preference-form" action="${request.route_path('user_google_analytics_preference')}" method="POST">
           <input type="submit" class="btn btn-success" name="yes" value="Ok, I can handle one more cookie" />
           <input type="submit" class="btn btn-danger" name="no" value="No, I don't want to be tracked" />
