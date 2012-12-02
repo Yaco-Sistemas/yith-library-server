@@ -86,8 +86,9 @@
     </div>
   </div>
 
-  <p class="well">Sorry if some of these terms are a little imprecise and sloppy. We are
-    hackers, not lawyers. If in doubt, <a href="#">just drop us a line</a>.</p>
+  <p class="well">Sorry if some of these terms are a little imprecise and
+    sloppy. We are hackers, not lawyers. If in doubt,
+    <a href="${request.route_path('contact')}">just drop us a line</a>.</p>
 
 </tal:block>
 

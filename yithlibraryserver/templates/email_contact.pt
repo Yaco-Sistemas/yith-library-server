@@ -1,0 +1,18 @@
+<p>This is a message composed from Yith Library's contact form</p>
+
+<dl>
+  <dt>Author:</dt>
+  <dd>${name}</dd>
+
+  <dt>Email:</dt>
+  <dd> ${email}</dd>
+
+  <dt>Message:</dt>
+  <dd>${message}</dd>
+</dl>
+
+<p>You are receiving this message because you are an administrator
+of Yith Library server located at <a href="${link}">${link}</a></p>
+
+<p>- The Yith Library team</p>
+

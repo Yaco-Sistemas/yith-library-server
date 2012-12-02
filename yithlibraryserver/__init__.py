@@ -111,4 +111,5 @@ def main(global_config, **settings):
 
 def includeme(config):
     config.add_route('home', '/')
+    config.add_route('contact', '/contact')
     config.add_route('tos', '/tos')

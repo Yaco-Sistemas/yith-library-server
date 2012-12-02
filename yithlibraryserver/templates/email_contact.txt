@@ -1,0 +1,11 @@
+This is a message composed from Yith Library's contact form
+
+Author: ${name}
+Email: ${email}
+Message:
+${message}
+
+You are receiving this message because you are an administrator
+of Yith Library server located at ${link}
+
+- The Yith Library team

@@ -85,6 +85,7 @@
         <li><a href="https://github.com/Yaco-Sistemas/yith-library-server" target="_blank">Fork us in GitHub!</a></li>
       </ul>
       <ul class="pull-right">
+        <li><a href="${request.route_path('contact')}">Contact</a> |</li>
         <li><a href="#" id="creditsButton">Credits</a></li>
       </ul>
     </footer>
