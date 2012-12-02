@@ -81,3 +81,15 @@ class TestCase(unittest.TestCase):
             session[key] = value
         session.persist()
         self.testapp.cookies['beaker.session.id'] = session._sess.id
+
+    def get_session(self, response):
+        session_factory = self.testapp.app.registry.queryUtility(ISessionFactory)
+        request = response.request
+
+        if not hasattr(request, 'add_response_callback'):
+            request.add_response_callback = lambda r: r
+
+        if 'Set-Cookie' in response.headers:
+            request.environ['HTTP_COOKIE'] = response.headers['Set-Cookie']
+
+        return session_factory(request)

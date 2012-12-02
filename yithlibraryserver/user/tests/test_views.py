@@ -26,6 +26,7 @@ from pyramid_mailer import get_mailer
 
 from yithlibraryserver.compat import url_quote
 from yithlibraryserver.testing import TestCase
+from yithlibraryserver.user.analytics import SESSION_KEY, USER_ATTR
 
 
 class DummyValidationFailure(ValidationFailure):
@@ -199,6 +200,40 @@ class ViewTests(TestCase):
                          'Please verify your email address')
         self.assertEqual(mailer.outbox[0].recipients,
                          ['john@example.com'])
+
+
+        # the next_url and user_info keys are cleared at this point
+        self.add_to_session({
+                'next_url': 'http://localhost/foo/bar',
+                'user_info': {
+                    'provider': 'myprovider',
+                    'myprovider_id': '1234',
+                    'screen_name': 'John Doe',
+                    'first_name': 'John',
+                    'last_name': 'Doe',
+                    'email': '',
+                    },
+                SESSION_KEY: True,
+                })
+
+        # The user want the Google Analytics cookie
+        res = self.testapp.post('/register', {
+                'first_name': 'John3',
+                'last_name': 'Doe3',
+                'email': 'john3@example.com',
+                'submit': 'Register into Yith Library',
+                }, status=302)
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/foo/bar')
+        self.assertEqual(self.db.users.count(), 4)
+        user = self.db.users.find_one({'first_name': 'John3'})
+        self.assertFalse(user is None)
+        self.assertEqual(user['first_name'], 'John3')
+        self.assertEqual(user['last_name'], 'Doe3')
+        self.assertEqual(user['email'], 'john3@example.com')
+        self.assertEqual(user['email_verified'], False)
+        self.assertEqual(user['authorized_apps'], [])
+        self.assertEqual(user[USER_ATTR], True)
 
         # the next_url and user_info keys are cleared at this point
         self.add_to_session({
@@ -598,3 +633,43 @@ class ViewTests(TestCase):
         self.assertEqual(2, self.db.passwords.find(
                 {'owner': user1_id}, safe=True).count())
 
+    def test_google_analytics_preference(self):
+        res = self.testapp.post('/google-analytics-preference', status=400)
+        self.assertEqual(res.status, '400 Bad Request')
+        res.mustcontain('Missing preference parameter')
+
+        # Anonymous users save the preference in the session
+        res = self.testapp.post('/google-analytics-preference', {'yes': 'Yes'})
+        self.assertEqual(res.status, '200 OK')
+        self.assertEqual(res.json, {'allow': True})
+        self.assertEquals(self.get_session(res)[SESSION_KEY], True)
+
+        res = self.testapp.post('/google-analytics-preference', {'no': 'No'})
+        self.assertEqual(res.status, '200 OK')
+        self.assertEqual(res.json, {'allow': False})
+        self.assertEquals(self.get_session(res)[SESSION_KEY], False)
+
+        # Authenticated users save the preference in the database
+        # Log in
+        user_id = self.db.users.insert({
+                'twitter_id': 'twitter1',
+                'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': 'john@example.com',
+                'email_verified': True,
+                'authorized_apps': ['app1', 'app2'],
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+
+        res = self.testapp.post('/google-analytics-preference', {'yes': 'Yes'})
+        self.assertEqual(res.status, '200 OK')
+        self.assertEqual(res.json, {'allow': True})
+        user_refreshed = self.db.users.find_one({'_id': user_id}, safe=True)
+        self.assertEqual(user_refreshed[USER_ATTR], True)
+
+        res = self.testapp.post('/google-analytics-preference', {'no': 'No'})
+        self.assertEqual(res.status, '200 OK')
+        self.assertEqual(res.json, {'allow': False})
+        user_refreshed = self.db.users.find_one({'_id': user_id}, safe=True)
+        self.assertEqual(user_refreshed[USER_ATTR], False)

@@ -359,7 +359,7 @@ def google_analytics_preference(request):
     elif 'no' in request.POST:
         allow = False
     else:
-        return HTTPBadRequest('Missing preference in the POST data')
+        return HTTPBadRequest('Missing preference parameter')
 
     if request.user is None:
         request.session[analytics.SESSION_KEY] = allow
