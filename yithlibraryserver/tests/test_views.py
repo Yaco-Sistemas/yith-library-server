@@ -18,6 +18,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
+from pyramid_mailer import get_mailer
+
 from yithlibraryserver import testing
 
 
@@ -26,6 +28,80 @@ class ViewTests(testing.TestCase):
     def test_home(self):
         res = self.testapp.get('/')
         self.assertEqual(res.status, '200 OK')
+
+    def test_contact(self):
+        res = self.testapp.get('/contact')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Name')
+        res.mustcontain('Email')
+        res.mustcontain('Message')
+
+        # The three fields are required
+        res = self.testapp.post('/contact', {
+                'submit': 'Send message',
+                })
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('class="error" id="error-deformField1">Required')
+        res.mustcontain('class="error" id="error-deformField2">Required')
+        res.mustcontain('class="error" id="error-deformField3">Required')
+
+        res = self.testapp.post('/contact', {
+                'name': 'John',
+                'email': 'john@example.com',
+                'message': 'Testing message',
+                'submit': 'Send message',
+                })
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/')
+        # check that the email was sent
+        res.request.registry = self.testapp.app.registry
+        mailer = get_mailer(res.request)
+        self.assertEqual(len(mailer.outbox), 1)
+        self.assertEqual(mailer.outbox[0].subject,
+                         "John sent a message from Yith's contact form")
+        self.assertEqual(mailer.outbox[0].recipients,
+                         ['admin1@example.com', 'admin2@example.com'])
+        self.assertEqual(mailer.outbox[0].extra_headers,
+                         {'Reply-To': 'john@example.com'})
+
+        # if the user is authenticated, prefill the name and
+        # email fields
+        # Log in
+        user_id = self.db.users.insert({
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': 'john@example.com',
+                'email_verified': True,
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+
+        res = self.testapp.get('/contact')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('John')
+        res.mustcontain('john@example.com')
+
+        # simulate a cancel
+        res = self.testapp.post('/contact', {
+                'cancel': 'Cancel',
+                }, status=302)
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/')
+
+        # remove the admin emails configuration
+        self.testapp.app.registry.settings['admin_emails'] = []
+
+        res = self.testapp.post('/contact', {
+                'name': 'John',
+                'email': 'john@example.com',
+                'message': 'Testing message',
+                'submit': 'Send message',
+                })
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/')
+        # check that the email was *not* sent
+        res.request.registry = self.testapp.app.registry
+        mailer = get_mailer(res.request)
+        self.assertEqual(len(mailer.outbox), 1)
 
     def test_tos(self):
         res = self.testapp.get('/tos')
