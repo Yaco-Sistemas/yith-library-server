@@ -43,7 +43,7 @@ def login(request):
     if request.query_string:
         referrer += '?' + request.query_string
     if referrer == login_url:
-        referrer = request.route_path('home')
+        referrer = request.route_path('oauth2_clients')
     came_from = request.params.get('came_from', referrer)
     return {
         'identity_providers': request.registry.identity_providers,
@@ -62,7 +62,7 @@ def register_new_user(request):
     try:
         next_url = request.session['next_url']
     except KeyError:
-        next_url = request.route_url('home')
+        next_url = request.route_url('oauth2_clients')
 
     schema = UserSchema()
     button1 = Button('submit', 'Register into Yith Library')
