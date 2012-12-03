@@ -28,6 +28,7 @@ from pyramid.exceptions import ConfigurationError
 from yithlibraryserver.config import read_setting_from_env
 from yithlibraryserver.cors import CORSManager
 from yithlibraryserver.db import MongoDB
+from yithlibraryserver.jsonrenderer import json_renderer
 from yithlibraryserver.security import RootFactory
 
 
@@ -67,6 +68,7 @@ def main(global_config, **settings):
             wild_domain=False,
             ),
         )
+    config.add_renderer('json', json_renderer)
     config.add_static_view('static', 'static', cache_max_age=3600)
 
     # Beaker (sessions) setup

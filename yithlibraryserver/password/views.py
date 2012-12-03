@@ -27,7 +27,6 @@ from pyramid.view import view_config, view_defaults
 
 from yithlibraryserver.errors import password_not_found, invalid_password_id
 from yithlibraryserver.security import authorize_user
-from yithlibraryserver.utils import jsonable
 from yithlibraryserver.password.models import PasswordsManager
 from yithlibraryserver.password.validation import validate_password
 
@@ -49,7 +48,7 @@ class PasswordCollectionRESTView(object):
     @view_config(request_method='GET')
     def get(self):
         user = authorize_user(self.request)
-        return [jsonable(p) for p in self.passwords_manager.retrieve(user)]
+        return list(self.passwords_manager.retrieve(user))
 
     @view_config(request_method='POST')
     def post(self):
@@ -62,7 +61,7 @@ class PasswordCollectionRESTView(object):
             return HTTPBadRequest(body=json.dumps(result),
                                   content_type='application/json')
 
-        return jsonable(self.passwords_manager.create(user, password))
+        return self.passwords_manager.create(user, password)
 
 
 @view_defaults(route_name='password_view', renderer='json')
@@ -93,7 +92,7 @@ class PasswordRESTView(object):
         if password is None:
             return password_not_found()
         else:
-            return jsonable(password)
+            return password
 
     @view_config(request_method='PUT')
     def put(self):
@@ -116,7 +115,7 @@ class PasswordRESTView(object):
         if result is None:
             return password_not_found()
         else:
-            return jsonable(result)
+            return result
 
     @view_config(request_method='DELETE')
     def delete(self):

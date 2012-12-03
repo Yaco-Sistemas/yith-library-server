@@ -34,7 +34,6 @@ from yithlibraryserver.user.schemas import UserSchema, AccountDestroySchema
 from yithlibraryserver.user.utils import delete_user
 from yithlibraryserver.password.models import PasswordsManager
 from yithlibraryserver.security import authorize_user
-from yithlibraryserver.utils import jsonable
 
 
 @view_config(route_name='login', renderer='templates/login.pt')
@@ -389,4 +388,4 @@ class UserRESTView(object):
 
     @view_config(request_method='GET')
     def get(self):
-        return jsonable(authorize_user(self.request))
+        return authorize_user(self.request)
