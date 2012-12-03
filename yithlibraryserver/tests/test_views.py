@@ -28,6 +28,19 @@ class ViewTests(testing.TestCase):
     def test_home(self):
         res = self.testapp.get('/')
         self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Start using it today', no='Access your passwords')
+
+        # Log in
+        user_id = self.db.users.insert({
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': 'john@example.com',
+                'email_verified': True,
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+        res = self.testapp.get('/')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Access your passwords', no='Start using it today')
 
     def test_contact(self):
         res = self.testapp.get('/contact')
