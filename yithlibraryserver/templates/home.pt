@@ -19,7 +19,7 @@
 	    <small>at no cost</small>
       </a>
       <a tal:condition="request.user" class="btn btn-primary btn-large" href="${request.route_path('oauth2_clients')}">
-	    <strong>Access your passwords</strong>
+	    <strong>Get your passwords</strong>
       </a>
     </p>
   </div>
@@ -174,7 +174,7 @@
 	  <small>at no cost</small>
 	</a>
     <a tal:condition="request.user" class="btn btn-primary btn-large" href="${request.route_path('oauth2_clients')}">
-	  <strong>Access your passwords</strong>
+	  <strong>Get your passwords</strong>
     </a>
   </p>
 
