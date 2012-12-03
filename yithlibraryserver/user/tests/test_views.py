@@ -270,7 +270,7 @@ class ViewTests(TestCase):
                 'cancel': 'Cancel',
                 }, status=302)
         self.assertEqual(res.status, '302 Found')
-        self.assertEqual(res.location, 'http://localhost/')
+        self.assertEqual(res.location, 'http://localhost/oauth2/clients')
 
         # make the form fail
         self.add_to_session({
