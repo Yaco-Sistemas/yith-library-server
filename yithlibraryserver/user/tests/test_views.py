@@ -673,3 +673,55 @@ class ViewTests(TestCase):
         self.assertEqual(res.json, {'allow': False})
         user_refreshed = self.db.users.find_one({'_id': user_id}, safe=True)
         self.assertEqual(user_refreshed[USER_ATTR], False)
+
+
+class RESTViewTests(TestCase):
+
+    clean_collections = ('users', 'access_codes')
+
+    def setUp(self):
+        super(RESTViewTests, self).setUp()
+
+        self.access_code = '1234'
+        self.auth_header = {'Authorization': 'Bearer %s' % self.access_code}
+        self.user_id = self.db.users.insert({
+                'provider_user_id': 'user1',
+                'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': 'john@example.com',
+                'email_verified': True,
+                'allow_google_analytics': True,
+                'authorized_apps': [],
+                }, safe=True)
+        self.db.access_codes.insert({
+                'code': self.access_code,
+                'scope': None,
+                'user': self.user_id,
+                'client_id': None,
+                }, safe=True)
+
+    def test_user_options(self):
+        res = self.testapp.options('/user')
+        self.assertEqual(res.status, '200 OK')
+        self.assertEqual(res.body, b'')
+        self.assertEqual(res.headers['Access-Control-Allow-Methods'],
+                         'GET')
+        self.assertEqual(res.headers['Access-Control-Allow-Headers'],
+                         'Origin, Content-Type, Accept, Authorization')
+
+    def test_user_get(self):
+        res = self.testapp.get('/user', headers=self.auth_header)
+        self.assertEqual(res.status, '200 OK')
+        self.assertEqual(res.json, {
+                '_id': str(self.user_id),
+                'provider_user_id': 'user1',
+                'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': 'john@example.com',
+                'email_verified': True,
+                'allow_google_analytics': True,
+                'authorized_apps': [],
+                })
+

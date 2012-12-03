@@ -23,7 +23,7 @@ from deform import Button, Form, ValidationFailure
 
 from pyramid.httpexceptions import HTTPBadRequest, HTTPFound
 from pyramid.security import remember, forget
-from pyramid.view import view_config, forbidden_view_config
+from pyramid.view import view_config, view_defaults, forbidden_view_config
 
 from yithlibraryserver.compat import url_quote
 from yithlibraryserver.user import analytics
@@ -33,6 +33,8 @@ from yithlibraryserver.user.email_verification import EmailVerificationCode
 from yithlibraryserver.user.schemas import UserSchema, AccountDestroySchema
 from yithlibraryserver.user.utils import delete_user
 from yithlibraryserver.password.models import PasswordsManager
+from yithlibraryserver.security import authorize_user
+from yithlibraryserver.utils import jsonable
 
 
 @view_config(route_name='login', renderer='templates/login.pt')
@@ -370,3 +372,21 @@ def google_analytics_preference(request):
                                 safe=True)
 
     return {'allow': allow}
+
+
+@view_defaults(route_name='user_view', renderer='json')
+class UserRESTView(object):
+
+    def __init__(self, request):
+        self.request = request
+
+    @view_config(request_method='OPTIONS', renderer='string')
+    def options(self):
+        headers = self.request.response.headers
+        headers['Access-Control-Allow-Methods'] = 'GET'
+        headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization'
+        return ''
+
+    @view_config(request_method='GET')
+    def get(self):
+        return jsonable(authorize_user(self.request))
