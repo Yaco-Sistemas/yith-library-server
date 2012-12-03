@@ -14,9 +14,12 @@
       your secrets under control in a secure and easy way. Your online data is
       too valuable to avoid protecting it seriously.</p>
     <p>
-      <a class="btn btn-primary btn-large" href="${request.route_path('login')}">
-	<strong>Start using it today</strong>
-	<small>at no cost</small>
+      <a tal:condition="not request.user" class="btn btn-primary btn-large" href="${request.route_path('login')}">
+	    <strong>Start using it today</strong>
+	    <small>at no cost</small>
+      </a>
+      <a tal:condition="request.user" class="btn btn-primary btn-large" href="${request.route_path('oauth2_clients')}">
+	    <strong>Access your passwords</strong>
       </a>
     </p>
   </div>
@@ -165,16 +168,15 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="span2 offset5">
-      <p>
-	<a class="btn btn-primary btn-large btn-block" href="${request.route_path('login')}">
+  <p class="content-centered">
+	<a tal:condition="not request.user" class="btn btn-primary btn-large" href="${request.route_path('login')}">
 	  <strong>Start using it today</strong>
 	  <small>at no cost</small>
 	</a>
-      </p>
-    </div>
-  </div>
+    <a tal:condition="request.user" class="btn btn-primary btn-large" href="${request.route_path('oauth2_clients')}">
+	  <strong>Access your passwords</strong>
+    </a>
+  </p>
 
 </tal:block>
 
