@@ -18,6 +18,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
+import datetime
+
 from deform import ValidationFailure
 
 from mock import patch
@@ -684,6 +686,7 @@ class RESTViewTests(TestCase):
 
         self.access_code = '1234'
         self.auth_header = {'Authorization': 'Bearer %s' % self.access_code}
+        date = datetime.datetime(2012, 12, 12, 12, 12)
         self.user_id = self.db.users.insert({
                 'provider_user_id': 'user1',
                 'screen_name': 'John Doe',
@@ -693,6 +696,8 @@ class RESTViewTests(TestCase):
                 'email_verified': True,
                 'allow_google_analytics': True,
                 'authorized_apps': [],
+                'date_joined': date,
+                'last_login': date,
                 }, safe=True)
         self.db.access_codes.insert({
                 'code': self.access_code,
@@ -723,5 +728,7 @@ class RESTViewTests(TestCase):
                 'email_verified': True,
                 'allow_google_analytics': True,
                 'authorized_apps': [],
+                'date_joined': '2012-12-12T12:12:00+00:00',
+                'last_login': '2012-12-12T12:12:00+00:00',
                 })
 

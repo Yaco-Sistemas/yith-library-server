@@ -33,8 +33,6 @@ except ImportError:
         into a JSON-serializable primitive.
         """
 
-    _marker = object()
-
 
     class JSON(object):
 
@@ -44,8 +42,6 @@ except ImportError:
             self.serializer = serializer
             self.kw = kw
             self.components = Components()
-            for type, adapter in adapters:
-                self.add_adapter(type, adapter)
 
         def add_adapter(self, type_or_iface, adapter):
             self.components.registerAdapter(adapter, (type_or_iface,),
@@ -66,14 +62,10 @@ except ImportError:
 
         def _make_default(self, request):
             def default(obj):
-                if hasattr(obj, '__json__'):
-                    return obj.__json__(request)
                 obj_iface = providedBy(obj)
                 adapters = self.components.adapters
                 result = adapters.lookup((obj_iface,), IJSONAdapter,
-                                         default=_marker)
-                if result is _marker:
-                    raise TypeError('%r is not JSON serializable' % (obj,))
+                                         default=None)
                 return result(obj, request)
             return default
 
