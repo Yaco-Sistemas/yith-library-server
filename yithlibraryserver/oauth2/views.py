@@ -227,6 +227,9 @@ def authorization_endpoint(request):
             code, redirect_uri, state)
         return HTTPFound(location=url)
 
+    elif 'cancel' in request.POST:
+        return HTTPFound(app['main_url'])
+
     else:
         if authorizator.is_app_authorized(user):
             code = authorizator.auth_codes.create(
@@ -236,6 +239,10 @@ def authorization_endpoint(request):
             return HTTPFound(location=url)
 
         else:
+            owner = None
+            owner_id = app.get('owner', None)
+            if owner_id is not None:
+                owner = request.db.users.find_one({'_id': owner_id})
             return {
                 'response_type': response_type,
                 'client_id': client_id,
@@ -244,6 +251,7 @@ def authorization_endpoint(request):
                 'state': state,
                 'app': app,
                 'scopes': scope.split(' '),
+                'owner': owner,
                 }
 
 

@@ -77,6 +77,8 @@ class ViewTests(testing.TestCase):
                 'name': 'Example',
                 'main_url': 'https://example.com',
                 'callback_url': 'https://example.com/callback',
+                'image_url': 'https://example.com/logo.png',
+                'description': 'Example description',
                 }, safe=True)
 
         res = self.testapp.get('/oauth2/endpoints/authorization', {
@@ -95,9 +97,9 @@ class ViewTests(testing.TestCase):
                 'redirect_uri': 'https://example.com/callback',
                 })
         self.assertEqual(res.status, '200 OK')
-        res.mustcontain('Authorize application')
-        res.mustcontain('Do you want to allow this access?')
-        res.mustcontain('Yes, I authorize the Example application')
+        res.mustcontain('is asking your permission for')
+        res.mustcontain('Allow access')
+        res.mustcontain('No, thanks')
 
         res = self.testapp.post('/oauth2/endpoints/authorization', {
                 'submit': 'Authorize',

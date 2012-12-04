@@ -8,28 +8,43 @@
 
 <tal:block metal:fill-slot="content">
 
-  <div class="hero-unit">
-    <h1>Authorize application</h1>
+  <div class="row">
+    <div class="span4 offset2">
+      <h2>Authorize application</h2>
 
-    <p>The application <a href="${app.main_url}">${app.name}</a>
-      is requesting access to the following items:</p>
+      <p><strong>${app.name}</strong> is asking your permission for</p>
 
-    <ul>
-      <li tal:repeat="scope scopes">${scope}</li>
-    </ul>
+      <ul>
+        <li tal:repeat="scope scopes">Access your ${scope}</li>
+      </ul>
 
-    <p>Do you want to allow this access?</p>
+      <form style="margin-top: 2em;" method="post" action="${request.route_path('oauth2_authorization_endpoint', app=app._id)}">
+        <input type="hidden" name="response_type" value="${response_type}" />
+        <input type="hidden" name="client_id" value="${client_id}" />
+        <input type="hidden" name="redirect_uri" value="${redirect_uri}" />
+        <input type="hidden" name="scope" value="${scope}" />
+        <input type="hidden" name="state" value="${state}" />
+        <input class="btn btn-primary" type="submit" name="submit" value="Allow access" />
+        <input class="btn" type="submit" name="cancel" value="No, thanks" />
+      </form>
 
-    <form method="post" action="${request.route_path('oauth2_authorization_endpoint', app=app._id)}">
-      <input type="hidden" name="response_type" value="${response_type}" />
-      <input type="hidden" name="client_id" value="${client_id}" />
-      <input type="hidden" name="redirect_uri" value="${redirect_uri}" />
-      <input type="hidden" name="scope" value="${scope}" />
-      <input type="hidden" name="state" value="${state}" />
-      <input class="btn btn-primary btn-large" type="submit" name="submit" value="Yes, I authorize the ${app.name} application" />
-    </form>
+      <p><small>You can revoke this permission in the future.</small></p>
 
-    <p>You can revoke this permission in the future.</p>
+    </div>
+
+    <div class="span6">
+      <figure>
+	    <figcaption>
+	      <h3>${app.name}</h3>
+	    </figcaption>
+	    <img tal:condition="app.image_url" src="${app.image_url}" width="200" height="200" alt="" />
+        <p>
+          <a tal:condition="owner" href="#" rel="popover" title="${app.main_url}" data-content="<p>${app.description}.</p><small>By ${owner.email}</small>" data-placement="top" data-trigger="click">More information</a>
+          <a tal:condition="not owner" href="#" rel="popover" title="${app.main_url}" data-content="<p>${app.description}.</p>" data-placement="top" data-trigger="click">More information</a>
+        </p>
+      </figure>
+    </div>
+
   </div>
 
 </tal:block>
