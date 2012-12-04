@@ -73,6 +73,7 @@ class ViewTests(testing.TestCase):
 
         # create a valid app
         app_id = self.db.applications.insert({
+                'owner': '000000000000000000000000',
                 'client_id': '123456',
                 'name': 'Example',
                 'main_url': 'https://example.com',
@@ -90,6 +91,23 @@ class ViewTests(testing.TestCase):
         res.mustcontain('Redirect URI does not match registered callback URL')
 
         # 2. Valid requests
+        # simulate a cancel action
+        res = self.testapp.get('/oauth2/endpoints/authorization', {
+                'response_type': 'code',
+                'client_id': '123456',
+                'redirect_uri': 'https://example.com/callback',
+                })
+        self.assertEqual(res.status, '200 OK')
+
+        res = self.testapp.post('/oauth2/endpoints/authorization', {
+                'cancel': 'No thanks',
+                'response_type': 'code',
+                'client_id': '123456',
+                'redirect_uri': 'https://example.com/callback',
+                })
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'https://example.com')
+
         # authenticated user who hasn't authorized the app
         res = self.testapp.get('/oauth2/endpoints/authorization', {
                 'response_type': 'code',
