@@ -23,7 +23,8 @@
     <![endif]-->
 </head>
 <body>
-  <tal:block metal:define-slot="navbar">
+
+  <div class="container-fluid">
     <div class="alert" tal:condition="request.google_analytics.enabled and request.google_analytics.first_time">
       <p><strong>Welcome, <span tal:condition="not request.user">new visitor!</span><span tal:condition="request.user">${request.user.first_name}</span>.</strong> We are using cookies to get statistics about the usage of Yith Library. This is completely optional and we want to ask you if this is ok with you.</p>
       <form id="google-analytics-preference-form" action="${request.route_path('user_google_analytics_preference')}" method="POST">
@@ -31,6 +32,9 @@
         <input type="submit" class="btn btn-danger" name="no" value="No, I don't want to be tracked" />
       </form>
     </div>
+  </div>
+
+  <tal:block metal:define-slot="navbar">
     <div class="navbar container-fluid">
       <div class="navbar-inner">
         <a class="brand" href="${request.route_path('home')}">Yith Library</a>
@@ -59,7 +63,7 @@
     </div>
   </tal:block>
 
-  <div id="messages">
+  <div id="messages" class="container-fluid">
     <div tal:repeat="queue ('info', 'success', 'error', '')" tal:omit-tag="">
       <div class="alert alert-${queue}"
            tal:define="messages request.session.pop_flash(queue)"

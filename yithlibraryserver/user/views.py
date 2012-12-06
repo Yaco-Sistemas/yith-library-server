@@ -195,7 +195,7 @@ def destroy(request):
             'Thanks for reconsidering removing your account!',
             'info',
             )
-        return HTTPFound(location=request.route_path('user_profile'))
+        return HTTPFound(location=request.route_path('user_information'))
 
     context['form'] = form.render()
     return context
