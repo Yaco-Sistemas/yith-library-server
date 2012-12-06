@@ -202,7 +202,7 @@ def destroy(request):
 
 
 @view_config(route_name='user_information',
-             renderer='templates/user-information.pt',
+             renderer='templates/user_information.pt',
              permission='edit-profile')
 def user_information(request):
     schema = UserSchema()
