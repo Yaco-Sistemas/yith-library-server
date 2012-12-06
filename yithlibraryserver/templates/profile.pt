@@ -32,7 +32,7 @@
 
         <li class="divider"></li>
         <li tal:attributes="class 'active' if request.matched_route.name == 'user_destroy' else None">
-          <a href="${request.route_path('user_destroy')}">Close account</a>
+          <a href="${request.route_path('user_destroy')}">Destroy account</a>
         </li>
       </ul>
 
