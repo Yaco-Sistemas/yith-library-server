@@ -21,7 +21,6 @@
         <li tal:attributes="class 'active' if request.matched_route.name == 'user_identity_providers' else None">
           <a href="${request.route_path('user_identity_providers')}">Identity providers</a>
         </li>
-        <li><a href="#">Preferences</a></li>
 
         <li class="nav-header">Applications</li>
         <li tal:attributes="class 'active' if request.matched_route.name == 'oauth2_authorized_applications' else None">
