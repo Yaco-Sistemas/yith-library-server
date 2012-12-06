@@ -46,12 +46,14 @@ def get_n_passwords(db, user):
     return db.passwords.find({'owner': user['_id']}, safe=True).count()
 
 
-def get_accounts(db, user, current_provider):
-    email = user.get('email', None)
-    results = db.users.find({'email_verified': True, 'email': email},
-                            safe=True)
+def get_accounts(db, current_user, current_provider):
+    email = current_user.get('email', None)
+    results = db.users.find({
+            'email': email,
+            '_id': {'$ne': current_user['_id']},
+            }, safe=True)
     accounts = []
-    for user in results:
+    for user in [current_user] + list(results):
         providers = get_providers(user, current_provider)
         is_current = current_provider in [p['name'] for p in providers]
         accounts.append({
@@ -59,6 +61,7 @@ def get_accounts(db, user, current_provider):
             'is_current': is_current,
             'passwords': get_n_passwords(db, user),
             'id': str(user['_id']),
+            'is_verified': user.get('email_verified', False),
             })
     return accounts
 

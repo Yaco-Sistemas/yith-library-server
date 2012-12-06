@@ -208,16 +208,8 @@ def user_information(request):
     schema = UserSchema()
     button1 = Button('submit', 'Save changes')
     button1.css_class = 'btn-primary'
-    button2 = Button('cancel', 'Cancel')
-    button2.css_class = ''
 
-    form = Form(schema, buttons=(button1, button2))
-
-    current_provider = request.session.get('current_provider', None)
-    context = {
-        'accounts': get_accounts(request.db, request.user, current_provider),
-    }
-    context['has_several_accounts'] = len(context['accounts']) > 1
+    form = Form(schema, buttons=(button1, ))
 
     if 'submit' in request.POST:
 
@@ -225,8 +217,7 @@ def user_information(request):
         try:
             appstruct = form.validate(controls)
         except ValidationFailure as e:
-            context['form'] = e.render()
-            return context
+            return {'form': e.render()}
 
         changes = {
             'first_name': appstruct['first_name'],
@@ -244,17 +235,15 @@ def user_information(request):
         if result['n'] == 1:
             request.session.flash('The changes were saved successfully',
                                   'success')
-            return HTTPFound(location=request.route_path('user_profile'))
+            return HTTPFound(location=request.route_path('user_information'))
         else:
             request.session.flash('There were an error while saving your changes',
                                   'error')
-            context['form'] = appstruct
-            return context
+            return {'form': appstruct}
     elif 'cancel' in request.POST:
-        return HTTPFound(location=request.route_path('user_profile'))
+        return HTTPFound(location=request.route_path('user_information'))
 
-    context['form'] = form.render(request.user)
-    return context
+    return {'form': form.render(request.user)}
 
 
 @view_config(route_name='user_identity_providers',
@@ -262,10 +251,48 @@ def user_information(request):
              permission='edit-profile')
 def identity_providers(request):
     current_provider = request.session.get('current_provider', None)
+    accounts = get_accounts(request.db, request.user, current_provider)
     context = {
-        'accounts': get_accounts(request.db, request.user, current_provider),
+        'accounts': accounts
     }
-    context['has_several_accounts'] = len(context['accounts']) > 1
+    verified = [ac for ac in accounts if ac['is_verified']]
+    context['can_merge'] = len(verified) > 1
+
+    if 'submit' in request.POST:
+        if not context['can_merge']:
+            return HTTPBadRequest('You do not have enough accounts to merge')
+
+        def is_verified(ac):
+            for a in accounts:
+                if a['id'] == ac:
+                    return a['is_verified']
+            return False
+
+        accounts_to_merge = [account.replace('account-', '')
+                             for account in request.POST.keys()
+                             if account != 'submit']
+        accounts_to_merge = [account
+                             for account in accounts_to_merge
+                             if is_verified(account)]
+        if len(accounts_to_merge) > 1:
+            merged = merge_accounts(request.db, request.user, accounts_to_merge)
+            if merged > 0:
+                request.session.flash(
+                    'Congratulations, %d of your accounts have been merged into the current one' % merged,
+                    'success',
+                    )
+            else:
+                request.session.flash(
+                    'Sorry, your accounts were not merged',
+                    'error',
+                    )
+        else:
+            request.session.flash(
+                'Not enough accounts for merging',
+                'error',
+                )
+
+        return HTTPFound(location=request.route_path('user_identity_providers'))
 
     return context
 
@@ -326,44 +353,6 @@ def verify_email(request):
         return {
             'verified': False,
             }
-
-
-@view_config(route_name='user_merge_accounts',
-             renderer='templates/merge_accounts.pt',
-             permission='edit-profile')
-def account_merging(request):
-    current_provider = request.session.get('current_provider', None)
-    available_accounts = get_accounts(request.db, request.user,
-                                      current_provider)
-    if not len(available_accounts) > 1:
-        return HTTPBadRequest('You do not have enough accounts to merge')
-
-    if 'submit' in request.POST:
-
-        accounts_to_merge = [account.replace('account-', '')
-                             for account in request.POST.keys()
-                             if account != 'submit']
-        if len(accounts_to_merge) > 1:
-            merged = merge_accounts(request.db, request.user, accounts_to_merge)
-            if merged > 0:
-                request.session.flash(
-                    'Congratulations, %d of your accounts have been merged into the current one' % merged,
-                    'success',
-                    )
-            else:
-                request.session.flash(
-                    'Sorry, your accounts were not merged',
-                    'error',
-                    )
-
-        return HTTPFound(location=request.route_path('user_profile'))
-
-    elif 'cancel' in request.POST:
-        return HTTPFound(location=request.route_path('user_profile'))
-
-    return {
-        'accounts': available_accounts,
-        }
 
 
 @view_config(route_name='user_google_analytics_preference', renderer='json')

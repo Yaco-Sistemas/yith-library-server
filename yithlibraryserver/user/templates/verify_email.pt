@@ -13,13 +13,13 @@
   <div tal:condition="verified">
     <p>Now you can link several accounts to identify yourself.</p>
 
-    <p>Go to your <a href="${request.route_path('user_profile')}">profile page</a>
+    <p>Go to your <a href="${request.route_path('user_information')}">profile page</a>
      and follow the instructions.</p>
   </div>
 
   <div tal:condition="not verified">
     <p>It looks that your verification code is not correct. Please go to your
-    <a href="${request.route_path('user_profile')}">profile page</a> and
+    <a href="${request.route_path('user_information')}">profile page</a> and
     generate a new one.</p>
   </div>
 
