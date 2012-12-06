@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="profile.macros['profile']">
+
+<tal:block metal:fill-slot="header-title">Identity providers</tal:block>
+
+<tal:block metal:fill-slot="profile-content">
+
+  <h2>Identity providers</h2>
+
+  <p>You are registered with the following accounts:</p>
+  <ul class="unstyled">
+    <li tal:repeat="account accounts">
+      <div tal:omit-tag="" tal:repeat="provider account['providers']">
+        <img tal:attributes="class 'current provider' if provider['is_current'] else 'provider'"
+             src="${request.static_path('yithlibraryserver:static/img/' + provider['name'] + '-mini-logo.png')}"
+             alt="${provider['name']}"
+             width="32"
+             height="32" />
+      </div>
+      <span class="badge" title="${account['passwords']} passwords" tal:content="account['passwords']">Number of passwords</span>
+      <span class="badge badge-inverse" tal:condition="account['is_current']">Current</span>
+    </li>
+  </ul>
+
+  <div tal:condition="has_several_accounts">
+    <div class="alert alert-info">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <h4>Account merging is possible!</h4>
+      If you merge your accounts you will be able to access your passwords in a unified way: no matter which provider you use to log in you will always see the same set of passwords.</div>
+    <a class="btn btn-primary" href='${request.route_path("user_merge_accounts")}'>Merge my accounts ...</a>
+  </div>
+
+</tal:block>
+
+</html>
