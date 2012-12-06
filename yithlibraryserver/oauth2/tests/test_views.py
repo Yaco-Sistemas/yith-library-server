@@ -567,6 +567,26 @@ class ViewTests(testing.TestCase):
         self.assertEqual(res.status, '302 Found')
         self.assertEqual(res.location, 'http://localhost/oauth2/applications')
 
+    def test_authorized_applications(self):
+        # this view required authentication
+        res = self.testapp.get('/oauth2/authorized-applications')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Log in')
+
+        # Log in
+        user_id = self.db.users.insert({
+                'twitter_id': 'twitter1',
+                'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'authorized_apps': [],
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+
+        res = self.testapp.get('/oauth2/authorized-applications')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Authorized Applications')
+
     def test_revoke_application(self):
         # this view required authentication
         res = self.testapp.get('/oauth2/applications/xxx/revoke')
@@ -619,7 +639,7 @@ class ViewTests(testing.TestCase):
                 'submit': 'Yes, I am sure',
                 })
         self.assertEqual(res.status, '302 Found')
-        self.assertEqual(res.location, 'http://localhost/oauth2/applications')
+        self.assertEqual(res.location, 'http://localhost/oauth2/authorized-applications')
         user = self.db.users.find_one(user_id)
         self.assertEqual(user['authorized_apps'], [])
 

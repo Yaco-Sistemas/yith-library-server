@@ -13,7 +13,7 @@
 
   <form method="post" action="${request.route_path('oauth2_revoke_application', app=app._id)}">
     <input class="btn btn-danger" type="submit" name="submit" value="Yes, I am sure" />
-    <a class="btn" href="${request.route_path('oauth2_applications')}">No, take me back to the application list</a>
+    <a class="btn" href="${request.route_path('oauth2_authorized_applications')}">No, take me back to the application list</a>
   </form>
 
 </tal:block>

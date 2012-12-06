@@ -330,7 +330,7 @@ def revoke_application(request):
 
         request.session.flash('The access to application %s has been revoked' %
                               app['name'], 'success')
-        return HTTPFound(location=request.route_path('oauth2_applications'))
+        return HTTPFound(location=request.route_path('oauth2_authorized_applications'))
 
     return {'app': app}
 
