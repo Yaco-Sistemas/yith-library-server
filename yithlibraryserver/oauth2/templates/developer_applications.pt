@@ -10,7 +10,7 @@
 
   <h2>Developer Applications</h2>
 
-  <table class="table table-stripped table-bordered" tal:condition="applications.count() > 0">
+  <table class="table table-striped" tal:condition="applications.count() > 0">
     <thead>
       <th>Name</th>
       <th>Main URL</th>
