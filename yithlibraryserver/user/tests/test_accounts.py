@@ -82,24 +82,69 @@ class AccountTests(unittest.TestCase):
 
     def test_get_accounts(self):
         self.assertEqual([], get_accounts(self.db, {}, ''))
-        self.assertEqual([], get_accounts(self.db,
-                                          {'email': 'john@example.com'}, ''))
+        self.assertEqual([{
+                    'providers': [],
+                    'is_current': False,
+                    'passwords': 0,
+                    'id': '',
+                    'is_verified': False,
+                    }], get_accounts(self.db, {
+                    'email': 'john@example.com',
+                    '_id': '',
+                    }, ''))
 
         user_id = self.db.users.insert({'email': 'john@example.com'},
                                        safe=True)
-        self.assertEqual([], get_accounts(self.db,
-                                          {'email': 'john@example.com'}, ''))
+        self.assertEqual([{
+                    'providers': [],
+                    'is_current': False,
+                    'passwords': 0,
+                    'id': '',
+                    'is_verified': False,
+                    }, {
+                    'providers': [],
+                    'is_current': False,
+                    'passwords': 0,
+                    'id': str(user_id),
+                    'is_verified': False,
+                    }], get_accounts(self.db, {
+                    'email': 'john@example.com',
+                    '_id': '',
+                    }, ''))
 
         self.db.users.update({'email': 'john@example.com'}, {
                 '$set': {'twitter_id': 1234},
                 }, safe=True)
-        self.assertEqual([], get_accounts(self.db,
-                                          {'email': 'john@example.com'}, ''))
+        self.assertEqual([{
+                    'providers': [],
+                    'is_current': False,
+                    'passwords': 0,
+                    'id': '',
+                    'is_verified': False,
+                    }, {
+                    'providers': [{
+                            'name': 'twitter',
+                            'is_current': False,
+                            }],
+                    'is_current': False,
+                    'passwords': 0,
+                    'id': str(user_id),
+                    'is_verified': False,
+                    }], get_accounts(self.db, {
+                    'email': 'john@example.com',
+                    '_id': '',
+                    }, ''))
 
         self.db.users.update({'email': 'john@example.com'}, {
                 '$set': {'email_verified': True},
                 }, safe=True)
         self.assertEqual([{
+                    'providers': [],
+                    'is_current': False,
+                    'passwords': 0,
+                    'id': '',
+                    'is_verified': False,
+                    }, {
                     'providers': [{
                             'name': 'twitter',
                             'is_current': True,
@@ -107,10 +152,11 @@ class AccountTests(unittest.TestCase):
                     'passwords': 0,
                     'id': str(user_id),
                     'is_current': True,
-                    }],
-                          get_accounts(self.db,
-                                       {'email': 'john@example.com'},
-                                       'twitter'))
+                    'is_verified': True,
+                    }], get_accounts(self.db, {
+                    'email': 'john@example.com',
+                    '_id': '',
+                    }, 'twitter'))
 
         self.db.passwords.insert({'password': 'secret', 'owner': user_id},
                                  safe=True)
@@ -118,6 +164,12 @@ class AccountTests(unittest.TestCase):
                 '$set': {'twitter_id': 1234},
                 }, safe=True)
         self.assertEqual([{
+                    'providers': [],
+                    'is_current': False,
+                    'passwords': 0,
+                    'id': '',
+                    'is_verified': False,
+                    }, {
                     'providers': [{
                             'name': 'twitter',
                             'is_current': False,
@@ -125,15 +177,22 @@ class AccountTests(unittest.TestCase):
                     'passwords': 1,
                     'id': str(user_id),
                     'is_current': False,
-                    }],
-                          get_accounts(self.db,
-                                       {'email': 'john@example.com'},
-                                       'google'))
+                    'is_verified': True,
+                    }], get_accounts(self.db, {
+                    'email': 'john@example.com',
+                    '_id': '',
+                    }, 'google'))
 
         self.db.users.update({'email': 'john@example.com'}, {
                 '$set': {'google_id': 4321},
                 }, safe=True)
         self.assertEqual([{
+                    'providers': [],
+                    'is_current': False,
+                    'passwords': 0,
+                    'id': '',
+                    'is_verified': False,
+                    }, {
                     'providers': [{
                             'name': 'google',
                             'is_current': True,
@@ -144,10 +203,11 @@ class AccountTests(unittest.TestCase):
                     'passwords': 1,
                     'id': str(user_id),
                     'is_current': True,
-                    }],
-                          get_accounts(self.db,
-                                       {'email': 'john@example.com'},
-                                       'google'))
+                    'is_verified': True,
+                    }], get_accounts(self.db, {
+                    'email': 'john@example.com',
+                    '_id': '',
+                    }, 'google'))
 
     def test_merge_accounts(self):
         self.assertEqual(0, merge_accounts(self.db, {}, []))
