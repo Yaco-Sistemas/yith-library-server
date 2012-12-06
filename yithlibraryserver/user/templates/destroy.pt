@@ -10,17 +10,40 @@
 
   <h2>Destroy account</h2>
 
-  <p tal:condition="passwords">${ request.user.first_name }, you already have <strong>${ passwords } passwords</strong></p>
+  <div id="initial-block">
+    <h4>I am tired of using Yith Library</h4>
+    <p>We are very sorry to hear that, but hey, it's your decission!</p>
+    <a href="#destroy-account-dialog" class="btn btn-danger">
+      Destroy my account ...
+    </a>
+  </div>
 
-  <div class="alert alert-danger">
-    <h4>Do you really want to destroy your account?</h4>
+  <div class="hide" id="destroy-account-form">
+    <h3>Do you really really really want to destroy your account?</h3>
+
+    <p tal:condition="passwords">${ request.user.first_name }, you already have <strong>${ passwords } passwords</strong></p>
 
     <p>All your personal information and passwords will be removed from this server.</p>
 
     <p>You will not be able to undo this operation. Think about it.</p>
+
+    <form tal:replace="structure form">form</form>
   </div>
 
-  <form tal:replace="structure form">form</form>
-
 </tal:block>
+
+<tal:block metal:fill-slot="extra-scripts">
+  <script type="text/javascript">
+    (function ($) {
+      "use strict";
+      $(document).ready(function () {
+        $("#initial-block a").click(function () {
+            $("#initial-block").hide();
+            $("#destroy-account-form").show();
+        });
+      });
+    })(jQuery);
+  </script>
+</tal:block>
+
 </html>

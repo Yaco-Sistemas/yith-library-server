@@ -28,11 +28,6 @@
 
   <div class="row-fluid">
 
-    <div class="span6">
-      <h4>Personal information</h4>
-      <form tal:replace="structure form">form</form>
-    </div>
-
     <div class="span6" tal:condition="request.user.email">
       <div tal:condition="not request.user.email_verified">
         <p>Your email is not verified so you can not link
@@ -63,17 +58,6 @@
           <a class="btn btn-primary" href='${request.route_path("user_merge_accounts")}'>Merge my accounts ...</a>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="row-fluid">
-
-    <div class="span6">
-      <h4>I am tired of using Yith Library</h4>
-      <p>We are very sorry to hear that, but hey, it's your decission!</p>
-      <a href="${request.route_path('user_destroy')}" class="btn btn-danger">
-        Destroy my account ...
-      </a>
     </div>
   </div>
 
