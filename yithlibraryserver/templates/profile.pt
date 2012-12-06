@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="base.macros['base']"
+      metal:define-macro="profile">
+
+<tal:block metal:fill-slot="header-title">Profile</tal:block>
+
+<tal:block metal:fill-slot="content">
+
+  <div class="row-fluid">
+
+    <div class="span2">
+
+      <ul class="nav nav-list">
+        <li class="nav-header">Account</li>
+        <li tal:attributes="class 'active' if request.matched_route.name == 'user_information' else None">
+          <a href="${request.route_path('user_information')}">Personal information</a>
+        </li>
+        <li><a href="#">Identity providers</a></li>
+        <li><a href="#">Preferences</a></li>
+
+        <li class="nav-header">Applications</li>
+        <li><a href="#">Authorized clients</a></li>
+        <li><a href="#">Developer apps</a></li>
+
+        <li class="divider"></li>
+        <li tal:attributes="class 'active' if request.matched_route.name == 'user_destroy' else None">
+          <a href="${request.route_path('user_destroy')}">Close account</a>
+        </li>
+      </ul>
+
+    </div>
+
+    <div class="span10">
+
+      <tal:block metal:define-slot="profile-content"></tal:block>
+
+    </div>
+
+  </div>
+
+</tal:block>
+
+</html>

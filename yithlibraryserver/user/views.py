@@ -201,10 +201,10 @@ def destroy(request):
     return context
 
 
-@view_config(route_name='user_profile',
-             renderer='templates/profile.pt',
+@view_config(route_name='user_information',
+             renderer='templates/user-information.pt',
              permission='edit-profile')
-def profile(request):
+def user_information(request):
     schema = UserSchema()
     button1 = Button('submit', 'Save changes')
     button1.css_class = 'btn-primary'

@@ -2,15 +2,31 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
-      metal:use-macro="base.macros['base']">
+      metal:use-macro="profile.macros['profile']">
 
-<tal:block metal:fill-slot="header-title">Profile</tal:block>
+<tal:block metal:fill-slot="header-title">User information</tal:block>
 
-<tal:block metal:fill-slot="content">
+<tal:block metal:fill-slot="profile-content">
 
-  <h1>Profile</h1>
+  <div class="row-fluid">
 
-  <div class="row">
+    <div class="span6">
+      <h2>Personal information</h2>
+      <form tal:replace="structure form">form</form>
+    </div>
+
+    <div class="span6" tal:condition="request.user.email">
+      <div tal:condition="not request.user.email_verified">
+        <h2>Email verification needed!</h2>
+        <p>Your email is not verified so you can not link
+          your different accounts.</p>
+        <a id="open-email-verification-dialog" href="#email-verification-dialog" class="btn btn-primary" data-toggle="modal">Verify your email address</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row-fluid">
 
     <div class="span6">
       <h4>Personal information</h4>
@@ -50,7 +66,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row-fluid">
 
     <div class="span6">
       <h4>I am tired of using Yith Library</h4>
@@ -61,16 +77,15 @@
     </div>
   </div>
 
-
   <div class="modal hide" id="email-verification-dialog">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">×</button>
       <h3>Email verification</h3>
     </div>
     <div class="modal-body">
-      <p>An email with a verification link will be sent to your email address
-        to verify that you are the legitimate owner of the email address
-        <strong>${request.user.email}</strong>.</p>
+      <p>An email with a verification link will be sent to
+        <strong>${request.user.email}</strong> to verify that you are
+        its legitimate owner.</p>
       <p>All you need to do is click on the <i>Send verification email</i>
         button, go to your inbox and follow the instructions in the email.</p>
       <div class="alert alert-info hide">
@@ -81,13 +96,12 @@
       </div>
     </div>
     <div class="modal-footer">
-      <a href="#" class="btn" data-dismiss="modal">Close</a>
+      <a href="#" class="btn" data-dismiss="modal">Cancel</a>
       <a id="send-verification-email" href="#" class="btn btn-primary">Send verification email</a>
     </div>
   </div>
 
 </tal:block>
-
 
 <tal:block metal:fill-slot="extra-scripts">
   <script type="text/javascript">

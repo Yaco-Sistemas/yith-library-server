@@ -33,13 +33,17 @@ def add_cors_headers_response(event):
     event.request.add_response_callback(cors_headers_callback)
 
 
-def add_base_template(event):
+def add_base_templates(event):
     base_renderer = get_renderer('yithlibraryserver:templates/base.pt')
-    event.update({'base': base_renderer.implementation()})
+    profile_renderer = get_renderer('yithlibraryserver:templates/profile.pt')
+    event.update({
+            'base': base_renderer.implementation(),
+            'profile': profile_renderer.implementation(),
+            })
 
 
 def includeme(config):
     config.set_request_property(get_db, 'db', reify=True)
 
     config.add_subscriber(add_cors_headers_response, NewRequest)
-    config.add_subscriber(add_base_template, BeforeRender)
+    config.add_subscriber(add_base_templates, BeforeRender)

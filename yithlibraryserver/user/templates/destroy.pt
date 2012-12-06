@@ -2,13 +2,13 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
-      metal:use-macro="base.macros['base']">
+      metal:use-macro="profile.macros['profile']">
 
 <tal:block metal:fill-slot="header-title">Destroy account</tal:block>
 
-<tal:block metal:fill-slot="content">
+<tal:block metal:fill-slot="profile-content">
 
-  <h1>Destroy account</h1>
+  <h2>Destroy account</h2>
 
   <p tal:condition="passwords">${ request.user.first_name }, you already have <strong>${ passwords } passwords</strong></p>
 
