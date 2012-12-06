@@ -36,24 +36,21 @@ from yithlibraryserver.user.security import assert_authenticated_user_is_registe
 DEFAULT_SCOPE = 'passwords'
 
 
-@view_config(route_name='oauth2_applications',
-             renderer='templates/applications.pt',
+@view_config(route_name='oauth2_developer_applications',
+             renderer='templates/developer_applications.pt',
              permission='view-applications')
-def applications(request):
+def developer_applications(request):
     assert_authenticated_user_is_registered(request)
-    authorized_apps_filter = {'_id': {'$in': request.user['authorized_apps']}}
     owned_apps_filter = {'owner': request.user['_id']}
     return {
-        'screen_name': request.user['screen_name'],
-        'authorized_apps': request.db.applications.find(authorized_apps_filter),
         'applications': request.db.applications.find(owned_apps_filter)
         }
 
 
-@view_config(route_name='oauth2_application_new',
-             renderer='templates/application_new.pt',
+@view_config(route_name='oauth2_developer_application_new',
+             renderer='templates/developer_application_new.pt',
              permission='add-application')
-def application_new(request):
+def developer_application_new(request):
     assert_authenticated_user_is_registered(request)
     schema = ApplicationSchema()
     button1 = Button('submit', 'Save application')
@@ -85,18 +82,18 @@ def application_new(request):
                               appstruct['name'], 'success')
 
         request.db.applications.insert(application, safe=True)
-        return HTTPFound(location=request.route_path('oauth2_applications'))
+        return HTTPFound(location=request.route_path('oauth2_developer_applications'))
     elif 'cancel' in request.POST:
-        return HTTPFound(location=request.route_path('oauth2_applications'))
+        return HTTPFound(location=request.route_path('oauth2_developer_applications'))
 
     # this is a GET
     return {'form': form.render()}
 
 
-@view_config(route_name='oauth2_application_edit',
-             renderer='templates/application_edit.pt',
+@view_config(route_name='oauth2_developer_application_edit',
+             renderer='templates/developer_application_edit.pt',
              permission='edit-application')
-def application_edit(request):
+def developer_application_edit(request):
     try:
         app_id = bson.ObjectId(request.matchdict['app'])
     except bson.errors.InvalidId:
@@ -146,21 +143,21 @@ def application_edit(request):
         request.session.flash('The changes were saved successfully',
                               'success')
 
-        return HTTPFound(location=request.route_path('oauth2_applications'))
+        return HTTPFound(location=request.route_path('oauth2_developer_applications'))
     elif 'delete' in request.POST:
-        return HTTPFound(location=request.route_path('oauth2_application_delete',
+        return HTTPFound(location=request.route_path('oauth2_developer_application_delete',
                                                     app=app['_id']))
     elif 'cancel' in request.POST:
-        return HTTPFound(location=request.route_path('oauth2_applications'))
+        return HTTPFound(location=request.route_path('oauth2_developer_applications'))
 
     # this is a GET
     return {'form': form.render(app), 'app': app}
 
 
-@view_config(route_name='oauth2_application_delete',
-             renderer='templates/application_delete.pt',
+@view_config(route_name='oauth2_developer_application_delete',
+             renderer='templates/developer_application_delete.pt',
              permission='delete-application')
-def application_delete(request):
+def developer_application_delete(request):
     try:
         app_id = bson.ObjectId(request.matchdict['app'])
     except bson.errors.InvalidId:
@@ -178,7 +175,7 @@ def application_delete(request):
         request.db.applications.remove(app_id, safe=True)
         request.session.flash('The application %s was deleted successfully' %
                               app['name'], 'success')
-        return HTTPFound(location=request.route_path('oauth2_applications'))
+        return HTTPFound(location=request.route_path('oauth2_developer_applications'))
 
     return {'app': app}
 
@@ -294,6 +291,17 @@ def token_endpoint(request):
         'token_type': 'bearer',
         'expires_in': 3600,
         'scope': grant['scope'],
+        }
+
+
+@view_config(route_name='oauth2_authorized_applications',
+             renderer='templates/authorized_applications.pt',
+             permission='view-applications')
+def authorized_applications(request):
+    assert_authenticated_user_is_registered(request)
+    authorized_apps_filter = {'_id': {'$in': request.user['authorized_apps']}}
+    return {
+        'authorized_apps': request.db.applications.find(authorized_apps_filter),
         }
 
 

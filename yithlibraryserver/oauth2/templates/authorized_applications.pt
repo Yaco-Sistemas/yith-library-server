@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="profile.macros['profile']">
+
+<tal:block metal:fill-slot="header-title">Authorized applications</tal:block>
+
+<tal:block metal:fill-slot="profile-content">
+
+  <h2>Authorized Applications</h2>
+  <ul>
+    <li tal:repeat="app authorized_apps">${app.name} <a href="${request.route_path('oauth2_revoke_application', app=app._id)}">Revoke</a></li>
+  </ul>
+
+</tal:block>
+
+</html>

@@ -2,18 +2,18 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
-      metal:use-macro="base.macros['base']">
+      metal:use-macro="profile.macros['profile']">
 
 <tal:block metal:fill-slot="header-title">Delete Application</tal:block>
 
-<tal:block metal:fill-slot="content">
+<tal:block metal:fill-slot="profile-content">
 
-  <h1>Delete Application ${app.name}</h1>
+  <h2>Delete Application ${app.name}</h2>
   <p class="well">Are you sure you want to remove the application ${app.name} with id ${app._id}?</p>
 
-  <form method="post" action="${request.route_path('oauth2_application_delete', app=app._id)}">
+  <form method="post" action="${request.route_path('oauth2_developer_application_delete', app=app._id)}">
     <input class="btn btn-danger" type="submit" name="submit" value="Yes, I am sure" />
-    <a class="btn" href="${request.route_path('oauth2_applications')}">No, take me back to the application list</a>
+    <a class="btn" href="${request.route_path('oauth2_developer_applications')}">No, take me back to the application list</a>
   </form>
 
 </tal:block>

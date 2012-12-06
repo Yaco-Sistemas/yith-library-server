@@ -30,14 +30,15 @@ def includeme(config):
     search_path = (resolver.resolve('templates').abspath(), deform_templates)
     Form.set_zpt_renderer(search_path)
 
-    config.add_route('oauth2_applications', '/oauth2/applications')
-    config.add_route('oauth2_application_new', '/oauth2/applications/new')
-    config.add_route('oauth2_application_edit', '/oauth2/applications/{app}/edit')
-    config.add_route('oauth2_application_delete', '/oauth2/applications/{app}/delete')
+    config.add_route('oauth2_developer_applications', '/oauth2/applications')
+    config.add_route('oauth2_developer_application_new', '/oauth2/applications/new')
+    config.add_route('oauth2_developer_application_edit', '/oauth2/applications/{app}/edit')
+    config.add_route('oauth2_developer_application_delete', '/oauth2/applications/{app}/delete')
 
     config.add_route('oauth2_authorization_endpoint', '/oauth2/endpoints/authorization')
     config.add_route('oauth2_token_endpoint', '/oauth2/endpoints/token')
 
+    config.add_route('oauth2_authorized_applications', '/oauth2/authorized-applications')
     config.add_route('oauth2_revoke_application', '/oauth2/applications/{app}/revoke')
 
     config.add_route('oauth2_clients', '/oauth2/clients')

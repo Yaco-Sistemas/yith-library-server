@@ -50,9 +50,6 @@
                 <a href="${request.route_path('oauth2_clients')}">Passwords</a>
               </li>
               <li>
-                <a href="${request.route_path('oauth2_applications')}">Applications</a>
-              </li>
-              <li>
                 <a href="${request.route_path('logout')}">Log out</a>
               </li>
             </ul>
