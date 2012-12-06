@@ -257,6 +257,19 @@ def user_information(request):
     return context
 
 
+@view_config(route_name='user_identity_providers',
+             renderer='templates/identity_providers.pt',
+             permission='edit-profile')
+def identity_providers(request):
+    current_provider = request.session.get('current_provider', None)
+    context = {
+        'accounts': get_accounts(request.db, request.user, current_provider),
+    }
+    context['has_several_accounts'] = len(context['accounts']) > 1
+
+    return context
+
+
 @view_config(route_name='user_send_email_verification_code',
              renderer='json',
              permission='edit-profile')
