@@ -164,26 +164,26 @@ class GoogleAnalyticsTests(unittest.TestCase):
         request.user = None
         ga = GoogleAnalytics(request)
         ga.clean_session()
-        self.assertEquals(request.session, {})
+        self.assertEqual(request.session, {})
 
         request = DummyRequest()
         request.session = {SESSION_KEY: True}
         request.user = None
         ga = GoogleAnalytics(request)
         ga.clean_session()
-        self.assertEquals(request.session, {})
+        self.assertEqual(request.session, {})
 
     def test_get_user_attr(self):
         request = DummyRequest()
         request.session = {}
         request.user = None
         ga = GoogleAnalytics(request)
-        self.assertEquals(ga.get_user_attr(True), {USER_ATTR: True})
-        self.assertEquals(ga.get_user_attr(False), {USER_ATTR: False})
+        self.assertEqual(ga.get_user_attr(True), {USER_ATTR: True})
+        self.assertEqual(ga.get_user_attr(False), {USER_ATTR: False})
 
     def test_get_google_analytics(self):
         request = DummyRequest()
         ga = get_google_analytics(request)
 
         self.assertTrue(isinstance(ga, GoogleAnalytics))
-        self.assertEquals(ga.request, request)
+        self.assertEqual(ga.request, request)

@@ -604,12 +604,12 @@ class ViewTests(TestCase):
         res = self.testapp.post('/google-analytics-preference', {'yes': 'Yes'})
         self.assertEqual(res.status, '200 OK')
         self.assertEqual(res.json, {'allow': True})
-        self.assertEquals(self.get_session(res)[SESSION_KEY], True)
+        self.assertEqual(self.get_session(res)[SESSION_KEY], True)
 
         res = self.testapp.post('/google-analytics-preference', {'no': 'No'})
         self.assertEqual(res.status, '200 OK')
         self.assertEqual(res.json, {'allow': False})
-        self.assertEquals(self.get_session(res)[SESSION_KEY], False)
+        self.assertEqual(self.get_session(res)[SESSION_KEY], False)
 
         # Authenticated users save the preference in the database
         # Log in
