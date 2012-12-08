@@ -18,6 +18,7 @@
 
 import unittest
 
+from yithlibraryserver.compat import text_type
 from yithlibraryserver.user.models import User
 
 
@@ -25,16 +26,16 @@ class UserTests(unittest.TestCase):
 
     def test_unicode(self):
         data = {'_id': '1234'}
-        self.assertEqual(unicode(User(data)), '1234')
+        self.assertEqual(text_type(User(data)), '1234')
 
         data['email'] = 'john@example.com'
-        self.assertEqual(unicode(User(data)), 'john@example.com')
+        self.assertEqual(text_type(User(data)), 'john@example.com')
 
         data['last_name'] = 'Doe'
-        self.assertEqual(unicode(User(data)), 'Doe')
+        self.assertEqual(text_type(User(data)), 'Doe')
 
         data['first_name'] = 'John'
-        self.assertEqual(unicode(User(data)), 'John Doe')
+        self.assertEqual(text_type(User(data)), 'John Doe')
 
         data['screen_name'] = 'Johnny'
-        self.assertEqual(unicode(User(data)), 'Johnny')
+        self.assertEqual(text_type(User(data)), 'Johnny')

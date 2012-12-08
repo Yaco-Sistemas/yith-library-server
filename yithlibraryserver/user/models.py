@@ -16,6 +16,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
+from yithlibraryserver.compat import text_type
+
 
 class User(dict):
 
@@ -34,4 +36,8 @@ class User(dict):
         if result:
             return result
 
-        return unicode(self['_id'])
+        return text_type(self['_id'])
+
+    # py3 compatibility
+    def __str__(self):
+        return self.__unicode__()
