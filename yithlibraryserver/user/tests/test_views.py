@@ -304,6 +304,7 @@ class ViewTests(TestCase):
                 'first_name': 'John',
                 'last_name': 'Doe',
                 'email': '',
+                'email_verified': False,
                 'authorized_apps': [],
                 }, safe=True)
         self.set_user_cookie(str(user_id))
