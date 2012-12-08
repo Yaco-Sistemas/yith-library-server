@@ -95,7 +95,7 @@ def register_new_user(request):
 
         user_attrs = {
                 provider_key: user_info[provider_key],
-                'screen_name': user_info.get('screen_name', ''),
+                'screen_name': appstruct['screen_name'],
                 'first_name': appstruct['first_name'],
                 'last_name': appstruct['last_name'],
                 'email': appstruct['email'],
@@ -137,6 +137,7 @@ def register_new_user(request):
         'form': form.render({
                 'first_name': user_info.get('first_name', ''),
                 'last_name': user_info.get('last_name', ''),
+                'screen_name': user_info.get('screen_name', ''),
                 'email': user_info.get('email', ''),
                 }),
         }
@@ -223,6 +224,7 @@ def user_information(request):
         changes = {
             'first_name': appstruct['first_name'],
             'last_name': appstruct['last_name'],
+            'screen_name': appstruct['screen_name'],
             'email': appstruct['email']['email'],
             }
 
@@ -250,6 +252,7 @@ def user_information(request):
         'form': form.render({
                 'first_name': request.user['first_name'],
                 'last_name': request.user['last_name'],
+                'screen_name': request.user['screen_name'],
                 'email': {
                     'email': request.user['email'],
                     'email_verified': request.user['email_verified'],

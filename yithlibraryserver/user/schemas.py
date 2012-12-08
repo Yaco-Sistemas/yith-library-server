@@ -59,8 +59,21 @@ class EmailSchema(colander.MappingSchema):
 
 class BaseUserSchema(colander.MappingSchema):
 
-    first_name = colander.SchemaNode(colander.String(), missing='')
-    last_name = colander.SchemaNode(colander.String(), missing='')
+    first_name = colander.SchemaNode(
+        colander.String(),
+        title='First name',
+        missing='',
+        )
+    last_name = colander.SchemaNode(
+        colander.String(),
+        title='Last name',
+        missing='',
+        )
+    screen_name = colander.SchemaNode(
+        colander.String(),
+        title='Screen name',
+        missing='',
+        )
 
 
 class UserSchema(BaseUserSchema):
