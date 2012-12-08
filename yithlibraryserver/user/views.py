@@ -30,7 +30,8 @@ from yithlibraryserver.user import analytics
 from yithlibraryserver.user.accounts import get_accounts, merge_accounts
 from yithlibraryserver.user.accounts import notify_admins_of_account_removal
 from yithlibraryserver.user.email_verification import EmailVerificationCode
-from yithlibraryserver.user.schemas import UserSchema, AccountDestroySchema
+from yithlibraryserver.user.schemas import UserSchema, NewUserSchema
+from yithlibraryserver.user.schemas import AccountDestroySchema
 from yithlibraryserver.user.utils import delete_user
 from yithlibraryserver.password.models import PasswordsManager
 from yithlibraryserver.security import authorize_user
@@ -65,7 +66,7 @@ def register_new_user(request):
     except KeyError:
         next_url = request.route_url('oauth2_clients')
 
-    schema = UserSchema()
+    schema = NewUserSchema()
     button1 = Button('submit', 'Register into Yith Library')
     button1.css_class = 'btn-primary'
     button2 = Button('cancel', 'Cancel')

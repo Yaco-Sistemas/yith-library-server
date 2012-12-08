@@ -56,14 +56,23 @@ class EmailSchema(colander.MappingSchema):
     email_verified = colander.SchemaNode(colander.Boolean())
 
 
-class UserSchema(colander.MappingSchema):
+class BaseUserSchema(colander.MappingSchema):
 
     first_name = colander.SchemaNode(colander.String(), missing='')
     last_name = colander.SchemaNode(colander.String(), missing='')
+
+
+class UserSchema(BaseUserSchema):
+
     email = EmailSchema(
         widget=EmailWidget(),
         missing={'email': '', 'email_verified': False},
         )
+
+
+class NewUserSchema(BaseUserSchema):
+
+    email = colander.SchemaNode(colander.String(), missing='')
 
 
 class AccountDestroySchema(colander.MappingSchema):
