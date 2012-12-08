@@ -20,10 +20,13 @@
 
 import re
 
+from pkg_resources import resource_filename
+from deform import Form
 from pyramid.config import Configurator
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.exceptions import ConfigurationError
+from pyramid.path import AssetResolver
 
 from yithlibraryserver.config import read_setting_from_env
 from yithlibraryserver.cors import CORSManager
@@ -112,6 +115,15 @@ def main(global_config, **settings):
 
 
 def includeme(config):
+    # override deform templates
+    deform_templates = resource_filename('deform', 'templates')
+    resolver = AssetResolver('yithlibraryserver')
+    search_path = (
+        resolver.resolve('templates').abspath(),
+        deform_templates,
+        )
+    Form.set_zpt_renderer(search_path)
+
     config.add_route('home', '/')
     config.add_route('contact', '/contact')
     config.add_route('tos', '/tos')

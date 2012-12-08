@@ -27,11 +27,11 @@ class ApplicationSchema(colander.MappingSchema):
     name = colander.SchemaNode(colander.String())
     main_url = colander.SchemaNode(
         colander.String(),
-        widget=TextInputWidget(css_class='input-xlarge'),        
+        widget=TextInputWidget(css_class='input-xlarge'),
         )
     callback_url = colander.SchemaNode(
         colander.String(),
-        widget=TextInputWidget(css_class='input-xlarge'),        
+        widget=TextInputWidget(css_class='input-xlarge'),
         )
     production_ready = colander.SchemaNode(colander.Boolean(), missing=False)
     image_url = colander.SchemaNode(

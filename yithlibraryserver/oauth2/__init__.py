@@ -18,18 +18,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-from pkg_resources import resource_filename
-from deform import Form
-
-from pyramid.path import AssetResolver
-
 def includeme(config):
-    # override deform templates
-    deform_templates = resource_filename('deform', 'templates')
-    resolver = AssetResolver('yithlibraryserver.oauth2')
-    search_path = (resolver.resolve('templates').abspath(), deform_templates)
-    Form.set_zpt_renderer(search_path)
-
     config.add_route('oauth2_developer_applications', '/oauth2/applications')
     config.add_route('oauth2_developer_application_new', '/oauth2/applications/new')
     config.add_route('oauth2_developer_application_edit', '/oauth2/applications/{app}/edit')
