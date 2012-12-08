@@ -19,13 +19,43 @@
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
 import colander
-from deform.widget import TextAreaWidget
+from deform.widget import TextAreaWidget, TextInputWidget
+
+
+class EmailWidget(TextInputWidget):
+
+    email_verified_template = 'email_verified'
+
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct in (colander.null, None):
+            cstruct = {'email': '', 'email_verified': False}
+
+        email_output = super(EmailWidget, self).serialize(field,
+                                                          cstruct['email'],
+                                                          readonly)
+
+        pstruct = field.schema.deserialize(cstruct)
+        email_verified_output = field.renderer(
+            self.email_verified_template,
+            email_verified=pstruct['email_verified'],
+            )
+        return email_output + email_verified_output
+
+
+class EmailSchema(colander.MappingSchema):
+
+    email = colander.SchemaNode(colander.String(), missing='')
+    email_verified = colander.SchemaNode(colander.Boolean())
+
 
 class UserSchema(colander.MappingSchema):
 
     first_name = colander.SchemaNode(colander.String(), missing='')
     last_name = colander.SchemaNode(colander.String(), missing='')
-    email = colander.SchemaNode(colander.String(), missing='')
+    email = EmailSchema(
+        widget=EmailWidget(),
+        missing={'email': '', 'email_verified': False},
+        )
 
 
 class AccountDestroySchema(colander.MappingSchema):

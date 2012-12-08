@@ -1,0 +1,5 @@
+<span tal:condition="email_verified" class="badge badge-success">Verified</span>
+<span tal:condition="not email_verified">
+  <span class="badge badge-warning">Unverified</span>
+  <a id="open-email-verification-dialog" href="#email-verification-dialog" class="btn btn-mini btn-primary" data-toggle="modal">Verify email address</a>
+</span>
