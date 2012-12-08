@@ -42,7 +42,8 @@ class PasswordCollectionRESTView(object):
     def options(self):
         headers = self.request.response.headers
         headers['Access-Control-Allow-Methods'] = 'GET, POST'
-        headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization'
+        headers['Access-Control-Allow-Headers'] = ('Origin, Content-Type, '
+                                                   'Accept, Authorization')
         return ''
 
     @view_config(request_method='GET')
@@ -76,7 +77,8 @@ class PasswordRESTView(object):
     def options(self):
         headers = self.request.response.headers
         headers['Access-Control-Allow-Methods'] = 'GET, PUT, DELETE'
-        headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization'
+        headers['Access-Control-Allow-Headers'] = ('Origin, Content-Type, '
+                                                   'Accept, Authorization')
         return ''
 
     @view_config(request_method='GET')

@@ -49,17 +49,21 @@ def main(global_config, **settings):
         settings['admin_emails'] = settings['admin_emails'].split()
 
     # read Google Analytics code
-    settings['google_analytics_code'] = read_setting_from_env(settings, 'google_analytics_code', None)
+    settings['google_analytics_code'] = read_setting_from_env(
+        settings, 'google_analytics_code', None)
 
     # read the auth secret
-    settings['auth_tk_secret'] = read_setting_from_env(settings, 'auth_tk_secret', None)
+    settings['auth_tk_secret'] = read_setting_from_env(
+        settings, 'auth_tk_secret', None)
     if settings['auth_tk_secret'] is None:
-        raise ConfigurationError('The auth_tk_secret configuration option is required')
+        raise ConfigurationError('The auth_tk_secret configuration '
+                                 'option is required')
 
     # read the Mongodb URI
     settings['mongo_uri'] = read_setting_from_env(settings, 'mongo_uri', None)
     if settings['mongo_uri'] is None:
-        raise ConfigurationError('The mongo_uri configuration option is required')
+        raise ConfigurationError('The mongo_uri configuration '
+                                 'option is required')
 
     # main config object
     config = Configurator(

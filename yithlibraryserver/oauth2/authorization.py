@@ -20,6 +20,7 @@
 
 import uuid
 
+
 class Codes(object):
 
     collection_name = ''

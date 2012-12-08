@@ -82,9 +82,11 @@ def developer_application_new(request):
                               appstruct['name'], 'success')
 
         request.db.applications.insert(application, safe=True)
-        return HTTPFound(location=request.route_path('oauth2_developer_applications'))
+        return HTTPFound(
+            location=request.route_path('oauth2_developer_applications'))
     elif 'cancel' in request.POST:
-        return HTTPFound(location=request.route_path('oauth2_developer_applications'))
+        return HTTPFound(
+            location=request.route_path('oauth2_developer_applications'))
 
     # this is a GET
     return {'form': form.render()}
@@ -143,12 +145,15 @@ def developer_application_edit(request):
         request.session.flash('The changes were saved successfully',
                               'success')
 
-        return HTTPFound(location=request.route_path('oauth2_developer_applications'))
+        return HTTPFound(
+            location=request.route_path('oauth2_developer_applications'))
     elif 'delete' in request.POST:
-        return HTTPFound(location=request.route_path('oauth2_developer_application_delete',
-                                                    app=app['_id']))
+        return HTTPFound(
+            location=request.route_path('oauth2_developer_application_delete',
+                                        app=app['_id']))
     elif 'cancel' in request.POST:
-        return HTTPFound(location=request.route_path('oauth2_developer_applications'))
+        return HTTPFound(
+            location=request.route_path('oauth2_developer_applications'))
 
     # this is a GET
     return {'form': form.render(app), 'app': app}
@@ -175,7 +180,8 @@ def developer_application_delete(request):
         request.db.applications.remove(app_id, safe=True)
         request.session.flash('The application %s was deleted successfully' %
                               app['name'], 'success')
-        return HTTPFound(location=request.route_path('oauth2_developer_applications'))
+        return HTTPFound(
+            location=request.route_path('oauth2_developer_applications'))
 
     return {'app': app}
 
@@ -204,7 +210,8 @@ def authorization_endpoint(request):
         redirect_uri = app['callback_url']
     else:
         if redirect_uri != app['callback_url']:
-            return HTTPBadRequest('Redirect URI does not match registered callback URL')
+            return HTTPBadRequest(
+                'Redirect URI does not match registered callback URL')
 
     scope = request.params.get('scope', DEFAULT_SCOPE)
 
@@ -300,9 +307,8 @@ def token_endpoint(request):
 def authorized_applications(request):
     assert_authenticated_user_is_registered(request)
     authorized_apps_filter = {'_id': {'$in': request.user['authorized_apps']}}
-    return {
-        'authorized_apps': request.db.applications.find(authorized_apps_filter),
-        }
+    authorized_apps = request.db.applications.find(authorized_apps_filter)
+    return {'authorized_apps': authorized_apps}
 
 
 @view_config(route_name='oauth2_revoke_application',
@@ -330,7 +336,8 @@ def revoke_application(request):
 
         request.session.flash('The access to application %s has been revoked' %
                               app['name'], 'success')
-        return HTTPFound(location=request.route_path('oauth2_authorized_applications'))
+        return HTTPFound(
+            location=request.route_path('oauth2_authorized_applications'))
 
     return {'app': app}
 

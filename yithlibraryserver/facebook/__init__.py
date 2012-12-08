@@ -20,6 +20,7 @@
 
 from yithlibraryserver import read_setting_from_env
 
+
 def includeme(config):
     settings = config.registry.settings
     for key, default in (

@@ -49,7 +49,9 @@ class ApplicationSchema(colander.MappingSchema):
 class ReadOnlyTextInputWidget(TextInputWidget):
 
     def serialize(self, field, cstruct, readonly=False):
-        return super(ReadOnlyTextInputWidget, self).serialize(field, cstruct=cstruct, readonly=True)
+        return super(ReadOnlyTextInputWidget, self).serialize(field,
+                                                              cstruct=cstruct,
+                                                              readonly=True)
 
 
 class FullApplicationSchema(ApplicationSchema):

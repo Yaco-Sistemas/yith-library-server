@@ -20,6 +20,7 @@
 
 from yithlibraryserver import read_setting_from_env
 
+
 def includeme(config):
     settings = config.registry.settings
     for key, default in (
@@ -33,7 +34,9 @@ def includeme(config):
         option = 'twitter_%s' % key
         settings[option] = read_setting_from_env(settings, option, default)
 
-    if settings['twitter_consumer_key'] and settings['twitter_consumer_secret']:
+    if (settings['twitter_consumer_key']
+        and settings['twitter_consumer_secret']):
+
         config.add_route('twitter_login', '/twitter/login')
         config.add_view('.views.twitter_login',
                         route_name='twitter_login', renderer='string')

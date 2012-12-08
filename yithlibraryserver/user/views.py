@@ -234,12 +234,16 @@ def user_information(request):
                                          safe=True)
 
         if result['n'] == 1:
-            request.session.flash('The changes were saved successfully',
-                                  'success')
+            request.session.flash(
+                'The changes were saved successfully',
+                'success',
+                )
             return HTTPFound(location=request.route_path('user_information'))
         else:
-            request.session.flash('There were an error while saving your changes',
-                                  'error')
+            request.session.flash(
+                'There were an error while saving your changes',
+                'error',
+                )
             return {'form': appstruct}
 
     return {
@@ -284,9 +288,11 @@ def identity_providers(request):
                              if is_verified(account)]
 
         if len(accounts_to_merge) > 1:
-            merged = merge_accounts(request.db, request.user, accounts_to_merge)
+            merged = merge_accounts(request.db, request.user,
+                                    accounts_to_merge)
             request.session.flash(
-                'Congratulations, %d of your accounts have been merged into the current one' % merged,
+                ('Congratulations, %d of your accounts have been merged '
+                 'into the current one' % merged),
                 'success',
                 )
         else:
@@ -295,7 +301,8 @@ def identity_providers(request):
                 'error',
                 )
 
-        return HTTPFound(location=request.route_path('user_identity_providers'))
+        return HTTPFound(
+            location=request.route_path('user_identity_providers'))
 
     return context
 
@@ -388,7 +395,8 @@ class UserRESTView(object):
     def options(self):
         headers = self.request.response.headers
         headers['Access-Control-Allow-Methods'] = 'GET'
-        headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization'
+        headers['Access-Control-Allow-Headers'] = ('Origin, Content-Type, '
+                                                   'Accept, Authorization')
         return ''
 
     @view_config(request_method='GET')

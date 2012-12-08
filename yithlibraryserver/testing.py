@@ -30,6 +30,7 @@ from yithlibraryserver import main
 
 MONGO_URI = 'mongodb://localhost:27017/test-yith-library'
 
+
 class FakeRequest(DummyRequest):
 
     def __init__(self, *args, **kwargs):
@@ -74,7 +75,8 @@ class TestCase(unittest.TestCase):
         self.testapp.cookies['auth_tkt'] = cookie_value
 
     def add_to_session(self, data):
-        session_factory = self.testapp.app.registry.queryUtility(ISessionFactory)
+        queryUtility = self.testapp.app.registry.queryUtility
+        session_factory = queryUtility(ISessionFactory)
         request = DummyRequest()
         session = session_factory(request)
         for key, value in data.items():
@@ -83,7 +85,8 @@ class TestCase(unittest.TestCase):
         self.testapp.cookies['beaker.session.id'] = session._sess.id
 
     def get_session(self, response):
-        session_factory = self.testapp.app.registry.queryUtility(ISessionFactory)
+        queryUtility = self.testapp.app.registry.queryUtility
+        session_factory = queryUtility(ISessionFactory)
         request = response.request
 
         if not hasattr(request, 'add_response_callback'):

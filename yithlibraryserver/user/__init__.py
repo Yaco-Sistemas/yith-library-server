@@ -39,6 +39,7 @@ def includeme(config):
     config.add_route('user_send_email_verification_code',
                      '/send-email-verification-code')
     config.add_route('user_verify_email', '/verify-email')
-    config.add_route('user_google_analytics_preference', '/google-analytics-preference')
+    config.add_route('user_google_analytics_preference',
+                     '/google-analytics-preference')
 
     config.add_route('user_view', '/user')

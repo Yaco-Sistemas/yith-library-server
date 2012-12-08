@@ -45,7 +45,8 @@ def oauth2_step1(request, auth_uri, client_id, redirect_url, scope):
     return HTTPFound(location=auth_uri + '?' + url_encode(params))
 
 
-def oauth2_step2(request, token_uri, client_id, client_secret, redirect_url, scope):
+def oauth2_step2(request, token_uri, client_id, client_secret, redirect_url,
+                 scope):
     try:
         code = request.params['code']
     except KeyError:
@@ -59,11 +60,13 @@ def oauth2_step2(request, token_uri, client_id, client_secret, redirect_url, sco
     try:
         my_state = request.session['state']
         if state != my_state:
-            return HTTPUnauthorized('State parameter does not match internal state. You may be a victim of CSRF')
+            return HTTPUnauthorized('State parameter does not match internal '
+                                    'state. You may be a victim of CSRF')
         else:
             del request.session['state']
     except KeyError:
-        return HTTPUnauthorized('Missing internal state. You may be a victim of CSRF')
+        return HTTPUnauthorized('Missing internal state. '
+                                'You may be a victim of CSRF')
 
     params = {
         'grant_type': 'authorization_code',

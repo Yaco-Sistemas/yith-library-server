@@ -41,7 +41,8 @@ def timestamp():
 
 def sign(method, url, original_params, consumer_secret, oauth_token):
     # 1. create the parameter string
-    param_string = '&'.join(['%s=%s' % (key, value) for key, value in sorted(original_params)])
+    param_string = '&'.join(['%s=%s' % (key, value)
+                             for key, value in sorted(original_params)])
 
     # 2. create signature base string
     signature_base = '%s&%s&%s' % (
@@ -58,7 +59,8 @@ def sign(method, url, original_params, consumer_secret, oauth_token):
     return quote(binascii.b2a_base64(hashed.digest())[:-1])
 
 
-def auth_header(method, url, original_params, settings, oauth_token='', nonce_=None, timestamp_=None):
+def auth_header(method, url, original_params, settings, oauth_token='',
+                nonce_=None, timestamp_=None):
     params = list(original_params) + [
         ('oauth_consumer_key', settings['twitter_consumer_key']),
         ('oauth_nonce', nonce_ or nonce()),

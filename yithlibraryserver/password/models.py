@@ -18,6 +18,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
+
 class PasswordsManager(object):
 
     def __init__(self, db):
@@ -65,7 +66,7 @@ class PasswordsManager(object):
         new_password['_id'] = _id
 
         # result['n'] is the number of documents updated
-        # See http://www.mongodb.org/display/DOCS/getLastError+Command#getLastErrorCommand-ReturnValue
+        # See <http://www.mongodb.org/display/DOCS/getLastError+Command#getLastErrorCommand-ReturnValue
         if result['n'] == 1:
             return new_password
         else:

@@ -62,15 +62,19 @@ class EmailVerificationCode(object):
 
     def send(self, request, user, url):
         link = '%s?code=%s&email=%s' % (url, self.code, user['email'])
-        text_body = render('yithlibraryserver.user:templates/email_verification_code.txt',
-                           {'link': link, 'user': user},
-                           request=request)
+        text_body = render(
+            'yithlibraryserver.user:templates/email_verification_code.txt',
+            {'link': link, 'user': user},
+            request=request,
+            )
         # chamaleon txt templates are rendered as utf-8 bytestrings
         text_body = text_body.decode('utf-8')
 
-        html_body = render('yithlibraryserver.user:templates/email_verification_code.pt',
-                           {'link': link, 'user': user},
-                           request=request)
+        html_body = render(
+            'yithlibraryserver.user:templates/email_verification_code.pt',
+            {'link': link, 'user': user},
+            request=request,
+            )
         message = Message(subject='Please verify your email address',
                           recipients=[user['email']],
                           body=text_body,

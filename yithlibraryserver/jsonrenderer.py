@@ -33,7 +33,6 @@ except ImportError:
         into a JSON-serializable primitive.
         """
 
-
     class JSON(object):
 
         def __init__(self, serializer=json.dumps, adapters=(), **kw):

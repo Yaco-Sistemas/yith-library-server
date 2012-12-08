@@ -31,6 +31,7 @@ def _get_user_display_name(user):
                            user.get('last_name', ''),
                            user.get('email', ''))
 
+
 def _get_user_info(db, user):
     return {
         'display_name': _get_user_display_name(user),
@@ -75,6 +76,7 @@ def usage():
 
     finally:
         closer()
+
 
 def _get_app_info(db, app):
     user = db.users.find_one({'_id': app['owner']})

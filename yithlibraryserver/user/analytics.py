@@ -27,7 +27,8 @@ class GoogleAnalytics(object):
 
     @property
     def enabled(self):
-        return self.request.registry.settings['google_analytics_code'] is not None
+        code = self.request.registry.settings['google_analytics_code']
+        return code is not None
 
     @property
     def first_time(self):
