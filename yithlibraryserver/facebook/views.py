@@ -52,6 +52,6 @@ def facebook_callback(request):
     info = get_user_info(settings['facebook_basic_information_url'],
                          access_token)
     user_id = info['id']
-
+    info['screen_name'] = info['name']
     return register_or_update(request, 'facebook', user_id, info,
                               request.route_path('home'))

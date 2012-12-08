@@ -67,6 +67,7 @@ class ViewTests(testing.TestCase):
                     'username': 'john.doe',
                     'first_name': 'John',
                     'last_name': 'Doe',
+                    'name': 'John Doe',
                     'email': 'john@example.com',
                     }
 
