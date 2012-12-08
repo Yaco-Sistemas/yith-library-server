@@ -222,10 +222,10 @@ def user_information(request):
         changes = {
             'first_name': appstruct['first_name'],
             'last_name': appstruct['last_name'],
-            'email': appstruct['email'],
+            'email': appstruct['email']['email'],
             }
 
-        if request.user['email'] != appstruct['email']:
+        if request.user['email'] != appstruct['email']['email']:
             changes['email_verified'] = False
 
         result = request.db.users.update({'_id': request.user['_id']},

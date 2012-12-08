@@ -41,6 +41,14 @@ class EmailWidget(TextInputWidget):
             )
         return email_output + email_verified_output
 
+    def deserialize(self, field, pstruct):
+        return {
+            'email': super(EmailWidget, self).deserialize(field, pstruct),
+            # The email_verified attr is readonly and
+            # thus, not used in the view
+            'email_verified': None,
+            }
+
 
 class EmailSchema(colander.MappingSchema):
 
