@@ -34,11 +34,14 @@ def add_cors_headers_response(event):
 
 
 def add_base_templates(event):
-    base_renderer = get_renderer('yithlibraryserver:templates/base.pt')
-    profile_renderer = get_renderer('yithlibraryserver:templates/profile.pt')
+
+    def get_template(name):
+        renderer = get_renderer('yithlibraryserver:templates/%s.pt' % name)
+        return renderer.implementation()
+
     event.update({
-            'base': base_renderer.implementation(),
-            'profile': profile_renderer.implementation(),
+            'base': get_template('base'),
+            'profile': get_template('profile'),
             })
 
 
