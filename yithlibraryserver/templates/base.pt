@@ -42,21 +42,14 @@
           <li tal:condition="not request.user">
             <a href="${request.route_path('login')}">Log in</a>
           </li>
-          <li tal:condition="request.user" class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              ${request.user} <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a href="${request.route_path('user_information')}">Profile</a>
-              </li>
-              <li>
-                <a href="${request.route_path('oauth2_clients')}">Passwords</a>
-              </li>
-              <li>
-                <a href="${request.route_path('logout')}">Log out</a>
-              </li>
-            </ul>
+          <li tal:condition="request.user">
+            <a href="${request.route_path('user_information')}">${request.user}</a>
+          </li>
+          <li tal:condition="request.user">
+            <a href="${request.route_path('oauth2_clients')}">My passwords</a>
+          </li>
+          <li tal:condition="request.user">
+            <a href="${request.route_path('logout')}">Log out</a>
           </li>
         </ul>
       </div>
