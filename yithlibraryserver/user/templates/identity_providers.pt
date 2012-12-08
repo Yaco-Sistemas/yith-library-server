@@ -49,11 +49,12 @@
         </td>
         <td>
           <span class="badge badge-success" tal:condition="account.is_verified">Email verified</span>
-          <span class="badge badge-important" tal:condition="not account.is_verified">Email not verified</span>
+          <span class="badge badge-warning" tal:condition="request.user.email and not account.is_verified">Email not verified</span>
+          <span class="badge" tal:condition="not request.user.email">No email available</span>
         </td>
         <td>
           <div tal:omit-tag="" tal:condition="not account.is_verified">
-            <a tal:condition="account.is_current" id="open-email-verification-dialog" href="#email-verification-dialog" class="btn btn-mini btn-primary" data-toggle="modal">Verify email address</a>
+            <a tal:condition="account.is_current and request.user.email" id="open-email-verification-dialog" href="#email-verification-dialog" class="btn btn-mini btn-primary" data-toggle="modal">Verify email address</a>
 
             <a tal:condition="not account.is_current" href="#" class="btn btn-mini btn-primary disabled" title="You need to log in with this provider to verify this email address">Verify email address</a>
           </div>
@@ -63,7 +64,13 @@
   </table>
 
   <div class="buttons form-actions">
-    <button class="btnText submit btn btn-primary" value="submit" type="submit" name="submit">Merge my accounts</button>
+    <input
+       class="btn btn-primary"
+       value="Merge my accounts"
+       type="submit"
+       name="submit"
+       tal:attributes="disabled None if can_merge else 'disabled'"
+       />
   </div>
   </form>
 
@@ -98,39 +105,6 @@
     </div>
   </div>
 
-</tal:block>
-
-<tal:block metal:fill-slot="extra-scripts">
-  <script type="text/javascript">
-    (function ($) {
-      "use strict";
-      $(document).ready(function () {
-        $("#send-verification-email").click(function () {
-          var $button = $(this);
-          if ($button.hasClass("disabled")) {
-            return;
-          }
-          $button.addClass("disabled");
-          $.ajax({
-            type: 'POST',
-            url: '${request.route_path("user_send_email_verification_code")}',
-            data: {submit: 'Send verification code'},
-            dataType: 'json',
-            success: function (data, textStatus, jqXHR) {
-              if (data.status === 'ok') {
-                $("#email-verification-dialog .alert-info").removeClass("hide");
-                $("#open-email-verification-dialog").addClass("hide");
-              } else {
-                $("#email-verification-dialog .alert-error").removeClass("hide").find("strong").text(data.error);
-                $("#email-verification-dialog .alert-info").addClass("hide");
-                $button.removeClass("disabled");
-              }
-            }
-          });
-        });
-      });
-    })(jQuery);
-  </script>
 </tal:block>
 
 </html>
