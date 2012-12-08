@@ -11,6 +11,17 @@
   <h2>Personal information</h2>
   <form tal:replace="structure form">form</form>
 
+  <tal:block
+     tal:define="email_verification_dialog load: email_verification_dialog.pt"
+     metal:use-macro="email_verification_dialog"
+     />
+
+</tal:block>
+
+<tal:block metal:fill-slot="extra-scripts">
+
+  <script src="${request.static_path('yithlibraryserver:static/js/email_verification_dialog.js')}"></script>
+
 </tal:block>
 
 </html>
