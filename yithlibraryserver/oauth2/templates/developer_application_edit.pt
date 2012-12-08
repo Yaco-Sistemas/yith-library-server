@@ -6,7 +6,7 @@
 
 <tal:block metal:fill-slot="header-title">Edit Application</tal:block>
 
-<tal:block metal:fill-slot="profile-content">
+<tal:block metal:fill-slot="content">
 
   <h2>Edit application ${app.name}</h2>
   <div tal:replace="structure form">form</div>

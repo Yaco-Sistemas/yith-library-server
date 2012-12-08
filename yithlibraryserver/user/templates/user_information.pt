@@ -6,7 +6,7 @@
 
 <tal:block metal:fill-slot="header-title">User information</tal:block>
 
-<tal:block metal:fill-slot="profile-content">
+<tal:block metal:fill-slot="content">
 
   <h2>Personal information</h2>
   <form tal:replace="structure form">form</form>

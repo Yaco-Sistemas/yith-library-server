@@ -6,7 +6,7 @@
 
 <tal:block metal:fill-slot="header-title">Identity providers</tal:block>
 
-<tal:block metal:fill-slot="profile-content">
+<tal:block metal:fill-slot="content">
 
   <h2>Identity providers</h2>
 

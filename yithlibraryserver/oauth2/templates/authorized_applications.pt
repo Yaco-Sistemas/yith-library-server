@@ -6,7 +6,7 @@
 
 <tal:block metal:fill-slot="header-title">Authorized applications</tal:block>
 
-<tal:block metal:fill-slot="profile-content">
+<tal:block metal:fill-slot="content">
 
   <h2>Authorized Applications</h2>
   <ul>

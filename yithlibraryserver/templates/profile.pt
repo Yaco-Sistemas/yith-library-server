@@ -2,10 +2,12 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
-      metal:use-macro="base.macros['base']"
+      metal:extend-macro="base.macros['base']"
       metal:define-macro="profile">
 
-<tal:block metal:fill-slot="header-title">Profile</tal:block>
+<tal:block metal:fill-slot="header-title">
+  Profile - <tal:block metal:define-slot="header-title"></tal:block>
+</tal:block>
 
 <tal:block metal:fill-slot="content">
 
@@ -40,7 +42,7 @@
 
     <div class="span10">
 
-      <tal:block metal:define-slot="profile-content"></tal:block>
+      <tal:block metal:define-slot="content"></tal:block>
 
     </div>
 

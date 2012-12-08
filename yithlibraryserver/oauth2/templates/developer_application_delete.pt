@@ -6,7 +6,7 @@
 
 <tal:block metal:fill-slot="header-title">Delete Application</tal:block>
 
-<tal:block metal:fill-slot="profile-content">
+<tal:block metal:fill-slot="content">
 
   <h2>Delete Application ${app.name}</h2>
   <p class="well">Are you sure you want to remove the application ${app.name} with id ${app._id}?</p>

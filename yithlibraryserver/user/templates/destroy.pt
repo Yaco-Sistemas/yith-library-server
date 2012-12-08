@@ -6,7 +6,7 @@
 
 <tal:block metal:fill-slot="header-title">Destroy account</tal:block>
 
-<tal:block metal:fill-slot="profile-content">
+<tal:block metal:fill-slot="content">
 
   <h2>Destroy account</h2>
 
