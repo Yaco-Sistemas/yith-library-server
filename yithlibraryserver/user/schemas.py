@@ -37,6 +37,7 @@ class EmailWidget(TextInputWidget):
         pstruct = field.schema.deserialize(cstruct)
         email_verified_output = field.renderer(
             self.email_verified_template,
+            email=pstruct['email'],
             email_verified=pstruct['email_verified'],
             )
         return email_output + email_verified_output
