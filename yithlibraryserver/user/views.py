@@ -240,10 +240,17 @@ def user_information(request):
             request.session.flash('There were an error while saving your changes',
                                   'error')
             return {'form': appstruct}
-    elif 'cancel' in request.POST:
-        return HTTPFound(location=request.route_path('user_information'))
 
-    return {'form': form.render(request.user)}
+    return {
+        'form': form.render({
+                'first_name': request.user['first_name'],
+                'last_name': request.user['last_name'],
+                'email': {
+                    'email': request.user['email'],
+                    'email_verified': request.user['email_verified'],
+                    },
+                }),
+        }
 
 
 @view_config(route_name='user_identity_providers',
@@ -274,18 +281,13 @@ def identity_providers(request):
         accounts_to_merge = [account
                              for account in accounts_to_merge
                              if is_verified(account)]
+
         if len(accounts_to_merge) > 1:
             merged = merge_accounts(request.db, request.user, accounts_to_merge)
-            if merged > 0:
-                request.session.flash(
-                    'Congratulations, %d of your accounts have been merged into the current one' % merged,
-                    'success',
-                    )
-            else:
-                request.session.flash(
-                    'Sorry, your accounts were not merged',
-                    'error',
-                    )
+            request.session.flash(
+                'Congratulations, %d of your accounts have been merged into the current one' % merged,
+                'success',
+                )
         else:
             request.session.flash(
                 'Not enough accounts for merging',

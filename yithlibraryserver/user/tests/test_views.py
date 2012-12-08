@@ -37,12 +37,6 @@ class DummyValidationFailure(ValidationFailure):
         return 'dummy error'
 
 
-class BadCursor(list):
-
-    def count(self):
-        return len(self)
-
-
 class BadCollection(object):
 
     def __init__(self, user=None):
@@ -50,12 +44,6 @@ class BadCollection(object):
 
     def find_one(self, *args, **kwargs):
         return self.user
-
-    def find(self, *args, **kwargs):
-        if self.user is None:
-            return BadCursor()
-        else:
-            return BadCursor([self.user])
 
     def update(self, *args, **kwargs):
         return {'n': 0}
@@ -303,7 +291,7 @@ class ViewTests(TestCase):
         self.assertTrue('Set-Cookie' in res.headers)
         self.assertTrue('auth_tkt=""' in res.headers['Set-Cookie'])
 
-    def test_user_profile(self):
+    def test_user_information(self):
         # this view required authentication
         res = self.testapp.get('/profile')
         self.assertEqual(res.status, '200 OK')
@@ -326,7 +314,6 @@ class ViewTests(TestCase):
         res.mustcontain('John')
         res.mustcontain('Doe')
         res.mustcontain('Save changes')
-        res.mustcontain('Cancel')
 
         res = self.testapp.post('/profile', {
                 'submit': 'Save changes',
@@ -341,16 +328,6 @@ class ViewTests(TestCase):
         self.assertEqual(new_user['first_name'], 'John')
         self.assertEqual(new_user['last_name'], 'Doe')
         self.assertEqual(new_user['email'], 'john@example.com')
-
-        # click on the cancel button
-        res = self.testapp.post('/profile', {
-                'cancel': 'Cancel',
-                'first_name': 'John',
-                'last_name': 'Doe',
-                'email': 'john@example.com',
-                })
-        self.assertEqual(res.status, '302 Found')
-        self.assertEqual(res.location, 'http://localhost/profile')
 
         # make the form fail
         with patch('deform.Form.validate') as fake:
@@ -391,7 +368,7 @@ class ViewTests(TestCase):
 
         res = self.testapp.get('/destroy')
         res.mustcontain('Destroy account')
-        res.mustcontain('Do you really want to destroy your account?')
+        res.mustcontain('Do you really really really want to destroy your account?')
         res.mustcontain('You will not be able to undo this operation')
 
         # simulate a cancel
@@ -529,9 +506,9 @@ class ViewTests(TestCase):
         self.assertEqual(user['email_verified'], True)
         self.assertFalse('email_verification_code' in user)
 
-    def test_account_merging(self):
+    def test_identity_providers(self):
         # this view required authentication
-        res = self.testapp.get('/merge-accounts')
+        res = self.testapp.get('/identity-providers')
         self.assertEqual(res.status, '200 OK')
         res.mustcontain('Log in')
 
@@ -552,7 +529,9 @@ class ViewTests(TestCase):
                 })
 
         # one account is not enough for merging
-        res = self.testapp.get('/merge-accounts', status=400)
+        res = self.testapp.post('/identity-providers', {
+                'submit': 'Merge my accounts',
+                }, status=400)
         self.assertEqual(res.status, '400 Bad Request')
         res.mustcontain('You do not have enough accounts to merge')
 
@@ -572,41 +551,21 @@ class ViewTests(TestCase):
                 })
 
         # now the profile view should say I can merge my accounts
-        res = self.testapp.get('/profile')
+        res = self.testapp.get('/identity-providers')
         self.assertEqual(res.status, '200 OK')
-        res.mustcontain('You are registered with the following accounts')
-        res.mustcontain('Account merging is possible!')
-        res.mustcontain('Merge my accounts ...')
-
-        # and the merge account view ask me to select the accounts
-        res = self.testapp.get('/merge-accounts')
-        self.assertEqual(res.status, '200 OK')
-        res.mustcontain('Please, select the accounts you want to merge')
-        res.mustcontain('Merge my accounts')
-
-        # if the user hits cancel nothing happens
-        res = self.testapp.post('/merge-accounts', {
-                'account-%s' % str(user1_id): 'on',
-                'account-%s' % str(user2_id): 'on',
-                'cancel': 'Cancel',
-                }, status=302)
-        self.assertEqual(res.status, '302 Found')
-        self.assertEqual(res.location, 'http://localhost/profile')
-        self.assertEqual(2, self.db.users.count())
-        self.assertEqual(1, self.db.passwords.find(
-                {'owner': user1_id}, safe=True).count())
-        self.assertEqual(1, self.db.passwords.find(
-                {'owner': user2_id}, safe=True).count())
+        res.mustcontain('You are registered with the following accounts',
+                        'Merge my accounts',
+                        'If you merge your accounts')
 
         # if only one account is selected or fake accounts
         # are selected nothing is merged
-        res = self.testapp.post('/merge-accounts', {
+        res = self.testapp.post('/identity-providers', {
                 'account-%s' % str(user1_id): 'on',
                 'account-000000000000000000000000': 'on',
                 'submit': 'Merge my accounts',
                 }, status=302)
         self.assertEqual(res.status, '302 Found')
-        self.assertEqual(res.location, 'http://localhost/profile')
+        self.assertEqual(res.location, 'http://localhost/identity-providers')
         self.assertEqual(2, self.db.users.count())
         self.assertEqual(1, self.db.passwords.find(
                 {'owner': user1_id}, safe=True).count())
@@ -614,13 +573,13 @@ class ViewTests(TestCase):
                 {'owner': user2_id}, safe=True).count())
 
         # let's merge them
-        res = self.testapp.post('/merge-accounts', {
+        res = self.testapp.post('/identity-providers', {
                 'account-%s' % str(user1_id): 'on',
                 'account-%s' % str(user2_id): 'on',
                 'submit': 'Merge my accounts',
                 }, status=302)
         self.assertEqual(res.status, '302 Found')
-        self.assertEqual(res.location, 'http://localhost/profile')
+        self.assertEqual(res.location, 'http://localhost/identity-providers')
 
         # the accounts have been merged
         self.assertEqual(1, self.db.users.count())
@@ -731,4 +690,3 @@ class RESTViewTests(TestCase):
                 'date_joined': '2012-12-12T12:12:00+00:00',
                 'last_login': '2012-12-12T12:12:00+00:00',
                 })
-
