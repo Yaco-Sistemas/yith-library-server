@@ -27,19 +27,19 @@ class EmailWidget(TextInputWidget):
     email_verified_template = 'email_verified'
 
     def serialize(self, field, cstruct, readonly=False):
-        if cstruct in (colander.null, None):
-            cstruct = {'email': '', 'email_verified': False}
-
-        email_output = super(EmailWidget, self).serialize(field,
-                                                          cstruct['email'],
-                                                          readonly)
+        email_output = super(EmailWidget, self).serialize(
+            field,
+            cstruct.get('email', ''),
+            readonly,
+            )
 
         pstruct = field.schema.deserialize(cstruct)
         email_verified_output = field.renderer(
             self.email_verified_template,
-            email=pstruct['email'],
-            email_verified=pstruct['email_verified'],
+            email=pstruct.get('email', ''),
+            email_verified=pstruct.get('email_verified', False),
             )
+
         return email_output + email_verified_output
 
     def deserialize(self, field, pstruct):
