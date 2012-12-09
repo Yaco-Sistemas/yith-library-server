@@ -19,6 +19,7 @@
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import sys
 
 from setuptools import setup, find_packages
 
@@ -27,7 +28,6 @@ README = open(os.path.join(here, 'README.rst')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 
 requires = [
-    'Babel==0.9.6',
     'deform==0.9.5',
     'pymongo==2.3',
     'pyramid==1.3.4',
@@ -38,6 +38,10 @@ requires = [
     'requests==0.14.0',
     'waitress==0.8.1',
     ]
+
+if sys.version_info[0] < 3:
+    # Babel does not work with Python 3
+    requires.append('Babel==0.9.6')
 
 test_requires = [
     'WebTest',

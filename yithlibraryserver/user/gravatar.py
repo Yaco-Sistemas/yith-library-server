@@ -27,7 +27,7 @@ class Gravatar(object):
         self.request = request
 
     def get_email_hash(self, email):
-        return hashlib.md5(email.lower()).hexdigest()
+        return hashlib.md5(email.lower().encode('utf-8')).hexdigest()
 
     def get_default_image_url(self):
         return self.request.static_url(

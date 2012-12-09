@@ -16,7 +16,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-from babel.dates import format_date, format_datetime
+try:
+    from babel.dates import format_date, format_datetime
+except ImportError:
+    # Babel does not work in Python 3
+
+    def format_date(date_value, locale=None):
+        return date_value.strftime('%c')
+
+    def format_datetime(datetime_value, locale=None):
+        return datetime_value.strftime('%c')
 
 
 class DatesFormatter(object):
@@ -24,8 +33,8 @@ class DatesFormatter(object):
     def __init__(self, locale_name):
         self.locale_name = locale_name
 
-    def date(self, datetime_value):
-        return format_date(datetime_value, locale=self.locale_name)
+    def date(self, date_value):
+        return format_date(date_value, locale=self.locale_name)
 
     def datetime(self, datetime_value):
         return format_datetime(datetime_value, locale=self.locale_name)
