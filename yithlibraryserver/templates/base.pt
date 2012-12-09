@@ -43,7 +43,10 @@
             <a href="${request.route_path('login')}">Log in</a>
           </li>
           <li tal:condition="request.user">
-            <a href="${request.route_path('user_information')}">${request.user}</a>
+            <a href="${request.route_path('user_information')}">
+              <img class="avatar" src="${request.gravatar.get_image_url(32)}" height="32" alt="" />
+              ${request.user}
+            </a>
           </li>
           <li tal:condition="request.user">
             <a href="${request.route_path('oauth2_clients')}">My passwords</a>

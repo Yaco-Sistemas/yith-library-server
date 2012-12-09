@@ -6,6 +6,13 @@ h1 {
     margin-bottom: 30px;
 }
 
+.navbar img.avatar {
+    float: left;
+    margin-top: -6px;
+    padding-right: 4px;
+    height: 32px;
+}
+
 .pointer {
     cursor: pointer;
 }
@@ -196,4 +203,18 @@ footer ul li {
 
 .content-centered {
     text-align: center;
+}
+
+/* Profile styles */
+.personal-info {
+    margin-bottom: 12px;
+}
+
+.personal-info .avatar {
+    float: left;
+    margin-left: 60px;
+}
+
+.personal-info ul {
+    margin-left: 180px;
 }

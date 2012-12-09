@@ -16,29 +16,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-import unittest
-
-from yithlibraryserver.compat import text_type
-from yithlibraryserver.user.models import User
+from babel.dates import format_date, format_datetime
 
 
-class UserTests(unittest.TestCase):
+class DatesFormatter(object):
 
-    def test_unicode(self):
-        data = {'_id': '1234'}
-        self.assertEqual(text_type(User(data)), '1234')
+    def __init__(self, locale_name):
+        self.locale_name = locale_name
 
-        data['email'] = 'john@example.com'
-        self.assertEqual(text_type(User(data)), 'john@example.com')
+    def date(self, datetime_value):
+        return format_date(datetime_value, locale=self.locale_name)
 
-        data['last_name'] = 'Doe'
-        self.assertEqual(text_type(User(data)), 'Doe')
-
-        data['first_name'] = 'John'
-        self.assertEqual(text_type(User(data)), 'John Doe')
-
-        data['screen_name'] = 'Johnny'
-        self.assertEqual(text_type(User(data)), 'Johnny')
-
-        u = User(data)
-        self.assertEqual(u.__unicode__(), u.__str__())
+    def datetime(self, datetime_value):
+        return format_datetime(datetime_value, locale=self.locale_name)

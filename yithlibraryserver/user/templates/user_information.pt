@@ -9,6 +9,28 @@
 <tal:block metal:fill-slot="content">
 
   <h2>Personal information</h2>
+
+  <div class="personal-info clearfix">
+    <img class="avatar" src="${request.gravatar.get_image_url(100)}" height="100" alt="" />
+    <ul class="unstyled">
+      <li>Id: ${request.user._id }</li>
+      <li>Member since:
+        <time
+           datetime="${request.user.date_joined.isoformat()}"
+           tal:content="dates_formatter.datetime(request.user.date_joined)" />
+      </li>
+      <li>Last seen:
+        <time
+           datetime="${request.user.last_login.isoformat()}"
+           tal:content="dates_formatter.datetime(request.user.last_login)" />
+      </li>
+      <li><a href="http://www.gravatar.com/" target="_blank">
+          <span tal:condition="request.gravatar.has_avatar()">Change your avatar at gravatar.com</span>
+          <span tal:condition="not request.gravatar.has_avatar()">Set your avatar at gravatar.com</span>
+      </a></li>
+    </ul>
+  </div>
+
   <form tal:replace="structure form">form</form>
 
   <tal:block

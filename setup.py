@@ -27,6 +27,7 @@ README = open(os.path.join(here, 'README.rst')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 
 requires = [
+    'Babel==0.9.6',
     'deform==0.9.5',
     'pymongo==2.3',
     'pyramid==1.3.4',

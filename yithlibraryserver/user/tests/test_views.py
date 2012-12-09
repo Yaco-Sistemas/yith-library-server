@@ -298,6 +298,7 @@ class ViewTests(TestCase):
         res.mustcontain('Log in')
 
         # Log in
+        date = datetime.datetime(2012, 12, 12, 12, 12)
         user_id = self.db.users.insert({
                 'twitter_id': 'twitter1',
                 'screen_name': 'John Doe',
@@ -306,6 +307,8 @@ class ViewTests(TestCase):
                 'email': '',
                 'email_verified': False,
                 'authorized_apps': [],
+                'date_joined': date,
+                'last_login': date,
                 }, safe=True)
         self.set_user_cookie(str(user_id))
 

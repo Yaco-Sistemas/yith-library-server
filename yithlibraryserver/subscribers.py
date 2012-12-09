@@ -19,9 +19,11 @@
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
 from pyramid.events import BeforeRender, NewRequest
+from pyramid.i18n import get_locale_name
 from pyramid.renderers import get_renderer
 
 from yithlibraryserver.db import get_db
+from yithlibraryserver.locale import DatesFormatter
 
 
 def add_cors_headers_response(event):
@@ -45,8 +47,18 @@ def add_base_templates(event):
             })
 
 
+def add_custom_functions(event):
+
+    locale_name = get_locale_name(event['request'])
+
+    event.update({
+            'dates_formatter': DatesFormatter(locale_name),
+            })
+
+
 def includeme(config):
     config.set_request_property(get_db, 'db', reify=True)
 
     config.add_subscriber(add_cors_headers_response, NewRequest)
     config.add_subscriber(add_base_templates, BeforeRender)
+    config.add_subscriber(add_custom_functions, BeforeRender)

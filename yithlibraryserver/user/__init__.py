@@ -19,6 +19,7 @@
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
 from yithlibraryserver.user.analytics import get_google_analytics
+from yithlibraryserver.user.gravatar import get_gravatar
 from yithlibraryserver.user.idp import add_identity_provider
 from yithlibraryserver.user.security import get_user
 
@@ -29,6 +30,7 @@ def includeme(config):
     config.set_request_property(get_user, 'user', reify=True)
     config.set_request_property(get_google_analytics,
                                 'google_analytics', reify=True)
+    config.set_request_property(get_gravatar, 'gravatar', reify=True)
 
     config.add_route('login', '/login')
     config.add_route('register_new_user', '/register')
