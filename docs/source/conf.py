@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Yith Library Server'
-copyright = u'2012, Yaco Sistemas'
+copyright = u'2012, Lorenzo Gil Sánchez'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -184,7 +184,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
   ('index', 'YithLibraryServer.tex', u'Yith Library Server Documentation',
-   u'Yaco Sistemas', 'manual'),
+   u'Lorenzo Gil Sánchez', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -214,7 +214,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'yithlibraryserver', u'Yith Library Server Documentation',
-     [u'Yaco Sistemas'], 1)
+     [u'Lorenzo Gil Sánchez'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -228,7 +228,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'YithLibraryServer', u'Yith Library Server Documentation',
-   u'Yaco Sistemas', 'YithLibraryServer', 'One line description of project.',
+   u'Lorenzo Gil Sánchez', 'YithLibraryServer', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -246,9 +246,9 @@ texinfo_documents = [
 
 # Bibliographic Dublin Core info.
 epub_title = u'Yith Library Server'
-epub_author = u'Yaco Sistemas'
-epub_publisher = u'Yaco Sistemas'
-epub_copyright = u'2012, Yaco Sistemas'
+epub_author = u'Lorenzo Gil Sánchez'
+epub_publisher = u'Lorenzo Gil Sánchez'
+epub_copyright = u'2012, Lorenzo Gil Sánchez'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
