@@ -16,16 +16,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-try:
+try:  # pragma: no cover
     from babel.dates import format_date, format_datetime
-except ImportError:
+    HAS_BABEL = True
+except ImportError:  # pragma: no cover
     # Babel does not work in Python 3
-
-    def format_date(date_value, locale=None):
-        return date_value.strftime('%c')
-
-    def format_datetime(datetime_value, locale=None):
-        return datetime_value.strftime('%c')
+    HAS_BABEL = False
 
 
 class DatesFormatter(object):
@@ -34,7 +30,14 @@ class DatesFormatter(object):
         self.locale_name = locale_name
 
     def date(self, date_value):
-        return format_date(date_value, locale=self.locale_name)
+        if HAS_BABEL:
+            return format_date(date_value, locale=self.locale_name)
+        else:
+            return date_value.strftime('%c')
 
     def datetime(self, datetime_value):
-        return format_datetime(datetime_value, locale=self.locale_name)
+        if HAS_BABEL:
+            return format_datetime(datetime_value, locale=self.locale_name)
+        else:
+            return datetime_value.strftime('%c')
+
