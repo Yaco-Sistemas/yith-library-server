@@ -23,18 +23,15 @@ from yithlibraryserver.compat import url_encode
 
 class Gravatar(object):
 
-    def __init__(self, request):
+    def __init__(self, request, default_image_url):
         self.request = request
+        self.default_image_url = default_image_url
 
     def get_email_hash(self, email):
         return hashlib.md5(email.lower().encode('utf-8')).hexdigest()
 
-    def get_default_image_url(self):
-        return self.request.static_url(
-            'yithlibraryserver:static/img/default_gravatar.png')
-
     def get_image_url(self, size=32):
-        default_image_url = self.get_default_image_url()
+        default_image_url = self.default_image_url
 
         email = self.get_email()
         if not email:
@@ -66,5 +63,7 @@ class Gravatar(object):
 
 
 def get_gravatar(request):
-    return Gravatar(request)
+    default_image_url = request.static_url(
+        'yithlibraryserver:static/img/default_gravatar.png')
+    return Gravatar(request, default_image_url)
 
