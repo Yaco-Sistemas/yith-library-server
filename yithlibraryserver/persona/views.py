@@ -48,7 +48,7 @@ def persona_login(request):
         if verification_data['status'] == 'okay':
             email = verification_data['email']
             info = {'email': email}
-            user_id = hashlib.sha1(email).hexdigest()
+            user_id = hashlib.sha1(email.encode('utf-8')).hexdigest()
             return register_or_update(request, 'persona', user_id,
                                       info, request.route_path('home'))
 
