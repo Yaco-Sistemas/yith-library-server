@@ -284,12 +284,16 @@ class ViewTests(TestCase):
     def test_logout(self):
         # Log in
         self.set_user_cookie('twitter1')
+        self.add_to_session({
+                'current_provider': 'twitter',
+                })
 
         res = self.testapp.get('/logout', status=302)
         self.assertEqual(res.status, '302 Found')
         self.assertEqual(res.location, 'http://localhost/')
         self.assertTrue('Set-Cookie' in res.headers)
         self.assertTrue('auth_tkt=""' in res.headers['Set-Cookie'])
+        self.assertFalse('current_provider' in self.get_session(res))
 
     def test_user_information(self):
         # this view required authentication
