@@ -21,12 +21,15 @@ import hashlib
 import requests
 
 from pyramid.httpexceptions import HTTPBadRequest, HTTPForbidden
-from pyramid.httpexceptions import HTTPServerError
+from pyramid.httpexceptions import HTTPMethodNotAllowed, HTTPServerError
 
 from yithlibraryserver.user.utils import register_or_update
 
 
 def persona_login(request):
+    if request.method != 'POST':
+        return HTTPMethodNotAllowed('Only POST is allowed')
+
     assertion = request.POST.get('assertion', None)
     if assertion is None:
         return HTTPBadRequest('The assertion parameter is required')
