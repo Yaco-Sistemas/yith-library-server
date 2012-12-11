@@ -80,7 +80,12 @@ def register_new_user(request):
         try:
             appstruct = form.validate(controls)
         except ValidationFailure as e:
-            return {'form': e.render()}
+            return {
+                'form': e.render(),
+                'provider': user_info.get('provider', ''),
+                'email': user_info.get('email', ''),
+                'next_url': next_url,
+                }
 
         provider = user_info['provider']
         provider_key = provider + '_id'
@@ -140,6 +145,9 @@ def register_new_user(request):
                 'screen_name': user_info.get('screen_name', ''),
                 'email': user_info.get('email', ''),
                 }),
+        'provider': user_info.get('provider', ''),
+        'email': user_info.get('email', ''),
+        'next_url': next_url,
         }
 
 
@@ -192,8 +200,7 @@ def destroy(request):
             'Your account has been removed. Have a nice day!',
             'success',
             )
-        return HTTPFound(location=request.route_path('home'),
-                         headers=forget(request))
+        return logout(request)
 
     elif 'cancel' in request.POST:
         request.session.flash(
