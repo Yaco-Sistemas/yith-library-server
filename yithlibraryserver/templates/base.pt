@@ -21,6 +21,8 @@
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <script tal:condition="request.registry.settings['persona_audience']" src="https://login.persona.org/include.js"></script>
+
 </head>
 <body>
 
@@ -51,8 +53,8 @@
           <li tal:condition="request.user">
             <a href="${request.route_path('oauth2_clients')}">My passwords</a>
           </li>
-          <li tal:condition="request.user">
-            <a href="${request.route_path('logout')}">Log out</a>
+          <li tal:attributes="class None if request.user else 'hide'">
+            <a class="logout" href="${request.route_path('logout')}">Log out</a>
           </li>
         </ul>
       </div>
@@ -123,9 +125,21 @@
     </div>
   </div>
 
+  <form
+     tal:condition="request.registry.settings['persona_audience']"
+     id="persona-login-form"
+     class="hide"
+     action="${request.route_path('persona_login')}"
+     method="post"
+     tal:attributes="data-current-user request.user.email if (request.user and request.user.email) else None;
+                     data-current-provider request.session.get('current_provider', None)">
+    <input type="hidden" name="assertion" value="" />
+  </form>
+
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src=\'${request.static_path("yithlibraryserver:static/js/libs/jquery-1.7.2.min.js")}\'><\/script>')</script>
   <script src="${request.static_path('yithlibraryserver:static/js/libs/bootstrap.js')}"></script>
+  <script tal:condition="request.registry.settings['persona_audience']" src="${request.static_path('yithlibraryserver:static/js/mozilla_persona.js')}"></script>
   <script src="${request.static_path('yithlibraryserver:static/js/jquery.google_analytics.js')}"></script>
   <script type="text/javascript">
     (function ($) {

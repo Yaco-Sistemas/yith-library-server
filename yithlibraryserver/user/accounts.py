@@ -27,7 +27,7 @@ from pyramid_mailer.message import Message
 
 
 def get_available_providers():
-    return ('facebook', 'google', 'twitter')
+    return ('facebook', 'google', 'twitter', 'persona')
 
 
 def get_providers(user, current):

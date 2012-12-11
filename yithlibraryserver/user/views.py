@@ -145,6 +145,9 @@ def register_new_user(request):
 
 @view_config(route_name='logout', renderer='string')
 def logout(request):
+    if 'current_provider' in request.session:
+        del request.session['current_provider']
+
     return HTTPFound(location=request.route_path('home'),
                      headers=forget(request))
 

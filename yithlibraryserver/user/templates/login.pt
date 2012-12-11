@@ -11,11 +11,11 @@
   <h1>Log in</h1>
   <ul class="thumbnails">
 
-    <li class="span3" tal:repeat="idp identity_providers">
+    <li id="${idp.name}" class="span3" tal:repeat="idp identity_providers">
       <div class="thumbnail">
-	<a href="${request.route_path(idp.route_path)}?next_url=${next_url}">
-	  <img src="${request.static_path(idp.image_path)}" alt="" />
-	</a>
+	    <a href="${request.route_path(idp.route_path)}?next_url=${next_url}">
+	      <img src="${request.static_path(idp.image_path)}" alt="" />
+	    </a>
         <div class="caption">
           <a class="btn btn-primary" href="${request.route_path(idp.route_path)}?next_url=${next_url}">${idp.message}</a>
         </div>
@@ -25,4 +25,23 @@
   </ul>
 
 </tal:block>
+
+<tal:block metal:fill-slot="extra-scripts">
+
+  <script type="text/javascript" tal:condition="request.registry.settings['persona_audience']">
+(function ($) {
+    "use strict";
+    $(document).ready(function () {
+        var next_url = "<input type='hidden' name='next_url' value='${next_url}' />";
+        $("#persona-login-form").append(next_url);
+        $("#persona a").click(function (event) {
+            event.preventDefault();
+            navigator.id.request();
+        });
+    });
+}(jQuery));
+  </script>
+
+</tal:block>
+
 </html>

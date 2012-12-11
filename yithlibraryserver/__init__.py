@@ -108,6 +108,7 @@ def main(global_config, **settings):
     config.include('yithlibraryserver.twitter')
     config.include('yithlibraryserver.facebook')
     config.include('yithlibraryserver.google')
+    config.include('yithlibraryserver.persona')
 
     includeme(config)
 
