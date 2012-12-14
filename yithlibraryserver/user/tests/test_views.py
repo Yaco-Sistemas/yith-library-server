@@ -357,6 +357,61 @@ class ViewTests(TestCase):
             self.assertEqual(res.status, '200 OK')
             res.mustcontain('There were an error while saving your changes')
 
+    def test_user_preferences(self):
+        # this view required authentication
+        res = self.testapp.get('/preferences')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Log in')
+
+        # Log in
+        date = datetime.datetime(2012, 12, 12, 12, 12)
+        user_id = self.db.users.insert({
+                'twitter_id': 'twitter1',
+                'screen_name': 'John Doe',
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': '',
+                'email_verified': False,
+                'authorized_apps': [],
+                'date_joined': date,
+                'last_login': date,
+                'allow_google_analytics': False,
+                }, safe=True)
+        self.set_user_cookie(str(user_id))
+
+        res = self.testapp.get('/preferences')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Preferences', 'Allow statistics cookie',
+                        'Save changes')
+
+        res = self.testapp.post('/preferences', {
+                'submit': 'Save changes',
+                'allow_google_analytics': 'true',
+                })
+        self.assertEqual(res.status, '302 Found')
+        self.assertEqual(res.location, 'http://localhost/preferences')
+        # check that the user has changed
+        new_user = self.db.users.find_one({'_id': user_id})
+        self.assertEqual(new_user['allow_google_analytics'], True)
+
+        # make the form fail
+        with patch('deform.Form.validate') as fake:
+            fake.side_effect = DummyValidationFailure('f', 'c', 'e')
+            res = self.testapp.post('/preferences', {
+                    'submit': 'Save Changes',
+                    })
+            self.assertEqual(res.status, '200 OK')
+
+        # make the db fail
+        with patch('yithlibraryserver.db.MongoDB.get_database') as fake:
+            fake.return_value = BadDB(new_user)
+            res = self.testapp.post('/preferences', {
+                    'submit': 'Save changes',
+                    'allow_google_analytics': 'true',
+                    })
+            self.assertEqual(res.status, '200 OK')
+            res.mustcontain('There were an error while saving your changes')
+
     def test_destroy(self):
         # this view required authentication
         res = self.testapp.get('/destroy')

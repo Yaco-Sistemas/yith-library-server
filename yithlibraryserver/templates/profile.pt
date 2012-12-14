@@ -20,6 +20,9 @@
         <li tal:attributes="class 'active' if request.matched_route.name == 'user_information' else None">
           <a href="${request.route_path('user_information')}">Personal information</a>
         </li>
+        <li tal:attributes="class 'active' if request.matched_route.name == 'user_preferences' else None">
+          <a href="${request.route_path('user_preferences')}">Preferences</a>
+        </li>
         <li tal:attributes="class 'active' if request.matched_route.name == 'user_identity_providers' else None">
           <a href="${request.route_path('user_identity_providers')}">Identity providers</a>
         </li>

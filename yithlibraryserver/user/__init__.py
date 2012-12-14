@@ -37,6 +37,7 @@ def includeme(config):
     config.add_route('logout', '/logout')
     config.add_route('user_destroy', '/destroy')
     config.add_route('user_information', '/profile')
+    config.add_route('user_preferences', '/preferences')
     config.add_route('user_identity_providers', '/identity-providers')
     config.add_route('user_send_email_verification_code',
                      '/send-email-verification-code')

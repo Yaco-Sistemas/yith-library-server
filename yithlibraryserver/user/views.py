@@ -32,6 +32,7 @@ from yithlibraryserver.user.accounts import notify_admins_of_account_removal
 from yithlibraryserver.user.email_verification import EmailVerificationCode
 from yithlibraryserver.user.schemas import UserSchema, NewUserSchema
 from yithlibraryserver.user.schemas import AccountDestroySchema
+from yithlibraryserver.user.schemas import UserPreferencesSchema
 from yithlibraryserver.user.utils import delete_user
 from yithlibraryserver.password.models import PasswordsManager
 from yithlibraryserver.security import authorize_user
@@ -269,6 +270,47 @@ def user_information(request):
                     },
                 }),
         }
+
+
+@view_config(route_name='user_preferences',
+             renderer='templates/preferences.pt',
+             permission='edit-profile')
+def preferences(request):
+    schema = UserPreferencesSchema()
+    button1 = Button('submit', 'Save changes')
+    button1.css_class = 'btn-primary'
+
+    form = Form(schema, buttons=(button1, ))
+
+    if 'submit' in request.POST:
+        controls = request.POST.items()
+        try:
+            appstruct = form.validate(controls)
+        except ValidationFailure as e:
+            return {'form': e.render()}
+
+        changes = {
+            analytics.USER_ATTR: appstruct[analytics.USER_ATTR],
+            }
+
+        result = request.db.users.update({'_id': request.user['_id']},
+                                         {'$set': changes},
+                                         safe=True)
+
+        if result['n'] == 1:
+            request.session.flash(
+                'The changes were saved successfully',
+                'success',
+                )
+            return HTTPFound(location=request.route_path('user_preferences'))
+        else:
+            request.session.flash(
+                'There were an error while saving your changes',
+                'error',
+                )
+            return {'form': appstruct}
+
+    return {'form': form.render(request.user)}
 
 
 @view_config(route_name='user_identity_providers',

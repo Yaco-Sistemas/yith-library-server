@@ -97,3 +97,12 @@ class AccountDestroySchema(colander.MappingSchema):
         title='Do you mind telling us your reasons? We want to get better!',
         widget=TextAreaWidget(css_class='input-xlarge'),
         )
+
+
+class UserPreferencesSchema(colander.MappingSchema):
+
+    allow_google_analytics = colander.SchemaNode(
+        colander.Boolean(),
+        title='Allow statistics cookie',
+        missing=False,
+        )
