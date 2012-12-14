@@ -16,7 +16,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-SESSION_KEY = 'show_google_analytics'
 USER_ATTR = 'allow_google_analytics'
 
 
@@ -33,18 +32,18 @@ class GoogleAnalytics(object):
     @property
     def first_time(self):
         if self.request.user is None:
-            return SESSION_KEY not in self.request.session
+            return USER_ATTR not in self.request.session
         else:
             return USER_ATTR not in self.request.user
 
     def show_in_session(self):
-        return self.request.session.get(SESSION_KEY, False)
+        return self.request.session.get(USER_ATTR, False)
 
     def show_in_user(self, user):
         return user.get(USER_ATTR, False)
 
     def is_in_session(self):
-        return SESSION_KEY in self.request.session
+        return USER_ATTR in self.request.session
 
     def is_stored_in_user(self, user):
         return USER_ATTR in user
@@ -58,8 +57,8 @@ class GoogleAnalytics(object):
             return self.show_in_user(user)
 
     def clean_session(self):
-        if SESSION_KEY in self.request.session:
-            del self.request.session[SESSION_KEY]
+        if USER_ATTR in self.request.session:
+            del self.request.session[USER_ATTR]
 
     def get_user_attr(self, value):
         return {USER_ATTR: value}

@@ -28,7 +28,7 @@ from pyramid_mailer import get_mailer
 
 from yithlibraryserver.compat import url_quote
 from yithlibraryserver.testing import TestCase
-from yithlibraryserver.user.analytics import SESSION_KEY, USER_ATTR
+from yithlibraryserver.user.analytics import USER_ATTR
 
 
 class DummyValidationFailure(ValidationFailure):
@@ -203,7 +203,7 @@ class ViewTests(TestCase):
                     'last_name': 'Doe',
                     'email': '',
                     },
-                SESSION_KEY: True,
+                USER_ATTR: True,
                 })
 
         # The user want the Google Analytics cookie
@@ -666,12 +666,12 @@ class ViewTests(TestCase):
         res = self.testapp.post('/google-analytics-preference', {'yes': 'Yes'})
         self.assertEqual(res.status, '200 OK')
         self.assertEqual(res.json, {'allow': True})
-        self.assertEqual(self.get_session(res)[SESSION_KEY], True)
+        self.assertEqual(self.get_session(res)[USER_ATTR], True)
 
         res = self.testapp.post('/google-analytics-preference', {'no': 'No'})
         self.assertEqual(res.status, '200 OK')
         self.assertEqual(res.json, {'allow': False})
-        self.assertEqual(self.get_session(res)[SESSION_KEY], False)
+        self.assertEqual(self.get_session(res)[USER_ATTR], False)
 
         # Authenticated users save the preference in the database
         # Log in

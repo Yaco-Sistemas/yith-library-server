@@ -430,7 +430,7 @@ def google_analytics_preference(request):
         return HTTPBadRequest('Missing preference parameter')
 
     if request.user is None:
-        request.session[analytics.SESSION_KEY] = allow
+        request.session[analytics.USER_ATTR] = allow
     else:
         changes = request.google_analytics.get_user_attr(allow)
         request.db.users.update({'_id': request.user['_id']},

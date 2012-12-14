@@ -26,7 +26,7 @@ from yithlibraryserver.db import MongoDB
 from yithlibraryserver.testing import MONGO_URI
 
 from yithlibraryserver.user.analytics import GoogleAnalytics
-from yithlibraryserver.user.analytics import SESSION_KEY, USER_ATTR
+from yithlibraryserver.user.analytics import USER_ATTR
 from yithlibraryserver.user.utils import split_name, delete_user, update_user
 from yithlibraryserver.user.utils import register_or_update
 
@@ -139,7 +139,7 @@ class UtilsTests(unittest.TestCase):
 
         request = testing.DummyRequest()
         request.db = self.db
-        request.session = {SESSION_KEY: True}
+        request.session = {USER_ATTR: True}
         request.google_analytics = GoogleAnalytics(request)
         response = register_or_update(request, 'skynet', 1, {
                 'screen_name': 'JohnDoe',

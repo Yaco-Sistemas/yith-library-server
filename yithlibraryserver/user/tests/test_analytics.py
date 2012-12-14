@@ -22,7 +22,7 @@ from pyramid.testing import DummyRequest
 
 from yithlibraryserver.user.analytics import GoogleAnalytics
 from yithlibraryserver.user.analytics import get_google_analytics
-from yithlibraryserver.user.analytics import SESSION_KEY, USER_ATTR
+from yithlibraryserver.user.analytics import USER_ATTR
 
 
 class DummyRegistry(object):
@@ -54,13 +54,13 @@ class GoogleAnalyticsTests(unittest.TestCase):
         self.assertTrue(ga.first_time)
 
         request = DummyRequest()
-        request.session = {SESSION_KEY: True}
+        request.session = {USER_ATTR: True}
         request.user = None
         ga = GoogleAnalytics(request)
         self.assertFalse(ga.first_time)
 
         request = DummyRequest()
-        request.session = {SESSION_KEY: False}
+        request.session = {USER_ATTR: False}
         request.user = None
         ga = GoogleAnalytics(request)
         self.assertFalse(ga.first_time)
@@ -90,12 +90,12 @@ class GoogleAnalyticsTests(unittest.TestCase):
         self.assertFalse(ga.show_in_session())
 
         request = DummyRequest()
-        request.session = {SESSION_KEY: False}
+        request.session = {USER_ATTR: False}
         ga = GoogleAnalytics(request)
         self.assertFalse(ga.show_in_session())
 
         request = DummyRequest()
-        request.session = {SESSION_KEY: True}
+        request.session = {USER_ATTR: True}
         ga = GoogleAnalytics(request)
         self.assertTrue(ga.show_in_session())
 
@@ -115,12 +115,12 @@ class GoogleAnalyticsTests(unittest.TestCase):
         self.assertFalse(ga.is_in_session())
 
         request = DummyRequest()
-        request.session = {SESSION_KEY: True}
+        request.session = {USER_ATTR: True}
         ga = GoogleAnalytics(request)
         self.assertTrue(ga.is_in_session())
 
         request = DummyRequest()
-        request.session = {SESSION_KEY: False}
+        request.session = {USER_ATTR: False}
         ga = GoogleAnalytics(request)
         self.assertTrue(ga.is_in_session())
 
@@ -141,7 +141,7 @@ class GoogleAnalyticsTests(unittest.TestCase):
         self.assertFalse(ga.show)
 
         request = DummyRequest()
-        request.session = {SESSION_KEY: True}
+        request.session = {USER_ATTR: True}
         request.user = None
         ga = GoogleAnalytics(request)
         self.assertTrue(ga.show)
@@ -153,7 +153,7 @@ class GoogleAnalyticsTests(unittest.TestCase):
         self.assertTrue(ga.show)
 
         request = DummyRequest()
-        request.session = {SESSION_KEY: True}
+        request.session = {USER_ATTR: True}
         request.user = {USER_ATTR: False}
         ga = GoogleAnalytics(request)
         self.assertFalse(ga.show)
@@ -167,7 +167,7 @@ class GoogleAnalyticsTests(unittest.TestCase):
         self.assertEqual(request.session, {})
 
         request = DummyRequest()
-        request.session = {SESSION_KEY: True}
+        request.session = {USER_ATTR: True}
         request.user = None
         ga = GoogleAnalytics(request)
         ga.clean_session()
