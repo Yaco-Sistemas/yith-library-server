@@ -16,7 +16,7 @@
 
   <table class="table table-striped">
     <thead>
-      <th><input type="checkbox" /></th>
+      <th><input id="check-all" type="checkbox" /></th>
       <th>Provider</th>
       <th>Passwords</th>
       <th>Is current?</th>
@@ -90,6 +90,24 @@
 <tal:block metal:fill-slot="extra-scripts">
 
   <script src="${request.static_path('yithlibraryserver:static/js/email_verification_dialog.js')}"></script>
+  <script type="text/javascript">
+    (function ($) {
+        "use strict";
+        $(document).ready(function () {
+            $("#check-all").click(function (event) {
+                var is_checked = $("#" + this.id + ":checked").size() === 1,
+                    $inputs = $("table input[type='checkbox'][name^='account-']:not([disabled])");
+
+                if (is_checked) {
+                    $inputs.attr("checked", "checked");
+                } else {
+                    $inputs.removeAttr("checked");
+                }
+
+            });
+        });
+    }(jQuery));
+  </script>
 
 </tal:block>
 
