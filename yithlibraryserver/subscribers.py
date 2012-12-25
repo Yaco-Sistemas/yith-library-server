@@ -34,6 +34,16 @@ def add_cors_headers_response(event):
 
     event.request.add_response_callback(cors_headers_callback)
 
+def add_compress_response_callback(event):
+
+    def gzip_response(request, response):
+        response.encode_content('gzip')
+        return response
+
+    accepted = event.request.accept_encoding.best_match(('identity', 'gzip'))
+    if 'gzip' == accepted:
+        event.request.add_response_callback(gzip_response)
+
 
 def add_base_templates(event):
 
@@ -60,5 +70,6 @@ def includeme(config):
     config.set_request_property(get_db, 'db', reify=True)
 
     config.add_subscriber(add_cors_headers_response, NewRequest)
+    config.add_subscriber(add_compress_response_callback, NewRequest)
     config.add_subscriber(add_base_templates, BeforeRender)
     config.add_subscriber(add_custom_functions, BeforeRender)
