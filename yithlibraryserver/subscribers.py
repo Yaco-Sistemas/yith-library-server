@@ -34,6 +34,7 @@ def add_cors_headers_response(event):
 
     event.request.add_response_callback(cors_headers_callback)
 
+
 def add_compress_response_callback(event):
 
     def gzip_response(request, response):
