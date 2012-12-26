@@ -30,7 +30,7 @@ CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 requires = [
     'deform==0.9.5',
     'pymongo==2.3',
-    'pyramid==1.3.4',
+    'pyramid==1.4',
     'pyramid_beaker==0.7',
     'pyramid_debugtoolbar==1.0.2',
     'pyramid_mailer==0.9',
