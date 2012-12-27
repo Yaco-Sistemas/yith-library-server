@@ -36,7 +36,7 @@ requires = [
     'pyramid_mailer==0.9',
     'pyramid_tm==0.5',
     'requests==0.14.0',
-    'waitress==0.8.1',
+    'waitress==0.8.2',
     ]
 
 if sys.version_info[0] < 3:
@@ -55,7 +55,7 @@ docs_extras = [
 
 testing_extras = test_requires + [
     'nose',
-    'coverage',
+    'coverage==3.5.3',
     ]
 
 setup(name='yith-library-server',
