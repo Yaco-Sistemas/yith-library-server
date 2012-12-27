@@ -20,10 +20,22 @@ import unittest
 
 from pyramid.testing import DummyRequest
 
+from yithlibraryserver.compat import urlparse
 from yithlibraryserver.user.gravatar import Gravatar
 
 
 class GravatarTests(unittest.TestCase):
+
+    def assertURLEqual(self, url1, url2):
+        parts1 = urlparse.urlparse(url1)
+        parts2 = urlparse.urlparse(url2)
+        self.assertEqual(parts1.scheme, parts2.scheme)
+        self.assertEqual(parts1.hostname, parts2.hostname)
+        self.assertEqual(parts1.netloc, parts2.netloc)
+        self.assertEqual(parts1.params, parts2.params)
+        self.assertEqual(parts1.path, parts2.path)
+        self.assertEqual(parts1.port, parts2.port)
+        self.assertEqual(parts1.query, parts2.query)
 
     def test_get_email(self):
         request = DummyRequest()
@@ -75,23 +87,23 @@ class GravatarTests(unittest.TestCase):
         request = DummyRequest()
         request.user = {}
         gravatar = Gravatar(request, 'http://localhost/default_gravatar.png')
-        self.assertEqual(gravatar.get_image_url(),
-                         'http://localhost/default_gravatar.png')
+        self.assertURLEqual(gravatar.get_image_url(),
+                            'http://localhost/default_gravatar.png')
 
         request = DummyRequest()
         request.user = {'email': ''}
         gravatar = Gravatar(request, 'http://localhost/default_gravatar.png')
-        self.assertEqual(gravatar.get_image_url(),
-                         'http://localhost/default_gravatar.png')
+        self.assertURLEqual(gravatar.get_image_url(),
+                            'http://localhost/default_gravatar.png')
 
         request = DummyRequest()
         request.user = {'email': 'john@example.com'}
         gravatar = Gravatar(request, 'http://localhost/default_gravatar.png')
-        self.assertEqual(
+        self.assertURLEqual(
             gravatar.get_image_url(),
             'https://www.gravatar.com/avatar/d4c74594d841139328695756648b6bd6?s=32&d=http%3A%2F%2Flocalhost%2Fdefault_gravatar.png')
 
         gravatar = Gravatar(request, 'http://localhost/default_gravatar.png')
-        self.assertEqual(
+        self.assertURLEqual(
             gravatar.get_image_url(100),
             'https://www.gravatar.com/avatar/d4c74594d841139328695756648b6bd6?s=100&d=http%3A%2F%2Flocalhost%2Fdefault_gravatar.png')
