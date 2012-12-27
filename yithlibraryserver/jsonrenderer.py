@@ -19,55 +19,7 @@
 import datetime
 import bson
 
-try:
-    from pyramid.renderers import JSON
-except ImportError:
-    # backported from Pyramid 1.4
-    import json
-    from zope.interface import providedBy, Interface
-    from zope.interface.registry import Components
-
-    class IJSONAdapter(Interface):
-        """
-        Marker interface for objects that can convert an arbitrary object
-        into a JSON-serializable primitive.
-        """
-
-    class JSON(object):
-
-        def __init__(self, serializer=json.dumps, adapters=(), **kw):
-            """ Any keyword arguments will be passed to the ``serializer``
-            function."""
-            self.serializer = serializer
-            self.kw = kw
-            self.components = Components()
-
-        def add_adapter(self, type_or_iface, adapter):
-            self.components.registerAdapter(adapter, (type_or_iface,),
-                                            IJSONAdapter)
-
-        def __call__(self, info):
-            def _render(value, system):
-                request = system.get('request')
-                if request is not None:
-                    response = request.response
-                    ct = response.content_type
-                    if ct == response.default_content_type:
-                        response.content_type = 'application/json'
-                default = self._make_default(request)
-                return self.serializer(value, default=default, **self.kw)
-
-            return _render
-
-        def _make_default(self, request):
-            def default(obj):
-                obj_iface = providedBy(obj)
-                adapters = self.components.adapters
-                result = adapters.lookup((obj_iface,), IJSONAdapter,
-                                         default=None)
-                return result(obj, request)
-            return default
-
+from pyramid.renderers import JSON
 
 json_renderer = JSON()
 
