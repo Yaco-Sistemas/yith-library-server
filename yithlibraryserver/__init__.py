@@ -73,6 +73,7 @@ def main(global_config, **settings):
         authentication_policy=AuthTktAuthenticationPolicy(
             settings['auth_tk_secret'],
             wild_domain=False,
+            hashalg='sha512',
             ),
         )
     config.add_renderer('json', json_renderer)
