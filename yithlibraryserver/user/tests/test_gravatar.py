@@ -35,7 +35,8 @@ class GravatarTests(unittest.TestCase):
         self.assertEqual(parts1.params, parts2.params)
         self.assertEqual(parts1.path, parts2.path)
         self.assertEqual(parts1.port, parts2.port)
-        self.assertEqual(parts1.query, parts2.query)
+        self.assertEqual(urlparse.parse_qs(parts1.query),
+                         urlparse.parse_qs(parts2.query))
 
     def test_get_email(self):
         request = DummyRequest()
