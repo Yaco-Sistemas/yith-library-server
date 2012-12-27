@@ -44,7 +44,7 @@ if sys.version_info[0] < 3:
     requires.append('Babel==0.9.6')
 
 test_requires = [
-    'WebTest >= 1.3.1',
+    'WebTest>=1.3.1',
     'mock',
     ]
 
