@@ -44,8 +44,16 @@ if sys.version_info[0] < 3:
     requires.append('Babel==0.9.6')
 
 test_requires = [
-    'WebTest',
+    'WebTest >= 1.3.1',
     'mock',
+    ]
+
+docs_extras = [
+    'Sphinx',
+    'docutils',
+    ]
+
+testing_extras = test_requires + [
     'nose',
     'coverage',
     ]
@@ -79,6 +87,10 @@ setup(name='yith-library-server',
       zip_safe=False,
       install_requires=requires,
       tests_require=requires + test_requires,
+      extras_require = {
+        'testing': testing_extras,
+        'docs': docs_extras,
+        },
       test_suite="yithlibraryserver",
       entry_points = """\
       [paste.app_factory]
