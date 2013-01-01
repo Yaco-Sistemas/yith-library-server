@@ -48,6 +48,13 @@ test_requires = [
     'mock',
     ]
 
+# Until a new venusian (a pyramid dependency) version is released
+# we need to include our test dependencies since the test_*
+# modules are imported by the Pyramid configuration engine
+# See https://github.com/Pylons/venusian/commit/5ef6f4cf68a4062d7ff18638bf15910769445c4f
+# for more information
+requires = requires + test_requires
+
 docs_extras = [
     'Sphinx',
     'docutils',
