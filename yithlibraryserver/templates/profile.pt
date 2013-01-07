@@ -2,6 +2,8 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
       metal:extend-macro="base.macros['base']"
       metal:define-macro="profile">
 
@@ -16,28 +18,28 @@
     <div class="span2">
 
       <ul class="nav nav-list">
-        <li class="nav-header">Account</li>
+        <li class="nav-header" i18n:translate="">Account</li>
         <li tal:attributes="class 'active' if request.matched_route.name == 'user_information' else None">
-          <a href="${request.route_path('user_information')}">Personal information</a>
+          <a href="${request.route_path('user_information')}" i18n:translate="">Personal information</a>
         </li>
         <li tal:attributes="class 'active' if request.matched_route.name == 'user_preferences' else None">
-          <a href="${request.route_path('user_preferences')}">Preferences</a>
+          <a href="${request.route_path('user_preferences')}" i18n:translate="">Preferences</a>
         </li>
         <li tal:attributes="class 'active' if request.matched_route.name == 'user_identity_providers' else None">
-          <a href="${request.route_path('user_identity_providers')}">Identity providers</a>
+          <a href="${request.route_path('user_identity_providers')}" i18n:translate="">Identity providers</a>
         </li>
 
-        <li class="nav-header">Applications</li>
+        <li class="nav-header" i18n:translate="">Applications</li>
         <li tal:attributes="class 'active' if request.matched_route.name == 'oauth2_authorized_applications' else None">
-          <a href="${request.route_path('oauth2_authorized_applications')}">Authorized clients</a>
+          <a href="${request.route_path('oauth2_authorized_applications')}" i18n:translate="">Authorized clients</a>
         </li>
         <li tal:attributes="class 'active' if request.matched_route.name == 'oauth2_developer_applications' else None">
-          <a href="${request.route_path('oauth2_developer_applications')}">Developer apps</a>
+          <a href="${request.route_path('oauth2_developer_applications')}" i18n:translate="">Developer apps</a>
         </li>
 
         <li class="divider"></li>
         <li tal:attributes="class 'active' if request.matched_route.name == 'user_destroy' else None">
-          <a href="${request.route_path('user_destroy')}">Destroy account</a>
+          <a href="${request.route_path('user_destroy')}" i18n:translate="">Destroy account</a>
         </li>
       </ul>
 

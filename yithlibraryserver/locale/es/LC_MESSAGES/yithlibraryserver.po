@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-01-07 19:46+0100\n"
-"PO-Revision-Date: 2013-01-07 19:47+0100\n"
+"POT-Creation-Date: 2013-01-07 21:17+0100\n"
+"PO-Revision-Date: 2013-01-07 21:22+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -369,6 +369,40 @@ msgstr ""
 msgid "I couldn't live a week without a private library."
 msgstr "No podía vivir una semana sin una biblioteca privada."
 
+#: yithlibraryserver/templates/profile.pt:21
+msgid "Account"
+msgstr "Cuenta"
+
+#: yithlibraryserver/templates/profile.pt:23
+msgid "Personal information"
+msgstr "Información personal"
+
+#: yithlibraryserver/templates/profile.pt:26
+msgid "Preferences"
+msgstr "Preferencias"
+
+#: yithlibraryserver/templates/profile.pt:29
+msgid "Identity providers"
+msgstr "Proveedores de identidad"
+
+#: yithlibraryserver/templates/profile.pt:32
+msgid "Applications"
+msgstr "Aplicaciones"
+
+#: yithlibraryserver/templates/profile.pt:34
+msgid "Authorized clients"
+msgstr "Clientes autorizados"
+
+#: yithlibraryserver/templates/profile.pt:37
+msgid "Developer apps"
+msgstr "Aplicaciones de desarrolladores"
+
+#: yithlibraryserver/templates/profile.pt:42
+#: yithlibraryserver/user/templates/destroy.pt:9
+#: yithlibraryserver/user/templates/destroy.pt:13
+msgid "Destroy account"
+msgstr "Destruir cuenta"
+
 #: yithlibraryserver/templates/tos.pt:18
 msgid "Free software"
 msgstr "Software libre"
@@ -553,4 +587,32 @@ msgstr ""
 "Perdón si estos términos son algo imprecisos y vagos. Somos "
 "programadores,\n"
 "no abogados. Si tienes dudas, ${contact-url}."
+
+#: yithlibraryserver/user/templates/destroy.pt:16
+msgid "I am tired of using Yith Library"
+msgstr "Estoy cansado de usar Yith Library"
+
+#: yithlibraryserver/user/templates/destroy.pt:17
+msgid "We are very sorry to hear that, but hey, it's your decission!"
+msgstr "Sentimos mucho oir eso, pero ¡hey, es tu decisión!"
+
+#: yithlibraryserver/user/templates/destroy.pt:18
+msgid "Destroy my account ..."
+msgstr "Destruye mi cuenta ..."
+
+#: yithlibraryserver/user/templates/destroy.pt:22
+msgid "Do you really really really want to destroy your account?"
+msgstr "¿De verdad de la buena quieres destruir tu cuenta?"
+
+#: yithlibraryserver/user/templates/destroy.pt:26
+msgid ""
+"All your personal information and passwords will be removed from this "
+"server."
+msgstr ""
+"Toda tu información personal y contraseñas se eliminarán de este\n"
+"servidor."
+
+#: yithlibraryserver/user/templates/destroy.pt:28
+msgid "You will not be able to undo this operation. Think about it."
+msgstr "No podrás deshacer esta operación. Piensa en ello."
 

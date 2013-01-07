@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-01-07 19:46+0100\n"
+"POT-Creation-Date: 2013-01-07 21:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -307,6 +307,40 @@ msgstr ""
 msgid "I couldn't live a week without a private library."
 msgstr ""
 
+#: yithlibraryserver/templates/profile.pt:21
+msgid "Account"
+msgstr ""
+
+#: yithlibraryserver/templates/profile.pt:23
+msgid "Personal information"
+msgstr ""
+
+#: yithlibraryserver/templates/profile.pt:26
+msgid "Preferences"
+msgstr ""
+
+#: yithlibraryserver/templates/profile.pt:29
+msgid "Identity providers"
+msgstr ""
+
+#: yithlibraryserver/templates/profile.pt:32
+msgid "Applications"
+msgstr ""
+
+#: yithlibraryserver/templates/profile.pt:34
+msgid "Authorized clients"
+msgstr ""
+
+#: yithlibraryserver/templates/profile.pt:37
+msgid "Developer apps"
+msgstr ""
+
+#: yithlibraryserver/templates/profile.pt:42
+#: yithlibraryserver/user/templates/destroy.pt:9
+#: yithlibraryserver/user/templates/destroy.pt:13
+msgid "Destroy account"
+msgstr ""
+
 #: yithlibraryserver/templates/tos.pt:18
 msgid "Free software"
 msgstr ""
@@ -440,5 +474,29 @@ msgstr ""
 msgid ""
 "Sorry if some of these terms are a little imprecise and sloppy. We are "
 "hackers, not lawyers. If in doubt, ${contact-url}."
+msgstr ""
+
+#: yithlibraryserver/user/templates/destroy.pt:16
+msgid "I am tired of using Yith Library"
+msgstr ""
+
+#: yithlibraryserver/user/templates/destroy.pt:17
+msgid "We are very sorry to hear that, but hey, it's your decission!"
+msgstr ""
+
+#: yithlibraryserver/user/templates/destroy.pt:18
+msgid "Destroy my account ..."
+msgstr ""
+
+#: yithlibraryserver/user/templates/destroy.pt:22
+msgid "Do you really really really want to destroy your account?"
+msgstr ""
+
+#: yithlibraryserver/user/templates/destroy.pt:26
+msgid "All your personal information and passwords will be removed from this server."
+msgstr ""
+
+#: yithlibraryserver/user/templates/destroy.pt:28
+msgid "You will not be able to undo this operation. Think about it."
 msgstr ""
 

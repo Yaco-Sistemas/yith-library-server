@@ -2,30 +2,30 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
       metal:use-macro="profile.macros['profile']">
 
-<tal:block metal:fill-slot="header-title">Destroy account</tal:block>
+<tal:block metal:fill-slot="header-title" i18n:translate="">Destroy account</tal:block>
 
 <tal:block metal:fill-slot="content">
 
-  <h2>Destroy account</h2>
+  <h2 i18n:translate="">Destroy account</h2>
 
   <div id="initial-block">
-    <h4>I am tired of using Yith Library</h4>
-    <p>We are very sorry to hear that, but hey, it's your decission!</p>
-    <a href="" class="btn btn-danger">
-      Destroy my account ...
-    </a>
+    <h4 i18n:translate="">I am tired of using Yith Library</h4>
+    <p i18n:translate="">We are very sorry to hear that, but hey, it's your decission!</p>
+    <a href="" class="btn btn-danger" i18n:translate="">Destroy my account ...</a>
   </div>
 
   <div class="hide" id="destroy-account-form">
-    <h3>Do you really really really want to destroy your account?</h3>
+    <h3 i18n:translate="">Do you really really really want to destroy your account?</h3>
 
-    <p tal:condition="passwords">${ request.user.first_name }, you already have <strong>${ passwords } passwords</strong></p>
+    <p tal:condition="passwords">${request.user.first_name}, you already have <strong>${passwords} passwords</strong></p>
 
-    <p>All your personal information and passwords will be removed from this server.</p>
+    <p i18n:translate="">All your personal information and passwords will be removed from this server.</p>
 
-    <p>You will not be able to undo this operation. Think about it.</p>
+    <p i18n:translate="">You will not be able to undo this operation. Think about it.</p>
 
     <form tal:replace="structure form">form</form>
   </div>
