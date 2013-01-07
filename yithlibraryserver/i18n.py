@@ -24,3 +24,8 @@ TranslationString = TranslationStringFactory('yithlibraryserver')
 
 def deform_translator(term):
     return get_localizer(get_current_request()).translate(term)
+
+
+def locale_negotiator(request):
+    available_languages = request.registry.settings['available_languages']
+    return request.accept_language.best_match(available_languages)

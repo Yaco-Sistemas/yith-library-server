@@ -32,7 +32,7 @@ from yithlibraryserver.config import read_setting_from_env
 from yithlibraryserver.cors import CORSManager
 from yithlibraryserver.db import MongoDB
 from yithlibraryserver.jsonrenderer import json_renderer
-from yithlibraryserver.i18n import deform_translator
+from yithlibraryserver.i18n import deform_translator, locale_negotiator
 from yithlibraryserver.security import RootFactory
 
 
@@ -66,6 +66,13 @@ def main(global_config, **settings):
         raise ConfigurationError('The mongo_uri configuration '
                                  'option is required')
 
+    # Available languages
+    available_languages = read_setting_from_env(settings, 'available_languages', '')
+
+    settings['available_languages'] = [
+        lang for lang in available_languages.split(' ') if lang
+        ]
+
     # main config object
     config = Configurator(
         settings=settings,
@@ -76,6 +83,7 @@ def main(global_config, **settings):
             wild_domain=False,
             hashalg='sha512',
             ),
+        locale_negotiator=locale_negotiator,
         )
     config.add_renderer('json', json_renderer)
     config.add_static_view('static', 'static', cache_max_age=3600)
