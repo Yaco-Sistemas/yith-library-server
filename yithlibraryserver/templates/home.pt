@@ -2,31 +2,33 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
       metal:use-macro="base.macros['base']">
 
-<tal:block metal:fill-slot="header-title">Home</tal:block>
+<tal:block metal:fill-slot="header-title" i18n:translate="">Home</tal:block>
 
 <tal:block metal:fill-slot="content">
 
   <div class="hero-unit main-banner">
-    <h1>Web password manager</h1>
-    <p>Yith Library is an online password manager. It will help you to keep
+    <h1 i18n:translate="">Web password manager</h1>
+    <p i18n:translate="">Yith Library is an online password manager. It will help you to keep
       your secrets under control in a secure and easy way. Your online data is
       too valuable to avoid protecting it seriously.</p>
     <p>
       <a tal:condition="not request.user" class="btn btn-primary btn-large" href="${request.route_path('login')}">
-	    <strong>Start using it today</strong>
-	    <small>at no cost</small>
+	    <strong i18n:translate="">Start using it today</strong>
+	    <small i18n:translate="">at no cost</small>
       </a>
       <a tal:condition="request.user" class="btn btn-primary btn-large" href="${request.route_path('oauth2_clients')}">
-	    <strong>Get your passwords</strong>
+	    <strong i18n:translate="">Get your passwords</strong>
       </a>
     </p>
   </div>
 
   <div class="row block-header">
     <div class="span12">
-      <h2>Why do you need a password manager?</h2>
+      <h2 i18n:translate="">Why do you need a password manager?</h2>
     </div>
   </div>
 
@@ -36,26 +38,30 @@
     </div>
 
     <div class="span6">
-      <h3>Using one <strong>password</strong> for everything is a bad idea</h3>
-      <p>Today, most Internet services force you to use an username and a
-	password as your credentials to identify yourself. Since we are not very
-	good at remembering a lot of different passwords, we usually have only one.
-	But what if one of those service's security is compromised and an attacker
-	can get the passwords used at that service? Well, that means the
-	attacker can access all the services where you use the same password.
-	Scary, isn't it?
+      <h3 i18n:translate="">Using one
+        <strong i18n:name="password" i18n:translate="">password</strong>
+        for everything is a bad idea</h3>
+      <p i18n:translate="">Today, most Internet services force you to use an username and a
+	    password as your credentials to identify yourself. Since we are not very
+	    good at remembering a lot of different passwords, we usually have only one.
+	    But what if one of those service's security is compromised and an attacker
+	    can get the passwords used at that service? Well, that means the
+	    attacker can access all the services where you use the same password.
+	    Scary, isn't it?
       </p>
     </div>
   </div>
 
   <div class="row row-no-margin marketing-block marketing-block-left">
     <div class="span6">
-      <h3 style="margin-top: 34px">Manage your passwords <strong>easily</strong></h3>
-      <p>It's not as easy as using the same password for everything but you
-	already know you should never do that. The Yith Library is super easy
-	to use: just remember your master password is only stored in your
-	brain and you should always use the same one. You can access your
-	passwords from <a href="${request.route_path('oauth2_clients')}">any device!</a>
+      <h3 style="margin-top: 34px" i18n:translate="">Manage your passwords
+        <strong i18n:name="easily" i18n:translate="">easily</strong></h3>
+      <p i18n:translate="">It's not as easy as using the same password for everything but you
+	    already know you should never do that. The Yith Library is super easy
+	    to use: just remember your master password is only stored in your
+	    brain and you should always use the same one. You can access your
+	    passwords from
+        <a href="${request.route_path('oauth2_clients')}" i18n:name="any-device" i18n:translate="">any device!</a>
       </p>
     </div>
 
@@ -70,36 +76,39 @@
     </div>
 
     <div class="span6">
-      <h3 style="margin-top: 42px">Keep your secrets <strong>secure</strong></h3>
-      <p>Your passwords are transmitted over the network using the SSL
-	protocol and they are stored on the server encrypted. Even the
-	yithians who run this service can't read them! Not even with
-	their time machine...
+      <h3 style="margin-top: 42px" i18n:translate="">Keep your secrets
+        <strong i18n:name="secure" i18n:translate="">secure</strong></h3>
+      <p i18n:translate="">Your passwords are transmitted over the network using the TLS
+	    protocol and they are stored on the server encrypted. Even the
+	    yithians who run this service can't read them! Not even with
+	    their time machine...
       </p>
     </div>
   </div>
 
   <div class="row row-no-margin marketing-block marketing-block-left marketing-block-last">
     <div class="span6">
-      <h3>Yith Library is a <strong>free</strong> service</h3>
+      <h3 i18n:translate="">Yith Library is a
+        <strong i18n:name="free" i18n:translate="">free</strong> service</h3>
       <div class="row row-no-margin">
-	<div class="span3">
-	  <p><strong>Free as in freedom</strong></p>
-	  <ul class="unstyled">
-	    <li>You can use it any way you want</li>
-	    <li>You can run your own server or clients</li>
-	    <li><a href="https://github.com/Yaco-Sistemas/yith-library-server" target="_blank">You can modify it</a></li>
-	    <li>You can distribute it</li>
-	    <li>We are happy with all of this</li>
-	  </ul>
-	</div>
-	<div class="span3">
-	  <p><strong>Free as in beer</strong></p>
-	  <ul class="unstyled">
-	    <li>You can use our server and clients without paying a dime</li>
-	    <li>If you like it a lot, we are happy to accept <a href="#" rel="tooltip" title="Coming soon">donations</a></li>
-	  </ul>
-	</div>
+	    <div class="span3">
+	      <p><strong i18n:translate="">Free as in freedom</strong></p>
+	      <ul class="unstyled">
+	        <li i18n:translate="">You can use it any way you want</li>
+	        <li i18n:translate="">You can run your own server or clients</li>
+	        <li><a href="https://github.com/Yaco-Sistemas/yith-library-server" target="_blank" i18n:translate="">You can modify it</a></li>
+	        <li i18n:translate="">You can distribute it</li>
+	        <li i18n:translate="">We are happy with all of this</li>
+	      </ul>
+	    </div>
+	    <div class="span3">
+	      <p><strong i18n:translate="">Free as in beer</strong></p>
+	      <ul class="unstyled">
+	        <li i18n:translate="">You can use our server and clients without paying a dime</li>
+	        <li i18n:translate="">If you like it a lot, we are happy to accept
+              <a href="#" rel="tooltip" title="Coming soon" i18n:name="donations" i18n:translate="">donations</a></li>
+	      </ul>
+	    </div>
       </div>
     </div>
 
@@ -110,22 +119,22 @@
 
   <div class="row row-no-margin marketing-block marketing-block-left marketing-block-big marketing-block-first marketing-block-last">
     <div class="span6">
-      <h3>How it works</h3>
+      <h3 i18n:translate="">How it works</h3>
       <ol class="fancy-list">
-	<li>When you access the Yith Library the server sends your
-	  ciphered password collection to your browser using secure
-	  protocols such as SSL. This means that nobody can sniff
-	  this traffic and see your ciphered secrets.</li>
-	<li>Yith Library asks you for the
-	  <a href="#" class="master-password" rel="popover" title="About the master password" data-content="The master password is the only thing you will need to remember when using Yith Library. This secret is used to encrypt all your other passwords so only you can access them. You can change it any time you want but be careful since there is no 'I forgot my password' link.">master password</a>
-	  everytime you open an existing password or create a new
-	  one. As the browser does not keep the master password in
-	  memory, it is safe against malicious programs or
-	  plugins.</li>
-	<li>After making changes, the data is sent back to the server
-	  where it's persisted and it is ready to be fetched from your
-	  other devices. Since it is also stored in your browser cache
-	  you can read them offline.</li>
+	    <li i18n:translate="">When you access the Yith Library the server sends your
+	      ciphered password collection to your browser using secure
+	      protocols such as TLS. This means that nobody can sniff
+	      this traffic and see your ciphered secrets.</li>
+	    <li i18n:translate="">Yith Library asks you for the
+	      <a href="#" class="master-password" rel="popover" title="About the master password" data-content="The master password is the only thing you will need to remember when using Yith Library. This secret is used to encrypt all your other passwords so only you can access them. You can change it any time you want but be careful since there is no 'I forgot my password' link." i18n:name="master-password" i18n:translate="">master password</a>
+	      everytime you open an existing password or create a new
+	      one. As the browser does not keep the master password in
+	      memory, it is safe against malicious programs or
+	      plugins.</li>
+	    <li i18n:translate="">After making changes, the data is sent back to the server
+	      where it's persisted and it is ready to be fetched from your
+	      other devices. Since it is also stored in your browser cache
+	      you can read them offline.</li>
       </ol>
     </div>
 
@@ -140,18 +149,19 @@
     </div>
 
     <div class="span6">
-      <h3 style="margin-top: 42px">Access your data from <strong>any device</strong></h3>
-      <p>Your passwords are a very critical piece of data since they are
-	the keys that open your digital accounts. You should be able to
-	access them at home, on the run, in a foreign country without
-	Internet connection... <a href="${request.route_path('oauth2_clients')}">Anytime, anywhere!</a></p>
+      <h3 style="margin-top: 42px" i18n:translate="">Access your data from
+        <strong i18n:name="any-device" i18n:translate="">any device</strong></h3>
+      <p i18n:translate="">Your passwords are a very critical piece of data since they are
+	    the keys that open your digital accounts. You should be able to
+	    access them at home, on the run, in a foreign country without
+	    Internet connection... <a href="${request.route_path('oauth2_clients')}" i18n:name="anytime-anywhere" i18n:translate="">Anytime, anywhere!</a></p>
     </div>
   </div>
 
   <div class="row row-no-margin marketing-block marketing-block-right marketing-block-left marketing-block-last">
     <div class="span6">
-      <h3 style="margin-top: 34px">About the great library of Yith</h3>
-      <p><em>Those captive minds who cooperated with the Great Race were
+      <h3 style="margin-top: 34px" i18n:translate="">About the great library of Yith</h3>
+      <p><em i18n:translate="">Those captive minds who cooperated with the Great Race were
 	  allowed to wander the Yithian cities at will and to browse the
 	  Yithians' gigantic library, which contained metallic cases with
 	  books, made of an incredibly long-lasting material, that recorded
@@ -163,18 +173,18 @@
     <div class="span6">
       <img class="pull-right" src="${request.static_path('yithlibraryserver:static/img/lovecraft.jpg')}" width="113" height="150" alt="Picture of Howard Phillips Lovecraft" />
       <blockquote>
-        <h4>I couldn't live a week without a private library. <small>H. P. Lovecraft</small></h4>
+        <h4><span i18n:translate="">I couldn't live a week without a private library.</span> <small>H. P. Lovecraft</small></h4>
       </blockquote>
     </div>
   </div>
 
   <p class="content-centered">
 	<a tal:condition="not request.user" class="btn btn-primary btn-large" href="${request.route_path('login')}">
-	  <strong>Start using it today</strong>
-	  <small>at no cost</small>
+	  <strong i18n:translate="">Start using it today</strong>
+	  <small i18n:translate="">at no cost</small>
 	</a>
     <a tal:condition="request.user" class="btn btn-primary btn-large" href="${request.route_path('oauth2_clients')}">
-	  <strong>Get your passwords</strong>
+	  <strong i18n:translate="">Get your passwords</strong>
     </a>
   </p>
 

@@ -13,6 +13,7 @@ colander==0.9.9
 coverage==3.5.3
 deform==0.9.5
 docutils==0.10
+lingua==1.3
 mock==1.0.1
 nose==1.2.1
 peppercorn==0.4

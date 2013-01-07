@@ -1,0 +1,444 @@
+# Translations template for yith-library-server.
+# Copyright (C) 2013 ORGANIZATION
+# This file is distributed under the same license as the yith-library-server
+# project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: yith-library-server 0.0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2013-01-07 19:46+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+
+#: yithlibraryserver/schemas.py:27
+msgid "Name"
+msgstr ""
+
+#: yithlibraryserver/schemas.py:28
+msgid "Email"
+msgstr ""
+
+#: yithlibraryserver/schemas.py:32
+msgid "Message"
+msgstr ""
+
+#: yithlibraryserver/views.py:46
+msgid "Send message"
+msgstr ""
+
+#: yithlibraryserver/views.py:48
+msgid "Cancel"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:34
+msgid "Welcome, new visitor!"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:35
+msgid "Welcome ${current-user}"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:36
+msgid ""
+"We are using cookies to get statistics about the usage of Yith Library. This "
+"is completely optional and we want to ask you if this is ok with you."
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:38
+msgid "Ok, I can handle one more cookie"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:39
+msgid "No, I don't want to be tracked"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:50
+msgid "Log in"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:59
+msgid "My passwords"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:62
+msgid "Log out"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:89 yithlibraryserver/templates/tos.pt:9
+#: yithlibraryserver/templates/tos.pt:13
+msgid "Terms of service"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:90
+msgid "Fork us in GitHub!"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:93 yithlibraryserver/templates/contact.pt:9
+msgid "Contact"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:94 yithlibraryserver/templates/base.pt:101
+msgid "Credits"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:104
+msgid "Yith Library is copyright of:"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:129
+msgid "Close"
+msgstr ""
+
+#: yithlibraryserver/templates/contact.pt:13
+msgid "Contact us"
+msgstr ""
+
+#: yithlibraryserver/templates/form.pt:19
+msgid "There was a problem with your submission"
+msgstr ""
+
+#: yithlibraryserver/templates/form.pt:21
+msgid "Errors have been highlighted below"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:9
+msgid "Home"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:14
+msgid "Web password manager"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:15
+msgid ""
+"Yith Library is an online password manager. It will help you to keep your "
+"secrets under control in a secure and easy way. Your online data is too "
+"valuable to avoid protecting it seriously."
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:20 yithlibraryserver/templates/home.pt:183
+msgid "Start using it today"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:21 yithlibraryserver/templates/home.pt:184
+msgid "at no cost"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:24 yithlibraryserver/templates/home.pt:187
+msgid "Get your passwords"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:31
+msgid "Why do you need a password manager?"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:42
+msgid "password"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:41
+msgid "Using one ${password} for everything is a bad idea"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:44
+msgid ""
+"Today, most Internet services force you to use an username and a password as "
+"your credentials to identify yourself. Since we are not very good at "
+"remembering a lot of different passwords, we usually have only one. But what "
+"if one of those service's security is compromised and an attacker can get the"
+" passwords used at that service? Well, that means the attacker can access all"
+" the services where you use the same password. Scary, isn't it?"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:58
+msgid "easily"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:57
+msgid "Manage your passwords ${easily}"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:64
+msgid "any device!"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:59
+msgid ""
+"It's not as easy as using the same password for everything but you already "
+"know you should never do that. The Yith Library is super easy to use: just "
+"remember your master password is only stored in your brain and you should "
+"always use the same one. You can access your passwords from ${any-device}"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:80
+msgid "secure"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:79
+msgid "Keep your secrets ${secure}"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:81
+msgid ""
+"Your passwords are transmitted over the network using the TLS protocol and "
+"they are stored on the server encrypted. Even the yithians who run this "
+"service can't read them! Not even with their time machine..."
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:92
+msgid "free"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:91
+msgid "Yith Library is a ${free} service"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:95
+msgid "Free as in freedom"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:97
+msgid "You can use it any way you want"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:98
+msgid "You can run your own server or clients"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:99
+msgid "You can modify it"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:100
+msgid "You can distribute it"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:101
+msgid "We are happy with all of this"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:105
+msgid "Free as in beer"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:107
+msgid "You can use our server and clients without paying a dime"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:109
+msgid "donations"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:108
+msgid "If you like it a lot, we are happy to accept ${donations}"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:122
+msgid "How it works"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:124
+msgid ""
+"When you access the Yith Library the server sends your ciphered password "
+"collection to your browser using secure protocols such as TLS. This means "
+"that nobody can sniff this traffic and see your ciphered secrets."
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:129
+msgid "master password"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:128
+msgid ""
+"Yith Library asks you for the ${master-password} everytime you open an "
+"existing password or create a new one. As the browser does not keep the "
+"master password in memory, it is safe against malicious programs or plugins."
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:134
+msgid ""
+"After making changes, the data is sent back to the server where it's "
+"persisted and it is ready to be fetched from your other devices. Since it is "
+"also stored in your browser cache you can read them offline."
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:153
+msgid "any device"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:152
+msgid "Access your data from ${any-device}"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:157
+msgid "Anytime, anywhere!"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:154
+msgid ""
+"Your passwords are a very critical piece of data since they are the keys that"
+" open your digital accounts. You should be able to access them at home, on "
+"the run, in a foreign country without Internet connection... ${anytime-"
+"anywhere}"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:163
+msgid "About the great library of Yith"
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:164
+msgid ""
+"Those captive minds who cooperated with the Great Race were allowed to wander"
+" the Yithian cities at will and to browse the Yithians' gigantic library, "
+"which contained metallic cases with books, made of an incredibly long-lasting"
+" material, that recorded the histories of uncounted alien races, including "
+"humanity."
+msgstr ""
+
+#: yithlibraryserver/templates/home.pt:176
+msgid "I couldn't live a week without a private library."
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:18
+msgid "Free software"
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:20
+msgid ""
+"Yith Library Server is free software: you can redistribute it and/or modify "
+"it under the terms of the GNU Affero General Public License as published by "
+"the Free Software Foundation, either version 3 of the License, or (at your "
+"option) any later version."
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:26
+msgid ""
+"Among many things being free software means Yith Library users have four "
+"essential freedoms:"
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:30
+msgid "The freedom to run the program, for any purpose (freedom 0)."
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:35 yithlibraryserver/templates/tos.pt:42
+msgid "source code"
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:32
+msgid ""
+"The freedom to study how the program works, and change it so it does your "
+"computing as you wish (freedom 1). Access to the ${github-url} is a "
+"precondition for this."
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:37
+msgid "The freedom to redistribute copies so you can help your neighbor (freedom 2)."
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:39
+msgid ""
+"The freedom to distribute copies of your modified versions to others (freedom"
+" 3). By doing this you can give the whole community a chance to benefit from "
+"your changes. Access to the ${github-url} is a precondition for this."
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:46
+msgid "You can read the GNU Affero General Public License at ${agpl-url}"
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:50
+msgid "Data ownership"
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:52
+msgid ""
+"You own your personal data and all the passwords stored in your account "
+"belongs only to you."
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:55
+msgid ""
+"You can export such data in a machine readable format any time you want. If "
+"you want, we will send you a backup of your passwords once a month."
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:62
+msgid "No warranty"
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:64
+msgid ""
+"Yith Library Server is distributed in the hope that it will be useful, but "
+"WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or"
+" FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
+"more details."
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:69
+msgid "Cookies usage. No tracking"
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:73
+msgid "beaker.session.id"
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:76
+msgid "auth_tkt"
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:71
+msgid ""
+"We use cookies for the sole purpose of managing a session for you (${beaker-"
+"cookie}) and remembering your identity after you succesfully finish the "
+"authentication process (${auth-cookie})."
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:78
+msgid ""
+"Optionally and if you allow it, we use Google Analytics to learn more about "
+"our users. This way we can optimize Yith Library and priorize our changes so "
+"you are served better. Knowing our users habits also helps us to scale our "
+"infrastructure better."
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:83
+msgid "Account termination"
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:85
+msgid ""
+"You are free to remove your account and all the data associated with it "
+"whenever you want. It's a sad event for us but you must have the rights to "
+"make that decission."
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:89
+msgid "We won't sell your data, ever"
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:91
+msgid ""
+"We don't sell your data to any third party company. We do this just for\tfun "
+"and because we believe a web password manager is needed to make the Internet "
+"a safer place."
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:100
+msgid "just drop us a line"
+msgstr ""
+
+#: yithlibraryserver/templates/tos.pt:98
+msgid ""
+"Sorry if some of these terms are a little imprecise and sloppy. We are "
+"hackers, not lawyers. If in doubt, ${contact-url}."
+msgstr ""
+

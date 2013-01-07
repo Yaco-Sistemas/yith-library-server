@@ -19,12 +19,15 @@
 import colander
 from deform.widget import TextAreaWidget
 
+from yithlibraryserver.i18n import TranslationString as _
+
 
 class ContactSchema(colander.MappingSchema):
 
-    name = colander.SchemaNode(colander.String())
-    email = colander.SchemaNode(colander.String())
+    name = colander.SchemaNode(colander.String(), title=_('Name'))
+    email = colander.SchemaNode(colander.String(), title=_('Email'))
     message = colander.SchemaNode(
         colander.String(),
         widget=TextAreaWidget(css_class='input-xxlarge', rows=10),
+        title=_('Message'),
         )

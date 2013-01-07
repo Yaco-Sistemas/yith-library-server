@@ -16,27 +16,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-try:  # pragma: no cover
-    from babel.dates import format_date, format_datetime
-    HAS_BABEL = True
-except ImportError:  # pragma: no cover
-    # Babel does not work in Python 3
-    HAS_BABEL = False
+from pyramid.i18n import get_localizer, TranslationStringFactory
+from pyramid.threadlocal import get_current_request
+
+TranslationString = TranslationStringFactory('yithlibraryserver')
 
 
-class DatesFormatter(object):
-
-    def __init__(self, locale_name):
-        self.locale_name = locale_name
-
-    def date(self, date_value):
-        if HAS_BABEL:
-            return format_date(date_value, locale=self.locale_name)
-        else:
-            return date_value.strftime('%c')
-
-    def datetime(self, datetime_value):
-        if HAS_BABEL:
-            return format_datetime(datetime_value, locale=self.locale_name)
-        else:
-            return datetime_value.strftime('%c')
+def deform_translator(term):
+    return get_localizer(get_current_request()).translate(term)

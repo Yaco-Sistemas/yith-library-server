@@ -42,6 +42,7 @@ requires = [
 if sys.version_info[0] < 3:
     # Babel does not work with Python 3
     requires.append('Babel==0.9.6')
+    requires.append('lingua==1.3')
 
 test_requires = [
     'WebTest>=1.3.1',
@@ -106,5 +107,8 @@ setup(name='yith-library-server',
       yith_usage_report = yithlibraryserver.scripts.reports:usage
       yith_apps_report = yithlibraryserver.scripts.reports:applications
       """,
+      message_extractors = {'.': [
+            ('**.py', 'lingua_python', None),
+            ('**.pt', 'lingua_xml', None),
+        ]}
       )
-

@@ -22,6 +22,7 @@ import logging
 
 from deform import Button, Form, ValidationFailure
 
+from pyramid.i18n import get_localizer
 from pyramid.httpexceptions import HTTPFound
 from pyramid.renderers import render
 from pyramid.view import view_config
@@ -29,6 +30,7 @@ from pyramid.view import view_config
 from pyramid_mailer import get_mailer
 from pyramid_mailer.message import Message
 
+from yithlibraryserver.i18n import TranslationString as _
 from yithlibraryserver.schemas import ContactSchema
 
 log = logging.getLogger(__name__)
@@ -41,9 +43,9 @@ def home(request):
 
 @view_config(route_name='contact', renderer='templates/contact.pt')
 def contact(request):
-    button1 = Button('submit', 'Send message')
+    button1 = Button('submit', _('Send message'))
     button1.css_class = 'btn-primary'
-    button2 = Button('cancel', 'Cancel')
+    button2 = Button('cancel', _('Cancel'))
     button2.css_class = ''
 
     form = Form(ContactSchema(), buttons=(button1, button2))

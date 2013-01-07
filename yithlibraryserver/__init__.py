@@ -32,6 +32,7 @@ from yithlibraryserver.config import read_setting_from_env
 from yithlibraryserver.cors import CORSManager
 from yithlibraryserver.db import MongoDB
 from yithlibraryserver.jsonrenderer import json_renderer
+from yithlibraryserver.i18n import deform_translator
 from yithlibraryserver.security import RootFactory
 
 
@@ -102,6 +103,9 @@ def main(global_config, **settings):
     config.include('yithlibraryserver.oauth2')
     config.include('yithlibraryserver.password')
 
+    # Translation directories
+    config.add_translation_dirs('yithlibraryserver:locale/')
+
     # the user package needs to be included before twitter,
     # facebook and google
     config.include('yithlibraryserver.user')
@@ -128,7 +132,8 @@ def includeme(config):
         resolver.resolve('templates').abspath(),
         deform_templates,
         )
-    Form.set_zpt_renderer(search_path)
+
+    Form.set_zpt_renderer(search_path, translator=deform_translator)
 
     config.add_route('home', '/')
     config.add_route('contact', '/contact')
