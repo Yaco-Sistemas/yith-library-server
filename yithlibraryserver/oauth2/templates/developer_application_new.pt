@@ -2,13 +2,15 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
       metal:use-macro="profile.macros['profile']">
 
-<tal:block metal:fill-slot="header-title">New application</tal:block>
+<tal:block metal:fill-slot="header-title" i18n:translate="">New application</tal:block>
 
 <tal:block metal:fill-slot="content">
 
-  <h2>New Application</h2>
+  <h2 i18n:translate="">New Application</h2>
   <div tal:replace="structure form">form</div>
 
 </tal:block>

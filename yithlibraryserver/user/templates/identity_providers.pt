@@ -2,26 +2,28 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
       metal:use-macro="profile.macros['profile']">
 
-<tal:block metal:fill-slot="header-title">Identity providers</tal:block>
+<tal:block metal:fill-slot="header-title" i18n:translate="">Identity providers</tal:block>
 
 <tal:block metal:fill-slot="content">
 
-  <h2>Identity providers</h2>
+  <h2 i18n:translate="">Identity providers</h2>
 
-  <p>You are registered with the following accounts:</p>
+  <p i18n:translate="">You are registered with the following accounts:</p>
 
   <form action="" method="post">
 
   <table class="table table-striped">
     <thead>
       <th><input id="check-all" type="checkbox" /></th>
-      <th>Provider</th>
-      <th>Passwords</th>
-      <th>Is current?</th>
-      <th>Is email verified?</th>
-      <th>Available actions</th>
+      <th i18n:translate="">Provider</th>
+      <th i18n:translate="">Passwords</th>
+      <th i18n:translate="">Is current?</th>
+      <th i18n:translate="">Is email verified?</th>
+      <th i18n:translate="">Available actions</th>
     </thead>
     <tbody>
       <tr tal:repeat="account accounts">
@@ -42,21 +44,21 @@
           </div>
         </td>
         <td>
-          <span class="badge" title="${account['passwords']} passwords" tal:content="account['passwords']">Number of passwords</span>
+          <span class="badge" title="${account['passwords']} passwords" tal:content="account['passwords']" i18n:translate="">Number of passwords</span>
         </td>
         <td>
-          <span class="badge badge-inverse" tal:condition="account.is_current">Current</span>
+          <span class="badge badge-inverse" tal:condition="account.is_current" i18n:translate="">Current</span>
         </td>
         <td>
-          <span class="badge badge-success" tal:condition="account.is_verified">Email verified</span>
-          <span class="badge badge-warning" tal:condition="request.user.email and not account.is_verified">Email not verified</span>
-          <span class="badge" tal:condition="not request.user.email">No email available</span>
+          <span class="badge badge-success" tal:condition="account.is_verified" i18n:translate="">Email verified</span>
+          <span class="badge badge-warning" tal:condition="request.user.email and not account.is_verified" i18n:translate="">Email not verified</span>
+          <span class="badge" tal:condition="not request.user.email" i18n:translate="">No email available</span>
         </td>
         <td>
           <div tal:omit-tag="" tal:condition="not account.is_verified">
-            <a tal:condition="account.is_current and request.user.email" id="open-email-verification-dialog" href="#email-verification-dialog" class="btn btn-mini btn-primary" data-toggle="modal">Verify email address</a>
+            <a tal:condition="account.is_current and request.user.email" id="open-email-verification-dialog" href="#email-verification-dialog" class="btn btn-mini btn-primary" data-toggle="modal" i18n:translate="">Verify email address</a>
 
-            <a tal:condition="not account.is_current" href="#" class="btn btn-mini btn-primary disabled" title="You need to log in with this provider to verify this email address">Verify email address</a>
+            <a tal:condition="not account.is_current" href="#" class="btn btn-mini btn-primary disabled" title="You need to log in with this provider to verify this email address" i18n:translate="">Verify email address</a>
           </div>
         </td>
       </tr>
@@ -70,6 +72,7 @@
        type="submit"
        name="submit"
        tal:attributes="disabled None if can_merge else 'disabled'"
+       i18n:attributes="value"
        />
   </div>
   </form>
@@ -77,7 +80,7 @@
 
   <div tal:condition="can_merge" class="alert alert-info">
     <button type="button" class="close" data-dismiss="alert">×</button>
-    <strong>Tip:</strong> If you merge your accounts you will be able to access your passwords in a unified way: no matter which provider you use to log in you will always see the same set of passwords.
+    <strong i18n:translate="">Tip:</strong> <span i18n:translate="">If you merge your accounts you will be able to access your passwords in a unified way: no matter which provider you use to log in you will always see the same set of passwords.</span>
   </div>
 
   <tal:block

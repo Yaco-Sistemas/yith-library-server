@@ -1,23 +1,23 @@
-  <div class="modal hide" id="email-verification-dialog">
+  <div class="modal hide" id="email-verification-dialog" i18n:domain="yithlibraryserver">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">×</button>
-      <h3>Email verification</h3>
+      <h3 i18n:translate="">Email verification</h3>
     </div>
     <div class="modal-body">
-      <p>An email with a verification link will be sent to
-        <strong>${request.user.email}</strong> to verify that you are
+      <p i18n:translate="">An email with a verification link will be sent to
+        <strong i18n:name="user-email">${request.user.email}</strong> to verify that you are
         its legitimate owner.</p>
-      <p>All you need to do is click on the <i>Send verification email</i>
+      <p i18n:translate="">All you need to do is click on the <i i18n:name="send-verification-email" i18n:translate="">Send verification email</i>
         button, go to your inbox and follow the instructions in the email.</p>
       <div class="alert alert-info hide">
-        <p>The email message with the verification link has been sent. <strong>Go and check your inbox!</strong></p>
+        <p i18n:translate="">The email message with the verification link has been sent. <strong i18n:name="check-your-inbox" i18n:translate="">Go and check your inbox!</strong></p>
       </div>
       <div class="alert alert-error hide">
-        <p>There was an error sending the verification link to your email address. <strong></strong></p>
+        <p><span i18n:translate="">There was an error sending the verification link to your email address.</span> <strong></strong></p>
       </div>
     </div>
     <div class="modal-footer">
-      <a href="#" class="btn" data-dismiss="modal">Close</a>
-      <a id="send-verification-email" href="${request.route_path('user_send_email_verification_code')}" class="btn btn-primary">Send verification email</a>
+      <a href="#" class="btn" data-dismiss="modal" i18n:translate="">Close</a>
+      <a id="send-verification-email" href="${request.route_path('user_send_email_verification_code')}" class="btn btn-primary" i18n:translate="">Send verification email</a>
     </div>
   </div>

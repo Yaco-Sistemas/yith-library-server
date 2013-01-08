@@ -22,10 +22,13 @@ import datetime
 from deform import Button, Form, ValidationFailure
 
 from pyramid.httpexceptions import HTTPBadRequest, HTTPFound
+from pyramid.i18n import get_localizer
 from pyramid.security import remember, forget
 from pyramid.view import view_config, view_defaults, forbidden_view_config
 
 from yithlibraryserver.compat import url_quote
+from yithlibraryserver.i18n import translation_domain
+from yithlibraryserver.i18n import TranslationString as _
 from yithlibraryserver.user import analytics
 from yithlibraryserver.user.accounts import get_accounts, merge_accounts
 from yithlibraryserver.user.accounts import notify_admins_of_account_removal
@@ -166,9 +169,9 @@ def logout(request):
              permission='destroy-account')
 def destroy(request):
     schema = AccountDestroySchema()
-    button1 = Button('submit', 'Yes, I am sure. Destroy my account')
+    button1 = Button('submit', _('Yes, I am sure. Destroy my account'))
     button1.css_class = 'btn-danger'
-    button2 = Button('cancel', 'Cancel')
+    button2 = Button('cancel', _('Cancel'))
     button2.css_class = ''
 
     form = Form(schema, buttons=(button1, button2))
@@ -198,14 +201,14 @@ def destroy(request):
         delete_user(request.db, request.user)
 
         request.session.flash(
-            'Your account has been removed. Have a nice day!',
+            _('Your account has been removed. Have a nice day!'),
             'success',
             )
         return logout(request)
 
     elif 'cancel' in request.POST:
         request.session.flash(
-            'Thanks for reconsidering removing your account!',
+            _('Thanks for reconsidering removing your account!'),
             'info',
             )
         return HTTPFound(location=request.route_path('user_information'))
@@ -219,7 +222,7 @@ def destroy(request):
              permission='edit-profile')
 def user_information(request):
     schema = UserSchema()
-    button1 = Button('submit', 'Save changes')
+    button1 = Button('submit', _('Save changes'))
     button1.css_class = 'btn-primary'
 
     form = Form(schema, buttons=(button1, ))
@@ -248,13 +251,13 @@ def user_information(request):
 
         if result['n'] == 1:
             request.session.flash(
-                'The changes were saved successfully',
+                _('The changes were saved successfully'),
                 'success',
                 )
             return HTTPFound(location=request.route_path('user_information'))
         else:
             request.session.flash(
-                'There were an error while saving your changes',
+                _('There were an error while saving your changes'),
                 'error',
                 )
             return {'form': appstruct}
@@ -277,7 +280,7 @@ def user_information(request):
              permission='edit-profile')
 def preferences(request):
     schema = UserPreferencesSchema()
-    button1 = Button('submit', 'Save changes')
+    button1 = Button('submit', _('Save changes'))
     button1.css_class = 'btn-primary'
 
     form = Form(schema, buttons=(button1, ))
@@ -299,13 +302,13 @@ def preferences(request):
 
         if result['n'] == 1:
             request.session.flash(
-                'The changes were saved successfully',
+                _('The changes were saved successfully'),
                 'success',
                 )
             return HTTPFound(location=request.route_path('user_preferences'))
         else:
             request.session.flash(
-                'There were an error while saving your changes',
+                _('There were an error while saving your changes'),
                 'error',
                 )
             return {'form': appstruct}
@@ -345,14 +348,18 @@ def identity_providers(request):
         if len(accounts_to_merge) > 1:
             merged = merge_accounts(request.db, request.user,
                                     accounts_to_merge)
-            request.session.flash(
-                ('Congratulations, %d of your accounts have been merged '
-                 'into the current one' % merged),
-                'success',
+            localizer = get_localizer(request)
+            msg = localizer.pluralize(
+                _('Congratulations, ${n_merged} of your accounts has been merged into the current one'),
+                _('Congratulations, ${n_merged} of your accounts have been merged into the current one'),
+                merged,
+                domain=translation_domain,
+                mapping={'n_merged': merged},
                 )
+            request.session.flash(msg, 'success')
         else:
             request.session.flash(
-                'Not enough accounts for merging',
+                _('Not enough accounts for merging'),
                 'error',
                 )
 
@@ -403,7 +410,7 @@ def verify_email(request):
     evc = EmailVerificationCode(code)
     if evc.verify(request.db, email):
         request.session.flash(
-            'Congratulations, your email has been successfully verified',
+            _('Congratulations, your email has been successfully verified'),
             'success',
             )
         evc.remove(request.db, email, True)
@@ -412,7 +419,7 @@ def verify_email(request):
             }
     else:
         request.session.flash(
-            'Sorry, your verification code is not correct or has expired',
+            _('Sorry, your verification code is not correct or has expired'),
             'error',
             )
         return {

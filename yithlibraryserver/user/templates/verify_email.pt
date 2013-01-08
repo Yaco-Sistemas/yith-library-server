@@ -2,26 +2,26 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
       metal:use-macro="profile.macros['profile']">
 
-<tal:block metal:fill-slot="header-title">Email verification</tal:block>
+<tal:block metal:fill-slot="header-title" i18n:translate="">Email verification</tal:block>
 
 <tal:block metal:fill-slot="content">
 
-  <h2 tal:condition="verified">Email verified</h2>
-  <h2 tal:condition="not verified">Email not verified</h2>
+  <h2 tal:condition="verified" i18n:translate="">Email verified</h2>
+  <h2 tal:condition="not verified" i18n:translate="">Email not verified</h2>
 
   <div tal:condition="verified">
-    <p>Now you can link several accounts to identify yourself.</p>
+    <p i18n:translate="">Now you can link several accounts to identify yourself.</p>
 
-    <p>Go to your <a href="${request.route_path('user_identity_providers')}">identity providers page</a>
-     and follow the instructions.</p>
+    <p i18n:translate="">Go to your <a href="${request.route_path('user_identity_providers')}" i18n:name="identity-providers" i18n:translate="">identity providers page</a> and follow the instructions.</p>
   </div>
 
   <div tal:condition="not verified">
-    <p>It looks that your verification code is not correct. Please go to your
-    <a href="${request.route_path('user_information')}">profile page</a> and
-    generate a new one.</p>
+    <p i18n:translate="">It looks that your verification code is not correct. Please go to your
+      <a href="${request.route_path('user_information')}" i18n:name="profile-page" i18n:translate="">profile page</a> and generate a new one.</p>
   </div>
 
 </tal:block>

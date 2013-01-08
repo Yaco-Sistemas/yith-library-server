@@ -2,31 +2,33 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
       metal:use-macro="profile.macros['profile']">
 
-<tal:block metal:fill-slot="header-title">User information</tal:block>
+<tal:block metal:fill-slot="header-title" i18n:translate="">User information</tal:block>
 
 <tal:block metal:fill-slot="content">
 
-  <h2>Personal information</h2>
+  <h2 i18n:translate="">Personal information</h2>
 
   <div class="personal-info clearfix">
     <img class="avatar" src="${request.gravatar.get_image_url(100)}" height="100" alt="" />
     <ul class="unstyled">
       <li>Id: ${request.user._id }</li>
-      <li>Member since:
+      <li><span i18n:translate="">Member since:</span>
         <time
            datetime="${request.user.date_joined.isoformat()}"
            tal:content="dates_formatter.datetime(request.user.date_joined)" />
       </li>
-      <li>Last seen:
+      <li><span i18n:translate="">Last seen:</span>
         <time
            datetime="${request.user.last_login.isoformat()}"
            tal:content="dates_formatter.datetime(request.user.last_login)" />
       </li>
       <li><a href="http://www.gravatar.com/" target="_blank">
-          <span tal:condition="request.gravatar.has_avatar()">Change your avatar at gravatar.com</span>
-          <span tal:condition="not request.gravatar.has_avatar()">Set your avatar at gravatar.com</span>
+          <span tal:condition="request.gravatar.has_avatar()" i18n:translate="">Change your avatar at gravatar.com</span>
+          <span tal:condition="not request.gravatar.has_avatar()" i18n:translate="">Set your avatar at gravatar.com</span>
       </a></li>
     </ul>
   </div>

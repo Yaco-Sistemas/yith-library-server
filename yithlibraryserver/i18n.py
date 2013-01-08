@@ -19,7 +19,8 @@
 from pyramid.i18n import get_localizer, TranslationStringFactory
 from pyramid.threadlocal import get_current_request
 
-TranslationString = TranslationStringFactory('yithlibraryserver')
+translation_domain = 'yithlibraryserver'
+TranslationString = TranslationStringFactory(translation_domain)
 
 
 def deform_translator(term):

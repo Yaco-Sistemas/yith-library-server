@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-01-07 21:17+0100\n"
+"POT-Creation-Date: 2013-01-08 22:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: yithlibraryserver/schemas.py:27
+#: yithlibraryserver/schemas.py:27 yithlibraryserver/oauth2/schemas.py:29
+#: yithlibraryserver/oauth2/templates/developer_applications.pt:17
 msgid "Name"
 msgstr ""
 
-#: yithlibraryserver/schemas.py:28
+#: yithlibraryserver/schemas.py:28 yithlibraryserver/user/schemas.py:84
+#: yithlibraryserver/user/schemas.py:94
 msgid "Email"
 msgstr ""
 
@@ -34,8 +36,112 @@ msgstr ""
 msgid "Send message"
 msgstr ""
 
-#: yithlibraryserver/views.py:48
+#: yithlibraryserver/views.py:48 yithlibraryserver/oauth2/views.py:59
+#: yithlibraryserver/oauth2/views.py:121 yithlibraryserver/user/views.py:174
 msgid "Cancel"
+msgstr ""
+
+#: yithlibraryserver/oauth2/schemas.py:32
+#: yithlibraryserver/oauth2/templates/developer_applications.pt:18
+msgid "Main URL"
+msgstr ""
+
+#: yithlibraryserver/oauth2/schemas.py:37
+#: yithlibraryserver/oauth2/templates/developer_applications.pt:19
+msgid "Callback URL"
+msgstr ""
+
+#: yithlibraryserver/oauth2/schemas.py:42
+msgid "Production ready"
+msgstr ""
+
+#: yithlibraryserver/oauth2/schemas.py:47
+msgid "Image URL"
+msgstr ""
+
+#: yithlibraryserver/oauth2/schemas.py:53
+msgid "Description"
+msgstr ""
+
+#: yithlibraryserver/oauth2/schemas.py:71
+msgid "Client Id"
+msgstr ""
+
+#: yithlibraryserver/oauth2/schemas.py:76
+msgid "Client secret"
+msgstr ""
+
+#: yithlibraryserver/oauth2/views.py:57 yithlibraryserver/oauth2/views.py:117
+msgid "Save application"
+msgstr ""
+
+#: yithlibraryserver/oauth2/views.py:83
+msgid "The application ${app} was created successfully"
+msgstr ""
+
+#: yithlibraryserver/oauth2/views.py:119
+msgid "Delete application"
+msgstr ""
+
+#: yithlibraryserver/oauth2/views.py:148 yithlibraryserver/user/views.py:254
+#: yithlibraryserver/user/views.py:305
+msgid "The changes were saved successfully"
+msgstr ""
+
+#: yithlibraryserver/oauth2/views.py:185
+msgid "The application ${app} was deleted successfully"
+msgstr ""
+
+#: yithlibraryserver/oauth2/views.py:344
+msgid "The access to application ${app} has been revoked"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/developer_application_delete.pt:9
+msgid "Delete Application"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/developer_application_delete.pt:13
+msgid "Delete Application ${app-name}"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/developer_application_delete.pt:14
+msgid "Are you sure you want to remove the application ${app-name} with id ${app-id}?"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/developer_application_delete.pt:17
+msgid "Yes, I am sure"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/developer_application_delete.pt:18
+msgid "No, take me back to the application list"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/developer_application_edit.pt:9
+msgid "Edit Application"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/developer_application_edit.pt:13
+msgid "Edit application ${app-name}"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/developer_application_new.pt:9
+msgid "New application"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/developer_application_new.pt:13
+msgid "New Application"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/developer_applications.pt:9
+msgid "Developer applications"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/developer_applications.pt:13
+msgid "Developer Applications"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/developer_applications.pt:30
+msgid "Register new application"
 msgstr ""
 
 #: yithlibraryserver/templates/base.pt:34
@@ -94,11 +200,26 @@ msgid "Yith Library is copyright of:"
 msgstr ""
 
 #: yithlibraryserver/templates/base.pt:129
+#: yithlibraryserver/user/templates/email_verification_dialog.pt:20
 msgid "Close"
 msgstr ""
 
 #: yithlibraryserver/templates/contact.pt:13
 msgid "Contact us"
+msgstr ""
+
+#: yithlibraryserver/templates/email_verified.pt:2
+msgid "Verified"
+msgstr ""
+
+#: yithlibraryserver/templates/email_verified.pt:4
+msgid "Unverified"
+msgstr ""
+
+#: yithlibraryserver/templates/email_verified.pt:5
+#: yithlibraryserver/user/templates/identity_providers.pt:59
+#: yithlibraryserver/user/templates/identity_providers.pt:61
+msgid "Verify email address"
 msgstr ""
 
 #: yithlibraryserver/templates/form.pt:19
@@ -312,14 +433,19 @@ msgid "Account"
 msgstr ""
 
 #: yithlibraryserver/templates/profile.pt:23
+#: yithlibraryserver/user/templates/user_information.pt:13
 msgid "Personal information"
 msgstr ""
 
 #: yithlibraryserver/templates/profile.pt:26
+#: yithlibraryserver/user/templates/preferences.pt:9
+#: yithlibraryserver/user/templates/preferences.pt:13
 msgid "Preferences"
 msgstr ""
 
 #: yithlibraryserver/templates/profile.pt:29
+#: yithlibraryserver/user/templates/identity_providers.pt:9
+#: yithlibraryserver/user/templates/identity_providers.pt:13
 msgid "Identity providers"
 msgstr ""
 
@@ -476,6 +602,70 @@ msgid ""
 "hackers, not lawyers. If in doubt, ${contact-url}."
 msgstr ""
 
+#: yithlibraryserver/user/schemas.py:66
+msgid "First name"
+msgstr ""
+
+#: yithlibraryserver/user/schemas.py:71
+msgid "Last name"
+msgstr ""
+
+#: yithlibraryserver/user/schemas.py:76
+msgid "Screen name"
+msgstr ""
+
+#: yithlibraryserver/user/schemas.py:104
+msgid "Do you mind telling us your reasons? We want to get better!"
+msgstr ""
+
+#: yithlibraryserver/user/schemas.py:113
+msgid "Allow statistics cookie"
+msgstr ""
+
+#: yithlibraryserver/user/views.py:172
+msgid "Yes, I am sure. Destroy my account"
+msgstr ""
+
+#: yithlibraryserver/user/views.py:204
+msgid "Your account has been removed. Have a nice day!"
+msgstr ""
+
+#: yithlibraryserver/user/views.py:211
+msgid "Thanks for reconsidering removing your account!"
+msgstr ""
+
+#: yithlibraryserver/user/views.py:225 yithlibraryserver/user/views.py:283
+msgid "Save changes"
+msgstr ""
+
+#: yithlibraryserver/user/views.py:260 yithlibraryserver/user/views.py:311
+msgid "There were an error while saving your changes"
+msgstr ""
+
+#: yithlibraryserver/user/views.py:353
+msgid ""
+"Congratulations, ${n_merged} of your accounts has been merged into the "
+"current one"
+msgstr ""
+
+#: yithlibraryserver/user/views.py:354
+msgid ""
+"Congratulations, ${n_merged} of your accounts have been merged into the "
+"current one"
+msgstr ""
+
+#: yithlibraryserver/user/views.py:362
+msgid "Not enough accounts for merging"
+msgstr ""
+
+#: yithlibraryserver/user/views.py:413
+msgid "Congratulations, your email has been successfully verified"
+msgstr ""
+
+#: yithlibraryserver/user/views.py:422
+msgid "Sorry, your verification code is not correct or has expired"
+msgstr ""
+
 #: yithlibraryserver/user/templates/destroy.pt:16
 msgid "I am tired of using Yith Library"
 msgstr ""
@@ -498,5 +688,144 @@ msgstr ""
 
 #: yithlibraryserver/user/templates/destroy.pt:28
 msgid "You will not be able to undo this operation. Think about it."
+msgstr ""
+
+#: yithlibraryserver/user/templates/email_verification_dialog.pt:4
+#: yithlibraryserver/user/templates/verify_email.pt:9
+msgid "Email verification"
+msgstr ""
+
+#: yithlibraryserver/user/templates/email_verification_dialog.pt:7
+msgid ""
+"An email with a verification link will be sent to ${user-email} to verify "
+"that you are its legitimate owner."
+msgstr ""
+
+#: yithlibraryserver/user/templates/email_verification_dialog.pt:10
+#: yithlibraryserver/user/templates/email_verification_dialog.pt:21
+msgid "Send verification email"
+msgstr ""
+
+#: yithlibraryserver/user/templates/email_verification_dialog.pt:10
+msgid ""
+"All you need to do is click on the ${send-verification-email} button, go to "
+"your inbox and follow the instructions in the email."
+msgstr ""
+
+#: yithlibraryserver/user/templates/email_verification_dialog.pt:13
+msgid "Go and check your inbox!"
+msgstr ""
+
+#: yithlibraryserver/user/templates/email_verification_dialog.pt:13
+msgid ""
+"The email message with the verification link has been sent. ${check-your-"
+"inbox}"
+msgstr ""
+
+#: yithlibraryserver/user/templates/email_verification_dialog.pt:16
+msgid "There was an error sending the verification link to your email address."
+msgstr ""
+
+#: yithlibraryserver/user/templates/identity_providers.pt:15
+msgid "You are registered with the following accounts:"
+msgstr ""
+
+#: yithlibraryserver/user/templates/identity_providers.pt:22
+msgid "Provider"
+msgstr ""
+
+#: yithlibraryserver/user/templates/identity_providers.pt:23
+msgid "Passwords"
+msgstr ""
+
+#: yithlibraryserver/user/templates/identity_providers.pt:24
+msgid "Is current?"
+msgstr ""
+
+#: yithlibraryserver/user/templates/identity_providers.pt:25
+msgid "Is email verified?"
+msgstr ""
+
+#: yithlibraryserver/user/templates/identity_providers.pt:26
+msgid "Available actions"
+msgstr ""
+
+#: yithlibraryserver/user/templates/identity_providers.pt:47
+msgid "Number of passwords"
+msgstr ""
+
+#: yithlibraryserver/user/templates/identity_providers.pt:50
+msgid "Current"
+msgstr ""
+
+#: yithlibraryserver/user/templates/identity_providers.pt:53
+#: yithlibraryserver/user/templates/verify_email.pt:13
+msgid "Email verified"
+msgstr ""
+
+#: yithlibraryserver/user/templates/identity_providers.pt:54
+#: yithlibraryserver/user/templates/verify_email.pt:14
+msgid "Email not verified"
+msgstr ""
+
+#: yithlibraryserver/user/templates/identity_providers.pt:55
+msgid "No email available"
+msgstr ""
+
+#: yithlibraryserver/user/templates/identity_providers.pt:69
+msgid "Merge my accounts"
+msgstr ""
+
+#: yithlibraryserver/user/templates/identity_providers.pt:83
+msgid "Tip:"
+msgstr ""
+
+#: yithlibraryserver/user/templates/identity_providers.pt:83
+msgid ""
+"If you merge your accounts you will be able to access your passwords in a "
+"unified way: no matter which provider you use to log in you will always see "
+"the same set of passwords."
+msgstr ""
+
+#: yithlibraryserver/user/templates/user_information.pt:9
+msgid "User information"
+msgstr ""
+
+#: yithlibraryserver/user/templates/user_information.pt:19
+msgid "Member since:"
+msgstr ""
+
+#: yithlibraryserver/user/templates/user_information.pt:24
+msgid "Last seen:"
+msgstr ""
+
+#: yithlibraryserver/user/templates/user_information.pt:30
+msgid "Change your avatar at gravatar.com"
+msgstr ""
+
+#: yithlibraryserver/user/templates/user_information.pt:31
+msgid "Set your avatar at gravatar.com"
+msgstr ""
+
+#: yithlibraryserver/user/templates/verify_email.pt:17
+msgid "Now you can link several accounts to identify yourself."
+msgstr ""
+
+#: yithlibraryserver/user/templates/verify_email.pt:19
+msgid "identity providers page"
+msgstr ""
+
+#: yithlibraryserver/user/templates/verify_email.pt:19
+msgid "Go to your ${identity-providers} and follow the instructions."
+msgstr ""
+
+#: yithlibraryserver/user/templates/verify_email.pt:24
+msgid "profile page"
+msgstr ""
+
+#: yithlibraryserver/user/templates/verify_email.pt:23
+msgid ""
+"It looks that your verification code is not correct. Please go to your "
+"${profile-page} and generate a new one."
 msgstr ""
 

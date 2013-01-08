@@ -21,26 +21,36 @@
 import colander
 from deform.widget import TextAreaWidget, TextInputWidget
 
+from yithlibraryserver.i18n import TranslationString as _
+
 
 class ApplicationSchema(colander.MappingSchema):
 
-    name = colander.SchemaNode(colander.String())
+    name = colander.SchemaNode(colander.String(), title=_('Name'))
     main_url = colander.SchemaNode(
         colander.String(),
+        title=_('Main URL'),
         widget=TextInputWidget(css_class='input-xlarge'),
         )
     callback_url = colander.SchemaNode(
         colander.String(),
+        title=_('Callback URL'),
         widget=TextInputWidget(css_class='input-xlarge'),
         )
-    production_ready = colander.SchemaNode(colander.Boolean(), missing=False)
+    production_ready = colander.SchemaNode(
+        colander.Boolean(),
+        title=_('Production ready'),
+        missing=False,
+        )
     image_url = colander.SchemaNode(
         colander.String(),
+        title=_('Image URL'),
         missing='',
         widget=TextInputWidget(css_class='input-xlarge'),
         )
     description = colander.SchemaNode(
         colander.String(),
+        title=_('Description'),
         missing='',
         widget=TextAreaWidget(css_class='input-xlarge'),
         )
@@ -58,9 +68,11 @@ class FullApplicationSchema(ApplicationSchema):
 
     client_id = colander.SchemaNode(
         colander.String(),
+        title=_('Client Id'),
         widget=ReadOnlyTextInputWidget(css_class='input-xlarge'),
         )
     client_secret = colander.SchemaNode(
         colander.String(),
+        title=_('Client secret'),
         widget=ReadOnlyTextInputWidget(css_class='input-xlarge'),
         )

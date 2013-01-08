@@ -21,6 +21,8 @@
 import colander
 from deform.widget import TextAreaWidget, TextInputWidget
 
+from yithlibraryserver.i18n import TranslationString as _
+
 
 class EmailWidget(TextInputWidget):
 
@@ -61,17 +63,17 @@ class BaseUserSchema(colander.MappingSchema):
 
     first_name = colander.SchemaNode(
         colander.String(),
-        title='First name',
+        title=_('First name'),
         missing='',
         )
     last_name = colander.SchemaNode(
         colander.String(),
-        title='Last name',
+        title=_('Last name'),
         missing='',
         )
     screen_name = colander.SchemaNode(
         colander.String(),
-        title='Screen name',
+        title=_('Screen name'),
         missing='',
         )
 
@@ -79,6 +81,7 @@ class BaseUserSchema(colander.MappingSchema):
 class UserSchema(BaseUserSchema):
 
     email = EmailSchema(
+        title=_('Email'),
         widget=EmailWidget(),
         missing={'email': '', 'email_verified': False},
         )
@@ -86,7 +89,11 @@ class UserSchema(BaseUserSchema):
 
 class NewUserSchema(BaseUserSchema):
 
-    email = colander.SchemaNode(colander.String(), missing='')
+    email = colander.SchemaNode(
+        colander.String(),
+        title=_('Email'),
+        missing='',
+        )
 
 
 class AccountDestroySchema(colander.MappingSchema):
@@ -94,7 +101,7 @@ class AccountDestroySchema(colander.MappingSchema):
     reason = colander.SchemaNode(
         colander.String(),
         missing='',
-        title='Do you mind telling us your reasons? We want to get better!',
+        title=_('Do you mind telling us your reasons? We want to get better!'),
         widget=TextAreaWidget(css_class='input-xlarge'),
         )
 
@@ -103,6 +110,6 @@ class UserPreferencesSchema(colander.MappingSchema):
 
     allow_google_analytics = colander.SchemaNode(
         colander.Boolean(),
-        title='Allow statistics cookie',
+        title=_('Allow statistics cookie'),
         missing=False,
         )

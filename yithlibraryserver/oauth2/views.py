@@ -25,6 +25,7 @@ from pyramid.httpexceptions import HTTPBadRequest, HTTPFound, HTTPNotFound
 from pyramid.httpexceptions import HTTPNotImplemented, HTTPUnauthorized
 from pyramid.view import view_config
 
+from yithlibraryserver.i18n import TranslationString as _
 from yithlibraryserver.oauth2.application import create_client_id_and_secret
 from yithlibraryserver.oauth2.authentication import authenticate_client
 from yithlibraryserver.oauth2.authorization import Authorizator
@@ -53,9 +54,9 @@ def developer_applications(request):
 def developer_application_new(request):
     assert_authenticated_user_is_registered(request)
     schema = ApplicationSchema()
-    button1 = Button('submit', 'Save application')
+    button1 = Button('submit', _('Save application'))
     button1.css_class = 'btn-primary'
-    button2 = Button('cancel', 'Cancel')
+    button2 = Button('cancel', _('Cancel'))
     button2.css_class = ''
     form = Form(schema, buttons=(button1, button2))
 
@@ -78,8 +79,10 @@ def developer_application_new(request):
             }
         create_client_id_and_secret(application)
 
-        request.session.flash('The application %s was created successfully' %
-                              appstruct['name'], 'success')
+        request.session.flash(
+            _('The application ${app} was created successfully',
+              mapping={'app': appstruct['name']}),
+            'success')
 
         request.db.applications.insert(application, safe=True)
         return HTTPFound(
@@ -111,11 +114,11 @@ def developer_application_edit(request):
         return HTTPUnauthorized()
 
     schema = FullApplicationSchema()
-    button1 = Button('submit', 'Save application')
+    button1 = Button('submit', _('Save application'))
     button1.css_class = 'btn-primary'
-    button2 = Button('delete', 'Delete application')
+    button2 = Button('delete', _('Delete application'))
     button2.css_class = 'btn-danger'
-    button3 = Button('cancel', 'Cancel')
+    button3 = Button('cancel', _('Cancel'))
     button3.css_class = ''
     form = Form(schema, buttons=(button1, button2, button3))
 
@@ -142,7 +145,7 @@ def developer_application_edit(request):
         request.db.applications.update({'_id': app['_id']},
                                        application, safe=True)
 
-        request.session.flash('The changes were saved successfully',
+        request.session.flash(_('The changes were saved successfully'),
                               'success')
 
         return HTTPFound(
@@ -178,8 +181,11 @@ def developer_application_delete(request):
 
     if 'submit' in request.POST:
         request.db.applications.remove(app_id, safe=True)
-        request.session.flash('The application %s was deleted successfully' %
-                              app['name'], 'success')
+        request.session.flash(
+            _('The application ${app} was deleted successfully',
+              mapping={'app': app['name']}),
+            'success',
+            )
         return HTTPFound(
             location=request.route_path('oauth2_developer_applications'))
 
@@ -334,8 +340,11 @@ def revoke_application(request):
     if 'submit' in request.POST:
         authorizator.remove_user_authorization(request.user)
 
-        request.session.flash('The access to application %s has been revoked' %
-                              app['name'], 'success')
+        request.session.flash(
+            _('The access to application ${app} has been revoked',
+              mapping={'app': app['name']}),
+            'success',
+            )
         return HTTPFound(
             location=request.route_path('oauth2_authorized_applications'))
 
