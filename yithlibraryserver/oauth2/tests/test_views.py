@@ -661,7 +661,7 @@ class ViewTests(testing.TestCase):
     def test_clients(self):
         res = self.testapp.get('/oauth2/clients')
         self.assertEqual(res.status, '200 OK')
-        res.mustcontain('Available clients')
+        res.mustcontain('Available Clients')
 
         # create a couple of apps
         self.db.applications.insert({
@@ -684,7 +684,7 @@ class ViewTests(testing.TestCase):
         res = self.testapp.get('/oauth2/clients')
         self.assertEqual(res.status, '200 OK')
         res.mustcontain(
-            'Available clients', 'Example app 1', 'https://example.com',
+            'Available Clients', 'Example app 1', 'https://example.com',
             'https://example.com/image.png', 'example description',
             no=('Example app 2', 'https://2.example.com'),
             )
