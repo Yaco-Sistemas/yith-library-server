@@ -73,8 +73,16 @@ class ViewTests(testing.TestCase):
         self.assertEqual(res.status, '404 Not Found')
 
         # create a valid app
+        owner_id = self.db.users.insert({
+                'twitter_id': 'twitter2',
+                'screen_name': 'Administrator',
+                'first_name': 'Alice',
+                'last_name': 'Doe',
+                'email': 'alice@example.com',
+                'authorized_apps': [],
+                }, safe=True)
         app_id = self.db.applications.insert({
-                'owner': '000000000000000000000000',
+                'owner': owner_id,
                 'client_id': '123456',
                 'name': 'Example',
                 'main_url': 'https://example.com',
