@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-01-09 23:01+0100\n"
-"PO-Revision-Date: 2013-01-09 23:01+0100\n"
+"POT-Creation-Date: 2013-01-09 23:16+0100\n"
+"PO-Revision-Date: 2013-01-09 23:17+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -164,6 +164,23 @@ msgstr "Aplicaciones autorizadas"
 #: yithlibraryserver/oauth2/templates/authorized_applications.pt:15
 msgid "Revoke authorization"
 msgstr "Revocar autorización"
+
+#: yithlibraryserver/oauth2/templates/clients.pt:9
+#: yithlibraryserver/oauth2/templates/clients.pt:13
+msgid "Available Clients"
+msgstr "Clientes Disponibles"
+
+#: yithlibraryserver/oauth2/templates/clients.pt:15
+msgid ""
+"There are several clients to access your passwords collection. You can "
+"use the one that fits your needs better"
+msgstr ""
+"Hay varios clientes para acceder a tu colección de contraseñas. Puedes\n"
+"usar el que mejor se ajuste a tus necesidades"
+
+#: yithlibraryserver/oauth2/templates/clients.pt:25
+msgid "Access"
+msgstr "Acceder"
 
 #: yithlibraryserver/oauth2/templates/developer_application_delete.pt:9
 msgid "Delete Application"

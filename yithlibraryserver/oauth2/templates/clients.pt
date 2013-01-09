@@ -2,15 +2,17 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
       metal:use-macro="base.macros['base']">
 
-<tal:block metal:fill-slot="header-title">Available Clients</tal:block>
+<tal:block metal:fill-slot="header-title" i18n:translate="">Available Clients</tal:block>
 
 <tal:block metal:fill-slot="content">
 
-  <h1>Available clients</h1>
+  <h1 i18n:translate="">Available Clients</h1>
 
-  <p>There are several clients to access your passwords
+  <p i18n:translate="">There are several clients to access your passwords
     collection. You can use the one that fits your needs better</p>
 
   <ul class="thumbnails">
@@ -20,7 +22,7 @@
 	    <div class="caption">
 	      <h3>${app.name}</h3>
 	      <p tal:condition="app.description">${app.description}</p>
-	      <a class="btn btn-primary" href="${app.main_url}">Access</a>
+	      <a class="btn btn-primary" href="${app.main_url}" i18n:translate="">Access</a>
 	    </div>
       </div>
     </li>

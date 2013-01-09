@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-01-09 23:01+0100\n"
+"POT-Creation-Date: 2013-01-09 23:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -160,6 +160,21 @@ msgstr ""
 
 #: yithlibraryserver/oauth2/templates/authorized_applications.pt:15
 msgid "Revoke authorization"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/clients.pt:9
+#: yithlibraryserver/oauth2/templates/clients.pt:13
+msgid "Available Clients"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/clients.pt:15
+msgid ""
+"There are several clients to access your passwords collection. You can use "
+"the one that fits your needs better"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/clients.pt:25
+msgid "Access"
 msgstr ""
 
 #: yithlibraryserver/oauth2/templates/developer_application_delete.pt:9
