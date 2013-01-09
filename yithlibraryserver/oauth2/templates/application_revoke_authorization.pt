@@ -2,18 +2,20 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
       metal:use-macro="base.macros['base']">
 
-<tal:block metal:fill-slot="header-title">Revoke Authorization</tal:block>
+<tal:block metal:fill-slot="header-title" i18n:translate="">Revoke Authorization</tal:block>
 
 <tal:block metal:fill-slot="content">
 
-  <h1>Revoke authorization to application ${app.name}</h1>
-  <p class="well">Are you sure you want to revoke the authorization to the application <a href="${app.main_url}">${app.name}</a> with id ${app._id}?</p>
+  <h1 i18n:translate="">Revoke authorization to application <span i18n:name="app-name">${app.name}</span></h1>
+  <p class="well" i18n:translate="">Are you sure you want to revoke the authorization to the application <a href="${app.main_url}" i18n:name="app-name">${app.name}</a> with id <span i18n:name="app-id">${app._id}</span>?</p>
 
   <form method="post" action="${request.route_path('oauth2_revoke_application', app=app._id)}">
-    <input class="btn btn-danger" type="submit" name="submit" value="Yes, I am sure" />
-    <a class="btn" href="${request.route_path('oauth2_authorized_applications')}">No, take me back to the application list</a>
+    <input class="btn btn-danger" type="submit" name="submit" value="Yes, I am sure" i18n:attributes="value" />
+    <a class="btn" href="${request.route_path('oauth2_authorized_applications')}" i18n:translate="">No, take me back to the application list</a>
   </form>
 
 </tal:block>

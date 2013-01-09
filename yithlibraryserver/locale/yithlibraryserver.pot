@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-01-08 22:57+0100\n"
+"POT-Creation-Date: 2013-01-09 21:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,6 +96,39 @@ msgstr ""
 msgid "The access to application ${app} has been revoked"
 msgstr ""
 
+#: yithlibraryserver/oauth2/templates/application_revoke_authorization.pt:9
+msgid "Revoke Authorization"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/application_revoke_authorization.pt:13
+msgid "Revoke authorization to application ${app-name}"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/application_revoke_authorization.pt:14
+msgid ""
+"Are you sure you want to revoke the authorization to the application ${app-"
+"name} with id ${app-id}?"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/application_revoke_authorization.pt:17
+#: yithlibraryserver/oauth2/templates/developer_application_delete.pt:17
+msgid "Yes, I am sure"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/application_revoke_authorization.pt:18
+#: yithlibraryserver/oauth2/templates/developer_application_delete.pt:18
+msgid "No, take me back to the application list"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/authorized_applications.pt:9
+#: yithlibraryserver/oauth2/templates/authorized_applications.pt:13
+msgid "Authorized Applications"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/authorized_applications.pt:15
+msgid "Revoke authorization"
+msgstr ""
+
 #: yithlibraryserver/oauth2/templates/developer_application_delete.pt:9
 msgid "Delete Application"
 msgstr ""
@@ -106,14 +139,6 @@ msgstr ""
 
 #: yithlibraryserver/oauth2/templates/developer_application_delete.pt:14
 msgid "Are you sure you want to remove the application ${app-name} with id ${app-id}?"
-msgstr ""
-
-#: yithlibraryserver/oauth2/templates/developer_application_delete.pt:17
-msgid "Yes, I am sure"
-msgstr ""
-
-#: yithlibraryserver/oauth2/templates/developer_application_delete.pt:18
-msgid "No, take me back to the application list"
 msgstr ""
 
 #: yithlibraryserver/oauth2/templates/developer_application_edit.pt:9

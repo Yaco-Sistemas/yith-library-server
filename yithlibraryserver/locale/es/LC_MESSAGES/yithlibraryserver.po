@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-01-08 22:57+0100\n"
-"PO-Revision-Date: 2013-01-08 22:59+0100\n"
+"POT-Creation-Date: 2013-01-09 21:05+0100\n"
+"PO-Revision-Date: 2013-01-09 21:06+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -96,6 +96,42 @@ msgstr "La aplicación ${app} fue borrada correctamente"
 msgid "The access to application ${app} has been revoked"
 msgstr "El acceso a la aplicación ${app} ha sido revocado"
 
+#: yithlibraryserver/oauth2/templates/application_revoke_authorization.pt:9
+msgid "Revoke Authorization"
+msgstr "Revocar Autorización"
+
+#: yithlibraryserver/oauth2/templates/application_revoke_authorization.pt:13
+msgid "Revoke authorization to application ${app-name}"
+msgstr "Revocar autorización a la aplicación ${app-name}"
+
+#: yithlibraryserver/oauth2/templates/application_revoke_authorization.pt:14
+msgid ""
+"Are you sure you want to revoke the authorization to the application "
+"${app-name} with id ${app-id}?"
+msgstr ""
+"¿Estas seguro de que quieres revocar la autorización a la aplicación "
+"${app-name} con\n"
+"el id ${app-id}?"
+
+#: yithlibraryserver/oauth2/templates/application_revoke_authorization.pt:17
+#: yithlibraryserver/oauth2/templates/developer_application_delete.pt:17
+msgid "Yes, I am sure"
+msgstr "Sí, estoy seguro"
+
+#: yithlibraryserver/oauth2/templates/application_revoke_authorization.pt:18
+#: yithlibraryserver/oauth2/templates/developer_application_delete.pt:18
+msgid "No, take me back to the application list"
+msgstr "No, llevame de vuelta a la lista de aplicaciones"
+
+#: yithlibraryserver/oauth2/templates/authorized_applications.pt:9
+#: yithlibraryserver/oauth2/templates/authorized_applications.pt:13
+msgid "Authorized Applications"
+msgstr "Aplicaciones autorizadas"
+
+#: yithlibraryserver/oauth2/templates/authorized_applications.pt:15
+msgid "Revoke authorization"
+msgstr "Revocar autorización"
+
 #: yithlibraryserver/oauth2/templates/developer_application_delete.pt:9
 msgid "Delete Application"
 msgstr "Borrar Aplicación"
@@ -111,14 +147,6 @@ msgid ""
 msgstr ""
 "¿Estas seguro de que quieres eliminar la aplicación ${app-name} con\n"
 "el id ${app-id}?"
-
-#: yithlibraryserver/oauth2/templates/developer_application_delete.pt:17
-msgid "Yes, I am sure"
-msgstr "Sí, estoy seguro"
-
-#: yithlibraryserver/oauth2/templates/developer_application_delete.pt:18
-msgid "No, take me back to the application list"
-msgstr "No, llevame de vuelta a la lista de aplicaciones"
 
 #: yithlibraryserver/oauth2/templates/developer_application_edit.pt:9
 msgid "Edit Application"
