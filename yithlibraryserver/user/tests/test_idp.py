@@ -44,4 +44,4 @@ class IdentityProviderTests(unittest.TestCase):
         idp1 = request.registry.identity_providers[0]
         self.assertEqual(idp1.route_path, 'provider1_login')
         self.assertEqual(idp1.image_path, 'yithlibraryserver:static/img/provider1-logo.png')
-        self.assertEqual(idp1.message, 'Log in with Provider1')
+        self.assertEqual(idp1.message, 'Log in with ${idp}')
