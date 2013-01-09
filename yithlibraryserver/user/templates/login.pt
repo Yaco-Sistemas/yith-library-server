@@ -2,13 +2,15 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
       metal:use-macro="base.macros['base']">
 
-<tal:block metal:fill-slot="header-title">Log in</tal:block>
+<tal:block metal:fill-slot="header-title" i18n:translate="">Log in</tal:block>
 
 <tal:block metal:fill-slot="content">
 
-  <h1>Log in</h1>
+  <h1 i18n:translate="">Log in</h1>
   <ul class="thumbnails">
 
     <li id="${idp.name}" class="span3" tal:repeat="idp identity_providers">

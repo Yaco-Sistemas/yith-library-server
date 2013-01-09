@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-01-09 22:09+0100\n"
-"PO-Revision-Date: 2013-01-09 22:10+0100\n"
+"POT-Creation-Date: 2013-01-09 23:01+0100\n"
+"PO-Revision-Date: 2013-01-09 23:01+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -237,6 +237,8 @@ msgid "No, I don't want to be tracked"
 msgstr "No, no quiero ser rastreado"
 
 #: yithlibraryserver/templates/base.pt:50
+#: yithlibraryserver/user/templates/login.pt:9
+#: yithlibraryserver/user/templates/login.pt:13
 msgid "Log in"
 msgstr "Entrar"
 
@@ -778,6 +780,10 @@ msgstr ""
 "Perdón si estos términos son algo imprecisos y vagos. Somos "
 "programadores,\n"
 "no abogados. Si tienes dudas, ${contact-url}."
+
+#: yithlibraryserver/user/idp.py:41
+msgid "Log in with ${idp}"
+msgstr "Entrar con ${idp}"
 
 #: yithlibraryserver/user/schemas.py:66
 msgid "First name"

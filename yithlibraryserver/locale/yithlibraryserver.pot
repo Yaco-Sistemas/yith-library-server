@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-01-09 22:09+0100\n"
+"POT-Creation-Date: 2013-01-09 23:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -225,6 +225,8 @@ msgid "No, I don't want to be tracked"
 msgstr ""
 
 #: yithlibraryserver/templates/base.pt:50
+#: yithlibraryserver/user/templates/login.pt:9
+#: yithlibraryserver/user/templates/login.pt:13
 msgid "Log in"
 msgstr ""
 
@@ -658,6 +660,10 @@ msgstr ""
 msgid ""
 "Sorry if some of these terms are a little imprecise and sloppy. We are "
 "hackers, not lawyers. If in doubt, ${contact-url}."
+msgstr ""
+
+#: yithlibraryserver/user/idp.py:41
+msgid "Log in with ${idp}"
 msgstr ""
 
 #: yithlibraryserver/user/schemas.py:66

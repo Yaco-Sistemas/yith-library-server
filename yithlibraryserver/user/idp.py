@@ -18,6 +18,8 @@
 
 import logging
 
+from yithlibraryserver.i18n import TranslationString as _
+
 log = logging.getLogger(__name__)
 
 
@@ -36,7 +38,7 @@ class IdentityProvider(object):
 
     @property
     def message(self):
-        return 'Log in with %s' % self.name.capitalize()
+        return _('Log in with ${idp}', mapping={'idp': self.name.capitalize()})
 
 
 def add_identity_provider(config, name):
