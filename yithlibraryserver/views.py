@@ -22,7 +22,6 @@ import logging
 
 from deform import Button, Form, ValidationFailure
 
-from pyramid.i18n import get_localizer
 from pyramid.httpexceptions import HTTPFound
 from pyramid.renderers import render
 from pyramid.view import view_config
@@ -93,7 +92,7 @@ def contact(request):
                 )
 
         request.session.flash(
-            'Thank you very much for sharing your opinion',
+            _('Thank you very much for sharing your opinion'),
             'info',
             )
 

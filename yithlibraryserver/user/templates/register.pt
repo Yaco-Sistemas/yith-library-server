@@ -2,17 +2,19 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
       metal:use-macro="base.macros['base']">
 
-<tal:block metal:fill-slot="header-title">Register new user</tal:block>
+<tal:block metal:fill-slot="header-title" i18n:translate="">Register new user</tal:block>
 
 <tal:block metal:fill-slot="content">
 
-  <h1>Welcome to the Yith Library!</h1>
+  <h1 i18n:translate="">Welcome to the Yith Library!</h1>
 
-  <p>It looks like it's the first time you log into the Yith Library.</p>
+  <p i18n:translate="">It looks like it's the first time you log into the Yith Library.</p>
 
-  <p>Click on the <strong>register</strong> button to finish
+  <p i18n:translate="">Click on the <strong i18n:name="register" i18n:translate="">register</strong> button to finish
   the registration process. Don't worry, we will not ask you
   for a new password. You already have enough of them.</p>
 

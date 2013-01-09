@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-01-09 23:16+0100\n"
+"POT-Creation-Date: 2013-01-09 23:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,13 +32,18 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: yithlibraryserver/views.py:46
+#: yithlibraryserver/views.py:45
 msgid "Send message"
 msgstr ""
 
-#: yithlibraryserver/views.py:48 yithlibraryserver/oauth2/views.py:63
-#: yithlibraryserver/oauth2/views.py:125 yithlibraryserver/user/views.py:174
+#: yithlibraryserver/views.py:47 yithlibraryserver/oauth2/views.py:63
+#: yithlibraryserver/oauth2/views.py:125 yithlibraryserver/user/views.py:76
+#: yithlibraryserver/user/views.py:174
 msgid "Cancel"
+msgstr ""
+
+#: yithlibraryserver/views.py:95
+msgid "Thank you very much for sharing your opinion"
 msgstr ""
 
 #: yithlibraryserver/oauth2/schemas.py:32
@@ -701,6 +706,10 @@ msgstr ""
 msgid "Allow statistics cookie"
 msgstr ""
 
+#: yithlibraryserver/user/views.py:74
+msgid "Register into Yith Library"
+msgstr ""
+
 #: yithlibraryserver/user/views.py:172
 msgid "Yes, I am sure. Destroy my account"
 msgstr ""
@@ -864,6 +873,29 @@ msgid ""
 "If you merge your accounts you will be able to access your passwords in a "
 "unified way: no matter which provider you use to log in you will always see "
 "the same set of passwords."
+msgstr ""
+
+#: yithlibraryserver/user/templates/register.pt:9
+msgid "Register new user"
+msgstr ""
+
+#: yithlibraryserver/user/templates/register.pt:13
+msgid "Welcome to the Yith Library!"
+msgstr ""
+
+#: yithlibraryserver/user/templates/register.pt:15
+msgid "It looks like it's the first time you log into the Yith Library."
+msgstr ""
+
+#: yithlibraryserver/user/templates/register.pt:17
+msgid "register"
+msgstr ""
+
+#: yithlibraryserver/user/templates/register.pt:17
+msgid ""
+"Click on the ${register} button to finish the registration process. Don't "
+"worry, we will not ask you for a new password. You already have enough of "
+"them."
 msgstr ""
 
 #: yithlibraryserver/user/templates/user_information.pt:9

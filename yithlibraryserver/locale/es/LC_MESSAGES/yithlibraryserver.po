@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-01-09 23:16+0100\n"
-"PO-Revision-Date: 2013-01-09 23:17+0100\n"
+"POT-Creation-Date: 2013-01-09 23:33+0100\n"
+"PO-Revision-Date: 2013-01-09 23:34+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -32,14 +32,19 @@ msgstr "Email"
 msgid "Message"
 msgstr "Mensaje"
 
-#: yithlibraryserver/views.py:46
+#: yithlibraryserver/views.py:45
 msgid "Send message"
 msgstr "Enviar mensaje"
 
-#: yithlibraryserver/views.py:48 yithlibraryserver/oauth2/views.py:63
-#: yithlibraryserver/oauth2/views.py:125 yithlibraryserver/user/views.py:174
+#: yithlibraryserver/views.py:47 yithlibraryserver/oauth2/views.py:63
+#: yithlibraryserver/oauth2/views.py:125 yithlibraryserver/user/views.py:76
+#: yithlibraryserver/user/views.py:174
 msgid "Cancel"
 msgstr "Cancelar"
+
+#: yithlibraryserver/views.py:95
+msgid "Thank you very much for sharing your opinion"
+msgstr "Muchas gracias por compartir tu opinión"
 
 #: yithlibraryserver/oauth2/schemas.py:32
 #: yithlibraryserver/oauth2/templates/developer_applications.pt:18
@@ -822,6 +827,10 @@ msgstr "¿Te importa decirnos tus razones? ¡Queremos mejorar!"
 msgid "Allow statistics cookie"
 msgstr "Permitir cookie de estadísticas"
 
+#: yithlibraryserver/user/views.py:74
+msgid "Register into Yith Library"
+msgstr "Registrarme en Yith Library"
+
 #: yithlibraryserver/user/views.py:172
 msgid "Yes, I am sure. Destroy my account"
 msgstr "Sí, estoy seguro. Destruye mi cuenta"
@@ -1005,6 +1014,32 @@ msgstr ""
 "Si mezclas tus cuentas podrás acceder a tus contraseñas de una forma\n"
 " unificada: no importa con que proveedor accedas siempre verás el mismo\n"
 "conjunto de contraseñas."
+
+#: yithlibraryserver/user/templates/register.pt:9
+msgid "Register new user"
+msgstr "Registro de nuevo usuario"
+
+#: yithlibraryserver/user/templates/register.pt:13
+msgid "Welcome to the Yith Library!"
+msgstr "¡Bienvenido a Yith Library!"
+
+#: yithlibraryserver/user/templates/register.pt:15
+msgid "It looks like it's the first time you log into the Yith Library."
+msgstr "Parece que es la primera vez que entras en Yith Library"
+
+#: yithlibraryserver/user/templates/register.pt:17
+msgid "register"
+msgstr "registrarme"
+
+#: yithlibraryserver/user/templates/register.pt:17
+msgid ""
+"Click on the ${register} button to finish the registration process. Don't"
+" worry, we will not ask you for a new password. You already have enough "
+"of them."
+msgstr ""
+"Haz click en el botón ${register} para finalizar el proceso de registro.\n"
+"No te preocupes, no te pediremos una nueva contraseña. Ya tienes "
+"bastantes."
 
 #: yithlibraryserver/user/templates/user_information.pt:9
 msgid "User information"

@@ -71,9 +71,9 @@ def register_new_user(request):
         next_url = request.route_url('oauth2_clients')
 
     schema = NewUserSchema()
-    button1 = Button('submit', 'Register into Yith Library')
+    button1 = Button('submit', _('Register into Yith Library'))
     button1.css_class = 'btn-primary'
-    button2 = Button('cancel', 'Cancel')
+    button2 = Button('cancel', _('Cancel'))
     button2.css_class = ''
 
     form = Form(schema, buttons=(button1, button2))
