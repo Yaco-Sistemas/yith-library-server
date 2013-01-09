@@ -640,7 +640,7 @@ class ViewTests(testing.TestCase):
 
         res = self.testapp.get('/oauth2/applications/%s/revoke' % str(app_id))
         self.assertEqual(res.status, '200 OK')
-        res.mustcontain('Revoke authorization to application Test Application')
+        res.mustcontain('Revoke authorization to application <span>Test Application</span>')
 
         res = self.testapp.post('/oauth2/applications/%s/revoke' % str(app_id), {
                 'submit': 'Yes, I am sure',
