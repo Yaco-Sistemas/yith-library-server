@@ -57,6 +57,7 @@ class TestCase(unittest.TestCase):
             'testing': True,
             'admin_emails': 'admin1@example.com admin2@example.com',
             'persona_audience': 'https//localhost:6543',
+            'available_languages': 'en es',
             }
         app = main({}, **settings)
         self.testapp = TestApp(app)
