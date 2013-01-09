@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-01-09 21:05+0100\n"
+"POT-Creation-Date: 2013-01-09 22:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,8 +36,8 @@ msgstr ""
 msgid "Send message"
 msgstr ""
 
-#: yithlibraryserver/views.py:48 yithlibraryserver/oauth2/views.py:59
-#: yithlibraryserver/oauth2/views.py:121 yithlibraryserver/user/views.py:174
+#: yithlibraryserver/views.py:48 yithlibraryserver/oauth2/views.py:63
+#: yithlibraryserver/oauth2/views.py:125 yithlibraryserver/user/views.py:174
 msgid "Cancel"
 msgstr ""
 
@@ -71,29 +71,62 @@ msgstr ""
 msgid "Client secret"
 msgstr ""
 
-#: yithlibraryserver/oauth2/views.py:57 yithlibraryserver/oauth2/views.py:117
+#: yithlibraryserver/oauth2/views.py:40
+msgid "Access your passwords"
+msgstr ""
+
+#: yithlibraryserver/oauth2/views.py:61 yithlibraryserver/oauth2/views.py:121
 msgid "Save application"
 msgstr ""
 
-#: yithlibraryserver/oauth2/views.py:83
+#: yithlibraryserver/oauth2/views.py:87
 msgid "The application ${app} was created successfully"
 msgstr ""
 
-#: yithlibraryserver/oauth2/views.py:119
+#: yithlibraryserver/oauth2/views.py:123
 msgid "Delete application"
 msgstr ""
 
-#: yithlibraryserver/oauth2/views.py:148 yithlibraryserver/user/views.py:254
+#: yithlibraryserver/oauth2/views.py:152 yithlibraryserver/user/views.py:254
 #: yithlibraryserver/user/views.py:305
 msgid "The changes were saved successfully"
 msgstr ""
 
-#: yithlibraryserver/oauth2/views.py:185
+#: yithlibraryserver/oauth2/views.py:189
 msgid "The application ${app} was deleted successfully"
 msgstr ""
 
-#: yithlibraryserver/oauth2/views.py:344
+#: yithlibraryserver/oauth2/views.py:263
+msgid "By ${owner}"
+msgstr ""
+
+#: yithlibraryserver/oauth2/views.py:356
 msgid "The access to application ${app} has been revoked"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/application_authorization.pt:9
+#: yithlibraryserver/oauth2/templates/application_authorization.pt:15
+msgid "Authorize Application"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/application_authorization.pt:17
+msgid "${app-name} is asking your permission for"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/application_authorization.pt:29
+msgid "Allow access"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/application_authorization.pt:30
+msgid "No, thanks"
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/application_authorization.pt:33
+msgid "You can revoke this permission in the future."
+msgstr ""
+
+#: yithlibraryserver/oauth2/templates/application_authorization.pt:44
+msgid "More information"
 msgstr ""
 
 #: yithlibraryserver/oauth2/templates/application_revoke_authorization.pt:9

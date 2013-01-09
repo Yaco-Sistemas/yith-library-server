@@ -2,20 +2,22 @@
 <html lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
       metal:use-macro="base.macros['base']">
 
-<tal:block metal:fill-slot="header-title">Authorize Application</tal:block>
+<tal:block metal:fill-slot="header-title" i18n:translate="">Authorize Application</tal:block>
 
 <tal:block metal:fill-slot="content">
 
   <div class="row">
     <div class="span4 offset2">
-      <h2>Authorize application</h2>
+      <h2 i18n:translate="">Authorize Application</h2>
 
-      <p><strong>${app.name}</strong> is asking your permission for</p>
+      <p i18n:translate=""><strong i18n:name="app-name">${app.name}</strong> is asking your permission for</p>
 
       <ul>
-        <li tal:repeat="scope scopes">Access your ${scope}</li>
+        <li tal:repeat="scope_name scopes">${scope_name}</li>
       </ul>
 
       <form style="margin-top: 2em;" method="post" action="${request.route_path('oauth2_authorization_endpoint', app=app._id)}">
@@ -24,11 +26,11 @@
         <input type="hidden" name="redirect_uri" value="${redirect_uri}" />
         <input type="hidden" name="scope" value="${scope}" />
         <input type="hidden" name="state" value="${state}" />
-        <input class="btn btn-primary" type="submit" name="submit" value="Allow access" />
-        <input class="btn" type="submit" name="cancel" value="No, thanks" />
+        <input class="btn btn-primary" type="submit" name="submit" value="Allow access" i18n:attributes="value" />
+        <input class="btn" type="submit" name="cancel" value="No, thanks" i18n:attributes="value" />
       </form>
 
-      <p><small>You can revoke this permission in the future.</small></p>
+      <p><small i18n:translate="">You can revoke this permission in the future.</small></p>
 
     </div>
 
@@ -39,8 +41,7 @@
 	    </figcaption>
 	    <img tal:condition="app.image_url" src="${app.image_url}" width="200" height="200" alt="" />
         <p>
-          <a tal:condition="owner" href="#" rel="popover" title="${app.main_url}" data-content="<p>${app.description}.</p><small>By ${owner.email}</small>" data-placement="top" data-trigger="click">More information</a>
-          <a tal:condition="not owner" href="#" rel="popover" title="${app.main_url}" data-content="<p>${app.description}.</p>" data-placement="top" data-trigger="click">More information</a>
+          <a href="#" rel="popover" title="${app.main_url}" data-content="${app.description}. ${authorship_information}" data-placement="top" data-trigger="click" i18n:translate="">More information</a>
         </p>
       </figure>
     </div>

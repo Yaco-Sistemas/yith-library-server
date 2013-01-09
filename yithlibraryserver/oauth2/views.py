@@ -36,6 +36,10 @@ from yithlibraryserver.user.security import assert_authenticated_user_is_registe
 
 DEFAULT_SCOPE = 'passwords'
 
+SCOPE_NAMES = {
+    'passwords': _('Access your passwords'),
+    }
+
 
 @view_config(route_name='oauth2_developer_applications',
              renderer='templates/developer_applications.pt',
@@ -249,10 +253,18 @@ def authorization_endpoint(request):
             return HTTPFound(location=url)
 
         else:
-            owner = None
+            authorship_information = ''
             owner_id = app.get('owner', None)
             if owner_id is not None:
                 owner = request.db.users.find_one({'_id': owner_id})
+                if owner:
+                    email = owner.get('email', None)
+                    if email:
+                        authorship_information = _('By ${owner}',
+                                                   mapping={'owner': email})
+
+            scopes = [SCOPE_NAMES.get(scope, scope)
+                      for scope in scope.split(' ')]
             return {
                 'response_type': response_type,
                 'client_id': client_id,
@@ -260,8 +272,8 @@ def authorization_endpoint(request):
                 'scope': scope,
                 'state': state,
                 'app': app,
-                'scopes': scope.split(' '),
-                'owner': owner,
+                'scopes': scopes,
+                'authorship_information': authorship_information,
                 }
 
 
