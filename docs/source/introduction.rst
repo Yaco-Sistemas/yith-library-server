@@ -46,5 +46,5 @@ Goals
   just for fun. They have boring day jobs to pay their bills so they don't
   have deadlines or pressure when they hack on Yith Library.
 
-Architecture
-------------
+.. todo::
+   Architecture

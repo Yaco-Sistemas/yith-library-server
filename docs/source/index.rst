@@ -16,6 +16,8 @@ Contents:
    installation
    configuration
    development
+
+.. todo::
    rest-api
 
 Indices and tables

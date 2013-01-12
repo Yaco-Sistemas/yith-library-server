@@ -405,7 +405,7 @@ In development mode and also for testing purposes you can use the
 use the `waitress <http://pypi.python.org/pypi/waitress/>`_ WSGI
 server.
 
-.. code-block:: bash
+.. code-block:: text
 
    pserve development.ini
      Starting server in PID 6743.

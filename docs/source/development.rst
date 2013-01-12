@@ -1,5 +1,10 @@
-Development
-===========
+.. _development_chapter:
+
+Developing :program:`Yith Library Server`
+=========================================
+
+Installing in development mode
+------------------------------
 
 Running the tests
 -----------------
