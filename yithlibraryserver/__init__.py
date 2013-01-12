@@ -40,9 +40,15 @@ def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
     # read pyramid_mailer options
-    for key in ('host', 'port', 'username', 'password', 'default_sender'):
+    for key, default in (
+        ('host', 'localhost'),
+        ('port', '25'),
+        ('username', None),
+        ('password', None),
+        ('default_sender', 'no-reply@yithlibrary.com')
+        ):
         option = 'mail_' + key
-        settings[option] = read_setting_from_env(settings, option)
+        settings[option] = read_setting_from_env(settings, option, default)
 
     # read admin_emails option
     settings['admin_emails'] = read_setting_from_env(settings, 'admin_emails')
@@ -67,7 +73,7 @@ def main(global_config, **settings):
                                  'option is required')
 
     # Available languages
-    available_languages = read_setting_from_env(settings, 'available_languages', '')
+    available_languages = read_setting_from_env(settings, 'available_languages', 'en es')
 
     settings['available_languages'] = [
         lang for lang in available_languages.split(' ') if lang
