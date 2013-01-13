@@ -304,6 +304,44 @@ Mail
 Persona authentication
 ~~~~~~~~~~~~~~~~~~~~~~
 
+You can configure support for Mozilla Persona authentication in
+:program:`Yith Library Server` by defining several settings. If you
+do so, your users will be able to access your server authenticating
+themselves via Persona.
+
+The first setting is ``persona_audience`` and it should be the full
+URL of your server, including the port.
+
+.. code-block:: ini
+
+   persona_audience = http://localhost:80
+
+There are no default value for the¡s setting. If it is not set,
+Persona authentication is automatically disabled.
+
+.. warning::
+
+   It is perfectly fine to avoid Persona authentication but it is
+   actually required to enable at least one of the supported
+   authentication mechanisms (Facebook, Google, Twitter or Persona).
+   Otherwise your users won't be able to access your server.
+
+There is one more Persona seetting that is used to verify the
+assertion that Persona sends to :program:`Yith Library Server`.
+It has a good default value and you should only need to change
+it if Persona itself change it:
+
+.. code-block:: ini
+
+   persona_verifier_url = https://verifier.login.persona.org/verify
+
+You can also set these options with environment variables:
+
+.. code-block:: bash
+
+   $ export PERSONA_AUDIENCE="http://localhost:80"
+   $ export PERSONA_VERIFIER_URL="https://verifier.login.persona.org/verify"
+
 Sessions
 ~~~~~~~~
 
