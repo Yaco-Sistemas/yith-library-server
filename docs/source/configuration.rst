@@ -295,11 +295,11 @@ You can also set these options with environment variables:
    $ export GOOGLE_TOKEN_URI="https://accounts.google.com/o/oauth2/token"
    $ export GOOGLE_USER_INFO_URI="https://www.googleapis.com/oauth2/v1/userinfo"
 
-Logging
-~~~~~~~
+.. todo::
+   Logging
 
-Mail
-~~~~
+.. todo::
+   Mail
 
 Persona authentication
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -342,8 +342,8 @@ You can also set these options with environment variables:
    $ export PERSONA_AUDIENCE="http://localhost:80"
    $ export PERSONA_VERIFIER_URL="https://verifier.login.persona.org/verify"
 
-Sessions
-~~~~~~~~
+.. todo::
+   Sessions
 
 Twitter authentication
 ~~~~~~~~~~~~~~~~~~~~~~
