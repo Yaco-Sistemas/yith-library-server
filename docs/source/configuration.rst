@@ -19,7 +19,9 @@ value of the environment variable.
 :program:`Yith Library Server` comes with two configuration
 templates, one for development and one for production purposes.
 You should copy one of these templates instead of editing them
-because that would make the upgrade process easier.
+because that would make the upgrade process easier. These templates
+are located inside the :file:`config-templates` directory of the
+main ``yithlibraryserver`` Python package.
 
 The development template is named :file:`development.ini` and the
 production template is named :file:`production.ini`. These templates
