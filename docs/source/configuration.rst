@@ -233,6 +233,68 @@ of your server.
 Google authentication
 ~~~~~~~~~~~~~~~~~~~~~
 
+You can configure support for Google authentication in
+:program:`Yith Library Server` by defining several settings. If you
+do so, your users will be able to access your server authenticating
+themselves via Google.
+
+But first you need to create a Google application at
+https://code.google.com/apis/console?hl=es#access . Your need to
+enter the Redirect URI and the Javascript origin. If your server is
+located at http://localhost:65432/ then that is the value for the
+Javascript origin and your redirect URI would be
+http://localhost:65432/google/callback
+
+After you have created and configured the Google application you
+are ready to fill the settings in :program:`Yith Library Server`.
+
+The first setting is ``facebook_client_id`` and is a number you can
+obtain from your API Access page at Google.
+
+.. code-block:: ini
+
+   google_client_id = 123456789012.apps.googleusercontent.com
+
+Then, there is ``google_client_secret`` which is the secret part of
+Google client credentials. You can also obtain it from your
+API Access page at Google.
+
+.. code-block:: ini
+
+   google_client_secret = 1234567890abcdefghijklmn
+
+There are no default values for the settings ``google_client_id``
+and ``google_client_secret``. If they are not set, Google
+authentication is automatically disabled.
+
+.. warning::
+
+   It is perfectly fine to avoid Google authentication but it is
+   actually required to enable at least one of the supported
+   authentication mechanisms (Facebook, Google, Twitter or Persona).
+   Otherwise your users won't be able to access your server.
+
+There are three more Google settings that are used to perform the
+actual authentication but they have good default values and you
+should only need to change them if Google itself changes them.
+These are the settings and their default values:
+
+.. code-block:: ini
+
+   google_auth_uri = https://accounts.google.com/o/oauth2/auth
+   google_token_uri = https://accounts.google.com/o/oauth2/token
+   google_user_info_uri = https://www.googleapis.com/oauth2/v1/userinfo
+
+You can also set these options with environment variables:
+
+.. code-block:: bash
+
+   $ export GOOGLE_CLIENT_ID="123456789012.apps.googleusercontent.com"
+   $ export GOOGLE_CLIENT_SECRET="1234567890abcdefghijklmn"
+   $ export GOOGLE_AUTH_URI="https://accounts.google.com/o/oauth2/auth"
+   $ export GOOGLE_TOKEN_URI="https://accounts.google.com/o/oauth2/token"
+   $ export GOOGLE_USER_INFO_URI="https://www.googleapis.com/oauth2/v1/userinfo"
+
 Logging
 ~~~~~~~
 
@@ -247,3 +309,64 @@ Sessions
 
 Twitter authentication
 ~~~~~~~~~~~~~~~~~~~~~~
+
+You can configure support for Twitter authentication in
+:program:`Yith Library Server` by defining several settings. If you
+do so, your users will be able to access your server authenticating
+themselves via Twitter.
+
+But first you need to create a Twitter application at
+https://dev.twitter.com/apps/new . Your need to
+enter the Website and Callback URL. If your server is
+located at http://localhost:65432/ then that is the value for the
+Website your redirect URI would be http://localhost:65432/twitter/callback
+
+After you have created and configured the Twitter application you
+are ready to fill the settings in :program:`Yith Library Server`.
+
+The first setting is ``twitter_consumer_key`` and is a string you can
+obtain from your App page at Twitter.
+
+.. code-block:: ini
+
+   twitter_consumer_key = 1234567890abcdefghij
+
+Then, there is ``twitter_consumer_secret`` which is the secret part of
+Twitter client credentials. You can also obtain it from your
+App page at Twitter.
+
+.. code-block:: ini
+
+   twitter_consumer_secret = 1234567890abcdefghijklmnopqrstuvwxyzABCDE
+
+There are no default values for the settings ``twitter_consumer_key``
+and ``twitter_consumer_secret``. If they are not set, Twitter
+authentication is automatically disabled.
+
+.. warning::
+
+   It is perfectly fine to avoid Twitter authentication but it is
+   actually required to enable at least one of the supported
+   authentication mechanisms (Facebook, Google, Twitter or Persona).
+   Otherwise your users won't be able to access your server.
+
+There are three more Twitter settings that are used to perform the
+actual authentication but they have good default values and you
+should only need to change them if Twitter itself changes them.
+These are the settings and their default values:
+
+.. code-block:: ini
+
+   twitter_request_token_url = https://api.twitter.com/oauth/request_token
+   twitter_authenticate_url = https://api.twitter.com/oauth/authenticate
+   twitter_access_token_url = https://api.twitter.com/oauth/access_token
+
+You can also set these options with environment variables:
+
+.. code-block:: bash
+
+   $ export TWITTER_CONSUMER_KEY="1234567890abcdefghij"
+   $ export TWITTER_CONSUMER_SECRET="1234567890abcdefghijklmnopqrstuvwxyzABCDE"
+   $ export TWITTER_REQUEST_TOKEN_URL="https://api.twitter.com/oauth/request_token"
+   $ export TWITTER_AUTHENTICATE_URL="https://api.twitter.com/oauth/authenticate"
+   $ export TWITTER_ACCESS_TOKEN_URL="https://api.twitter.com/oauth/access_token"
