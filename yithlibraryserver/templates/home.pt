@@ -10,6 +10,10 @@
 
 <tal:block metal:fill-slot="content">
 
+  <a href="https://github.com/Yaco-Sistemas/yith-library-server" class="ribbon" target="_blank">
+    <img src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork us on GitHub!" i18n:attributes="alt" />
+  </a>
+
   <div class="hero-unit main-banner">
     <h1 i18n:translate="">Web password manager</h1>
     <p i18n:translate="">Yith Library is an online password manager. It will help you to keep

@@ -64,6 +64,13 @@ footer ul li {
 
 /* Home page styles */
 
+.ribbon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 0;
+}
+
 .btn small {
     display: block;
 }

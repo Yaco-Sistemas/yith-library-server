@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-01-09 23:33+0100\n"
-"PO-Revision-Date: 2013-01-09 23:34+0100\n"
+"POT-Creation-Date: 2013-01-15 00:05+0100\n"
+"PO-Revision-Date: 2013-01-15 00:10+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -278,7 +278,8 @@ msgid "Terms of service"
 msgstr "Términos de servicio"
 
 #: yithlibraryserver/templates/base.pt:90
-msgid "Fork us in GitHub!"
+#: yithlibraryserver/templates/home.pt:14
+msgid "Fork us on GitHub!"
 msgstr "¡Copianos en Github!"
 
 #: yithlibraryserver/templates/base.pt:93
@@ -330,11 +331,11 @@ msgstr "Los errores han sido destacados abajo"
 msgid "Home"
 msgstr "Inicio"
 
-#: yithlibraryserver/templates/home.pt:14
+#: yithlibraryserver/templates/home.pt:18
 msgid "Web password manager"
 msgstr "Gestor de contraseñas web"
 
-#: yithlibraryserver/templates/home.pt:15
+#: yithlibraryserver/templates/home.pt:19
 msgid ""
 "Yith Library is an online password manager. It will help you to keep your"
 " secrets under control in a secure and easy way. Your online data is too "
@@ -345,34 +346,34 @@ msgstr ""
 "\n"
 "son demasiado valiosos para no protegerlos seriamente."
 
-#: yithlibraryserver/templates/home.pt:20
-#: yithlibraryserver/templates/home.pt:183
+#: yithlibraryserver/templates/home.pt:24
+#: yithlibraryserver/templates/home.pt:187
 msgid "Start using it today"
 msgstr "Empieza a usarlo hoy mismo"
 
-#: yithlibraryserver/templates/home.pt:21
-#: yithlibraryserver/templates/home.pt:184
+#: yithlibraryserver/templates/home.pt:25
+#: yithlibraryserver/templates/home.pt:188
 msgid "at no cost"
 msgstr "sin coste alguno"
 
-#: yithlibraryserver/templates/home.pt:24
-#: yithlibraryserver/templates/home.pt:187
+#: yithlibraryserver/templates/home.pt:28
+#: yithlibraryserver/templates/home.pt:191
 msgid "Get your passwords"
 msgstr "Accede a tus contraseñas"
 
-#: yithlibraryserver/templates/home.pt:31
+#: yithlibraryserver/templates/home.pt:35
 msgid "Why do you need a password manager?"
 msgstr "¿Por qué necesitas un gestor de contraseñas?"
 
-#: yithlibraryserver/templates/home.pt:42
+#: yithlibraryserver/templates/home.pt:46
 msgid "password"
 msgstr "contraseña"
 
-#: yithlibraryserver/templates/home.pt:41
+#: yithlibraryserver/templates/home.pt:45
 msgid "Using one ${password} for everything is a bad idea"
 msgstr "Usar una ${password} para todo es una mala idea"
 
-#: yithlibraryserver/templates/home.pt:44
+#: yithlibraryserver/templates/home.pt:48
 msgid ""
 "Today, most Internet services force you to use an username and a password"
 " as your credentials to identify yourself. Since we are not very good at "
@@ -393,19 +394,19 @@ msgstr ""
 "ese servicio? Bueno, eso significa que el atacante puede acceder a todos\n"
 "los servicios en los que uses la misma contraseña. Da miedo, ¿no?"
 
-#: yithlibraryserver/templates/home.pt:58
+#: yithlibraryserver/templates/home.pt:62
 msgid "easily"
 msgstr "fácilmente"
 
-#: yithlibraryserver/templates/home.pt:57
+#: yithlibraryserver/templates/home.pt:61
 msgid "Manage your passwords ${easily}"
 msgstr "Gestiona tus contraseñas ${easily}"
 
-#: yithlibraryserver/templates/home.pt:64
+#: yithlibraryserver/templates/home.pt:68
 msgid "any device!"
 msgstr "¡cualquier aparato!"
 
-#: yithlibraryserver/templates/home.pt:59
+#: yithlibraryserver/templates/home.pt:63
 msgid ""
 "It's not as easy as using the same password for everything but you "
 "already know you should never do that. The Yith Library is super easy to "
@@ -420,15 +421,15 @@ msgstr ""
 "contraseñas\n"
 "desde ${any-device}"
 
-#: yithlibraryserver/templates/home.pt:80
+#: yithlibraryserver/templates/home.pt:84
 msgid "secure"
 msgstr "de forma segura"
 
-#: yithlibraryserver/templates/home.pt:79
+#: yithlibraryserver/templates/home.pt:83
 msgid "Keep your secrets ${secure}"
 msgstr "Manten tus secretos ${secure}"
 
-#: yithlibraryserver/templates/home.pt:81
+#: yithlibraryserver/templates/home.pt:85
 msgid ""
 "Your passwords are transmitted over the network using the TLS protocol "
 "and they are stored on the server encrypted. Even the yithians who run "
@@ -438,59 +439,59 @@ msgstr ""
 "almacenan cifradas en el servidor. ¡Ni siquiera los yithians que llevan\n"
 "este servicio pueden leerlas! Ni con su máquina del tiempo..."
 
-#: yithlibraryserver/templates/home.pt:92
+#: yithlibraryserver/templates/home.pt:96
 msgid "free"
 msgstr "gratuito"
 
-#: yithlibraryserver/templates/home.pt:91
+#: yithlibraryserver/templates/home.pt:95
 msgid "Yith Library is a ${free} service"
 msgstr "Yith Library es un servicio ${free}"
 
-#: yithlibraryserver/templates/home.pt:95
+#: yithlibraryserver/templates/home.pt:99
 msgid "Free as in freedom"
 msgstr "Libre"
 
-#: yithlibraryserver/templates/home.pt:97
+#: yithlibraryserver/templates/home.pt:101
 msgid "You can use it any way you want"
 msgstr "Puedes usarlo de cualquier manera"
 
-#: yithlibraryserver/templates/home.pt:98
+#: yithlibraryserver/templates/home.pt:102
 msgid "You can run your own server or clients"
 msgstr "Puedes ejecutar tu propio servidor o clientes"
 
-#: yithlibraryserver/templates/home.pt:99
+#: yithlibraryserver/templates/home.pt:103
 msgid "You can modify it"
 msgstr "Puedes modificarlo"
 
-#: yithlibraryserver/templates/home.pt:100
+#: yithlibraryserver/templates/home.pt:104
 msgid "You can distribute it"
 msgstr "Puedes distribuirlo"
 
-#: yithlibraryserver/templates/home.pt:101
+#: yithlibraryserver/templates/home.pt:105
 msgid "We are happy with all of this"
 msgstr "Nos parece bien todo esto"
 
-#: yithlibraryserver/templates/home.pt:105
+#: yithlibraryserver/templates/home.pt:109
 msgid "Free as in beer"
 msgstr "Gratuito"
 
-#: yithlibraryserver/templates/home.pt:107
+#: yithlibraryserver/templates/home.pt:111
 msgid "You can use our server and clients without paying a dime"
 msgstr "Puedes usar nuestro servidor y clientes sin pagarnos ni un céntimo"
 
-#: yithlibraryserver/templates/home.pt:109
+#: yithlibraryserver/templates/home.pt:113
 msgid "donations"
 msgstr "donaciones"
 
-#: yithlibraryserver/templates/home.pt:108
+#: yithlibraryserver/templates/home.pt:112
 msgid "If you like it a lot, we are happy to accept ${donations}"
 msgstr "Si te gusta mucho, nos encantaría aceptar ${donations}"
 
-#: yithlibraryserver/templates/home.pt:122
+#: yithlibraryserver/templates/home.pt:126
 msgid "How it works"
 msgstr "Cómo funciona"
 
-#: yithlibraryserver/templates/home.pt:124
+#: yithlibraryserver/templates/home.pt:128
 msgid ""
 "When you access the Yith Library the server sends your ciphered password "
 "collection to your browser using secure protocols such as TLS. This means"
@@ -502,11 +503,11 @@ msgstr ""
 "significa\n"
 "que nadie podrá analizar este tráfico y ver tus secretos cifrados."
 
-#: yithlibraryserver/templates/home.pt:129
+#: yithlibraryserver/templates/home.pt:133
 msgid "master password"
 msgstr "contraseña maestra"
 
-#: yithlibraryserver/templates/home.pt:128
+#: yithlibraryserver/templates/home.pt:132
 msgid ""
 "Yith Library asks you for the ${master-password} everytime you open an "
 "existing password or create a new one. As the browser does not keep the "
@@ -518,7 +519,7 @@ msgstr ""
 "la contraseña maestra en memoria, es seguro ante programas o plugins\n"
 "maliciosos."
 
-#: yithlibraryserver/templates/home.pt:134
+#: yithlibraryserver/templates/home.pt:138
 msgid ""
 "After making changes, the data is sent back to the server where it's "
 "persisted and it is ready to be fetched from your other devices. Since it"
@@ -531,19 +532,19 @@ msgstr ""
 "también se almacenan en la cache de tu navegador puedes leerlos cuando\n"
 "estes desconectado."
 
-#: yithlibraryserver/templates/home.pt:153
+#: yithlibraryserver/templates/home.pt:157
 msgid "any device"
 msgstr "cualquier aparato"
 
-#: yithlibraryserver/templates/home.pt:152
+#: yithlibraryserver/templates/home.pt:156
 msgid "Access your data from ${any-device}"
 msgstr "Accede a tus datos desde ${any-device}"
 
-#: yithlibraryserver/templates/home.pt:157
+#: yithlibraryserver/templates/home.pt:161
 msgid "Anytime, anywhere!"
 msgstr "¡Cuándo sea, dónde sea!"
 
-#: yithlibraryserver/templates/home.pt:154
+#: yithlibraryserver/templates/home.pt:158
 msgid ""
 "Your passwords are a very critical piece of data since they are the keys "
 "that open your digital accounts. You should be able to access them at "
@@ -555,11 +556,11 @@ msgstr ""
 "\n"
 "en un pais extranjero sin conexión a Internet... ${anytime-anywhere}"
 
-#: yithlibraryserver/templates/home.pt:163
+#: yithlibraryserver/templates/home.pt:167
 msgid "About the great library of Yith"
 msgstr "Sobre la gran biblioteca Yith"
 
-#: yithlibraryserver/templates/home.pt:164
+#: yithlibraryserver/templates/home.pt:168
 msgid ""
 "Those captive minds who cooperated with the Great Race were allowed to "
 "wander the Yithian cities at will and to browse the Yithians' gigantic "
@@ -575,7 +576,7 @@ msgstr ""
 "de un material increiblemente duradero, que almacenaba las historias de\n"
 "incontables razas alienígenas, incluida la humanidad."
 
-#: yithlibraryserver/templates/home.pt:176
+#: yithlibraryserver/templates/home.pt:180
 msgid "I couldn't live a week without a private library."
 msgstr "No podía vivir una semana sin una biblioteca privada."
 
