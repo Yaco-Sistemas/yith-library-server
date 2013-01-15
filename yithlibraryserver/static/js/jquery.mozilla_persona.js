@@ -59,10 +59,12 @@
                 $(form).appendTo("body").submit();
             },
             onlogout: function () {
-                if (typeof options.logout_url === 'string') {
-                    window.location = options.logout_url;
-                } else {
-                    options.logout_url();
+                if (current_provider === 'persona') {
+                    if (typeof options.logout_url === 'string') {
+                        window.location = options.logout_url;
+                    } else {
+                        options.logout_url();
+                    }
                 }
             }
         });
