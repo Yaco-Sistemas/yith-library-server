@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
 "POT-Creation-Date: 2013-01-15 00:05+0100\n"
-"PO-Revision-Date: 2013-01-15 00:10+0100\n"
+"PO-Revision-Date: 2013-01-15 21:36+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -542,7 +542,7 @@ msgstr "Accede a tus datos desde ${any-device}"
 
 #: yithlibraryserver/templates/home.pt:161
 msgid "Anytime, anywhere!"
-msgstr "¡Cuándo sea, dónde sea!"
+msgstr "¡Cuando sea, donde sea!"
 
 #: yithlibraryserver/templates/home.pt:158
 msgid ""
