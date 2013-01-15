@@ -13,6 +13,10 @@ h1 {
     height: 32px;
 }
 
+.home-navbar .navbar-inner {
+    padding-right: 80px;
+}
+
 .pointer {
     cursor: pointer;
 }
@@ -67,7 +71,7 @@ footer ul li {
 .ribbon {
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
     border: 0;
 }
 

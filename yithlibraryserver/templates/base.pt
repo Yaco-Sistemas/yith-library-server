@@ -28,7 +28,7 @@
   </head>
   <body>
 
-  <div class="container-fluid">
+  <div class="container">
     <div class="alert" tal:condition="request.google_analytics.enabled and request.google_analytics.first_time">
       <p>
         <strong tal:condition="not request.user" i18n:translate="">Welcome, new visitor!</strong>
@@ -42,7 +42,7 @@
   </div>
 
   <tal:block metal:define-slot="navbar">
-    <div class="navbar container-fluid">
+    <div class="navbar container" tal:attributes="class 'navbar container home-navbar' if request.matched_route.name == 'home' else 'navbar container'">
       <div class="navbar-inner">
         <a class="brand" href="${request.route_path('home')}">Yith Library</a>
         <ul class="nav pull-right">
@@ -66,7 +66,7 @@
     </div>
   </tal:block>
 
-  <div id="messages" class="container-fluid">
+  <div id="messages" class="container">
     <div tal:repeat="queue ('info', 'success', 'error', '')" tal:omit-tag="">
       <div class="alert alert-${queue}"
            tal:define="messages request.session.pop_flash(queue)"
@@ -78,21 +78,23 @@
     </div>
   </div>
 
-  <div class="container-fluid">
+  <div class="container">
 
     <tal:block metal:define-slot="content"></tal:block>
 
   </div>
 
   <footer class="container-fluid">
-    <ul class="pull-left">
-      <li><a href="${request.route_path('tos')}" id="tosButton" i18n:translate="">Terms of service</a> |</li>
-      <li><a href="https://github.com/Yaco-Sistemas/yith-library-server" target="_blank" i18n:translate="">Fork us on GitHub!</a></li>
-    </ul>
-    <ul class="pull-right">
-      <li><a href="${request.route_path('contact')}" i18n:translate="">Contact</a> |</li>
-      <li><a href="#" id="creditsButton" i18n:translate="">Credits</a></li>
-    </ul>
+    <div class="container">
+      <ul class="pull-left">
+        <li><a href="${request.route_path('tos')}" id="tosButton" i18n:translate="">Terms of service</a> |</li>
+        <li><a href="https://github.com/Yaco-Sistemas/yith-library-server" target="_blank" i18n:translate="">Fork us on GitHub!</a></li>
+      </ul>
+      <ul class="pull-right">
+        <li><a href="${request.route_path('contact')}" i18n:translate="">Contact</a> |</li>
+        <li><a href="#" id="creditsButton" i18n:translate="">Credits</a></li>
+      </ul>
+    </div>
   </footer>
 
   <div class="modal hide" id="credits">
