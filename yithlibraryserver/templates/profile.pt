@@ -25,6 +25,9 @@
         <li tal:attributes="class 'active' if request.matched_route.name == 'user_preferences' else None">
           <a href="${request.route_path('user_preferences')}" i18n:translate="">Preferences</a>
         </li>
+        <li tal:attributes="class 'active' if request.matched_route.name == 'backups_index' else None">
+          <a href="${request.route_path('backups_index')}" i18n:translate="">Backup</a>
+        </li>
         <li tal:attributes="class 'active' if request.matched_route.name == 'user_identity_providers' else None">
           <a href="${request.route_path('user_identity_providers')}" i18n:translate="">Identity providers</a>
         </li>

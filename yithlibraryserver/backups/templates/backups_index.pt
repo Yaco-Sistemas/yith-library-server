@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
+      metal:use-macro="profile.macros['profile']">
+
+<tal:block metal:fill-slot="header-title" i18n:translate="">Backups</tal:block>
+
+<tal:block metal:fill-slot="content">
+
+  <h2 i18n:translate="">Backup</h2>
+
+  <h3>Export passwords</h3>
+
+  <a href="${request.route_path('backups_export')}" class="btn btn-primary btn-large">Download my passwords</a>
+
+  <h3>Import passwords</h3>
+
+  <form method="post" action="${request.route_path('backups_import')}" enctype="multipart/form-data">
+    <label for="passwords-file">Select a file:</label>
+    <input id="passwords-file" name="passwords-file" type="file" class="input-block-level" />
+    <div class="forms-actions">
+      <input type="submit" class="btn btn-primary btn-large" value="Upload my passwords" />
+    </div>
+  </form>
+
+</tal:block>
+
+</html>

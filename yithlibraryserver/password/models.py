@@ -25,17 +25,34 @@ class PasswordsManager(object):
         self.db = db
 
     def create(self, user, password):
-        """Creates and returns a new password.
+        """Creates and returns a new password or a set of passwords.
 
         Stores the password in the database for this specific user
         and returns a new dict with the 'owner' and '_id' fields
         filled.
+
+        If password is a list, do the same with each password in
+        this list.
         """
-        new_password = dict(password)  # copy since we are changing this object
-        new_password['owner'] = user['_id']
-        _id = self.db.passwords.insert(new_password, safe=True)
-        new_password['_id'] = _id
-        return new_password
+        if isinstance(password, dict):
+            new_password = dict(password)  # copy since we are changing this object
+            new_password['owner'] = user['_id']
+            _id = self.db.passwords.insert(new_password, safe=True)
+            new_password['_id'] = _id
+            return new_password
+        else:
+            new_passwords = []  # copy since we are changing this object
+            for p in password:
+                p = dict(p)
+                p['owner'] = user['_id']
+                new_passwords.append(p)
+
+            _id = self.db.passwords.insert(new_passwords, safe=True)
+
+            for i in range(len(new_passwords)):
+                new_passwords[i]['_id'] = _id[i]
+
+            return new_passwords
 
     def retrieve(self, user, _id=None):
         """Return the user's passwords or just one.
