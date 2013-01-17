@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-01-15 00:05+0100\n"
-"PO-Revision-Date: 2013-01-15 21:36+0100\n"
+"POT-Creation-Date: 2013-01-17 00:03+0100\n"
+"PO-Revision-Date: 2013-01-17 00:05+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -45,6 +45,48 @@ msgstr "Cancelar"
 #: yithlibraryserver/views.py:95
 msgid "Thank you very much for sharing your opinion"
 msgstr "Muchas gracias por compartir tu opinión"
+
+#: yithlibraryserver/backups/views.py:68
+msgid "There was a problem reading your passwords file"
+msgstr "Hubo un problema releyendo su fichero de contraseñas"
+
+#: yithlibraryserver/backups/views.py:75
+msgid "Congratulations, ${n_passwords} password has been imported"
+msgstr "Enhorabuena, ${n_passwords} contraseña ha sido importada"
+
+#: yithlibraryserver/backups/views.py:76
+msgid "Congratulations, ${n_passwords} passwords have been imported"
+msgstr "Enhorabuena, ${n_passwords} contraseñas han sido importadas"
+
+#: yithlibraryserver/backups/views.py:84 yithlibraryserver/backups/views.py:89
+msgid "The passwords file is required to upload the passwords"
+msgstr "El fichero de contraseñas es necesario para subir las contraseñas"
+
+#: yithlibraryserver/backups/templates/backups_index.pt:9
+#: yithlibraryserver/backups/templates/backups_index.pt:13
+#: yithlibraryserver/templates/profile.pt:29
+msgid "Backup"
+msgstr "Copia de seguridad"
+
+#: yithlibraryserver/backups/templates/backups_index.pt:15
+msgid "Export passwords"
+msgstr "Exportar contraseñas"
+
+#: yithlibraryserver/backups/templates/backups_index.pt:17
+msgid "Download my passwords"
+msgstr "Descargar mis contraseñas"
+
+#: yithlibraryserver/backups/templates/backups_index.pt:19
+msgid "Import passwords"
+msgstr "Importar contraseñas"
+
+#: yithlibraryserver/backups/templates/backups_index.pt:22
+msgid "Select a file:"
+msgstr "Selecciona un fichero:"
+
+#: yithlibraryserver/backups/templates/backups_index.pt:25
+msgid "Upload my passwords"
+msgstr "Subir mis contraseñas"
 
 #: yithlibraryserver/oauth2/schemas.py:32
 #: yithlibraryserver/oauth2/templates/developer_applications.pt:18
@@ -272,31 +314,31 @@ msgstr "Mis contraseñas"
 msgid "Log out"
 msgstr "Salir"
 
-#: yithlibraryserver/templates/base.pt:89 yithlibraryserver/templates/tos.pt:9
+#: yithlibraryserver/templates/base.pt:90 yithlibraryserver/templates/tos.pt:9
 #: yithlibraryserver/templates/tos.pt:13
 msgid "Terms of service"
 msgstr "Términos de servicio"
 
-#: yithlibraryserver/templates/base.pt:90
+#: yithlibraryserver/templates/base.pt:91
 #: yithlibraryserver/templates/home.pt:14
 msgid "Fork us on GitHub!"
 msgstr "¡Copianos en Github!"
 
-#: yithlibraryserver/templates/base.pt:93
+#: yithlibraryserver/templates/base.pt:94
 #: yithlibraryserver/templates/contact.pt:9
 msgid "Contact"
 msgstr "Contacto"
 
-#: yithlibraryserver/templates/base.pt:94
-#: yithlibraryserver/templates/base.pt:101
+#: yithlibraryserver/templates/base.pt:95
+#: yithlibraryserver/templates/base.pt:103
 msgid "Credits"
 msgstr "Créditos"
 
-#: yithlibraryserver/templates/base.pt:104
+#: yithlibraryserver/templates/base.pt:106
 msgid "Yith Library is copyright of:"
 msgstr "El copyright de Yith Library es de:"
 
-#: yithlibraryserver/templates/base.pt:129
+#: yithlibraryserver/templates/base.pt:131
 #: yithlibraryserver/user/templates/email_verification_dialog.pt:20
 msgid "Close"
 msgstr "Cerrar"
@@ -595,25 +637,25 @@ msgstr "Información personal"
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: yithlibraryserver/templates/profile.pt:29
+#: yithlibraryserver/templates/profile.pt:32
 #: yithlibraryserver/user/templates/identity_providers.pt:9
 #: yithlibraryserver/user/templates/identity_providers.pt:13
 msgid "Identity providers"
 msgstr "Proveedores de identidad"
 
-#: yithlibraryserver/templates/profile.pt:32
+#: yithlibraryserver/templates/profile.pt:35
 msgid "Applications"
 msgstr "Aplicaciones"
 
-#: yithlibraryserver/templates/profile.pt:34
+#: yithlibraryserver/templates/profile.pt:37
 msgid "Authorized clients"
 msgstr "Clientes autorizados"
 
-#: yithlibraryserver/templates/profile.pt:37
+#: yithlibraryserver/templates/profile.pt:40
 msgid "Developer apps"
 msgstr "Aplicaciones de desarrolladores"
 
-#: yithlibraryserver/templates/profile.pt:42
+#: yithlibraryserver/templates/profile.pt:45
 #: yithlibraryserver/user/templates/destroy.pt:9
 #: yithlibraryserver/user/templates/destroy.pt:13
 msgid "Destroy account"
