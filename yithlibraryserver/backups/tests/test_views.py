@@ -18,6 +18,7 @@
 
 import datetime
 
+from yithlibraryserver.compat import binary_type
 from yithlibraryserver.testing import TestCase
 
 
@@ -137,9 +138,10 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # bad file
+        content = binary_type('[{}')
         res = self.testapp.post(
             '/backup/import', {},
-            upload_files=[('passwords-file', 'bad.json', '[{}')],
+            upload_files=[('passwords-file', 'bad.json', content)],
             status=302)
         self.assertEqual(res.status, '302 Found')
         self.assertEqual(res.location, 'http://localhost/backup')
@@ -147,9 +149,10 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # file with good syntax but empty
+        content = binary_type('[]')
         res = self.testapp.post(
             '/backup/import', {},
-            upload_files=[('passwords-file', 'empty.json', '[]')],
+            upload_files=[('passwords-file', 'empty.json', content)],
             status=302)
         self.assertEqual(res.status, '302 Found')
         self.assertEqual(res.location, 'http://localhost/backup')
@@ -157,9 +160,10 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # file with good syntax but empty
+        content = binary_type('[{}]')
         res = self.testapp.post(
             '/backup/import', {},
-            upload_files=[('passwords-file', 'empty.json', '[{}]')],
+            upload_files=[('passwords-file', 'empty.json', content)],
             status=302)
         self.assertEqual(res.status, '302 Found')
         self.assertEqual(res.location, 'http://localhost/backup')
@@ -167,7 +171,7 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # file with good passwords
-        content = '[{"secret": "password1"}, {"secret": "password2"}]'
+        content = binary_type('[{"secret": "password1"}, {"secret": "password2"}]')
         res = self.testapp.post(
             '/backup/import', {},
             upload_files=[('passwords-file', 'good.json', content)],
