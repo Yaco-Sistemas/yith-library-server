@@ -59,7 +59,8 @@ def backups_import(request):
         passwords_field = request.POST['passwords-file']
         if passwords_field != '':
             try:
-                json_data = json.load(passwords_field.file)
+                raw_data = passwords_field.file.read().decode('utf-8')
+                json_data = json.loads(raw_data)
                 passwords_manager = PasswordsManager(request.db)
                 passwords_manager.delete(request.user)
                 passwords_manager.create(request.user, json_data)

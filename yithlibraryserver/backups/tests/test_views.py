@@ -18,7 +18,7 @@
 
 import datetime
 
-from yithlibraryserver.compat import binary_type
+from yithlibraryserver.compat import text_type
 from yithlibraryserver.testing import TestCase
 
 
@@ -138,7 +138,7 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # bad file
-        content = binary_type('[{}')
+        content = text_type('[{}').encode('utf-8')
         res = self.testapp.post(
             '/backup/import', {},
             upload_files=[('passwords-file', 'bad.json', content)],
@@ -149,7 +149,7 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # file with good syntax but empty
-        content = binary_type('[]')
+        content = text_type('[]').encode('utf-8')
         res = self.testapp.post(
             '/backup/import', {},
             upload_files=[('passwords-file', 'empty.json', content)],
@@ -160,7 +160,7 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # file with good syntax but empty
-        content = binary_type('[{}]')
+        content = text_type('[{}]').encode('utf-8')
         res = self.testapp.post(
             '/backup/import', {},
             upload_files=[('passwords-file', 'empty.json', content)],
@@ -171,7 +171,7 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # file with good passwords
-        content = binary_type('[{"secret": "password1"}, {"secret": "password2"}]')
+        content = text_type('[{"secret": "password1"}, {"secret": "password2"}]').encode('utf-8')
         res = self.testapp.post(
             '/backup/import', {},
             upload_files=[('passwords-file', 'good.json', content)],
