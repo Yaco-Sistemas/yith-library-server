@@ -35,24 +35,28 @@ class PasswordsManager(object):
         this list.
         """
         if isinstance(password, dict):
-            new_password = dict(password)  # copy since we are changing this object
-            new_password['owner'] = user['_id']
-            _id = self.db.passwords.insert(new_password, safe=True)
-            new_password['_id'] = _id
-            return new_password
+            if password:
+                new_password = dict(password)  # copy since we are changing this object
+                new_password['owner'] = user['_id']
+                _id = self.db.passwords.insert(new_password, safe=True)
+                new_password['_id'] = _id
+                return new_password
         else:
             new_passwords = []  # copy since we are changing this object
             for p in password:
-                p = dict(p)
-                p['owner'] = user['_id']
-                new_passwords.append(p)
+                if p:
+                    p = dict(p)
+                    p['owner'] = user['_id']
+                    new_passwords.append(p)
 
-            _id = self.db.passwords.insert(new_passwords, safe=True)
+            if new_passwords:
 
-            for i in range(len(new_passwords)):
-                new_passwords[i]['_id'] = _id[i]
+                _ids = self.db.passwords.insert(new_passwords, safe=True)
 
-            return new_passwords
+                for i in range(len(new_passwords)):
+                    new_passwords[i]['_id'] = _ids[i]
+
+                return new_passwords
 
     def retrieve(self, user, _id=None):
         """Return the user's passwords or just one.

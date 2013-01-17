@@ -44,10 +44,22 @@ class PasswordsManagerTests(unittest.TestCase):
 
     def test_create(self):
         n_passwords = self.db.passwords.count()
+        result = self.pm.create(self.user, {})
+        self.assertEqual(result, None)
+        self.assertEqual(n_passwords, self.db.passwords.count())
+
         password = {'secret': 'secret1'}
         created_password = self.pm.create(self.user, password)
         self.assertEqual(created_password['owner'], self.user_id)
         self.assertTrue('_id' in created_password)
+        self.assertEqual(n_passwords + 1, self.db.passwords.count())
+
+        result = self.pm.create(self.user, [])
+        self.assertEqual(result, None)
+        self.assertEqual(n_passwords + 1, self.db.passwords.count())
+
+        result = self.pm.create(self.user, [{}])
+        self.assertEqual(result, None)
         self.assertEqual(n_passwords + 1, self.db.passwords.count())
 
         passwords = [{
