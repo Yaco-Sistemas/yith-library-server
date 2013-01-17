@@ -9,8 +9,11 @@ h1 {
 .navbar img.avatar {
     float: left;
     margin-top: -6px;
-    padding-right: 4px;
+    margin-right: 4px;
     height: 32px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 
 .home-navbar .navbar-inner {
