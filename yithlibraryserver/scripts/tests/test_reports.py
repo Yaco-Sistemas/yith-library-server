@@ -60,7 +60,7 @@ class ReportTests(unittest.TestCase):
 
         # Replace sys argv and stdout
         sys.argv = []
-        sys.stdout = StringIO('')
+        sys.stdout = StringIO()
 
         # Call usage with no arguments
         result = usage()
@@ -155,7 +155,7 @@ John3 Doe3 <john3@example.com> (%s)
 
         # Replace sys argv and stdout
         sys.argv = []
-        sys.stdout = StringIO('')
+        sys.stdout = StringIO()
 
         # Call applications with no arguments
         result = applications()

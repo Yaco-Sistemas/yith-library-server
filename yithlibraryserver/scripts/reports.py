@@ -22,8 +22,16 @@ import sys
 
 from pyramid.paster import bootstrap
 
+from yithlibraryserver.compat import PY3
 from yithlibraryserver.user.accounts import get_available_providers
 from yithlibraryserver.user.accounts import get_n_passwords
+
+
+def safe_print(value):
+    if PY3:
+        print(value)
+    else:
+        print(value.encode('utf-8'))
 
 
 def _get_user_display_name(user):
@@ -53,7 +61,7 @@ def usage():
         )
     options, args = parser.parse_args(sys.argv[1:])
     if not len(args) >= 1:
-        print('You must provide at least one argument')
+        safe_print('You must provide at least one argument')
         return 2
     config_uri = args[0]
     env = bootstrap(config_uri)
@@ -73,7 +81,7 @@ def usage():
                     info['passwords'], info['providers'], info['verified'],
                     info['date_joined'], info['last_login'],
                     ))
-            print(text.encode('utf-8'))
+            safe_print(text)
 
     finally:
         closer()
@@ -106,7 +114,7 @@ def applications():
         )
     options, args = parser.parse_args(sys.argv[1:])
     if not len(args) >= 1:
-        print('You must provide at least one argument')
+        safe_print('You must provide at least one argument')
         return 2
     config_uri = args[0]
     env = bootstrap(config_uri)
@@ -125,7 +133,7 @@ def applications():
                     info['main_url'], info['callback_url'],
                     info['users'],
                     ))
-            print(text.encode('utf-8'))
+            safe_print(text)
 
     finally:
         closer()
