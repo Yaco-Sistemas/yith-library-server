@@ -63,16 +63,17 @@ def usage():
         db = settings['mongodb'].get_database()
         for user in db.users.find():
             info = _get_user_info(db, user)
-            print('%s (%s)\n'
-                  '\tPasswords: %d\n'
-                  '\tProviders: %s\n'
-                  '\tVerified: %s\n'
-                  '\tDate joined: %s\n'
-                  '\tLast login: %s\n' % (
+            text = ('%s (%s)\n'
+                    '\tPasswords: %d\n'
+                    '\tProviders: %s\n'
+                    '\tVerified: %s\n'
+                    '\tDate joined: %s\n'
+                    '\tLast login: %s\n' % (
                     info['display_name'], user['_id'],
                     info['passwords'], info['providers'], info['verified'],
                     info['date_joined'], info['last_login'],
                     ))
+            print(text.encode('utf-8'))
 
     finally:
         closer()
@@ -115,15 +116,16 @@ def applications():
         db = settings['mongodb'].get_database()
         for app in db.applications.find():
             info = _get_app_info(db, app)
-            print('%s\n'
-                  '\tOwner: %s\n'
-                  '\tMain URL: %s\n'
-                  '\tCallback URL: %s\n'
-                  '\tUsers: %d\n' % (
+            text = ('%s\n'
+                    '\tOwner: %s\n'
+                    '\tMain URL: %s\n'
+                    '\tCallback URL: %s\n'
+                    '\tUsers: %d\n' % (
                     info['name'], info['owner'],
                     info['main_url'], info['callback_url'],
                     info['users'],
                     ))
+            print(text.encode('utf-8'))
 
     finally:
         closer()
