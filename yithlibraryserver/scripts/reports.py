@@ -69,7 +69,7 @@ def usage():
 
     try:
         db = settings['mongodb'].get_database()
-        for user in db.users.find():
+        for user in db.users.find().sort('date_joined'):
             info = _get_user_info(db, user)
             text = ('%s (%s)\n'
                     '\tPasswords: %d\n'
