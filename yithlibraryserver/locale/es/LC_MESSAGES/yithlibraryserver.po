@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-01-17 00:03+0100\n"
-"PO-Revision-Date: 2013-01-17 00:05+0100\n"
+"POT-Creation-Date: 2013-01-20 18:59+0100\n"
+"PO-Revision-Date: 2013-01-20 19:00+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -46,19 +46,19 @@ msgstr "Cancelar"
 msgid "Thank you very much for sharing your opinion"
 msgstr "Muchas gracias por compartir tu opinión"
 
-#: yithlibraryserver/backups/views.py:68
+#: yithlibraryserver/backups/views.py:69
 msgid "There was a problem reading your passwords file"
 msgstr "Hubo un problema releyendo su fichero de contraseñas"
 
-#: yithlibraryserver/backups/views.py:75
+#: yithlibraryserver/backups/views.py:76
 msgid "Congratulations, ${n_passwords} password has been imported"
 msgstr "Enhorabuena, ${n_passwords} contraseña ha sido importada"
 
-#: yithlibraryserver/backups/views.py:76
+#: yithlibraryserver/backups/views.py:77
 msgid "Congratulations, ${n_passwords} passwords have been imported"
 msgstr "Enhorabuena, ${n_passwords} contraseñas han sido importadas"
 
-#: yithlibraryserver/backups/views.py:84 yithlibraryserver/backups/views.py:89
+#: yithlibraryserver/backups/views.py:85 yithlibraryserver/backups/views.py:90
 msgid "The passwords file is required to upload the passwords"
 msgstr "El fichero de contraseñas es necesario para subir las contraseñas"
 
@@ -320,25 +320,29 @@ msgid "Terms of service"
 msgstr "Términos de servicio"
 
 #: yithlibraryserver/templates/base.pt:91
-#: yithlibraryserver/templates/home.pt:14
-msgid "Fork us on GitHub!"
-msgstr "¡Copianos en Github!"
-
-#: yithlibraryserver/templates/base.pt:94
 #: yithlibraryserver/templates/contact.pt:9
 msgid "Contact"
 msgstr "Contacto"
 
-#: yithlibraryserver/templates/base.pt:95
-#: yithlibraryserver/templates/base.pt:103
+#: yithlibraryserver/templates/base.pt:92
+#: yithlibraryserver/templates/base.pt:104
 msgid "Credits"
 msgstr "Créditos"
 
-#: yithlibraryserver/templates/base.pt:106
+#: yithlibraryserver/templates/base.pt:95
+msgid "Follow us on Twitter!"
+msgstr "¡Síguenos en Twitter!"
+
+#: yithlibraryserver/templates/base.pt:96
+#: yithlibraryserver/templates/home.pt:14
+msgid "Fork us on GitHub!"
+msgstr "¡Copianos en Github!"
+
+#: yithlibraryserver/templates/base.pt:107
 msgid "Yith Library is copyright of:"
 msgstr "El copyright de Yith Library es de:"
 
-#: yithlibraryserver/templates/base.pt:131
+#: yithlibraryserver/templates/base.pt:132
 #: yithlibraryserver/user/templates/email_verification_dialog.pt:20
 msgid "Close"
 msgstr "Cerrar"

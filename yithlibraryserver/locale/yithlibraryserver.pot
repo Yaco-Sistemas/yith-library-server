@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-01-17 00:03+0100\n"
+"POT-Creation-Date: 2013-01-20 18:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,19 +46,19 @@ msgstr ""
 msgid "Thank you very much for sharing your opinion"
 msgstr ""
 
-#: yithlibraryserver/backups/views.py:68
+#: yithlibraryserver/backups/views.py:69
 msgid "There was a problem reading your passwords file"
 msgstr ""
 
-#: yithlibraryserver/backups/views.py:75
+#: yithlibraryserver/backups/views.py:76
 msgid "Congratulations, ${n_passwords} password has been imported"
 msgstr ""
 
-#: yithlibraryserver/backups/views.py:76
+#: yithlibraryserver/backups/views.py:77
 msgid "Congratulations, ${n_passwords} passwords have been imported"
 msgstr ""
 
-#: yithlibraryserver/backups/views.py:84 yithlibraryserver/backups/views.py:89
+#: yithlibraryserver/backups/views.py:85 yithlibraryserver/backups/views.py:90
 msgid "The passwords file is required to upload the passwords"
 msgstr ""
 
@@ -305,23 +305,27 @@ msgstr ""
 msgid "Terms of service"
 msgstr ""
 
-#: yithlibraryserver/templates/base.pt:91 yithlibraryserver/templates/home.pt:14
-msgid "Fork us on GitHub!"
-msgstr ""
-
-#: yithlibraryserver/templates/base.pt:94 yithlibraryserver/templates/contact.pt:9
+#: yithlibraryserver/templates/base.pt:91 yithlibraryserver/templates/contact.pt:9
 msgid "Contact"
 msgstr ""
 
-#: yithlibraryserver/templates/base.pt:95 yithlibraryserver/templates/base.pt:103
+#: yithlibraryserver/templates/base.pt:92 yithlibraryserver/templates/base.pt:104
 msgid "Credits"
 msgstr ""
 
-#: yithlibraryserver/templates/base.pt:106
+#: yithlibraryserver/templates/base.pt:95
+msgid "Follow us on Twitter!"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:96 yithlibraryserver/templates/home.pt:14
+msgid "Fork us on GitHub!"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:107
 msgid "Yith Library is copyright of:"
 msgstr ""
 
-#: yithlibraryserver/templates/base.pt:131
+#: yithlibraryserver/templates/base.pt:132
 #: yithlibraryserver/user/templates/email_verification_dialog.pt:20
 msgid "Close"
 msgstr ""

@@ -88,11 +88,12 @@
     <div class="container">
       <ul class="pull-left">
         <li><a href="${request.route_path('tos')}" id="tosButton" i18n:translate="">Terms of service</a> |</li>
-        <li><a href="https://github.com/Yaco-Sistemas/yith-library-server" target="_blank" i18n:translate="">Fork us on GitHub!</a></li>
-      </ul>
-      <ul class="pull-right">
         <li><a href="${request.route_path('contact')}" i18n:translate="">Contact</a> |</li>
         <li><a href="#" id="creditsButton" i18n:translate="">Credits</a></li>
+      </ul>
+      <ul class="pull-right">
+        <li><a href="https://github.com/Yaco-Sistemas/yith-library-server" target="_blank" i18n:translate="">Follow us on Twitter!</a></li>
+        <li><a href="https://github.com/Yaco-Sistemas/yith-library-server" target="_blank" i18n:translate="">Fork us on GitHub!</a></li>
       </ul>
     </div>
   </footer>
