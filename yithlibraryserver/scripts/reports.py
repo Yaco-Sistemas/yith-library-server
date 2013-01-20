@@ -34,6 +34,23 @@ def safe_print(value):
         print(value.encode('utf-8'))
 
 
+def setup_simple_command(name, description):
+    usage = name + ": %prog config_uri"
+    parser = optparse.OptionParser(
+        usage=usage,
+        description=textwrap.dedent(description)
+        )
+    options, args = parser.parse_args(sys.argv[1:])
+    if not len(args) >= 1:
+        safe_print('You must provide at least one argument')
+        return 2
+    config_uri = args[0]
+    env = bootstrap(config_uri)
+    settings, closer = env['registry'].settings, env['closer']
+
+    return settings, closer, env
+
+
 def _get_user_display_name(user):
     return '%s %s <%s>' % (user.get('first_name', ''),
                            user.get('last_name', ''),
@@ -53,19 +70,14 @@ def _get_user_info(db, user):
 
 
 def users():
-    description = "Report information about users and their passwords."
-    usage = "usage: %prog config_uri"
-    parser = optparse.OptionParser(
-        usage=usage,
-        description=textwrap.dedent(description)
+    result = setup_simple_command(
+        "users",
+        "Report information about users and their passwords.",
         )
-    options, args = parser.parse_args(sys.argv[1:])
-    if not len(args) >= 1:
-        safe_print('You must provide at least one argument')
-        return 2
-    config_uri = args[0]
-    env = bootstrap(config_uri)
-    settings, closer = env['registry'].settings, env['closer']
+    if isinstance(result, int):
+        return result
+    else:
+        settings, closer, env = result
 
     try:
         db = settings['mongodb'].get_database()
@@ -106,19 +118,14 @@ def _get_app_info(db, app):
 
 
 def applications():
-    description = "Report information about oauth2 client applications."
-    usage = "applications: %prog config_uri"
-    parser = optparse.OptionParser(
-        usage=usage,
-        description=textwrap.dedent(description)
+    result = setup_simple_command(
+        "applications",
+        "Report information about oauth2 client applications.",
         )
-    options, args = parser.parse_args(sys.argv[1:])
-    if not len(args) >= 1:
-        safe_print('You must provide at least one argument')
-        return 2
-    config_uri = args[0]
-    env = bootstrap(config_uri)
-    settings, closer = env['registry'].settings, env['closer']
+    if isinstance(result, int):
+        return result
+    else:
+        settings, closer, env = result
 
     try:
         db = settings['mongodb'].get_database()
@@ -137,3 +144,4 @@ def applications():
 
     finally:
         closer()
+
