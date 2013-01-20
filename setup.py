@@ -104,7 +104,7 @@ setup(name='yith-library-server',
       [paste.app_factory]
       main = yithlibraryserver:main
       [console_scripts]
-      yith_usage_report = yithlibraryserver.scripts.reports:usage
+      yith_users_report = yithlibraryserver.scripts.reports:users
       yith_apps_report = yithlibraryserver.scripts.reports:applications
       """,
       message_extractors = {'.': [

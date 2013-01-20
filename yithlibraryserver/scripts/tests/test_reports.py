@@ -24,7 +24,7 @@ import unittest
 from yithlibraryserver.db import MongoDB
 from yithlibraryserver.compat import StringIO
 from yithlibraryserver.testing import MONGO_URI
-from yithlibraryserver.scripts.reports import usage, applications
+from yithlibraryserver.scripts.reports import users, applications
 
 CONFIG = """[app:main]
 use = egg:yith-library-server
@@ -53,7 +53,7 @@ class ReportTests(unittest.TestCase):
         self.db.drop_collection('passwords')
         self.db.drop_collection('applications')
 
-    def test_usage(self):
+    def test_users(self):
         # Save sys values
         old_args = sys.argv[:]
         old_stdout = sys.stdout
@@ -62,16 +62,16 @@ class ReportTests(unittest.TestCase):
         sys.argv = []
         sys.stdout = StringIO()
 
-        # Call usage with no arguments
-        result = usage()
+        # Call users with no arguments
+        result = users()
         self.assertEqual(result, 2)
         stdout = sys.stdout.getvalue()
         self.assertEqual(stdout, 'You must provide at least one argument\n')
 
-        # Call usage with a config file but an empty database
+        # Call users with a config file but an empty database
         sys.argv = ['notused', self.conf_file_path]
         sys.stdout = StringIO()
-        result = usage()
+        result = users()
         self.assertEqual(result, None)
         stdout = sys.stdout.getvalue()
         self.assertEqual(stdout, '')
@@ -117,7 +117,7 @@ class ReportTests(unittest.TestCase):
                 })
         sys.argv = ['notused', self.conf_file_path]
         sys.stdout = StringIO()
-        result = usage()
+        result = users()
         self.assertEqual(result, None)
         stdout = sys.stdout.getvalue()
         expected_output = """John Doe <john@example.com> (%s)
