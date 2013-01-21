@@ -24,7 +24,7 @@ import unittest
 from yithlibraryserver.db import MongoDB
 from yithlibraryserver.compat import StringIO
 from yithlibraryserver.testing import MONGO_URI
-from yithlibraryserver.scripts.reports import users, applications
+from yithlibraryserver.scripts.reports import users, applications, statistics
 
 CONFIG = """[app:main]
 use = egg:yith-library-server
@@ -206,6 +206,109 @@ Test application 2
 	Callback URL: http://2.example.com/callback
 	Users: 0
 
+"""
+        self.assertEqual(stdout, expected_output)
+
+        # Restore sys.values
+        sys.argv = old_args
+        sys.stdout = old_stdout
+
+    def test_statistics(self):
+        # Save sys values
+        old_args = sys.argv[:]
+        old_stdout = sys.stdout
+
+        # Replace sys argv and stdout
+        sys.argv = []
+        sys.stdout = StringIO()
+
+        # Call statistics with no arguments
+        result = statistics()
+        self.assertEqual(result, 2)
+        stdout = sys.stdout.getvalue()
+        self.assertEqual(stdout, 'You must provide at least one argument\n')
+
+        # Call statistics with a config file but an empty database
+        sys.argv = ['notused', self.conf_file_path]
+        sys.stdout = StringIO()
+        result = statistics()
+        self.assertEqual(result, None)
+        stdout = sys.stdout.getvalue()
+        self.assertEqual(stdout, '')
+
+
+        def add_passwords(user, n):
+            for i in range(n):
+                self.db.passwords.insert({
+                        'service': 'service-%d' % (i + 1),
+                        'secret': 's3cr3t',
+                        'owner': user,
+                        })
+
+        # Add some data to the database
+        u1_id = self.db.users.insert({
+                'first_name': 'John',
+                'last_name': 'Doe',
+                'email': 'john@example.com',
+                'email_verified': True,
+                'allow_google_analytics': True,
+                'google_id': '1',
+                })
+        add_passwords(u1_id, 10)
+
+        u2_id = self.db.users.insert({
+                'first_name': 'Peter',
+                'last_name': 'Doe',
+                'email': 'peter@example.com',
+                'email_verified': True,
+                'allow_google_analytics': False,
+                'twitter_id': '1',
+                })
+        add_passwords(u2_id, 20)
+
+        u3_id = self.db.users.insert({
+                'first_name': 'Susan',
+                'last_name': 'Doe',
+                'email': 'susan@example2.com',
+                'email_verified': True,
+                'allow_google_analytics': False,
+                'facebook_id': '1',
+                })
+        add_passwords(u3_id, 15)
+
+        self.db.users.insert({
+                'first_name': 'Alice',
+                'last_name': 'Doe',
+                'email': '',
+                'email_verified': False,
+                'allow_google_analytics': False,
+                'persona_id': '1',
+                })
+
+        sys.argv = ['notused', self.conf_file_path]
+        sys.stdout = StringIO()
+        result = statistics()
+        self.assertEqual(result, None)
+        stdout = sys.stdout.getvalue()
+
+        expected_output = """Number of users: 4
+Number of passwords: 45
+Verified users: 75.00%
+Users that allow Google Analytics cookie: 25.00%
+Identity providers:
+	twitter: 25.00%
+	google: 25.00%
+	facebook: 25.00%
+	persona: 25.00%
+Email providers:
+	example.com: 66.67%
+	Others: 33.33%
+Users without email: 1
+Most active users:
+	Peter Doe <peter@example.com>: 20
+	Susan Doe <susan@example2.com>: 15
+	John Doe <john@example.com>: 10
+Users without passwords: 1
 """
         self.assertEqual(stdout, expected_output)
 

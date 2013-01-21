@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
+import operator
 import optparse
 import textwrap
 import sys
@@ -24,7 +25,7 @@ from pyramid.paster import bootstrap
 
 from yithlibraryserver.compat import PY3
 from yithlibraryserver.user.accounts import get_available_providers
-from yithlibraryserver.user.accounts import get_n_passwords
+from yithlibraryserver.user.accounts import get_provider_key, get_n_passwords
 
 
 def safe_print(value):
@@ -145,3 +146,131 @@ def applications():
     finally:
         closer()
 
+
+def group_by_identity_provider(users):
+    providers = {}
+    for user in users:
+        for provider in get_available_providers():
+            key = get_provider_key(provider)
+            if user.get(key, None):
+                if provider in providers:
+                    providers[provider] += 1
+                else:
+                    providers[provider] = 1
+
+    providers = providers.items()
+    providers.sort(key=operator.itemgetter(1), reverse=True)
+    return providers
+
+
+def group_by_email_provider(users, threshold):
+    providers = {}
+    no_email = 0
+    for user in users:
+        email = user.get('email', None)
+        if not email:
+            no_email += 1
+            continue
+
+        provider = email.split('@')[1]
+        if provider in providers:
+            providers[provider] += 1
+        else:
+            providers[provider] = 1
+
+    providers = [(p, a) for p, a in providers.items() if a > threshold]
+    providers.sort(key=operator.itemgetter(1), reverse=True)
+
+    return providers, no_email
+
+
+def users_with_most_passwords(users, passwords, amount):
+    # make a password dict keyed by users_id
+    passwords_map = {}
+    for password in passwords:
+        owner = password['owner']
+        if owner in passwords_map:
+            passwords_map[owner] += 1
+        else:
+            passwords_map[owner] = 1
+
+    users_map = dict([(user['_id'], user) for user in users])
+
+    passwords_list = passwords_map.items()
+    passwords_list.sort(key=operator.itemgetter(1), reverse=True)
+    passwords_list = passwords_list[:amount]
+
+    result = []
+    for password_owner, amount in passwords_list:
+        result.append((users_map[password_owner], amount))
+
+    return result, len(passwords_map)
+
+
+def statistics():
+    result = setup_simple_command(
+        "statistics",
+        "Report several different statistics.",
+        )
+    if isinstance(result, int):
+        return result
+    else:
+        settings, closer, env = result
+
+    try:
+        db = settings['mongodb'].get_database()
+
+        # Get the number of users and passwords
+        n_users = db.users.count()
+        if n_users == 0:
+            return
+
+        n_passwords = db.passwords.count()
+
+        # How many users are verified
+        n_verified = db.users.find({'email_verified': True}).count()
+        # How many users allow the analytics cookie
+        n_allow_cookie = db.users.find({'allow_google_analytics': True}).count()
+
+        all_users = list(db.users.find())
+
+        # Identity providers
+        by_identity = group_by_identity_provider(all_users)
+
+        # Email providers
+        by_email, without_email = group_by_email_provider(all_users, 1)
+        with_email = n_users - without_email
+
+        # Top ten users
+        all_passwords = list(db.passwords.find())
+        most_active_users, users_no_passwords = users_with_most_passwords(
+            all_users, all_passwords, 10)
+
+        # print the statistics
+        safe_print('Number of users: %d' % n_users)
+        safe_print('Number of passwords: %d' % n_passwords)
+        safe_print('Verified users: %.2f%%' % ((100.0 * n_verified) / n_users))
+        safe_print('Users that allow Google Analytics cookie: %.2f%%' % (
+                (100.0 * n_allow_cookie) / n_users))
+
+        safe_print('Identity providers:')
+        for provider, amount in by_identity:
+            safe_print('\t%s: %.2f%%' % (provider, (100.0 * amount) / n_users))
+
+        safe_print('Email providers:')
+        others = with_email
+        for provider, amount in by_email:
+            safe_print('\t%s: %.2f%%' % (provider, (100.0 * amount) / with_email))
+            others -= amount
+        safe_print('\tOthers: %.2f%%' % ((100.0 * others) / with_email))
+        safe_print('Users without email: %d' % without_email)
+
+        safe_print('Most active users:')
+        for user, n_passwords in most_active_users:
+            safe_print('\t%s: %s' % (_get_user_display_name(user), n_passwords))
+
+        safe_print('Users without passwords: %d' %
+                   (n_users - users_no_passwords))
+
+    finally:
+        closer()

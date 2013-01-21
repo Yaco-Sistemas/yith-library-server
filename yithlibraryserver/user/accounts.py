@@ -30,6 +30,10 @@ def get_available_providers():
     return ('facebook', 'google', 'twitter', 'persona')
 
 
+def get_provider_key(provider):
+    return '%s_id' % provider
+
+
 def get_providers(user, current):
     result = []
     for provider in get_available_providers():

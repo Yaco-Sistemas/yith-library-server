@@ -22,6 +22,8 @@ import datetime
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember
 
+from yithlibraryserver.user.accounts import get_provider_key
+
 
 def split_name(name):
     parts = name.split(' ')
@@ -56,17 +58,13 @@ def update_user(db, user, user_info, other_changes):
     db.users.update({'_id': user['_id']}, {'$set': changes}, safe=True)
 
 
-def _get_provider_key(provider):
-    return '%s_id' % provider
-
-
 def user_from_provider_id(db, provider, user_id):
-    provider_key = _get_provider_key(provider)
+    provider_key = get_provider_key(provider)
     return db.users.find_one({provider_key: user_id})
 
 
 def register_or_update(request, provider, user_id, info, default_url='/'):
-    provider_key = _get_provider_key(provider)
+    provider_key = get_provider_key(provider)
     user = user_from_provider_id(request.db, provider, user_id)
     if user is None:
 
