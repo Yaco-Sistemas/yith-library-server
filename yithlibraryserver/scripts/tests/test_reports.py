@@ -285,30 +285,79 @@ Test application 2
                 'persona_id': '1',
                 })
 
+        self.db.users.insert({
+                'first_name': 'Bob',
+                'last_name': 'Doe',
+                'email': '',
+                'email_verified': False,
+                'allow_google_analytics': False,
+                'google_id': '2',
+                })
+        self.db.users.insert({
+                'first_name': 'Kevin',
+                'last_name': 'Doe',
+                'email': '',
+                'email_verified': False,
+                'allow_google_analytics': False,
+                'google_id': '3',
+                })
+        self.db.users.insert({
+                'first_name': 'Maria',
+                'last_name': 'Doe',
+                'email': '',
+                'email_verified': False,
+                'allow_google_analytics': False,
+                'google_id': '4',
+                })
+        self.db.users.insert({
+                'first_name': 'Bran',
+                'last_name': 'Doe',
+                'email': '',
+                'email_verified': False,
+                'allow_google_analytics': False,
+                'twitter_id': '2',
+                })
+        self.db.users.insert({
+                'first_name': 'George',
+                'last_name': 'Doe',
+                'email': '',
+                'email_verified': False,
+                'allow_google_analytics': False,
+                'twitter_id': '3',
+                })
+        self.db.users.insert({
+                'first_name': 'Travis',
+                'last_name': 'Doe',
+                'email': '',
+                'email_verified': False,
+                'allow_google_analytics': False,
+                'persona_id': '2',
+                })
+
         sys.argv = ['notused', self.conf_file_path]
         sys.stdout = StringIO()
         result = statistics()
         self.assertEqual(result, None)
         stdout = sys.stdout.getvalue()
 
-        expected_output = """Number of users: 4
+        expected_output = """Number of users: 10
 Number of passwords: 45
-Verified users: 75.00%
-Users that allow Google Analytics cookie: 25.00%
+Verified users: 30.00%
+Users that allow Google Analytics cookie: 10.00%
 Identity providers:
-	twitter: 25.00%
-	google: 25.00%
-	facebook: 25.00%
-	persona: 25.00%
+	google: 40.00%
+	twitter: 30.00%
+	persona: 20.00%
+	facebook: 10.00%
 Email providers:
 	example.com: 66.67%
 	Others: 33.33%
-Users without email: 1
+Users without email: 7
 Most active users:
 	Peter Doe <peter@example.com>: 20
 	Susan Doe <susan@example2.com>: 15
 	John Doe <john@example.com>: 10
-Users without passwords: 1
+Users without passwords: 7
 """
         self.assertEqual(stdout, expected_output)
 

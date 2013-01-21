@@ -158,9 +158,7 @@ def group_by_identity_provider(users):
                 else:
                     providers[provider] = 1
 
-    providers = providers.items()
-    providers.sort(key=operator.itemgetter(1), reverse=True)
-    return providers
+    return sorted(providers.items(), key=operator.itemgetter(1), reverse=True)
 
 
 def group_by_email_provider(users, threshold):
@@ -196,9 +194,11 @@ def users_with_most_passwords(users, passwords, amount):
 
     users_map = dict([(user['_id'], user) for user in users])
 
-    passwords_list = passwords_map.items()
-    passwords_list.sort(key=operator.itemgetter(1), reverse=True)
-    passwords_list = passwords_list[:amount]
+    passwords_list = sorted(
+        passwords_map.items(),
+        key=operator.itemgetter(1),
+        reverse=True,
+        )[:amount]
 
     result = []
     for password_owner, amount in passwords_list:
