@@ -92,7 +92,7 @@
         <li><a href="#" id="creditsButton" i18n:translate="">Credits</a></li>
       </ul>
       <ul class="pull-right">
-        <li><a href="https://github.com/Yaco-Sistemas/yith-library-server" target="_blank" i18n:translate="">Follow us on Twitter!</a></li>
+        <li><a href="https://twitter.com/YithLibrary" target="_blank" i18n:translate="">Follow us on Twitter!</a></li>
         <li><a href="https://github.com/Yaco-Sistemas/yith-library-server" target="_blank" i18n:translate="">Fork us on GitHub!</a></li>
       </ul>
     </div>
