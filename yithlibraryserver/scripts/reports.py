@@ -29,9 +29,9 @@ from yithlibraryserver.user.accounts import get_provider_key, get_n_passwords
 
 
 def safe_print(value):
-    if PY3:
+    if PY3:  # pragma: no cover
         print(value)
-    else:
+    else:  # pragma: no cover
         print(value.encode('utf-8'))
 
 
