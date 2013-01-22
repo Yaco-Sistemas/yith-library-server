@@ -292,9 +292,10 @@ def preferences(request):
         except ValidationFailure as e:
             return {'form': e.render()}
 
-        changes = {
-            analytics.USER_ATTR: appstruct[analytics.USER_ATTR],
-            }
+        changes = dict([(pref, appstruct[pref]) for pref in (
+                    analytics.USER_ATTR,
+                    'send_passwords_periodically',
+                    )])
 
         result = request.db.users.update({'_id': request.user['_id']},
                                          {'$set': changes},

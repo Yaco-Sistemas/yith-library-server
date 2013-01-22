@@ -387,12 +387,14 @@ class ViewTests(TestCase):
         res = self.testapp.post('/preferences', {
                 'submit': 'Save changes',
                 'allow_google_analytics': 'true',
+                'send_passwords_periodically': 'false',
                 })
         self.assertEqual(res.status, '302 Found')
         self.assertEqual(res.location, 'http://localhost/preferences')
         # check that the user has changed
         new_user = self.db.users.find_one({'_id': user_id})
         self.assertEqual(new_user['allow_google_analytics'], True)
+        self.assertEqual(new_user['send_passwords_periodically'], False)
 
         # make the form fail
         with patch('deform.Form.validate') as fake:
@@ -408,6 +410,7 @@ class ViewTests(TestCase):
             res = self.testapp.post('/preferences', {
                     'submit': 'Save changes',
                     'allow_google_analytics': 'true',
+                    'send_passwords_periodically': 'false',
                     })
             self.assertEqual(res.status, '200 OK')
             res.mustcontain('There were an error while saving your changes')

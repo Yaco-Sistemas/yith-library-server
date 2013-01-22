@@ -113,3 +113,9 @@ class UserPreferencesSchema(colander.MappingSchema):
         title=_('Allow statistics cookie'),
         missing=False,
         )
+
+    send_passwords_periodically = colander.SchemaNode(
+        colander.Boolean(),
+        title=_('Send my passwords to my email monthly'),
+        missing=False,
+        )
