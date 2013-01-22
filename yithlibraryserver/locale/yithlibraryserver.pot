@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-01-20 18:59+0100\n"
+"POT-Creation-Date: 2013-01-22 23:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,7 +135,7 @@ msgid "Delete application"
 msgstr ""
 
 #: yithlibraryserver/oauth2/views.py:152 yithlibraryserver/user/views.py:254
-#: yithlibraryserver/user/views.py:305
+#: yithlibraryserver/user/views.py:306
 msgid "The changes were saved successfully"
 msgstr ""
 
@@ -752,6 +752,10 @@ msgstr ""
 msgid "Allow statistics cookie"
 msgstr ""
 
+#: yithlibraryserver/user/schemas.py:119
+msgid "Send my passwords to my email monthly"
+msgstr ""
+
 #: yithlibraryserver/user/views.py:74
 msgid "Register into Yith Library"
 msgstr ""
@@ -772,31 +776,31 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:260 yithlibraryserver/user/views.py:311
+#: yithlibraryserver/user/views.py:260 yithlibraryserver/user/views.py:312
 msgid "There were an error while saving your changes"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:353
+#: yithlibraryserver/user/views.py:354
 msgid ""
 "Congratulations, ${n_merged} of your accounts has been merged into the "
 "current one"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:354
+#: yithlibraryserver/user/views.py:355
 msgid ""
 "Congratulations, ${n_merged} of your accounts have been merged into the "
 "current one"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:362
+#: yithlibraryserver/user/views.py:363
 msgid "Not enough accounts for merging"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:413
+#: yithlibraryserver/user/views.py:414
 msgid "Congratulations, your email has been successfully verified"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:422
+#: yithlibraryserver/user/views.py:423
 msgid "Sorry, your verification code is not correct or has expired"
 msgstr ""
 
