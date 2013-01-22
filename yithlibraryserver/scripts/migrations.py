@@ -28,7 +28,7 @@ from yithlibraryserver.scripts.utils import get_user_display_name
 migration_registry = {}
 
 def migration(fnc):
-    migration_registry[fnc.func_name] = fnc
+    migration_registry[fnc.__name__] = fnc
     return fnc
 
 
