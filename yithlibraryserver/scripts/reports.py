@@ -17,50 +17,16 @@
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
 import operator
-import optparse
-import textwrap
-import sys
 
-from pyramid.paster import bootstrap
-
-from yithlibraryserver.compat import PY3
 from yithlibraryserver.user.accounts import get_available_providers
 from yithlibraryserver.user.accounts import get_provider_key, get_n_passwords
-
-
-def safe_print(value):
-    if PY3:  # pragma: no cover
-        print(value)
-    else:  # pragma: no cover
-        print(value.encode('utf-8'))
-
-
-def setup_simple_command(name, description):
-    usage = name + ": %prog config_uri"
-    parser = optparse.OptionParser(
-        usage=usage,
-        description=textwrap.dedent(description)
-        )
-    options, args = parser.parse_args(sys.argv[1:])
-    if not len(args) >= 1:
-        safe_print('You must provide at least one argument')
-        return 2
-    config_uri = args[0]
-    env = bootstrap(config_uri)
-    settings, closer = env['registry'].settings, env['closer']
-
-    return settings, closer, env
-
-
-def _get_user_display_name(user):
-    return '%s %s <%s>' % (user.get('first_name', ''),
-                           user.get('last_name', ''),
-                           user.get('email', ''))
+from yithlibraryserver.scripts.utils import safe_print, setup_simple_command
+from yithlibraryserver.scripts.utils import get_user_display_name
 
 
 def _get_user_info(db, user):
     return {
-        'display_name': _get_user_display_name(user),
+        'display_name': get_user_display_name(user),
         'passwords': get_n_passwords(db, user),
         'providers': ', '.join([prov for prov in get_available_providers()
                                 if ('%s_id' % prov) in user]),
@@ -105,7 +71,7 @@ def _get_app_info(db, app):
     if user is None:
         owner = 'Unknown owner (%s)' % app['owner']
     else:
-        owner = _get_user_display_name(user)
+        owner = get_user_display_name(user)
 
     return {
         'name': app['name'],
@@ -267,7 +233,7 @@ def statistics():
 
         safe_print('Most active users:')
         for user, n_passwords in most_active_users:
-            safe_print('\t%s: %s' % (_get_user_display_name(user), n_passwords))
+            safe_print('\t%s: %s' % (get_user_display_name(user), n_passwords))
 
         safe_print('Users without passwords: %d' %
                    (n_users - users_no_passwords))

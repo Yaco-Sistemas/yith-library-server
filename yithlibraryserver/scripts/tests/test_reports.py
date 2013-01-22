@@ -16,42 +16,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 import datetime
-import os
 import sys
-import tempfile
-import unittest
 
-from yithlibraryserver.db import MongoDB
 from yithlibraryserver.compat import StringIO
-from yithlibraryserver.testing import MONGO_URI
 from yithlibraryserver.scripts.reports import users, applications, statistics
-
-CONFIG = """[app:main]
-use = egg:yith-library-server
-mongo_uri = %s
-auth_tk_secret = 123456
-testing = True
-
-[server:main]
-use = egg:waitress#main
-host = 0.0.0.0
-port = 65432
-""" % MONGO_URI
+from yithlibraryserver.scripts.testing import ScriptTests
 
 
-class ReportTests(unittest.TestCase):
+class ReportTests(ScriptTests):
 
-    def setUp(self):
-        fd, self.conf_file_path = tempfile.mkstemp()
-        os.write(fd, CONFIG.encode('ascii'))
-        mdb = MongoDB(MONGO_URI)
-        self.db = mdb.get_database()
-
-    def tearDown(self):
-        os.unlink(self.conf_file_path)
-        self.db.drop_collection('users')
-        self.db.drop_collection('passwords')
-        self.db.drop_collection('applications')
+    clean_collections = ('users', 'passwords', 'applications')
 
     def test_users(self):
         # Save sys values

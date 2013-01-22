@@ -106,7 +106,8 @@ setup(name='yith-library-server',
       [console_scripts]
       yith_users_report = yithlibraryserver.scripts.reports:users
       yith_apps_report = yithlibraryserver.scripts.reports:applications
-      yith_stats_report = yithlibraryserver.scripts.reports:statistics""",
+      yith_stats_report = yithlibraryserver.scripts.reports:statistics
+      yith_migrate = yithlibraryserver.scripts.migrations:migrate""",
       message_extractors = {'.': [
             ('**.py', 'lingua_python', None),
             ('**.pt', 'lingua_xml', None),
