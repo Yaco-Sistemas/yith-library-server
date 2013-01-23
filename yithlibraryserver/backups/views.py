@@ -16,17 +16,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-import datetime
 import json
 
 from pyramid.i18n import get_localizer
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 
+from yithlibraryserver.backups.utils import get_backup_filename
+from yithlibraryserver.backups.utils import get_user_passwords
 from yithlibraryserver.i18n import translation_domain
 from yithlibraryserver.i18n import TranslationString as _
 from yithlibraryserver.password.models import PasswordsManager
-from yithlibraryserver.utils import remove_attrs
 
 
 @view_config(route_name='backups_index',
@@ -40,13 +40,9 @@ def backups_index(request):
              renderer='json',
              permission='backups')
 def backups_export(request):
-    today = datetime.date.today()
-    filename = 'yith-library-backup-%d-%02d-%02d.json' % (
-        today.year, today.month, today.day)
+    filename = get_backup_filename()
     request.response.content_disposition = 'attachment; filename=%s' % filename
-    passwords_manager = PasswordsManager(request.db)
-    return [remove_attrs(password, 'owner', '_id')
-            for password in passwords_manager.retrieve(request.user)]
+    return get_user_passwords(request.db, request.user)
 
 
 @view_config(route_name='backups_import',
