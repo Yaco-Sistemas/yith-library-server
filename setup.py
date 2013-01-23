@@ -33,7 +33,7 @@ requires = [
     'pyramid==1.4',
     'pyramid_beaker==0.7',
     'pyramid_debugtoolbar==1.0.2',
-    'pyramid_mailer==0.9',
+    'pyramid_mailer==0.10',
     'pyramid_tm==0.5',
     'requests==0.14.0',
     'waitress==0.8.2',
