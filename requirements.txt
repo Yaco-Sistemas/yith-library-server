@@ -21,7 +21,7 @@ pymongo==2.3
 pyramid==1.4
 pyramid-beaker==0.7
 pyramid-debugtoolbar==1.0.2
-pyramid-mailer==0.9
+pyramid-mailer==0.10
 pyramid-tm==0.5
 repoze.lru==0.6
 repoze.sendmail==3.2

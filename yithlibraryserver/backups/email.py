@@ -16,8 +16,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-import json
-
 from pyramid.renderers import render
 from pyramid_mailer import get_mailer
 from pyramid_mailer.message import Attachment, Message
@@ -58,6 +56,5 @@ def send_passwords(request, user):
     message.attach(attachment)
 
     mailer = get_mailer(request)
-    import pdb; pdb.set_trace()
     mailer.send(message)
     return True
