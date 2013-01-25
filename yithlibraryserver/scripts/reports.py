@@ -44,7 +44,7 @@ def users():
     if isinstance(result, int):
         return result
     else:
-        settings, closer, env = result
+        settings, closer, env, args = result
 
     try:
         db = settings['mongodb'].get_database()
@@ -92,7 +92,7 @@ def applications():
     if isinstance(result, int):
         return result
     else:
-        settings, closer, env = result
+        settings, closer, env, args = result
 
     try:
         db = settings['mongodb'].get_database()
@@ -181,7 +181,7 @@ def statistics():
     if isinstance(result, int):
         return result
     else:
-        settings, closer, env = result
+        settings, closer, env, args = result
 
     try:
         db = settings['mongodb'].get_database()

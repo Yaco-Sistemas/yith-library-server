@@ -23,6 +23,20 @@ from yithlibraryserver.scripts.utils import safe_print, setup_simple_command
 from yithlibraryserver.scripts.utils import get_user_display_name
 
 
+def get_all_users(db):
+    return db.users.find({
+            'send_passwords_periodically': True,
+            }).sort('date_joined')
+
+
+def get_selected_users(db, *emails):
+    for email in emails:
+        for user in db.users.find({
+                'email': email,
+                }).sort('date_joined'):
+            yield user
+
+
 def send_backups_via_email():
     result = setup_simple_command(
         "users",
@@ -31,15 +45,21 @@ def send_backups_via_email():
     if isinstance(result, int):
         return result
     else:
-        settings, closer, env = result
+        settings, closer, env, args = result
 
     try:
 
-        tx = transaction.begin()
-
         db = settings['mongodb'].get_database()
         request = env['request']
-        for user in db.users.find().sort('date_joined'):
+
+        if len(args) == 0:
+            user_iterator = get_all_users(db)
+        else:
+            user_iterator = get_selected_users(db, *args)
+
+        tx = transaction.begin()
+
+        for user in user_iterator:
             if user['email']:
                 sent = send_passwords(request, user)
                 if sent:

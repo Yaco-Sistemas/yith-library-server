@@ -46,7 +46,7 @@ def setup_simple_command(name, description):
     env = bootstrap(config_uri)
     settings, closer = env['registry'].settings, env['closer']
 
-    return settings, closer, env
+    return settings, closer, env, args[1:]
 
 
 def get_user_display_name(user):
