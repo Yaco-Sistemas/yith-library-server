@@ -23,7 +23,7 @@ from pyramid_mailer import get_mailer
 from pyramid_mailer.message import Attachment, Message
 
 from yithlibraryserver.backups.utils import get_backup_filename
-from yithlibraryserver.backups.utils import get_user_passwords
+from yithlibraryserver.backups.utils import get_user_passwords, compress
 
 
 def send_passwords(request, user):
@@ -52,9 +52,8 @@ def send_passwords(request, user):
                       body=text_body,
                       html=html_body)
 
-    json_passwords = json.dumps(passwords)
-    attachment = Attachment(get_backup_filename(), "application/json",
-                            json_passwords)
+    attachment = Attachment(get_backup_filename(), "application/yith",
+                            compress(passwords))
 
     message.attach(attachment)
 

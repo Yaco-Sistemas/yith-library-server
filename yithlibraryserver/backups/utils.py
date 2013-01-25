@@ -17,7 +17,10 @@
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
 import datetime
+import gzip
+import json
 
+from yithlibraryserver.compat import StringIO
 from yithlibraryserver.password.models import PasswordsManager
 from yithlibraryserver.utils import remove_attrs
 
@@ -30,5 +33,18 @@ def get_user_passwords(db, user):
 
 def get_backup_filename():
     today = datetime.date.today()
-    return 'yith-library-backup-%d-%02d-%02d.json' % (
+    return 'yith-library-backup-%d-%02d-%02d.yith' % (
         today.year, today.month, today.day)
+
+
+def compress(passwords):
+    buf = StringIO()
+    gzip_data = gzip.GzipFile(fileobj=buf, mode='wb')
+    json.dump(passwords, gzip_data)
+    gzip_data.close()
+    return buf.getvalue()
+
+
+def uncompress(data):
+    gzip_data = gzip.GzipFile(fileobj=data, mode='rb')
+    return json.load(gzip_data)

@@ -16,14 +16,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-import json
-
 from pyramid.i18n import get_localizer
 from pyramid.httpexceptions import HTTPFound
+from pyramid.response import Response
 from pyramid.view import view_config
 
 from yithlibraryserver.backups.utils import get_backup_filename
 from yithlibraryserver.backups.utils import get_user_passwords
+from yithlibraryserver.backups.utils import compress, uncompress
 from yithlibraryserver.i18n import translation_domain
 from yithlibraryserver.i18n import TranslationString as _
 from yithlibraryserver.password.models import PasswordsManager
@@ -37,12 +37,14 @@ def backups_index(request):
 
 
 @view_config(route_name='backups_export',
-             renderer='json',
              permission='backups')
 def backups_export(request):
+    passwords = get_user_passwords(request.db, request.user)
+    data = compress(passwords)
+    response = Response(body=data, content_type='application/yith-library')
     filename = get_backup_filename()
-    request.response.content_disposition = 'attachment; filename=%s' % filename
-    return get_user_passwords(request.db, request.user)
+    response.content_disposition = 'attachment; filename=%s' % filename
+    return response
 
 
 @view_config(route_name='backups_import',
@@ -55,8 +57,7 @@ def backups_import(request):
         passwords_field = request.POST['passwords-file']
         if passwords_field != '':
             try:
-                raw_data = passwords_field.file.read().decode('utf-8')
-                json_data = json.loads(raw_data)
+                json_data = uncompress(passwords_field.file)
                 passwords_manager = PasswordsManager(request.db)
                 passwords_manager.delete(request.user)
                 passwords_manager.create(request.user, json_data)
