@@ -61,7 +61,7 @@ def backups_import(request):
                 passwords_manager = PasswordsManager(request.db)
                 passwords_manager.delete(request.user)
                 passwords_manager.create(request.user, json_data)
-            except ValueError:
+            except (IOError, ValueError):
                 request.session.flash(
                     _('There was a problem reading your passwords file'),
                     'error')

@@ -17,14 +17,29 @@
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
 import datetime
+import gzip
+import json
 
-from yithlibraryserver.compat import text_type
+from yithlibraryserver.compat import text_type, StringIO
 from yithlibraryserver.testing import TestCase
+
+
+def get_gzip_data(data):
+    buf = StringIO()
+    gzip_data = gzip.GzipFile(fileobj=buf, mode='wb')
+    gzip_data.write(data)
+    gzip_data.close()
+    return buf.getvalue()
 
 
 class ViewTests(TestCase):
 
     clean_collections = ('users', 'passwords', )
+
+    def assertUncompressData(self, body, data):
+        buf = StringIO(body)
+        gzip_file = gzip.GzipFile(fileobj=buf, mode='rb')
+        self.assertEqual(gzip_file.read(), data)
 
     def test_backups_index(self):
         res = self.testapp.get('/backup')
@@ -72,9 +87,9 @@ class ViewTests(TestCase):
 
         res = self.testapp.get('/backup/export')
         self.assertEqual(res.status, '200 OK')
-        self.assertEqual(res.content_type, 'application/json')
-        self.assertEqual(res.json, [])
-        cd = 'attachment; filename=yith-library-backup-%d-%02d-%02d.json'
+        self.assertEqual(res.content_type, 'application/yith-library')
+        self.assertUncompressData(res.body, '[]')
+        cd = 'attachment; filename=yith-library-backup-%d-%02d-%02d.yith'
         today = datetime.date.today()
         self.assertEqual(res.content_disposition,
                          cd % (today.year, today.month, today.day))
@@ -90,13 +105,13 @@ class ViewTests(TestCase):
 
         res = self.testapp.get('/backup/export')
         self.assertEqual(res.status, '200 OK')
-        self.assertEqual(res.content_type, 'application/json')
-        self.assertEqual(res.json, [{
+        self.assertEqual(res.content_type, 'application/yith-library')
+        self.assertUncompressData(res.body, json.dumps([{
                     'password': 'secret1',
                     }, {
                     'password': 'secret2',
-                    }])
-        cd = 'attachment; filename=yith-library-backup-%d-%02d-%02d.json'
+                    }]))
+        cd = 'attachment; filename=yith-library-backup-%d-%02d-%02d.yith'
         today = datetime.date.today()
         self.assertEqual(res.content_disposition,
                          cd % (today.year, today.month, today.day))
@@ -149,7 +164,7 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # file with good syntax but empty
-        content = text_type('[]').encode('utf-8')
+        content = get_gzip_data('[]')
         res = self.testapp.post(
             '/backup/import', {},
             upload_files=[('passwords-file', 'empty.json', content)],
@@ -160,7 +175,7 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # file with good syntax but empty
-        content = text_type('[{}]').encode('utf-8')
+        content = get_gzip_data('[{}]')
         res = self.testapp.post(
             '/backup/import', {},
             upload_files=[('passwords-file', 'empty.json', content)],
@@ -171,7 +186,7 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # file with good passwords
-        content = text_type('[{"secret": "password1"}, {"secret": "password2"}]').encode('utf-8')
+        content = get_gzip_data('[{"secret": "password1"}, {"secret": "password2"}]')
         res = self.testapp.post(
             '/backup/import', {},
             upload_files=[('passwords-file', 'good.json', content)],
