@@ -70,3 +70,7 @@ def send_backups_via_email():
 
     finally:
         closer()
+
+
+if __name__ == '__main__':
+    send_backups_via_email()
