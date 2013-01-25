@@ -58,5 +58,6 @@ def send_passwords(request, user):
     message.attach(attachment)
 
     mailer = get_mailer(request)
+    import pdb; pdb.set_trace()
     mailer.send(message)
     return True
