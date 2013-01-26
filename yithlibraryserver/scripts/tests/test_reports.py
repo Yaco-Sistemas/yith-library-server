@@ -316,22 +316,22 @@ Test application 2
 
         expected_output = """Number of users: 10
 Number of passwords: 45
-Verified users: 30.00%
-Users that allow Google Analytics cookie: 10.00%
+Verified users: 30.00% (3)
+Users that allow Google Analytics cookie: 10.00% (1)
 Identity providers:
-	google: 40.00%
-	twitter: 30.00%
-	persona: 20.00%
-	facebook: 10.00%
+	google: 40.00% (4)
+	twitter: 30.00% (3)
+	persona: 20.00% (2)
+	facebook: 10.00% (1)
 Email providers:
-	example.com: 66.67%
-	Others: 33.33%
-Users without email: 7
+	example.com: 66.67% (2)
+	Others: 33.33% (1)
+Users without email: 70.00% (7)
 Most active users:
 	Peter Doe <peter@example.com>: 20
 	Susan Doe <susan@example2.com>: 15
 	John Doe <john@example.com>: 10
-Users without passwords: 7
+Users without passwords: 70.00% (7)
 """
         self.assertEqual(stdout, expected_output)
 

@@ -209,34 +209,40 @@ def statistics():
 
         # Top ten users
         all_passwords = list(db.passwords.find())
-        most_active_users, users_no_passwords = users_with_most_passwords(
+        most_active_users, users_with_passwords = users_with_most_passwords(
             all_users, all_passwords, 10)
 
         # print the statistics
         safe_print('Number of users: %d' % n_users)
         safe_print('Number of passwords: %d' % n_passwords)
-        safe_print('Verified users: %.2f%%' % ((100.0 * n_verified) / n_users))
-        safe_print('Users that allow Google Analytics cookie: %.2f%%' % (
-                (100.0 * n_allow_cookie) / n_users))
+        safe_print('Verified users: %.2f%% (%d)' % (
+                (100.0 * n_verified) / n_users, n_verified))
+        safe_print('Users that allow Google Analytics cookie: %.2f%% (%d)' % (
+                (100.0 * n_allow_cookie) / n_users, n_allow_cookie))
 
         safe_print('Identity providers:')
         for provider, amount in by_identity:
-            safe_print('\t%s: %.2f%%' % (provider, (100.0 * amount) / n_users))
+            safe_print('\t%s: %.2f%% (%d)' % (
+                    provider, (100.0 * amount) / n_users, amount))
 
         safe_print('Email providers:')
         others = with_email
         for provider, amount in by_email:
-            safe_print('\t%s: %.2f%%' % (provider, (100.0 * amount) / with_email))
+            safe_print('\t%s: %.2f%% (%d)' % (
+                    provider, (100.0 * amount) / with_email, amount))
             others -= amount
-        safe_print('\tOthers: %.2f%%' % ((100.0 * others) / with_email))
-        safe_print('Users without email: %d' % without_email)
+        safe_print('\tOthers: %.2f%% (%d)' % (
+                (100.0 * others) / with_email, others))
+        safe_print('Users without email: %.2f%% (%d)' % (
+                (100.0 * without_email) / n_users, without_email))
 
         safe_print('Most active users:')
         for user, n_passwords in most_active_users:
             safe_print('\t%s: %s' % (get_user_display_name(user), n_passwords))
 
-        safe_print('Users without passwords: %d' %
-                   (n_users - users_no_passwords))
+        users_no_passwords = n_users - users_with_passwords
+        safe_print('Users without passwords: %.2f%% (%d)' % (
+                (100 * users_no_passwords) / n_users, users_no_passwords))
 
     finally:
         closer()
