@@ -20,7 +20,7 @@ import datetime
 import gzip
 import json
 
-from yithlibraryserver.compat import StringIO
+from yithlibraryserver.compat import BytesIO
 from yithlibraryserver.password.models import PasswordsManager
 from yithlibraryserver.utils import remove_attrs
 
@@ -38,13 +38,15 @@ def get_backup_filename():
 
 
 def compress(passwords):
-    buf = StringIO()
+    buf = BytesIO()
     gzip_data = gzip.GzipFile(fileobj=buf, mode='wb')
-    json.dump(passwords, gzip_data)
+    data = json.dumps(passwords)
+    gzip_data.write(data.encode('utf-8'))
     gzip_data.close()
     return buf.getvalue()
 
 
 def uncompress(data):
     gzip_data = gzip.GzipFile(fileobj=data, mode='rb')
-    return json.load(gzip_data)
+    data = gzip_data.read()
+    return json.loads(data.decode('utf-8'))

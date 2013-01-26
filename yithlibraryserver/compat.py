@@ -63,6 +63,7 @@ else:  # pragma: no cover
         return obj.encode('utf-8')
 
 if PY3:  # pragma: no cover
-    from io import StringIO
+    from io import StringIO, BytesIO
 else:  # pragma: no cover
     from StringIO import StringIO
+    BytesIO = StringIO

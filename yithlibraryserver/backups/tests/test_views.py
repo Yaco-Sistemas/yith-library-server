@@ -20,14 +20,14 @@ import datetime
 import gzip
 import json
 
-from yithlibraryserver.compat import text_type, StringIO
+from yithlibraryserver.compat import text_type, BytesIO
 from yithlibraryserver.testing import TestCase
 
 
-def get_gzip_data(data):
-    buf = StringIO()
+def get_gzip_data(text):
+    buf = BytesIO()
     gzip_data = gzip.GzipFile(fileobj=buf, mode='wb')
-    gzip_data.write(data)
+    gzip_data.write(text.encode('utf-8'))
     gzip_data.close()
     return buf.getvalue()
 
@@ -37,9 +37,9 @@ class ViewTests(TestCase):
     clean_collections = ('users', 'passwords', )
 
     def assertUncompressData(self, body, data):
-        buf = StringIO(body)
+        buf = BytesIO(body)
         gzip_file = gzip.GzipFile(fileobj=buf, mode='rb')
-        self.assertEqual(gzip_file.read(), data)
+        self.assertEqual(gzip_file.read().decode('utf-8'), data)
 
     def test_backups_index(self):
         res = self.testapp.get('/backup')
@@ -153,7 +153,7 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # bad file
-        content = text_type('[{}').encode('utf-8')
+        content = get_gzip_data(text_type('[{}'))
         res = self.testapp.post(
             '/backup/import', {},
             upload_files=[('passwords-file', 'bad.json', content)],
@@ -164,7 +164,7 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # file with good syntax but empty
-        content = get_gzip_data('[]')
+        content = get_gzip_data(text_type('[]'))
         res = self.testapp.post(
             '/backup/import', {},
             upload_files=[('passwords-file', 'empty.json', content)],
@@ -175,7 +175,7 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # file with good syntax but empty
-        content = get_gzip_data('[{}]')
+        content = get_gzip_data(text_type('[{}]'))
         res = self.testapp.post(
             '/backup/import', {},
             upload_files=[('passwords-file', 'empty.json', content)],
@@ -186,7 +186,7 @@ class ViewTests(TestCase):
         self.assertEqual(0, self.db.passwords.count())
 
         # file with good passwords
-        content = get_gzip_data('[{"secret": "password1"}, {"secret": "password2"}]')
+        content = get_gzip_data(text_type('[{"secret": "password1"}, {"secret": "password2"}]'))
         res = self.testapp.post(
             '/backup/import', {},
             upload_files=[('passwords-file', 'good.json', content)],
