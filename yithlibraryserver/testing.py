@@ -55,6 +55,8 @@ class TestCase(unittest.TestCase):
             'google_client_id': 'id',
             'google_client_secret': 'secret',
             'testing': True,
+            'pyramid_mailer.prefix': 'mail_',
+            'mail_default_sender': 'no-reply@yithlibrary.com',
             'admin_emails': 'admin1@example.com admin2@example.com',
             'persona_audience': 'https//localhost:6543',
             }
