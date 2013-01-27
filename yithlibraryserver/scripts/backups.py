@@ -59,9 +59,11 @@ def send_backups_via_email():
 
         tx = transaction.begin()
 
+        preferences_link = request.route_url('user_preferences')
+
         for user in user_iterator:
             if user['email']:
-                sent = send_passwords(request, user)
+                sent = send_passwords(request, user, preferences_link)
                 if sent:
                     safe_print('Passwords sent to %s' %
                                get_user_display_name(user))

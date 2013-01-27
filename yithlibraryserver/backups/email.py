@@ -26,12 +26,10 @@ from yithlibraryserver.backups.utils import get_backup_filename
 from yithlibraryserver.backups.utils import get_user_passwords, compress
 
 
-def send_passwords(request, user):
+def send_passwords(request, user, preferences_link):
     passwords = get_user_passwords(request.db, user)
     if not passwords:
         return False
-
-    preferences_link = request.route_url('user_preferences')
 
     text_body = render(
         'yithlibraryserver.backups:templates/email_passwords.txt',
