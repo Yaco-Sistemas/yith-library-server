@@ -16,7 +16,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-import datetime
 import gzip
 import json
 
@@ -31,10 +30,9 @@ def get_user_passwords(db, user):
             for password in passwords_manager.retrieve(user)]
 
 
-def get_backup_filename():
-    today = datetime.date.today()
+def get_backup_filename(date):
     return 'yith-library-backup-%d-%02d-%02d.yith' % (
-        today.year, today.month, today.day)
+        date.year, date.month, date.day)
 
 
 def compress(passwords):
@@ -46,7 +44,8 @@ def compress(passwords):
     return buf.getvalue()
 
 
-def uncompress(data):
-    gzip_data = gzip.GzipFile(fileobj=data, mode='rb')
-    data = gzip_data.read()
-    return json.loads(data.decode('utf-8'))
+def uncompress(compressed_data):
+    buf = BytesIO(compressed_data)
+    gzip_data = gzip.GzipFile(fileobj=buf, mode='rb')
+    raw_data = gzip_data.read()
+    return json.loads(raw_data.decode('utf-8'))
