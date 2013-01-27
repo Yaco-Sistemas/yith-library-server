@@ -28,6 +28,9 @@ use = egg:yith-library-server
 mongo_uri = %s
 auth_tk_secret = 123456
 testing = True
+pyramid_mailer.prefix = mail_
+mail_default_sender = no-reply@yithlibrary.com
+admin_emails = admin1@example.com admin2@example.com
 
 [server:main]
 use = egg:waitress#main
@@ -51,6 +54,10 @@ class ScriptTests(unittest.TestCase):
         for col in self.clean_collections:
             self.db.drop_collection(col)
 
-        self.db.drop_collection('users')
-        self.db.drop_collection('passwords')
-        self.db.drop_collection('applications')
+    def add_passwords(self, user, n):
+        for i in range(n):
+            self.db.passwords.insert({
+                    'service': 'service-%d' % (i + 1),
+                    'secret': 's3cr3t',
+                    'owner': user,
+                    })

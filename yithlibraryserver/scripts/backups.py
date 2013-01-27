@@ -74,5 +74,5 @@ def send_backups_via_email():
         closer()
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     send_backups_via_email()

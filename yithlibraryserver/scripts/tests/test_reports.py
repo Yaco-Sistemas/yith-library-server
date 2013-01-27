@@ -210,15 +210,6 @@ Test application 2
         stdout = sys.stdout.getvalue()
         self.assertEqual(stdout, '')
 
-
-        def add_passwords(user, n):
-            for i in range(n):
-                self.db.passwords.insert({
-                        'service': 'service-%d' % (i + 1),
-                        'secret': 's3cr3t',
-                        'owner': user,
-                        })
-
         # Add some data to the database
         u1_id = self.db.users.insert({
                 'first_name': 'John',
@@ -228,7 +219,7 @@ Test application 2
                 'allow_google_analytics': True,
                 'google_id': '1',
                 })
-        add_passwords(u1_id, 10)
+        self.add_passwords(u1_id, 10)
 
         u2_id = self.db.users.insert({
                 'first_name': 'Peter',
@@ -238,7 +229,7 @@ Test application 2
                 'allow_google_analytics': False,
                 'twitter_id': '1',
                 })
-        add_passwords(u2_id, 20)
+        self.add_passwords(u2_id, 20)
 
         u3_id = self.db.users.insert({
                 'first_name': 'Susan',
@@ -248,7 +239,7 @@ Test application 2
                 'allow_google_analytics': False,
                 'facebook_id': '1',
                 })
-        add_passwords(u3_id, 15)
+        self.add_passwords(u3_id, 15)
 
         self.db.users.insert({
                 'first_name': 'Alice',
