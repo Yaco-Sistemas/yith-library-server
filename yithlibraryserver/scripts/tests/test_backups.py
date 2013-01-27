@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
+from datetime import datetime
 import sys
 
 from yithlibraryserver.compat import StringIO
@@ -50,38 +51,52 @@ class BackupsTests(ScriptTests):
         stdout = sys.stdout.getvalue()
         self.assertEqual(stdout, '')
 
+        today = datetime.today()
+
         # Add some users
         self.add_passwords(self.db.users.insert({
                     'first_name': 'John1',
                     'last_name': 'Doe',
                     'email': '',
                     'send_passwords_periodically': False,
+                    'date_joined': datetime(2012, 12, 12),
                     }), 10)
         self.add_passwords(self.db.users.insert({
                     'first_name': 'John2',
                     'last_name': 'Doe',
                     'email': 'john2@example.com',
                     'send_passwords_periodically': False,
+                    'date_joined': datetime(2012, 12, 12),
                     }), 10)
         self.add_passwords(self.db.users.insert({
                     'first_name': 'John3',
                     'last_name': 'Doe',
                     'email': 'john3@example.com',
                     'send_passwords_periodically': True,
+                    'date_joined': datetime(2012, 10, today.day),
                     }), 10)
         self.add_passwords(self.db.users.insert({
                     'first_name': 'John4',
                     'last_name': 'Doe',
                     'email': 'john4@example.com',
                     'send_passwords_periodically': True,
+                    'date_joined': datetime(2012, 12, today.day),
+                    }), 10)
+        next_day = (today.day + 1) % 30
+        self.add_passwords(self.db.users.insert({
+                    'first_name': 'John5',
+                    'last_name': 'Doe',
+                    'email': 'john5@example.com',
+                    'send_passwords_periodically': True,
+                    'date_joined': datetime(2012, 12, next_day),
                     }), 10)
         self.db.users.insert({
-                'first_name': 'John5',
+                'first_name': 'John6',
                 'last_name': 'Doe',
-                'email': 'john5@example.com',
+                'email': 'john6@example.com',
                 'send_passwords_periodically': True,
+                'date_joined': datetime(2012, 12, today.day),
                 })
-
 
         sys.argv = ['notused', self.conf_file_path]
         sys.stdout = StringIO()

@@ -16,6 +16,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
+import datetime
+
 import transaction
 
 from yithlibraryserver.backups.email import send_passwords
@@ -24,8 +26,10 @@ from yithlibraryserver.scripts.utils import get_user_display_name
 
 
 def get_all_users(db):
+    day = datetime.date.today().day
     return db.users.find({
             'send_passwords_periodically': True,
+            '$where': 'return this.date_joined.getDate() == %d' % day
             }).sort('date_joined')
 
 
