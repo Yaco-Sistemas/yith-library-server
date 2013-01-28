@@ -79,6 +79,10 @@ def main(global_config, **settings):
         lang for lang in available_languages.split(' ') if lang
         ]
 
+    # Public URL root
+    settings['public_url_root'] = read_setting_from_env(
+        settings, 'public_url_root', 'http://localhost:6543/')
+
     # main config object
     config = Configurator(
         settings=settings,

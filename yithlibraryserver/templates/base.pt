@@ -23,7 +23,7 @@
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <script tal:condition="request.registry.settings['persona_audience']" src="https://login.persona.org/include.js"></script>
+    <script src="https://login.persona.org/include.js"></script>
 
   </head>
   <body>
@@ -171,9 +171,8 @@
     </script>
   </div>
 
-  <div tal:omit-tag="" tal:condition="request.registry.settings['persona_audience']">
-    <script tal:condition="request.registry.settings['persona_audience']" src="${request.static_path('yithlibraryserver:static/js/jquery.mozilla_persona.js')}"></script>
-    <script type="text/javascript" metal:define-slot="mozilla-persona-script">
+  <script src="${request.static_path('yithlibraryserver:static/js/jquery.mozilla_persona.js')}"></script>
+  <script type="text/javascript" metal:define-slot="mozilla-persona-script">
       (function ($) {
           "use strict";
           $(document).ready(function () {
@@ -188,8 +187,7 @@
               });
           });
       }(jQuery));
-    </script>
-  </div>
+  </script>
 
   <tal:block metal:define-slot="extra-scripts"></tal:block>
 

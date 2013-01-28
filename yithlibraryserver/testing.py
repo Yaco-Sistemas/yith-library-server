@@ -58,7 +58,7 @@ class TestCase(unittest.TestCase):
             'pyramid_mailer.prefix': 'mail_',
             'mail_default_sender': 'no-reply@yithlibrary.com',
             'admin_emails': 'admin1@example.com admin2@example.com',
-            'persona_audience': 'https//localhost:6543',
+            'public_url_root': 'http://localhost:6543/',
             }
         app = main({}, **settings)
         self.testapp = TestApp(app)

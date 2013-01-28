@@ -28,7 +28,7 @@
 
 </tal:block>
 
-<script type="text/javascript" tal:condition="request.registry.settings['persona_audience']" metal:fill-slot="mozilla-persona-script">
+<script type="text/javascript" metal:fill-slot="mozilla-persona-script">
       (function ($) {
           "use strict";
           $(document).ready(function () {

@@ -24,6 +24,7 @@ from pyramid.httpexceptions import HTTPBadRequest, HTTPForbidden
 from pyramid.httpexceptions import HTTPMethodNotAllowed, HTTPServerError
 
 from yithlibraryserver.user.utils import register_or_update
+from yithlibraryserver.persona.audience import get_audience
 
 
 def persona_login(request):
@@ -39,7 +40,7 @@ def persona_login(request):
 
     settings = request.registry.settings
     data = {'assertion': assertion,
-            'audience': settings['persona_audience']}
+            'audience': get_audience(settings['public_url_root'])}
     response = requests.post(settings['persona_verifier_url'],
                              data=data, verify=True)
 

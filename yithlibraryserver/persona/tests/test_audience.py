@@ -1,5 +1,5 @@
 # Yith Library Server is a password storage server.
-# Copyright (C) 2012-2013 Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>
+# Copyright (C) 2013 Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>
 #
 # This file is part of Yith Library Server.
 #
@@ -16,21 +16,21 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-from yithlibraryserver import read_setting_from_env
+import unittest
+
+from yithlibraryserver.persona.audience import get_audience
 
 
-def includeme(config):
-    settings = config.registry.settings
+class AudienceTests(unittest.TestCase):
 
-    for key, default in (
-        ('verifier_url', 'https://verifier.login.persona.org/verify'),
-        ):
+    def test_get_audience(self):
+        self.assertEqual(get_audience('http://localhost/'),
+                         'http://localhost:80')
 
-        option = 'persona_%s' % key
-        settings[option] = read_setting_from_env(settings, option, default)
+        self.assertEqual(get_audience('https://localhost:443/'),
+                         'https://localhost:443')
 
-    config.add_route('persona_login', '/persona/login')
-    config.add_view('.views.persona_login',
-                    route_name='persona_login', renderer='string')
+        self.assertEqual(get_audience('https://localhost/foo'),
+                         'https://localhost:443')
 
-    config.add_identity_provider('persona')
+        self.assertRaises(ValueError, get_audience, 'foo://localhost')
