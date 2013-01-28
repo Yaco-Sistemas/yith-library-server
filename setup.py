@@ -108,7 +108,8 @@ setup(name='yith-library-server',
       yith_apps_report = yithlibraryserver.scripts.reports:applications
       yith_stats_report = yithlibraryserver.scripts.reports:statistics
       yith_migrate = yithlibraryserver.scripts.migrations:migrate
-      yith_send_backups_via_email = yithlibraryserver.scripts.backups:send_backups_via_email""",
+      yith_send_backups_via_email = yithlibraryserver.scripts.backups:send_backups_via_email
+      yith_announce = yithlibraryserver.scripts.announce:announce""",
       message_extractors = {'.': [
             ('**.py', 'lingua_python', None),
             ('**.pt', 'lingua_xml', None),

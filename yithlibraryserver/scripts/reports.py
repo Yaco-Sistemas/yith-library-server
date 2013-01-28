@@ -148,7 +148,7 @@ def group_by_email_provider(users, threshold):
     return providers, no_email
 
 
-def users_with_most_passwords(users, passwords, amount):
+def get_passwords_map(passwords):
     # make a password dict keyed by users_id
     passwords_map = {}
     for password in passwords:
@@ -158,6 +158,11 @@ def users_with_most_passwords(users, passwords, amount):
         else:
             passwords_map[owner] = 1
 
+    return passwords_map
+
+
+def users_with_most_passwords(users, passwords, amount):
+    passwords_map = get_passwords_map(passwords)
     users_map = dict([(user['_id'], user) for user in users])
 
     passwords_list = sorted(
