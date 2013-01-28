@@ -44,7 +44,7 @@ def get_selected_users(db, *emails):
 
 def send_backups_via_email():
     result = setup_simple_command(
-        "users",
+        "send_backups_via_email",
         "Report information about users and their passwords.",
         )
     if isinstance(result, int):
