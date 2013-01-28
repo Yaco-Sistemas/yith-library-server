@@ -27,6 +27,7 @@ from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.exceptions import ConfigurationError
 from pyramid.path import AssetResolver
+from pyramid.settings import asbool
 
 from yithlibraryserver.config import read_setting_from_env
 from yithlibraryserver.cors import CORSManager
@@ -102,7 +103,7 @@ def main(global_config, **settings):
     config.include('pyramid_beaker')
 
     # Mailer setup
-    if 'testing' in settings and settings['testing'] is True:
+    if 'testing' in settings and asbool(settings['testing']):
         config.include('pyramid_mailer.testing')
     else:  # pragma: no cover
         config.include('pyramid_mailer')

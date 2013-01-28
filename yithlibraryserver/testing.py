@@ -54,7 +54,7 @@ class TestCase(unittest.TestCase):
             'facebook_app_secret': 'secret',
             'google_client_id': 'id',
             'google_client_secret': 'secret',
-            'testing': True,
+            'testing': 'True',
             'pyramid_mailer.prefix': 'mail_',
             'mail_default_sender': 'no-reply@yithlibrary.com',
             'admin_emails': 'admin1@example.com admin2@example.com',
