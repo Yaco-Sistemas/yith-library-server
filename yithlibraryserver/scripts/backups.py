@@ -21,6 +21,7 @@ import datetime
 import transaction
 
 from yithlibraryserver.backups.email import send_passwords
+from yithlibraryserver.compat import urlparse
 from yithlibraryserver.scripts.utils import safe_print, setup_simple_command
 from yithlibraryserver.scripts.utils import get_user_display_name
 
@@ -63,7 +64,10 @@ def send_backups_via_email():
 
         tx = transaction.begin()
 
-        preferences_link = request.route_url('user_preferences')
+        public_url_root = settings['public_url_root']
+        preferences_link = urlparse.urljoin(
+            public_url_root,
+            request.route_path('user_preferences'))
 
         for user in user_iterator:
             if user['email']:
