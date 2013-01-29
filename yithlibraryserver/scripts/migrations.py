@@ -78,3 +78,7 @@ def migrate():
             return 3
     finally:
         closer()
+
+
+if __name__ == '__main__':  # pragma: no cover
+    migrate()
