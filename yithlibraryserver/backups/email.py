@@ -26,6 +26,11 @@ from yithlibraryserver.backups.utils import get_backup_filename
 from yithlibraryserver.backups.utils import get_user_passwords, compress
 
 
+def get_day_to_send(user, days_of_month):
+    """Sum the ordinal of each character in user._id % days_of_month"""
+    return sum([ord(chr) for chr in str(user['_id'])]) % days_of_month
+
+
 def send_passwords(request, user, preferences_link):
     passwords = get_user_passwords(request.db, user)
     if not passwords:
