@@ -381,7 +381,8 @@ class ViewTests(TestCase):
 
         res = self.testapp.get('/preferences')
         self.assertEqual(res.status, '200 OK')
-        res.mustcontain('Preferences', 'Allow statistics cookie',
+        res.mustcontain('Preferences',
+                        'Allow statistics cookie',
                         'Save changes')
 
         res = self.testapp.post('/preferences', {

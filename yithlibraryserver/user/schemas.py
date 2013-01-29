@@ -19,7 +19,7 @@
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
 import colander
-from deform.widget import TextAreaWidget, TextInputWidget
+from deform.widget import CheckboxWidget, TextAreaWidget, TextInputWidget
 
 from yithlibraryserver.i18n import TranslationString as _
 
@@ -118,4 +118,5 @@ class UserPreferencesSchema(colander.MappingSchema):
         colander.Boolean(),
         title=_('Send my passwords to my email monthly'),
         missing=False,
+        widget=CheckboxWidget(css_class='send-passwords-periodically'),
         )

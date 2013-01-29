@@ -30,7 +30,16 @@ def get_all_users(db):
     day = datetime.date.today().day
     return db.users.find({
             'send_passwords_periodically': True,
-            '$where': 'return this.date_joined.getDate() == %d' % day
+            '$where': '''
+function () {
+    var i, sum;
+    sum = 0;
+    for (i = 0; i < this._id.str.length; i += 1) {
+        sum += this._id.str.charCodeAt(i);
+    }
+    return sum %% 28 === %d;
+}
+''' % day
             }).sort('date_joined')
 
 

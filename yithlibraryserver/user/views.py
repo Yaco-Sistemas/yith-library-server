@@ -26,6 +26,7 @@ from pyramid.i18n import get_localizer
 from pyramid.security import remember, forget
 from pyramid.view import view_config, view_defaults, forbidden_view_config
 
+from yithlibraryserver.backups.email import get_day_to_send
 from yithlibraryserver.compat import url_quote
 from yithlibraryserver.i18n import translation_domain
 from yithlibraryserver.i18n import TranslationString as _
@@ -285,12 +286,31 @@ def preferences(request):
 
     form = Form(schema, buttons=(button1, ))
 
+    today = datetime.date.today()
+    # use 28 to get a consistent day_to_send no matter what the
+    # current month is. The disadvantage is that there are
+    # several days in a regular month that are not used.
+    day_to_send = get_day_to_send(request.user, 28)
+
+    if day_to_send > today.day:
+        day_to_send_msg = _(
+            'You will receive your passwords backup on the day ${day} of this month',
+            mapping={'day': day_to_send})
+    elif day_to_send < today.day:
+        day_to_send_msg = _(
+            'You will receive your passwords backup on the day ${day} of next month',
+            mapping={'day': day_to_send})
+    else:
+        day_to_send_msg = _(
+            'You will receive your passwords backup today!',
+            mapping={'day': day_to_send})
+
     if 'submit' in request.POST:
         controls = request.POST.items()
         try:
             appstruct = form.validate(controls)
         except ValidationFailure as e:
-            return {'form': e.render()}
+            return {'form': e.render(), 'day_to_send': day_to_send_msg}
 
         changes = dict([(pref, appstruct[pref]) for pref in (
                     analytics.USER_ATTR,
@@ -312,9 +332,9 @@ def preferences(request):
                 _('There were an error while saving your changes'),
                 'error',
                 )
-            return {'form': appstruct}
+            return {'form': appstruct, 'day_to_send': day_to_send_msg}
 
-    return {'form': form.render(request.user)}
+    return {'form': form.render(request.user), 'day_to_send': day_to_send_msg}
 
 
 @view_config(route_name='user_identity_providers',

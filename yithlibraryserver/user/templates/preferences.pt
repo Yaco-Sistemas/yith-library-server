@@ -16,4 +16,21 @@
 
 </tal:block>
 
+<tal:block metal:fill-slot="extra-scripts">
+
+  <script type="text/javascript">
+    (function ($) {
+        "use strict";
+        $(document).ready(function () {
+            $("form").tooltip({
+                selector: '.send-passwords-periodically',
+                title: '${day_to_send}',
+                trigger: 'hover'
+            });
+        });
+    }(jQuery));
+  </script>
+
+</tal:block>
+
 </html>
