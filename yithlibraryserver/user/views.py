@@ -113,6 +113,7 @@ def register_new_user(request):
                 'authorized_apps': [],
                 'date_joined': now,
                 'last_login': now,
+                'send_passwords_periodically': False,
             }
 
         if request.google_analytics.is_in_session():
