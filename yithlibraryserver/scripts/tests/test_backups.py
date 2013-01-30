@@ -69,12 +69,14 @@ class BackupsTests(ScriptTests):
                     'first_name': 'John1',
                     'last_name': 'Doe',
                     'email': '',
+                    'email_verified': False,
                     'send_passwords_periodically': False,
                     }), 10)
         self.add_passwords(self.db.users.insert({
                     'first_name': 'John2',
                     'last_name': 'Doe',
                     'email': 'john2@example.com',
+                    'email_verified': True,
                     'send_passwords_periodically': False,
                     }), 10)
 
@@ -86,6 +88,7 @@ class BackupsTests(ScriptTests):
                     'first_name': 'John%d' % i,
                     'last_name': 'Doe',
                     'email': 'john%d@example.com' % i,
+                    'email_verified': True,
                     'send_passwords_periodically': True,
                     })
             if get_day_to_send({'_id': user_id}, 28) == today:
@@ -111,24 +114,28 @@ class BackupsTests(ScriptTests):
                     'first_name': 'John1',
                     'last_name': 'Doe',
                     'email': '',
+                    'email_verified': False,
                     'send_passwords_periodically': False,
                     }), 10)
         self.add_passwords(self.db.users.insert({
                     'first_name': 'John2',
                     'last_name': 'Doe',
                     'email': 'john2@example.com',
+                    'email_verified': True,
                     'send_passwords_periodically': False,
                     }), 10)
         self.add_passwords(self.db.users.insert({
                     'first_name': 'John3',
                     'last_name': 'Doe',
                     'email': 'john3@example.com',
+                    'email_verified': True,
                     'send_passwords_periodically': True,
                     }), 10)
         self.add_passwords(self.db.users.insert({
                     'first_name': 'John4',
                     'last_name': 'Doe',
                     'email': 'john4@example.com',
+                    'email_verified': True,
                     'send_passwords_periodically': True,
                     }), 10)
 

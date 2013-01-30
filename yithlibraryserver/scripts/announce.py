@@ -37,7 +37,9 @@ from yithlibraryserver.scripts.utils import get_user_display_name
 def get_all_users_with_passwords_and_email(db):
     all_passwords = list(db.passwords.find())
     passwords_map = get_passwords_map(all_passwords)
-    for user in db.users.find():
+    for user in db.users.find({
+            'email_verified': True,
+            }):
         if not user['email']:
             continue
 

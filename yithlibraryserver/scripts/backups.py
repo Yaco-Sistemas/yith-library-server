@@ -30,6 +30,7 @@ def get_all_users(db):
     day = datetime.date.today().day
     return db.users.find({
             'send_passwords_periodically': True,
+            'email_verified': True,
             '$where': '''
 function () {
     var i, sum;

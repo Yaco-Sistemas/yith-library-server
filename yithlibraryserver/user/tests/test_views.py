@@ -115,6 +115,7 @@ class ViewTests(TestCase):
         self.assertEqual(user['email'], 'john@example.com')
         self.assertEqual(user['email_verified'], True)
         self.assertEqual(user['authorized_apps'], [])
+        self.assertEqual(user['send_passwords_periodically'], False)
 
         # the next_url and user_info keys are cleared at this point
         self.add_to_session({
@@ -147,6 +148,7 @@ class ViewTests(TestCase):
         self.assertEqual(user['email'], '')
         self.assertEqual(user['email_verified'], False)
         self.assertEqual(user['authorized_apps'], [])
+        self.assertEqual(user['send_passwords_periodically'], False)
 
         # the next_url and user_info keys are cleared at this point
         self.add_to_session({
@@ -181,6 +183,7 @@ class ViewTests(TestCase):
         self.assertEqual(user['email'], '')
         self.assertEqual(user['email_verified'], False)
         self.assertEqual(user['authorized_apps'], [])
+        self.assertEqual(user['send_passwords_periodically'], False)
 
         # check that the email was sent
         res.request.registry = self.testapp.app.registry
@@ -224,6 +227,7 @@ class ViewTests(TestCase):
         self.assertEqual(user['email_verified'], False)
         self.assertEqual(user['authorized_apps'], [])
         self.assertEqual(user[USER_ATTR], True)
+        self.assertEqual(user['send_passwords_periodically'], False)
 
         # the next_url and user_info keys are cleared at this point
         self.add_to_session({
