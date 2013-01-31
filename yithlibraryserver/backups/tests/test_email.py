@@ -77,6 +77,7 @@ class SendPasswordsTests(TestCase):
 
     def test_send_passwords(self):
         preferences_link = 'http://localhost/preferences'
+        backups_link = 'http://localhost/backups'
         user_id = self.db.users.insert({
                 'first_name': 'John',
                 'last_name': 'Doe',
@@ -88,7 +89,8 @@ class SendPasswordsTests(TestCase):
         request.db = self.db
         mailer = get_mailer(request)
 
-        self.assertFalse(send_passwords(request, user, preferences_link))
+        self.assertFalse(send_passwords(request, user,
+                                        preferences_link, backups_link))
         self.assertEqual(len(mailer.outbox), 0)
 
         # add some passwords
@@ -105,12 +107,14 @@ class SendPasswordsTests(TestCase):
         request.db = self.db
         mailer = get_mailer(request)
 
-        self.assertTrue(send_passwords(request, user, preferences_link))
+        self.assertTrue(send_passwords(request, user,
+                                       preferences_link, backups_link))
         self.assertEqual(len(mailer.outbox), 1)
         message = mailer.outbox[0]
         self.assertEqual(message.subject, "Your Yith Library's passwords")
         self.assertEqual(message.recipients, ['john@example.com'])
         self.assertTrue(preferences_link in message.body)
+        self.assertTrue(backups_link in message.body)
         self.assertEqual(len(message.attachments), 1)
         attachment = message.attachments[0]
         self.assertEqual(attachment.content_type, 'application/yith')

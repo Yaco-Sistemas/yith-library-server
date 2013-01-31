@@ -78,10 +78,14 @@ def send_backups_via_email():
         preferences_link = urlparse.urljoin(
             public_url_root,
             request.route_path('user_preferences'))
+        backups_link = urlparse.urljoin(
+            public_url_root,
+            request.route_path('backups_index'))
 
         for user in user_iterator:
             if user['email']:
-                sent = send_passwords(request, user, preferences_link)
+                sent = send_passwords(request, user,
+                                      preferences_link, backups_link)
                 if sent:
                     safe_print('Passwords sent to %s' %
                                get_user_display_name(user))

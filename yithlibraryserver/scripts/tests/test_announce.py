@@ -58,10 +58,17 @@ class AnnounceTests(ScriptTests):
 
     def test_announce_send_email(self):
         self.add_passwords(self.db.users.insert({
-                    'first_name': 'John1',
+                    'first_name': 'John0',
                     'last_name': 'Doe',
                     'email': '',
                     'email_verified': False,
+                    'send_passwords_periodically': False,
+                    }), 10)
+        self.add_passwords(self.db.users.insert({
+                    'first_name': 'John1',
+                    'last_name': 'Doe',
+                    'email': '',
+                    'email_verified': True,
                     'send_passwords_periodically': False,
                     }), 10)
         self.add_passwords(self.db.users.insert({

@@ -31,14 +31,16 @@ def get_day_to_send(user, days_of_month):
     return sum([ord(chr) for chr in str(user['_id'])]) % days_of_month
 
 
-def send_passwords(request, user, preferences_link):
+def send_passwords(request, user, preferences_link, backups_link):
     passwords = get_user_passwords(request.db, user)
     if not passwords:
         return False
 
     text_body = render(
         'yithlibraryserver.backups:templates/email_passwords.txt',
-        {'user': user, 'preferences_link': preferences_link},
+        {'user': user,
+         'preferences_link': preferences_link,
+         'backups_link': backups_link},
         request=request,
         )
     # chamaleon txt templates are rendered as utf-8 bytestrings
@@ -46,7 +48,9 @@ def send_passwords(request, user, preferences_link):
 
     html_body = render(
         'yithlibraryserver.backups:templates/email_passwords.pt',
-        {'user': user, 'preferences_link': preferences_link},
+        {'user': user,
+         'preferences_link': preferences_link,
+         'backups_link': backups_link},
         request=request,
         )
 
