@@ -31,7 +31,7 @@
 
       <h3 i18n:translate="">Import passwords</h3>
 
-      <form method="post" action="${request.route_path('backups_import')}" enctype="multipart/form-data">
+      <form id="import-form" method="post" action="${request.route_path('backups_import')}" enctype="multipart/form-data">
 
         <div style="min-height: 8em">
           <p class="muted"><small>By uploading a backup file you will replace your existing password collection with the contents of that file.</small></p>
@@ -41,11 +41,48 @@
         </div>
 
         <div class="form-actions">
-          <input type="submit" class="btn btn-primary btn-large" value="Upload my passwords" i18n:attributes="value" />
+          <input type="submit" class="btn btn-primary btn-large" value="Upload my passwords" i18n:attributes="value" data-toggle="modal" data-target="#import-confirmation-dialog" />
         </div>
       </form>
     </div>
   </div>
+
+
+  <div class="modal hide" id="import-confirmation-dialog">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">×</button>
+      <h3 i18n:translate="">Import confirmation</h3>
+    </div>
+
+    <div class="modal-body">
+      <p>Are you sure you want to import a password backup file?</p>
+      <p>This action will <strong>replace</strong> your current password collection with the contents of the file you are uploading.</p>
+      <p class="text-error">This action can not be undone.</p>
+
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn" data-dismiss="modal" i18n:translate="">Close</a>
+      <a href="#" id="confirmation-link" class="btn btn-primary">Yes, I am sure</a>
+    </div>
+  </div>
+
+</tal:block>
+
+<tal:block metal:fill-slot="extra-scripts">
+
+  <script type="text/javascript">
+    (function ($) {
+        "use strict";
+
+        $(document).ready(function () {
+            $("#confirmation-link").click(function (event) {
+                $("#import-form").submit();
+            });
+        });
+
+    }(jQuery));
+  </script>
 
 </tal:block>
 
