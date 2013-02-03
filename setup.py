@@ -67,7 +67,7 @@ testing_extras = test_requires + [
     ]
 
 setup(name='yith-library-server',
-      version='0.1',
+      version='0.2',
       description='yith-library-server',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
