@@ -144,6 +144,29 @@ You can also set this option with an environment variable:
 
 The default value for this option is ``mongodb://localhost:27017/yith-library``
 
+Public URL root
+~~~~~~~~~~~~~~~
+
+This setting specify the public URL root of the server. It is used when sending
+emails via scripts since in this environment there is no real HTTP requests and
+thus, no way to know the server's URL. It is also used to define the Persona
+audience string.
+
+.. code-block:: ini
+
+   public_url_root = https://yithlibrary.com/
+
+You can also set this option with an environment variable:
+
+.. code-block:: bash
+
+   $ export PUBLIC_URL_ROOT=https://yithlibrary.com/
+
+The default value for this option is http://localhost:6543
+
+As there is a default value for this option, the Persona authetication
+mechanism is always enabled.
+
 Facebook authentication
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -178,13 +201,6 @@ App summary page at Facebook.
 There are no default values for the settings ``facebook_app_id``
 and ``facebook_app_secret``. If they are not set, Facebook
 authentication is automatically disabled.
-
-.. warning::
-
-   It is perfectly fine to avoid Facebook authentication but it is
-   actually required to enable at least one of the supported
-   authentication mechanisms (Facebook, Google, Twitter or Persona).
-   Otherwise your users won't be able to access your server.
 
 There are three more Facebook settings that are used to perform the
 actual authentication but they have good default values and you
@@ -231,7 +247,6 @@ There is no default value for this setting. If unset, the Javascript
 snippet for Google Analytics will not be rendered in the final HTML
 of your server.
 
-
 Google authentication
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -269,13 +284,6 @@ There are no default values for the settings ``google_client_id``
 and ``google_client_secret``. If they are not set, Google
 authentication is automatically disabled.
 
-.. warning::
-
-   It is perfectly fine to avoid Google authentication but it is
-   actually required to enable at least one of the supported
-   authentication mechanisms (Facebook, Google, Twitter or Persona).
-   Otherwise your users won't be able to access your server.
-
 There are three more Google settings that are used to perform the
 actual authentication but they have good default values and you
 should only need to change them if Google itself changes them.
@@ -306,27 +314,9 @@ You can also set these options with environment variables:
 Persona authentication
 ~~~~~~~~~~~~~~~~~~~~~~
 
-You can configure support for Mozilla Persona authentication in
-:program:`Yith Library Server` by defining several settings. If you
-do so, your users will be able to access your server authenticating
-themselves via Persona.
-
-The first setting is ``persona_audience`` and it should be the full
-URL of your server, including the port.
-
-.. code-block:: ini
-
-   persona_audience = http://localhost:80
-
-There are no default value for the¡s setting. If it is not set,
-Persona authentication is automatically disabled.
-
-.. warning::
-
-   It is perfectly fine to avoid Persona authentication but it is
-   actually required to enable at least one of the supported
-   authentication mechanisms (Facebook, Google, Twitter or Persona).
-   Otherwise your users won't be able to access your server.
+As mentioned in the Public URL root setting, Mozilla Persona
+authentication is always enabled. This way your users will be able
+to access your server authenticating themselves via Persona.
 
 There is one more Persona seetting that is used to verify the
 assertion that Persona sends to :program:`Yith Library Server`.
@@ -337,11 +327,10 @@ it if Persona itself change it:
 
    persona_verifier_url = https://verifier.login.persona.org/verify
 
-You can also set these options with environment variables:
+You can also set this option with an environment variable:
 
 .. code-block:: bash
 
-   $ export PERSONA_AUDIENCE="http://localhost:80"
    $ export PERSONA_VERIFIER_URL="https://verifier.login.persona.org/verify"
 
 .. todo::
@@ -382,13 +371,6 @@ App page at Twitter.
 There are no default values for the settings ``twitter_consumer_key``
 and ``twitter_consumer_secret``. If they are not set, Twitter
 authentication is automatically disabled.
-
-.. warning::
-
-   It is perfectly fine to avoid Twitter authentication but it is
-   actually required to enable at least one of the supported
-   authentication mechanisms (Facebook, Google, Twitter or Persona).
-   Otherwise your users won't be able to access your server.
 
 There are three more Twitter settings that are used to perform the
 actual authentication but they have good default values and you
