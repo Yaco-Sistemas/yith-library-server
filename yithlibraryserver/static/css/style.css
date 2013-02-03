@@ -2,10 +2,6 @@ body {
     padding-top: 20px;
 }
 
-h1 {
-    margin-bottom: 30px;
-}
-
 .navbar img.avatar {
     float: left;
     margin-top: -6px;
@@ -20,25 +16,9 @@ h1 {
     padding-right: 80px;
 }
 
-.pointer {
-    cursor: pointer;
-}
-
-.red {
-    color: red;
-}
-
-#master {
-    z-index: 1070;
-}
-
 .passwords td:first-child .btn.btn-info {
     display: block;
     margin-bottom: 5px;
-}
-
-#master-password {
-    width: 520px;
 }
 
 footer {
