@@ -12,19 +12,40 @@
 
   <h2 i18n:translate="">Backup</h2>
 
-  <h3 i18n:translate="">Export passwords</h3>
+  <div class="row">
 
-  <a href="${request.route_path('backups_export')}" class="btn btn-primary btn-large" i18n:translate="">Download my passwords</a>
+    <div class="span5">
 
-  <h3 i18n:translate="">Import passwords</h3>
+      <h3 i18n:translate="">Export passwords</h3>
 
-  <form method="post" action="${request.route_path('backups_import')}" enctype="multipart/form-data">
-    <label for="passwords-file" i18n:translate="">Select a file:</label>
-    <input id="passwords-file" name="passwords-file" type="file" class="input-block-level" />
-    <div class="forms-actions">
-      <input type="submit" class="btn btn-primary btn-large" value="Upload my passwords" i18n:attributes="value" />
+      <div style="min-height: 8em">
+        <p class="muted"><small>By clicking in the following button you will get a backup file with your password collection.</small></p>
+      </div>
+
+      <div class="form-actions">
+        <a href="${request.route_path('backups_export')}" class="btn btn-primary btn-large" i18n:translate="">Download my passwords</a>
+      </div>
     </div>
-  </form>
+
+    <div class="span5">
+
+      <h3 i18n:translate="">Import passwords</h3>
+
+      <form method="post" action="${request.route_path('backups_import')}" enctype="multipart/form-data">
+
+        <div style="min-height: 8em">
+          <p class="muted"><small>By uploading a backup file you will replace your existing password collection with the contents of that file.</small></p>
+
+          <label class="control-label" for="passwords-file" i18n:translate="">Select a file:</label>
+          <input id="passwords-file" name="passwords-file" type="file" class="input-block-level" />
+        </div>
+
+        <div class="form-actions">
+          <input type="submit" class="btn btn-primary btn-large" value="Upload my passwords" i18n:attributes="value" />
+        </div>
+      </form>
+    </div>
+  </div>
 
 </tal:block>
 
