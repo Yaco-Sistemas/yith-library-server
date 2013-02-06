@@ -16,8 +16,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-import datetime
-
 import transaction
 
 from yithlibraryserver.backups.email import send_passwords
@@ -26,9 +24,9 @@ from yithlibraryserver.scripts.utils import safe_print, setup_simple_command
 from yithlibraryserver.scripts.utils import get_user_display_name
 
 
-def get_all_users(db):
-    day = datetime.date.today().day
-    return db.users.find({
+def get_all_users(request):
+    day = request.datetime_service.date_today().day
+    return request.db.users.find({
             'send_passwords_periodically': True,
             'email_verified': True,
             '$where': '''
@@ -44,9 +42,9 @@ function () {
             }).sort('date_joined')
 
 
-def get_selected_users(db, *emails):
+def get_selected_users(request, *emails):
     for email in emails:
-        for user in db.users.find({
+        for user in request.db.users.find({
                 'email': email,
                 }).sort('date_joined'):
             yield user
@@ -63,14 +61,12 @@ def send_backups_via_email():
         settings, closer, env, args = result
 
     try:
-
-        db = settings['mongodb'].get_database()
         request = env['request']
 
         if len(args) == 0:
-            user_iterator = get_all_users(db)
+            user_iterator = get_all_users(request)
         else:
-            user_iterator = get_selected_users(db, *args)
+            user_iterator = get_selected_users(request, *args)
 
         tx = transaction.begin()
 

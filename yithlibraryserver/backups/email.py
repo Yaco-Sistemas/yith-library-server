@@ -16,8 +16,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-import datetime
-
 from pyramid.renderers import render
 from pyramid_mailer import get_mailer
 from pyramid_mailer.message import Attachment, Message
@@ -59,7 +57,8 @@ def send_passwords(request, user, preferences_link, backups_link):
                       body=text_body,
                       html=html_body)
 
-    attachment = Attachment(get_backup_filename(datetime.date.today()),
+    today = request.datetime_service.date_today()
+    attachment = Attachment(get_backup_filename(today),
                             "application/yith",
                             compress(passwords))
 

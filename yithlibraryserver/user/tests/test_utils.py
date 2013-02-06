@@ -22,6 +22,7 @@ import unittest
 
 from pyramid import testing
 
+from yithlibraryserver.datetimeservice.testing import FakeDatetimeService
 from yithlibraryserver.db import MongoDB
 from yithlibraryserver.testing import MONGO_URI
 
@@ -141,6 +142,7 @@ class UtilsTests(unittest.TestCase):
         request.db = self.db
         request.session = {USER_ATTR: True}
         request.google_analytics = GoogleAnalytics(request)
+        request.datetime_service = FakeDatetimeService(request)
         response = register_or_update(request, 'skynet', 1, {
                 'screen_name': 'JohnDoe',
                 'first_name': 'John',
@@ -159,6 +161,7 @@ class UtilsTests(unittest.TestCase):
         request.db = self.db
         request.session = {'next_url': '/foo'}
         request.google_analytics = GoogleAnalytics(request)
+        request.datetime_service = FakeDatetimeService(request)
         response = register_or_update(request, 'skynet', 1, {
                 'screen_name': 'JohnDoe',
                 'first_name': 'John',

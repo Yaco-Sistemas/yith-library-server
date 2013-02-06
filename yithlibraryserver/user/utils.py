@@ -17,7 +17,6 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
-import datetime
 
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember
@@ -80,7 +79,7 @@ def register_or_update(request, provider, user_id, info, default_url='/'):
             request.session['next_url'] = default_url
         return HTTPFound(location=request.route_path('register_new_user'))
     else:
-        changes = {'last_login': datetime.datetime.utcnow()}
+        changes = {'last_login': request.datetime_service.utcnow()}
 
         ga = request.google_analytics
         if ga.is_in_session():
