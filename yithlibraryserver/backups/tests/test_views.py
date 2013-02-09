@@ -19,6 +19,7 @@
 import datetime
 import gzip
 import json
+import os
 
 from yithlibraryserver.compat import text_type, BytesIO
 from yithlibraryserver.testing import TestCase
@@ -85,14 +86,16 @@ class ViewTests(TestCase):
                 }, safe=True)
         self.set_user_cookie(str(user_id))
 
+        os.environ['YITH_FAKE_DATE'] = '2012-1-10'
+
         res = self.testapp.get('/backup/export')
         self.assertEqual(res.status, '200 OK')
         self.assertEqual(res.content_type, 'application/yith-library')
         self.assertUncompressData(res.body, '[]')
-        cd = 'attachment; filename=yith-library-backup-%d-%02d-%02d.yith'
-        today = datetime.date.today()
-        self.assertEqual(res.content_disposition,
-                         cd % (today.year, today.month, today.day))
+        self.assertEqual(
+            res.content_disposition,
+            'attachment; filename=yith-library-backup-2012-01-10.yith',
+            )
 
         self.db.passwords.insert({
                 'owner': user_id,
@@ -111,10 +114,11 @@ class ViewTests(TestCase):
                     }, {
                     'password': 'secret2',
                     }]))
-        cd = 'attachment; filename=yith-library-backup-%d-%02d-%02d.yith'
-        today = datetime.date.today()
-        self.assertEqual(res.content_disposition,
-                         cd % (today.year, today.month, today.day))
+        self.assertEqual(
+            res.content_disposition,
+            'attachment; filename=yith-library-backup-2012-01-10.yith',
+            )
+        del os.environ['YITH_FAKE_DATE']
 
     def test_backups_import(self):
         res = self.testapp.post('/backup/import')

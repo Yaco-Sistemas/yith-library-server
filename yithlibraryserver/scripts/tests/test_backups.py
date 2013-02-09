@@ -32,14 +32,20 @@ class BackupsTests(ScriptTests):
 
     def setUp(self):
         super(BackupsTests, self).setUp()
+
         # Save sys values
         self.old_args = sys.argv[:]
         self.old_stdout = sys.stdout
+
+        os.environ['YITH_FAKE_DATE'] = '2012-1-10'
 
     def tearDown(self):
         # Restore sys.values
         sys.argv = self.old_args
         sys.stdout = self.old_stdout
+
+        del os.environ['YITH_FAKE_DATE']
+
         super(BackupsTests, self).tearDown()
 
     def test_no_arguments(self):
@@ -102,8 +108,6 @@ class BackupsTests(ScriptTests):
         self.assertEqual(stdout, expected_output)
 
     def test_several_users(self):
-        os.environ['YITH_FAKE_DATE'] = '2012-1-10'
-
         date_joined = datetime.datetime(2012, 12, 12, 12, 12)
         # Add some users
         self.add_passwords(self.db.users.insert({
@@ -139,5 +143,3 @@ class BackupsTests(ScriptTests):
         expected_output = """Passwords sent to John%d Doe <john%d@example.com>
 """ % (i, i)
         self.assertEqual(stdout, expected_output)
-
-        del os.environ['YITH_FAKE_DATE']

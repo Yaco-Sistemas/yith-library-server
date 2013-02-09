@@ -18,6 +18,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
+
 from mock import patch
 
 from yithlibraryserver import testing
@@ -66,6 +68,8 @@ class ViewTests(testing.TestCase):
         settings['twitter_consumer_key'] = 'cChZNFj6T5R0TigYB9yd1w'
         settings['twitter_consumer_secret'] = 'L8qq9PZyRg6ieKGEKhZolGC0vJWLw8iEJ88DRdyOg'
         settings['twitter_authenticate_url'] = 'https://api.twitter.com/oauth/authenticate'
+
+        os.environ['YITH_FAKE_DATETIME'] = '2012-1-10-15-31-11'
 
         res = self.testapp.get('/twitter/callback', status=400)
         self.assertEqual(res.status, '400 Bad Request')
@@ -177,3 +181,5 @@ class ViewTests(testing.TestCase):
                 self.assertEqual(res.status, '302 Found')
                 self.assertEqual(res.location, 'http://localhost/foo/bar')
                 self.assertTrue('Set-Cookie' in res.headers)
+
+        del os.environ['YITH_FAKE_DATETIME']

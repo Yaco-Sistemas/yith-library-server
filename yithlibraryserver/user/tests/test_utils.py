@@ -18,6 +18,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 import unittest
 
 from pyramid import testing
@@ -108,6 +109,8 @@ class UtilsTests(unittest.TestCase):
         self.assertEqual(updated_user['foo'], 'bar')
 
     def test_register_or_update(self):
+        os.environ['YITH_FAKE_DATETIME'] = '2013-1-2-10-11-02'
+
         request = testing.DummyRequest()
         request.db = self.db
         request.session = {}
@@ -170,3 +173,5 @@ class UtilsTests(unittest.TestCase):
                 }, '/next')
         self.assertEqual(response.status, '302 Found')
         self.assertEqual(response.location, '/foo')
+
+        del os.environ['YITH_FAKE_DATETIME']

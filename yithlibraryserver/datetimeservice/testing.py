@@ -24,42 +24,22 @@ class FakeDateService(object):
 
     def __init__(self, request):
         self.request = request
-        if 'YITH_FAKE_DATE' in os.environ:
-            fake = os.environ['YITH_FAKE_DATE']
-            parts = [int(p) for p in fake.split('-')]
-            self.mock = datetime.date(*parts)
-        else:
-            self.mock = None
-
-    def set_mock(self, mock):
-        self.mock = mock
 
     def today(self):
-        if self.mock:
-            return self.mock
-        else:
-            return datetime.date.today()
+        fake = os.environ['YITH_FAKE_DATE']
+        parts = [int(p) for p in fake.split('-')]
+        return datetime.date(*parts)
 
 
 class FakeDatetimeService(object):
 
     def __init__(self, request):
         self.request = request
-        if 'YITH_FAKE_DATETIME' in os.environ:
-            fake = os.environ['YITH_FAKE_DATETIME']
-            parts = [int(p) for p in fake.split('-')]
-            self.mock = datetime.datetime(*parts)
-        else:
-            self.mock = None
-
-    def set_mock(self, mock):
-        self.mock = mock
 
     def utcnow(self):
-        if self.mock:
-            return self.mock
-        else:
-            return datetime.datetime.utcnow()
+        fake = os.environ['YITH_FAKE_DATETIME']
+        parts = [int(p) for p in fake.split('-')]
+        return datetime.datetime(*parts)
 
 
 def get_fake_date(request):

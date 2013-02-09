@@ -394,7 +394,7 @@ class ViewTests(TestCase):
                         'You will receive your passwords backup on the day %d of next month' % day,
                         'Save changes')
 
-        os.environ['YITH_FAKE_DATE'] = '2012-10-%d' % max(0, day - 1)
+        os.environ['YITH_FAKE_DATE'] = '2012-10-%d' % max(1, day - 1)
         res = self.testapp.get('/preferences')
         self.assertEqual(res.status, '200 OK')
         res.mustcontain('Preferences',
@@ -409,8 +409,6 @@ class ViewTests(TestCase):
                         'Allow statistics cookie',
                         'You will receive your passwords backup today',
                         'Save changes')
-
-        del os.environ['YITH_FAKE_DATE']
 
         res = self.testapp.post('/preferences', {
                 'submit': 'Save changes',
@@ -442,6 +440,8 @@ class ViewTests(TestCase):
                     })
             self.assertEqual(res.status, '200 OK')
             res.mustcontain('There were an error while saving your changes')
+
+        del os.environ['YITH_FAKE_DATE']
 
     def test_destroy(self):
         # this view required authentication
