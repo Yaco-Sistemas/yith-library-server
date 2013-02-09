@@ -375,20 +375,32 @@ class ViewTests(TestCase):
 
         # Log in
         date = datetime.datetime(2012, 12, 12, 12, 12)
-        user_id = self.db.users.insert({
-                'twitter_id': 'twitter1',
-                'screen_name': 'John Doe',
-                'first_name': 'John',
-                'last_name': 'Doe',
-                'email': '',
-                'email_verified': False,
-                'authorized_apps': [],
-                'date_joined': date,
-                'last_login': date,
-                'allow_google_analytics': False,
-                }, safe=True)
+        while True:
+            user_id = self.db.users.insert({
+                    'twitter_id': 'twitter1',
+                    'screen_name': 'John Doe',
+                    'first_name': 'John',
+                    'last_name': 'Doe',
+                    'email': '',
+                    'email_verified': False,
+                    'authorized_apps': [],
+                    'date_joined': date,
+                    'last_login': date,
+                    'allow_google_analytics': False,
+                    }, safe=True)
+            day = get_day_to_send({'_id': user_id}, 28)
+            # we want a user with a different day from 1
+            # since that's a special case and does not
+            # allow us to test a future date to send
+            # the passwords
+            if day != 1:
+                break
+
+            # In most cases day will be != 1 so this line
+            # only get executed with very low probability
+            self.db.users.remove(user_id, safe=True)  # pragma: no cover
+
         self.set_user_cookie(str(user_id))
-        day = get_day_to_send({'_id': user_id}, 28)
 
         os.environ['YITH_FAKE_DATE'] = '2012-10-30'
         res = self.testapp.get('/preferences')
