@@ -19,6 +19,7 @@
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
 import datetime
+import os
 
 from deform import ValidationFailure
 
@@ -26,6 +27,7 @@ from mock import patch
 
 from pyramid_mailer import get_mailer
 
+from yithlibraryserver.backups.email import get_day_to_send
 from yithlibraryserver.compat import url_quote
 from yithlibraryserver.testing import TestCase
 from yithlibraryserver.user.analytics import USER_ATTR
@@ -382,12 +384,33 @@ class ViewTests(TestCase):
                 'allow_google_analytics': False,
                 }, safe=True)
         self.set_user_cookie(str(user_id))
+        day = get_day_to_send({'_id': user_id}, 28)
 
+        os.environ['YITH_FAKE_DATE'] = '2012-10-30'
         res = self.testapp.get('/preferences')
         self.assertEqual(res.status, '200 OK')
         res.mustcontain('Preferences',
                         'Allow statistics cookie',
+                        'You will receive your passwords backup on the day %d of next month' % day,
                         'Save changes')
+
+        os.environ['YITH_FAKE_DATE'] = '2012-10-%d' % max(0, day - 1)
+        res = self.testapp.get('/preferences')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Preferences',
+                        'Allow statistics cookie',
+                        'You will receive your passwords backup on the day %d of this month' % day,
+                        'Save changes')
+
+        os.environ['YITH_FAKE_DATE'] = '2012-10-%d' % day
+        res = self.testapp.get('/preferences')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Preferences',
+                        'Allow statistics cookie',
+                        'You will receive your passwords backup today',
+                        'Save changes')
+
+        del os.environ['YITH_FAKE_DATE']
 
         res = self.testapp.post('/preferences', {
                 'submit': 'Save changes',
