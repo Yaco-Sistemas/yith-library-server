@@ -76,6 +76,8 @@ class ViewTests(TestCase):
         res.mustcontain('next_url=/')
 
     def test_register_new_user(self):
+        os.environ['YITH_FAKE_DATETIME'] = '2013-1-2-10-11-02'
+
         res = self.testapp.get('/register', status=400)
         self.assertEqual(res.status, '400 Bad Request')
         res.mustcontain('Missing user info in the session')
@@ -286,6 +288,8 @@ class ViewTests(TestCase):
                     'submit': 'Register into Yith Library',
                     })
             self.assertEqual(res.status, '200 OK')
+
+        del os.environ['YITH_FAKE_DATETIME']
 
     def test_logout(self):
         # Log in
