@@ -57,7 +57,7 @@ def send_passwords(request, user, preferences_link, backups_link):
                       body=text_body,
                       html=html_body)
 
-    today = request.datetime_service.date_today()
+    today = request.date_service.today()
     attachment = Attachment(get_backup_filename(today),
                             "application/yith",
                             compress(passwords))

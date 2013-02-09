@@ -17,28 +17,53 @@
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
 import datetime
+import os
+
+
+class FakeDateService(object):
+
+    def __init__(self, request):
+        self.request = request
+        if 'YITH_FAKE_DATE' in os.environ:
+            fake = os.environ['YITH_FAKE_DATE']
+            parts = [int(p) for p in fake.split('-')]
+            self.mock = datetime.date(*parts)
+        else:
+            self.mock = None
+
+    def set_mock(self, mock):
+        self.mock = mock
+
+    def today(self):
+        if self.mock:
+            return self.mock
+        else:
+            return datetime.date.today()
 
 
 class FakeDatetimeService(object):
 
     def __init__(self, request):
         self.request = request
-        self.mock = None
+        if 'YITH_FAKE_DATETIME' in os.environ:
+            fake = os.environ['YITH_FAKE_DATETIME']
+            parts = [int(p) for p in fake.split('-')]
+            self.mock = datetime.datetime(*parts)
+        else:
+            self.mock = None
 
     def set_mock(self, mock):
         self.mock = mock
 
     def utcnow(self):
         if self.mock:
-            return self.mock.utcnow()
+            return self.mock
         else:
             return datetime.datetime.utcnow()
 
-    def date_today(self):
-        if self.mock:
-            return self.mock.today()
-        else:
-            return datetime.date.today()
+
+def get_fake_date(request):
+    return FakeDateService(request)
 
 
 def get_fake_datetime(request):
@@ -46,4 +71,5 @@ def get_fake_datetime(request):
 
 
 def includeme(config):
+    config.set_request_property(get_fake_date, 'date_service', reify=True)
     config.set_request_property(get_fake_datetime, 'datetime_service', reify=True)

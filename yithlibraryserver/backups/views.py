@@ -42,7 +42,7 @@ def backups_export(request):
     passwords = get_user_passwords(request.db, request.user)
     data = compress(passwords)
     response = Response(body=data, content_type='application/yith-library')
-    today = request.datetime_service.date_today()
+    today = request.date_service.today()
     filename = get_backup_filename(today)
     response.content_disposition = 'attachment; filename=%s' % filename
     return response

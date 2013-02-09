@@ -26,7 +26,7 @@ from pyramid.testing import DummyRequest
 
 from pyramid_mailer import get_mailer
 
-from yithlibraryserver.datetimeservice.testing import FakeDatetimeService
+from yithlibraryserver.datetimeservice.testing import FakeDateService
 from yithlibraryserver.backups.email import get_day_to_send, send_passwords
 from yithlibraryserver.backups.utils import get_backup_filename
 from yithlibraryserver.testing import TestCase
@@ -106,7 +106,7 @@ class SendPasswordsTests(TestCase):
 
         request = DummyRequest()
         request.db = self.db
-        request.datetime_service = FakeDatetimeService(request)
+        request.date_service = FakeDateService(request)
         mailer = get_mailer(request)
 
         self.assertTrue(send_passwords(request, user,

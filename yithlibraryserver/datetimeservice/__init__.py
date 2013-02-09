@@ -19,6 +19,15 @@
 import datetime
 
 
+class DateService(object):
+
+    def __init__(self, request):
+        self.request = request
+
+    def today(self):
+        return datetime.date.today()
+
+
 class DatetimeService(object):
 
     def __init__(self, request):
@@ -27,8 +36,9 @@ class DatetimeService(object):
     def utcnow(self):
         return datetime.datetime.utcnow()
 
-    def date_today(self):
-        return datetime.date.today()
+
+def get_date(request):
+    return DateService(request)
 
 
 def get_datetime(request):
@@ -36,5 +46,6 @@ def get_datetime(request):
 
 
 def includeme(config):
+    config.set_request_property(get_date, 'date_service', reify=True)
     config.set_request_property(get_datetime, 'datetime_service', reify=True)
 

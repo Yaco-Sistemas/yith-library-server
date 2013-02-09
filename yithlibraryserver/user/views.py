@@ -286,7 +286,7 @@ def preferences(request):
 
     form = Form(schema, buttons=(button1, ))
 
-    today = request.datetime_service.date_today()
+    today = request.date_service.today()
     # use 28 to get a consistent day_to_send no matter what the
     # current month is. The disadvantage is that there are
     # several days in a regular month that are not used.

@@ -44,12 +44,15 @@ class ScriptTests(unittest.TestCase):
     clean_collections = tuple()
 
     def setUp(self):
+        super(ScriptTests, self).setUp()
+
         fd, self.conf_file_path = tempfile.mkstemp()
         os.write(fd, CONFIG.encode('ascii'))
         mdb = MongoDB(MONGO_URI)
         self.db = mdb.get_database()
 
     def tearDown(self):
+        super(ScriptTests, self).tearDown()
         os.unlink(self.conf_file_path)
         for col in self.clean_collections:
             self.db.drop_collection(col)
@@ -61,3 +64,4 @@ class ScriptTests(unittest.TestCase):
                     'secret': 's3cr3t',
                     'owner': user,
                     })
+        return user

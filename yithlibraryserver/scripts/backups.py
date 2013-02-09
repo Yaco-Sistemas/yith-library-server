@@ -25,7 +25,7 @@ from yithlibraryserver.scripts.utils import get_user_display_name
 
 
 def get_all_users(request):
-    day = request.datetime_service.date_today().day
+    day = request.date_service.today().day
     return request.db.users.find({
             'send_passwords_periodically': True,
             'email_verified': True,

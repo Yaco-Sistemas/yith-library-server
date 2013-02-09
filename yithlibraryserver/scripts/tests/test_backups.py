@@ -16,7 +16,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-from datetime import datetime
+import datetime
+import os
 import sys
 
 from yithlibraryserver.backups.email import get_day_to_send
@@ -61,54 +62,6 @@ class BackupsTests(ScriptTests):
         stdout = sys.stdout.getvalue()
         self.assertEqual(stdout, '')
 
-    def test_several_users(self):
-        today = datetime.today().day
-
-        # Add some users
-        self.add_passwords(self.db.users.insert({
-                    'first_name': 'John1',
-                    'last_name': 'Doe',
-                    'email': '',
-                    'email_verified': False,
-                    'send_passwords_periodically': False,
-                    }), 10)
-        self.add_passwords(self.db.users.insert({
-                    'first_name': 'John2',
-                    'last_name': 'Doe',
-                    'email': 'john2@example.com',
-                    'email_verified': True,
-                    'send_passwords_periodically': False,
-                    }), 10)
-
-        i = 3
-        found = False
-        max_iters = 1000
-        while i < max_iters:
-            user_id = self.db.users.insert({
-                    'first_name': 'John%d' % i,
-                    'last_name': 'Doe',
-                    'email': 'john%d@example.com' % i,
-                    'email_verified': True,
-                    'send_passwords_periodically': True,
-                    })
-            if get_day_to_send({'_id': user_id}, 28) == today:
-                self.add_passwords(user_id, 10)
-                found = True
-                break
-            i += 1
-
-        sys.argv = ['notused', self.conf_file_path]
-        sys.stdout = StringIO()
-        result = send_backups_via_email()
-        self.assertEqual(result, None)
-        stdout = sys.stdout.getvalue()
-        if found:
-            expected_output = """Passwords sent to John%d Doe <john%d@example.com>
-""" % (i, i)
-        else:
-            expected_output = ''
-        self.assertEqual(stdout, expected_output)
-
     def test_send_specific_user(self):
         self.add_passwords(self.db.users.insert({
                     'first_name': 'John1',
@@ -147,3 +100,44 @@ class BackupsTests(ScriptTests):
         expected_output = """Passwords sent to John3 Doe <john3@example.com>
 """
         self.assertEqual(stdout, expected_output)
+
+    def test_several_users(self):
+        os.environ['YITH_FAKE_DATE'] = '2012-1-10'
+
+        date_joined = datetime.datetime(2012, 12, 12, 12, 12)
+        # Add some users
+        self.add_passwords(self.db.users.insert({
+                    'first_name': 'John1',
+                    'last_name': 'Doe',
+                    'date_joined': date_joined,
+                    'email': '',
+                    'email_verified': False,
+                    'send_passwords_periodically': False,
+                    }), 10)
+
+        i = 1
+        while True:
+            user_id = self.add_passwords(self.db.users.insert({
+                        'first_name': 'John%d' % i,
+                        'last_name': 'Doe',
+                        'date_joined': date_joined,
+                        'email': 'john%d@example.com' % i,
+                        'email_verified': True,
+                        'send_passwords_periodically': True,
+                        }), 10)
+            day = get_day_to_send({'_id': user_id}, 28)
+            if day == 10:
+                break
+
+            i += 1
+
+        sys.argv = ['notused', self.conf_file_path]
+        sys.stdout = StringIO()
+        result = send_backups_via_email()
+        self.assertEqual(result, None)
+        stdout = sys.stdout.getvalue()
+        expected_output = """Passwords sent to John%d Doe <john%d@example.com>
+""" % (i, i)
+        self.assertEqual(stdout, expected_output)
+
+        del os.environ['YITH_FAKE_DATE']
