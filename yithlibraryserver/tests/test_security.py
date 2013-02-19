@@ -46,9 +46,14 @@ class AuthorizationTests(testing.TestCase):
         # Invalid code
         self.assertRaises(HTTPUnauthorized, authorize_user, request)
 
+        self.app_id = self.db.applications.insert({
+                'name': 'test-app',
+                }, safe=True)
+
         access_code_id = self.db.access_codes.insert({
                 'code': '1234',
                 'user': 'user1',
+                'client_id': self.app_id,
                 }, safe=True)
         request = testing.FakeRequest(headers={
                 'Authorization': 'Bearer 1234',
@@ -66,5 +71,6 @@ class AuthorizationTests(testing.TestCase):
                 'Authorization': 'Bearer 1234',
                 }, db=self.db)
         # Invalid user
-        authorized_user = authorize_user(request)
+        authorized_user, app = authorize_user(request)
         self.assertEqual(authorized_user['username'], 'user1')
+        self.assertEqual(app['name'], 'test-app')

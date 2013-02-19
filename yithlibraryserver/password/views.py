@@ -48,12 +48,12 @@ class PasswordCollectionRESTView(object):
 
     @view_config(request_method='GET')
     def get(self):
-        user = authorize_user(self.request)
+        user, app = authorize_user(self.request)
         return list(self.passwords_manager.retrieve(user))
 
     @view_config(request_method='POST')
     def post(self):
-        user = authorize_user(self.request)
+        user, app = authorize_user(self.request)
         password, errors = validate_password(self.request.body,
                                              self.request.charset)
 
@@ -83,7 +83,7 @@ class PasswordRESTView(object):
 
     @view_config(request_method='GET')
     def get(self):
-        user = authorize_user(self.request)
+        user, app = authorize_user(self.request)
         try:
             _id = bson.ObjectId(self.password_id)
         except bson.errors.InvalidId:
@@ -98,7 +98,7 @@ class PasswordRESTView(object):
 
     @view_config(request_method='PUT')
     def put(self):
-        user = authorize_user(self.request)
+        user, app = authorize_user(self.request)
         try:
             _id = bson.ObjectId(self.password_id)
         except bson.errors.InvalidId:
@@ -121,7 +121,7 @@ class PasswordRESTView(object):
 
     @view_config(request_method='DELETE')
     def delete(self):
-        user = authorize_user(self.request)
+        user, app = authorize_user(self.request)
         try:
             _id = bson.ObjectId(self.password_id)
         except bson.errors.InvalidId:
