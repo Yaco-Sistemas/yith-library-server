@@ -37,6 +37,13 @@ class ApplicationSchema(colander.MappingSchema):
         title=_('Callback URL'),
         widget=TextInputWidget(css_class='input-xlarge'),
         )
+    authorized_origins = colander.SchemaNode(
+        colander.String(),
+        title=_('Authorized Origins'),
+        description=_('One per line. For example https://example.com'),
+        missing='',
+        widget=TextAreaWidget(css_class='input-xlarge'),
+        )
     production_ready = colander.SchemaNode(
         colander.Boolean(),
         title=_('Production ready'),

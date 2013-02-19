@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-02-03 19:11+0100\n"
-"PO-Revision-Date: 2013-02-03 19:15+0100\n"
+"POT-Creation-Date: 2013-02-19 21:17+0100\n"
+"PO-Revision-Date: 2013-02-19 21:17+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -36,9 +36,10 @@ msgstr "Mensaje"
 msgid "Send message"
 msgstr "Enviar mensaje"
 
-#: yithlibraryserver/views.py:47 yithlibraryserver/oauth2/views.py:63
-#: yithlibraryserver/oauth2/views.py:125 yithlibraryserver/user/views.py:77
-#: yithlibraryserver/user/views.py:176
+#: yithlibraryserver/views.py:47
+#: yithlibraryserver/backups/templates/backups_index.pt:65
+#: yithlibraryserver/oauth2/views.py:63 yithlibraryserver/oauth2/views.py:125
+#: yithlibraryserver/user/views.py:76 yithlibraryserver/user/views.py:175
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -46,19 +47,19 @@ msgstr "Cancelar"
 msgid "Thank you very much for sharing your opinion"
 msgstr "Muchas gracias por compartir tu opinión"
 
-#: yithlibraryserver/backups/views.py:68
+#: yithlibraryserver/backups/views.py:67
 msgid "There was a problem reading your passwords file"
 msgstr "Hubo un problema releyendo su fichero de contraseñas"
 
-#: yithlibraryserver/backups/views.py:75
+#: yithlibraryserver/backups/views.py:74
 msgid "Congratulations, ${n_passwords} password has been imported"
 msgstr "Enhorabuena, ${n_passwords} contraseña ha sido importada"
 
-#: yithlibraryserver/backups/views.py:76
+#: yithlibraryserver/backups/views.py:75
 msgid "Congratulations, ${n_passwords} passwords have been imported"
 msgstr "Enhorabuena, ${n_passwords} contraseñas han sido importadas"
 
-#: yithlibraryserver/backups/views.py:84 yithlibraryserver/backups/views.py:89
+#: yithlibraryserver/backups/views.py:83 yithlibraryserver/backups/views.py:88
 msgid "The passwords file is required to upload the passwords"
 msgstr "El fichero de contraseñas es necesario para subir las contraseñas"
 
@@ -77,7 +78,8 @@ msgid ""
 "By clicking in the following button you will get a backup file with your "
 "password collection."
 msgstr ""
-"Al hacer click en el siguiente botón recibirás una copia de seguridad de tu\n"
+"Al hacer click en el siguiente botón recibirás una copia de seguridad de "
+"tu\n"
 "colección de contraseñas."
 
 #: yithlibraryserver/backups/templates/backups_index.pt:26
@@ -110,7 +112,9 @@ msgstr "Confirmación de importación"
 
 #: yithlibraryserver/backups/templates/backups_index.pt:58
 msgid "Are you sure you want to import a password backup file?"
-msgstr "¿Estás seguro de que quieres importar un fichero de respaldo de contraseñas?"
+msgstr ""
+"¿Estás seguro de que quieres importar un fichero de respaldo de "
+"contraseñas?"
 
 #: yithlibraryserver/backups/templates/backups_index.pt:59
 msgid "replace"
@@ -121,18 +125,13 @@ msgid ""
 "This action will ${replace} your current password collection with the "
 "contents of the file you are uploading."
 msgstr ""
-"Esta acción ${replace} tu colección de contraseñas actual con el contenido\n"
+"Esta acción ${replace} tu colección de contraseñas actual con el "
+"contenido\n"
 "del fichero que estás subiendo."
 
 #: yithlibraryserver/backups/templates/backups_index.pt:60
 msgid "This action can not be undone."
 msgstr "Esta acción no se puede deshacer."
-
-#: yithlibraryserver/backups/templates/backups_index.pt:65
-#: yithlibraryserver/templates/base.pt:132
-#: yithlibraryserver/user/templates/email_verification_dialog.pt:20
-msgid "Close"
-msgstr "Cerrar"
 
 #: yithlibraryserver/backups/templates/backups_index.pt:66
 #: yithlibraryserver/oauth2/templates/application_revoke_authorization.pt:17
@@ -151,22 +150,30 @@ msgid "Callback URL"
 msgstr "URL de retrollamada"
 
 #: yithlibraryserver/oauth2/schemas.py:42
+msgid "Authorized Origins"
+msgstr "Orígenes autorizados"
+
+#: yithlibraryserver/oauth2/schemas.py:43
+msgid "One per line. For example https://example.com"
+msgstr "Uno por linea. Por ejemplo https://example.com"
+
+#: yithlibraryserver/oauth2/schemas.py:49
 msgid "Production ready"
 msgstr "Listo para producción"
 
-#: yithlibraryserver/oauth2/schemas.py:47
+#: yithlibraryserver/oauth2/schemas.py:54
 msgid "Image URL"
 msgstr "URL de la imágen"
 
-#: yithlibraryserver/oauth2/schemas.py:53
+#: yithlibraryserver/oauth2/schemas.py:60
 msgid "Description"
 msgstr "Descripción"
 
-#: yithlibraryserver/oauth2/schemas.py:71
+#: yithlibraryserver/oauth2/schemas.py:78
 msgid "Client Id"
 msgstr "Id de cliente"
 
-#: yithlibraryserver/oauth2/schemas.py:76
+#: yithlibraryserver/oauth2/schemas.py:83
 msgid "Client secret"
 msgstr "Secreto de cliente"
 
@@ -186,8 +193,8 @@ msgstr "La aplicación ${app} fue creada correctamente"
 msgid "Delete application"
 msgstr "Borrar aplicación"
 
-#: yithlibraryserver/oauth2/views.py:152 yithlibraryserver/user/views.py:256
-#: yithlibraryserver/user/views.py:327
+#: yithlibraryserver/oauth2/views.py:152 yithlibraryserver/user/views.py:255
+#: yithlibraryserver/user/views.py:326
 msgid "The changes were saved successfully"
 msgstr "Los cambios fueron guardados correctamente"
 
@@ -388,6 +395,11 @@ msgstr "¡Copianos en Github!"
 #: yithlibraryserver/templates/base.pt:107
 msgid "Yith Library is copyright of:"
 msgstr "El copyright de Yith Library es de:"
+
+#: yithlibraryserver/templates/base.pt:132
+#: yithlibraryserver/user/templates/email_verification_dialog.pt:20
+msgid "Close"
+msgstr "Cerrar"
 
 #: yithlibraryserver/templates/contact.pt:13
 msgid "Contact us"
@@ -920,43 +932,47 @@ msgstr "Permitir cookie de estadísticas"
 msgid "Send my passwords to my email monthly"
 msgstr "Enviar mis contraseñas a mi email mensualmente"
 
-#: yithlibraryserver/user/views.py:75
+#: yithlibraryserver/user/views.py:74
 msgid "Register into Yith Library"
 msgstr "Registrarme en Yith Library"
 
-#: yithlibraryserver/user/views.py:174
+#: yithlibraryserver/user/views.py:173
 msgid "Yes, I am sure. Destroy my account"
 msgstr "Sí, estoy seguro. Destruye mi cuenta"
 
-#: yithlibraryserver/user/views.py:206
+#: yithlibraryserver/user/views.py:205
 msgid "Your account has been removed. Have a nice day!"
 msgstr "Tu cuenta ha sido eliminada. ¡Que tengas un buen día!"
 
-#: yithlibraryserver/user/views.py:213
+#: yithlibraryserver/user/views.py:212
 msgid "Thanks for reconsidering removing your account!"
 msgstr "¡Gracias por reconsiderar la eliminación de tu cuenta!"
 
-#: yithlibraryserver/user/views.py:227 yithlibraryserver/user/views.py:285
+#: yithlibraryserver/user/views.py:226 yithlibraryserver/user/views.py:284
 msgid "Save changes"
 msgstr "Guardar cambios"
 
-#: yithlibraryserver/user/views.py:262 yithlibraryserver/user/views.py:333
+#: yithlibraryserver/user/views.py:261 yithlibraryserver/user/views.py:332
 msgid "There were an error while saving your changes"
 msgstr "Hubo un error al guardar tus cambios"
 
-#: yithlibraryserver/user/views.py:297
+#: yithlibraryserver/user/views.py:296
 msgid "You will receive your passwords backup on the day ${day} of this month"
-msgstr "Recibirás la copia de seguridad de tus contraseñas el día ${day} de este mes"
+msgstr ""
+"Recibirás la copia de seguridad de tus contraseñas el día ${day} de este "
+"mes"
 
-#: yithlibraryserver/user/views.py:301
+#: yithlibraryserver/user/views.py:300
 msgid "You will receive your passwords backup on the day ${day} of next month"
-msgstr "Recibirás la copia de seguridad de tus contraseñas el día ${day} del próximo mes"
+msgstr ""
+"Recibirás la copia de seguridad de tus contraseñas el día ${day} del "
+"próximo mes"
 
-#: yithlibraryserver/user/views.py:305
+#: yithlibraryserver/user/views.py:304
 msgid "You will receive your passwords backup today!"
 msgstr "¡Recibirás la copia de seguridad de tus contraseñas hoy mismo!"
 
-#: yithlibraryserver/user/views.py:375
+#: yithlibraryserver/user/views.py:374
 msgid ""
 "Congratulations, ${n_merged} of your accounts has been merged into the "
 "current one"
@@ -965,7 +981,7 @@ msgstr ""
 "con\n"
 "la cuenta actual"
 
-#: yithlibraryserver/user/views.py:376
+#: yithlibraryserver/user/views.py:375
 msgid ""
 "Congratulations, ${n_merged} of your accounts have been merged into the "
 "current one"
@@ -974,15 +990,15 @@ msgstr ""
 "con\n"
 "la cuenta actual"
 
-#: yithlibraryserver/user/views.py:384
+#: yithlibraryserver/user/views.py:383
 msgid "Not enough accounts for merging"
 msgstr "No hay suficientes cuentas para mezclar"
 
-#: yithlibraryserver/user/views.py:435
+#: yithlibraryserver/user/views.py:434
 msgid "Congratulations, your email has been successfully verified"
 msgstr "Enhorabuena, tu email ha sido verificado correctamente"
 
-#: yithlibraryserver/user/views.py:444
+#: yithlibraryserver/user/views.py:443
 msgid "Sorry, your verification code is not correct or has expired"
 msgstr "Lo siento, tu código de verificación no es correcto o ha caducado"
 

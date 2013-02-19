@@ -7,9 +7,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: yith-library-server 0.1\n"
+"Project-Id-Version: yith-library-server 0.2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-02-03 19:11+0100\n"
+"POT-Creation-Date: 2013-02-19 21:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,9 +36,10 @@ msgstr ""
 msgid "Send message"
 msgstr ""
 
-#: yithlibraryserver/views.py:47 yithlibraryserver/oauth2/views.py:63
-#: yithlibraryserver/oauth2/views.py:125 yithlibraryserver/user/views.py:77
-#: yithlibraryserver/user/views.py:176
+#: yithlibraryserver/views.py:47
+#: yithlibraryserver/backups/templates/backups_index.pt:65
+#: yithlibraryserver/oauth2/views.py:63 yithlibraryserver/oauth2/views.py:125
+#: yithlibraryserver/user/views.py:76 yithlibraryserver/user/views.py:175
 msgid "Cancel"
 msgstr ""
 
@@ -46,19 +47,19 @@ msgstr ""
 msgid "Thank you very much for sharing your opinion"
 msgstr ""
 
-#: yithlibraryserver/backups/views.py:68
+#: yithlibraryserver/backups/views.py:67
 msgid "There was a problem reading your passwords file"
 msgstr ""
 
-#: yithlibraryserver/backups/views.py:75
+#: yithlibraryserver/backups/views.py:74
 msgid "Congratulations, ${n_passwords} password has been imported"
 msgstr ""
 
-#: yithlibraryserver/backups/views.py:76
+#: yithlibraryserver/backups/views.py:75
 msgid "Congratulations, ${n_passwords} passwords have been imported"
 msgstr ""
 
-#: yithlibraryserver/backups/views.py:84 yithlibraryserver/backups/views.py:89
+#: yithlibraryserver/backups/views.py:83 yithlibraryserver/backups/views.py:88
 msgid "The passwords file is required to upload the passwords"
 msgstr ""
 
@@ -122,12 +123,6 @@ msgstr ""
 msgid "This action can not be undone."
 msgstr ""
 
-#: yithlibraryserver/backups/templates/backups_index.pt:65
-#: yithlibraryserver/templates/base.pt:132
-#: yithlibraryserver/user/templates/email_verification_dialog.pt:20
-msgid "Close"
-msgstr ""
-
 #: yithlibraryserver/backups/templates/backups_index.pt:66
 #: yithlibraryserver/oauth2/templates/application_revoke_authorization.pt:17
 #: yithlibraryserver/oauth2/templates/developer_application_delete.pt:17
@@ -145,22 +140,30 @@ msgid "Callback URL"
 msgstr ""
 
 #: yithlibraryserver/oauth2/schemas.py:42
+msgid "Authorized Origins"
+msgstr ""
+
+#: yithlibraryserver/oauth2/schemas.py:43
+msgid "One per line. For example https://example.com"
+msgstr ""
+
+#: yithlibraryserver/oauth2/schemas.py:49
 msgid "Production ready"
 msgstr ""
 
-#: yithlibraryserver/oauth2/schemas.py:47
+#: yithlibraryserver/oauth2/schemas.py:54
 msgid "Image URL"
 msgstr ""
 
-#: yithlibraryserver/oauth2/schemas.py:53
+#: yithlibraryserver/oauth2/schemas.py:60
 msgid "Description"
 msgstr ""
 
-#: yithlibraryserver/oauth2/schemas.py:71
+#: yithlibraryserver/oauth2/schemas.py:78
 msgid "Client Id"
 msgstr ""
 
-#: yithlibraryserver/oauth2/schemas.py:76
+#: yithlibraryserver/oauth2/schemas.py:83
 msgid "Client secret"
 msgstr ""
 
@@ -180,8 +183,8 @@ msgstr ""
 msgid "Delete application"
 msgstr ""
 
-#: yithlibraryserver/oauth2/views.py:152 yithlibraryserver/user/views.py:256
-#: yithlibraryserver/user/views.py:327
+#: yithlibraryserver/oauth2/views.py:152 yithlibraryserver/user/views.py:255
+#: yithlibraryserver/user/views.py:326
 msgid "The changes were saved successfully"
 msgstr ""
 
@@ -364,6 +367,11 @@ msgstr ""
 
 #: yithlibraryserver/templates/base.pt:107
 msgid "Yith Library is copyright of:"
+msgstr ""
+
+#: yithlibraryserver/templates/base.pt:132
+#: yithlibraryserver/user/templates/email_verification_dialog.pt:20
+msgid "Close"
 msgstr ""
 
 #: yithlibraryserver/templates/contact.pt:13
@@ -792,63 +800,63 @@ msgstr ""
 msgid "Send my passwords to my email monthly"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:75
+#: yithlibraryserver/user/views.py:74
 msgid "Register into Yith Library"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:174
+#: yithlibraryserver/user/views.py:173
 msgid "Yes, I am sure. Destroy my account"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:206
+#: yithlibraryserver/user/views.py:205
 msgid "Your account has been removed. Have a nice day!"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:213
+#: yithlibraryserver/user/views.py:212
 msgid "Thanks for reconsidering removing your account!"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:227 yithlibraryserver/user/views.py:285
+#: yithlibraryserver/user/views.py:226 yithlibraryserver/user/views.py:284
 msgid "Save changes"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:262 yithlibraryserver/user/views.py:333
+#: yithlibraryserver/user/views.py:261 yithlibraryserver/user/views.py:332
 msgid "There were an error while saving your changes"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:297
+#: yithlibraryserver/user/views.py:296
 msgid "You will receive your passwords backup on the day ${day} of this month"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:301
+#: yithlibraryserver/user/views.py:300
 msgid "You will receive your passwords backup on the day ${day} of next month"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:305
+#: yithlibraryserver/user/views.py:304
 msgid "You will receive your passwords backup today!"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:375
+#: yithlibraryserver/user/views.py:374
 msgid ""
 "Congratulations, ${n_merged} of your accounts has been merged into the "
 "current one"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:376
+#: yithlibraryserver/user/views.py:375
 msgid ""
 "Congratulations, ${n_merged} of your accounts have been merged into the "
 "current one"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:384
+#: yithlibraryserver/user/views.py:383
 msgid "Not enough accounts for merging"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:435
+#: yithlibraryserver/user/views.py:434
 msgid "Congratulations, your email has been successfully verified"
 msgstr ""
 
-#: yithlibraryserver/user/views.py:444
+#: yithlibraryserver/user/views.py:443
 msgid "Sorry, your verification code is not correct or has expired"
 msgstr ""
 
