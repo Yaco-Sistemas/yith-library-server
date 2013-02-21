@@ -24,6 +24,23 @@ from deform.widget import TextAreaWidget, TextInputWidget
 from yithlibraryserver.i18n import TranslationString as _
 
 
+class AuthorizedOriginsNode(colander.SchemaNode):
+    """Converts a node of type string into and from a list of strings"""
+
+    def serialize(self, appstruct=colander.null):
+        if not appstruct is colander.null and isinstance(appstruct, list):
+            appstruct = '\n'.join(appstruct)
+        return super(AuthorizedOriginsNode, self).serialize(appstruct)
+
+    def deserialize(self, cstruct=colander.null):
+        result = super(AuthorizedOriginsNode, self).deserialize(cstruct)
+        if not result is colander.null and isinstance(result, basestring):
+            result = [item.strip() for item in result.split('\n')
+                      if item.strip()]
+
+        return result
+
+
 class ApplicationSchema(colander.MappingSchema):
 
     name = colander.SchemaNode(colander.String(), title=_('Name'))
@@ -37,11 +54,11 @@ class ApplicationSchema(colander.MappingSchema):
         title=_('Callback URL'),
         widget=TextInputWidget(css_class='input-xlarge'),
         )
-    authorized_origins = colander.SchemaNode(
+    authorized_origins = AuthorizedOriginsNode(
         colander.String(),
         title=_('Authorized Origins'),
         description=_('One per line. For example https://example.com'),
-        missing='',
+        missing=[],
         widget=TextAreaWidget(css_class='input-xlarge'),
         )
     production_ready = colander.SchemaNode(
