@@ -23,7 +23,7 @@ from yithlibraryserver import testing
 
 class ViewTests(testing.TestCase):
 
-    clean_collections = ('passwords', 'access_codes', 'users')
+    clean_collections = ('passwords', 'access_codes', 'applications', 'users')
 
     def setUp(self):
         super(ViewTests, self).setUp()

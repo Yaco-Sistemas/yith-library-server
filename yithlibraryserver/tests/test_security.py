@@ -26,7 +26,7 @@ from yithlibraryserver.security import authorize_user
 
 class AuthorizationTests(testing.TestCase):
 
-    clean_collections = ('access_codes', 'users')
+    clean_collections = ('access_codes', 'applications', 'users')
 
     def test_authorize_user(self):
 

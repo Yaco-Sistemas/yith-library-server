@@ -748,7 +748,7 @@ class ViewTests(TestCase):
 
 class RESTViewTests(TestCase):
 
-    clean_collections = ('users', 'access_codes')
+    clean_collections = ('users', 'access_codes', 'applications')
 
     def setUp(self):
         super(RESTViewTests, self).setUp()
