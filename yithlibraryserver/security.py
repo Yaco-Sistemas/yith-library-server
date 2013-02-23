@@ -62,9 +62,4 @@ def authorize_user(request):
     if user is None:
         raise HTTPUnauthorized()
 
-    client_id = access_code['client_id']
-    app = request.db.applications.find_one(client_id)
-    if app is None:
-        raise HTTPUnauthorized()
-
-    return user, app
+    return user

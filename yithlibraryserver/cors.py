@@ -25,16 +25,31 @@ log = logging.getLogger(__name__)
 
 class CORSManager(object):
 
-    def __init__(self, allowed_origins):
-        self.allowed_origins = allowed_origins.split(' ')
+    def __init__(self, global_allowed_origins):
+        self.global_allowed_origins = global_allowed_origins.split(' ')
 
     def add_cors_header(self, request, response):
         if 'Origin' in request.headers:
             origin = request.headers['Origin']
-            if origin in self.allowed_origins:
+
+            client_id = request.GET.get('client_id')
+            if client_id is None:
+                allowed_origins = self.global_allowed_origins
+            else:
+                allowed_origins = self._get_allowed_origins_for_client(
+                    request, client_id)
+
+            if origin in allowed_origins:
                 log.debug('Origin %s is allowed: %s' %
-                          (origin, ' '.join(self.allowed_origins)))
+                          (origin, ' '.join(allowed_origins)))
                 response.headers['Access-Control-Allow-Origin'] = origin
             else:
                 log.debug('Origin %s is not allowed: %s' %
-                          (origin, ' '.join(self.allowed_origins)))
+                          (origin, ' '.join(allowed_origins)))
+
+    def _get_allowed_origins_for_client(self, request, client_id):
+        app = request.db.applications.find_one({'client_id': client_id})
+        if app is None:
+            return []
+        else:
+            return app['authorized_origins']

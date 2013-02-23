@@ -768,14 +768,15 @@ class RESTViewTests(TestCase):
                 'date_joined': date,
                 'last_login': date,
                 }, safe=True)
-        self.app_id = self.db.applications.insert({
+        self.db.applications.insert({
                 'name': 'test-app',
+                'client_id': 'client1',
                 }, safe=True)
         self.db.access_codes.insert({
                 'code': self.access_code,
                 'scope': None,
                 'user': self.user_id,
-                'client_id': self.app_id,
+                'client_id': 'client1',
                 }, safe=True)
 
     def test_user_options(self):

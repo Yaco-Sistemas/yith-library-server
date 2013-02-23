@@ -484,5 +484,5 @@ class UserRESTView(object):
 
     @view_config(request_method='GET')
     def get(self):
-        user, app = authorize_user(self.request)
+        user = authorize_user(self.request)
         return user
