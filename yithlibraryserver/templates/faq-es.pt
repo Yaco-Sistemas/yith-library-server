@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title">FAQ</tal:block>
+
+<tal:block metal:fill-slot="content">
+
+  <h1>Preguntas frecuentes</h1>
+
+  <h2>Contraseña maestra</h2>
+
+  <h3>¿Dónde se almacena mi contraseña maestra?</h3>
+  <p>Sólo en tu cerebro. Yith Library no almacena la contraseña maestra.</p>
+
+  <h3>¿Sale mi contraseña maestra de mi ordenador alguna vez?</h3>
+  <p>No. La contraseña maestra sólo se usa localmente en tú navegador</p>
+
+  <h3>¿Cómo se establece la contraseña maestra?</h3>
+  <p>La primera vez que añades una contraseña a Yith Library se te preguntará por una contraseña maestra. Ahí es cuando se establece.</p>
+
+  <h3>¿Puedo cambiar mi contraseña maestra?</h3>
+  <p>Sí. En el cliente web, dentro de las opciones avanzadas, hay un botón para cambiar tu contraseña maestra.</p>
+
+  <h2>Criptografía</h2>
+
+  <h3>¿Qué algoritmo usáis para cifrar las contraseñas?</h3>
+  <p>Usamos el algoritmo <a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">Advanced Encryption Standard (AES)</a> con la implementación <a href=" http://crypto.stanford.edu/sjcl/">Stanford Javascript Crypto Library (SJCL)</a>.</p>
+
+  <h3>Me han dicho que usar Javascript para cryptografía no es seguro. ¿Es verdad?</h3>
+  <p>Sí y no. Usar Javascript apra enviar una contraseña cifrada por un canal inseguro (como HTTP) no es seguro porque el código Javascript que llega a tu navegador puede haber sido alterado ya que viaja por un canal inseguro. Es por eso que usar Javascript para evitar tener que configurar un canal seguro usando TLS es una muy mala idea. Eso <strong>no</strong> es lo que hace Yith Library. Todos los recursos que se envían a tu navegador se envía por TLS por esta razón.</p>
+
+  <p>Dicho esto, cualquier Javascript que se ejecuta en un navegador no es lo más seguro que se puede hacer ya que los navegadores actuales no disponen de un buen modo sandbox y un software malicioso instalado en tu ordenador podría hacer cosas malas. Esperamos disminuir este problema usando funciones criptográficas nativas del navegador como las que <a href="http://www.w3.org/2012/webcrypto/">se están estandarizando actualmente</a>.</p>
+
+  <h3>¿Cuáles son los parámetros exactos que usáis con AES?</h3>
+  <p>We first use <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2 (Password-Based Key Derivation Function 2)</a> key derivation on the master password with 1000 iterations and a salt value. Then we use the AES algorithm in <a href="http://en.wikipedia.org/wiki/CCM_mode">CCM (CTR mode with CBC MAC) mode</a> with an initialization vector, a key size of 128 bits and a tag length of 64 bits.</p>
+
+</tal:block>
+
+</html>

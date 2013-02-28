@@ -22,8 +22,9 @@ import logging
 
 from deform import Button, Form, ValidationFailure
 
+from pyramid.i18n import get_locale_name
 from pyramid.httpexceptions import HTTPFound
-from pyramid.renderers import render
+from pyramid.renderers import render, render_to_response
 from pyramid.view import view_config
 
 from pyramid_mailer import get_mailer
@@ -113,3 +114,26 @@ def contact(request):
 @view_config(route_name='tos', renderer='templates/tos.pt')
 def tos(request):
     return {}
+
+
+@view_config(route_name='faq', renderer='string')
+def faq(request):
+    settings = request.registry.settings
+
+    # We don't want to mess up the gettext .po file
+    # with a lot of strings which don't belong to the
+    # application interface.
+    #
+    # We consider the FAQ as application content
+    # so we simple use a different template for each
+    # language. When a new locale is added to the
+    # application it needs to translate the .po files
+    # as well as this template
+    locale_name = get_locale_name(request)
+
+    if locale_name not in settings['available_languages']:
+        locale_name = settings.get('default_locale_name', 'en')
+
+    template = 'yithlibraryserver:templates/faq-%s.pt' % locale_name
+
+    return render_to_response(template, {}, request=request)

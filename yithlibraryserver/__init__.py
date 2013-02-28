@@ -161,3 +161,4 @@ def includeme(config):
     config.add_route('home', '/')
     config.add_route('contact', '/contact')
     config.add_route('tos', '/tos')
+    config.add_route('faq', '/faq')

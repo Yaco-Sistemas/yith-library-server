@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title">FAQ</tal:block>
+
+<tal:block metal:fill-slot="content">
+
+  <h1>Frequently Asked Questions</h1>
+
+  <h2>Master password</h2>
+
+  <h3>Where is stored my master password?</h3>
+  <p>Only in your brain. Yith Library doesn’t store the master passwords.</p>
+
+  <h3>Does my master password ever leave my computer?</h3>
+  <p>No. The master password is only used locally in your browser.</p>
+
+  <h3>How do I set my master password?</h3>
+  <p>The first time you add a password to Yith Library a master password will be asked, that’s when is set.</p>
+
+  <h3>Can I change my master password?</h3>
+  <p>Yes. In the web client, under the advanced options, there is a button to change your master password.</p>
+
+  <h2>Crypto</h2>
+
+  <h3>What algorithm do you use to cipher the passwords?</h3>
+  <p>We use the <a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">Advanced Encryption Standard (AES)</a> with the <a href=" http://crypto.stanford.edu/sjcl/">Stanford Javascript Crypto Library (SJCL)</a> implementation.</p>
+
+  <h3>I've been told that using Javascript for crypto is not safe. Is that true?</h3>
+  <p>Yes and no. Using Javascript for sending a password encrypted over an insecure channel (such as HTTP) is not safe because the Javascript code that arrives to your browser can be tampered since it travels over an insecure channel. That's why using Javascript to replace the setup of a secure channel using TLS is a very bad idea. That's <strong>not</strong> what Yith Library does. All resources sent to your browser are sent over TLS because of this reason.</p>
+
+  <p>Having said that, any Javascript that runs in a browser is not the safest thing to run since nowadays browsers does not have a good sandbox and a malware installed in your computer could do nasty things. We hope to mitigate this probem using native browser crypto APIs such as the ones that <a href="http://www.w3.org/2012/webcrypto/">are being standarised today</a>.</p>
+
+  <h3>What are the exact paremeters you use with AES?</h3>
+  <p>We first use <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2 (Password-Based Key Derivation Function 2)</a> key derivation on the master password with 1000 iterations and a salt value. Then we use the AES algorithm in <a href="http://en.wikipedia.org/wiki/CCM_mode">CCM (CTR mode with CBC MAC) mode</a> with an initialization vector, a key size of 128 bits and a tag length of 64 bits.</p>
+
+</tal:block>
+
+</html>
