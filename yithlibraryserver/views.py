@@ -130,10 +130,6 @@ def faq(request):
     # application it needs to translate the .po files
     # as well as this template
     locale_name = get_locale_name(request)
-
-    if locale_name not in settings['available_languages']:
-        locale_name = settings.get('default_locale_name', 'en')
-
     template = 'yithlibraryserver:templates/faq-%s.pt' % locale_name
 
     return render_to_response(template, {}, request=request)
