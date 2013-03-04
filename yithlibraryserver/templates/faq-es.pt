@@ -8,7 +8,7 @@
 
 <tal:block metal:fill-slot="content">
 
-  <h1>Preguntas frecuentes</h1>
+  <h1>Preguntas Frecuentes</h1>
 
   <h2>Contraseña maestra</h2>
 

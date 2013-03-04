@@ -121,6 +121,10 @@ class ViewTests(testing.TestCase):
         self.assertEqual(res.status, '200 OK')
 
     def test_faq(self):
-        res = self.testapp.get('/faq')
+        res = self.testapp.get('/faq?_LOCALE_=en')
         self.assertEqual(res.status, '200 OK')
         res.mustcontain('Frequently Asked Questions')
+
+        res = self.testapp.get('/faq?_LOCALE_=es')
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Preguntas Frecuentes')
