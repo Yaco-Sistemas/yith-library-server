@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-02-19 21:17+0100\n"
-"PO-Revision-Date: 2013-02-19 21:17+0100\n"
+"POT-Creation-Date: 2013-03-04 22:51+0100\n"
+"PO-Revision-Date: 2013-03-04 22:52+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: yithlibraryserver/schemas.py:27 yithlibraryserver/oauth2/schemas.py:29
+#: yithlibraryserver/schemas.py:27 yithlibraryserver/oauth2/schemas.py:46
 #: yithlibraryserver/oauth2/templates/developer_applications.pt:17
 msgid "Name"
 msgstr "Nombre"
@@ -32,18 +32,18 @@ msgstr "Email"
 msgid "Message"
 msgstr "Mensaje"
 
-#: yithlibraryserver/views.py:45
+#: yithlibraryserver/views.py:46
 msgid "Send message"
 msgstr "Enviar mensaje"
 
-#: yithlibraryserver/views.py:47
+#: yithlibraryserver/views.py:48
 #: yithlibraryserver/backups/templates/backups_index.pt:65
-#: yithlibraryserver/oauth2/views.py:63 yithlibraryserver/oauth2/views.py:125
+#: yithlibraryserver/oauth2/views.py:63 yithlibraryserver/oauth2/views.py:126
 #: yithlibraryserver/user/views.py:76 yithlibraryserver/user/views.py:175
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: yithlibraryserver/views.py:95
+#: yithlibraryserver/views.py:96
 msgid "Thank you very much for sharing your opinion"
 msgstr "Muchas gracias por compartir tu opinión"
 
@@ -139,41 +139,41 @@ msgstr "Esta acción no se puede deshacer."
 msgid "Yes, I am sure"
 msgstr "Sí, estoy seguro"
 
-#: yithlibraryserver/oauth2/schemas.py:32
+#: yithlibraryserver/oauth2/schemas.py:49
 #: yithlibraryserver/oauth2/templates/developer_applications.pt:18
 msgid "Main URL"
 msgstr "URL Principal"
 
-#: yithlibraryserver/oauth2/schemas.py:37
+#: yithlibraryserver/oauth2/schemas.py:54
 #: yithlibraryserver/oauth2/templates/developer_applications.pt:19
 msgid "Callback URL"
 msgstr "URL de retrollamada"
 
-#: yithlibraryserver/oauth2/schemas.py:42
+#: yithlibraryserver/oauth2/schemas.py:59
 msgid "Authorized Origins"
 msgstr "Orígenes autorizados"
 
-#: yithlibraryserver/oauth2/schemas.py:43
+#: yithlibraryserver/oauth2/schemas.py:60
 msgid "One per line. For example https://example.com"
 msgstr "Uno por linea. Por ejemplo https://example.com"
 
-#: yithlibraryserver/oauth2/schemas.py:49
+#: yithlibraryserver/oauth2/schemas.py:66
 msgid "Production ready"
 msgstr "Listo para producción"
 
-#: yithlibraryserver/oauth2/schemas.py:54
+#: yithlibraryserver/oauth2/schemas.py:71
 msgid "Image URL"
 msgstr "URL de la imágen"
 
-#: yithlibraryserver/oauth2/schemas.py:60
+#: yithlibraryserver/oauth2/schemas.py:77
 msgid "Description"
 msgstr "Descripción"
 
-#: yithlibraryserver/oauth2/schemas.py:78
+#: yithlibraryserver/oauth2/schemas.py:95
 msgid "Client Id"
 msgstr "Id de cliente"
 
-#: yithlibraryserver/oauth2/schemas.py:83
+#: yithlibraryserver/oauth2/schemas.py:100
 msgid "Client secret"
 msgstr "Secreto de cliente"
 
@@ -181,32 +181,32 @@ msgstr "Secreto de cliente"
 msgid "Access your passwords"
 msgstr "Acceder a tus contraseñas"
 
-#: yithlibraryserver/oauth2/views.py:61 yithlibraryserver/oauth2/views.py:121
+#: yithlibraryserver/oauth2/views.py:61 yithlibraryserver/oauth2/views.py:122
 msgid "Save application"
 msgstr "Guardar aplicación"
 
-#: yithlibraryserver/oauth2/views.py:87
+#: yithlibraryserver/oauth2/views.py:88
 msgid "The application ${app} was created successfully"
 msgstr "La aplicación ${app} fue creada correctamente"
 
-#: yithlibraryserver/oauth2/views.py:123
+#: yithlibraryserver/oauth2/views.py:124
 msgid "Delete application"
 msgstr "Borrar aplicación"
 
-#: yithlibraryserver/oauth2/views.py:152 yithlibraryserver/user/views.py:255
+#: yithlibraryserver/oauth2/views.py:154 yithlibraryserver/user/views.py:255
 #: yithlibraryserver/user/views.py:326
 msgid "The changes were saved successfully"
 msgstr "Los cambios fueron guardados correctamente"
 
-#: yithlibraryserver/oauth2/views.py:189
+#: yithlibraryserver/oauth2/views.py:191
 msgid "The application ${app} was deleted successfully"
 msgstr "La aplicación ${app} fue borrada correctamente"
 
-#: yithlibraryserver/oauth2/views.py:263
+#: yithlibraryserver/oauth2/views.py:265
 msgid "By ${owner}"
 msgstr "Por ${owner}"
 
-#: yithlibraryserver/oauth2/views.py:356
+#: yithlibraryserver/oauth2/views.py:358
 msgid "The access to application ${app} has been revoked"
 msgstr "El acceso a la aplicación ${app} ha sido revocado"
 
@@ -368,35 +368,39 @@ msgstr "Mis contraseñas"
 msgid "Log out"
 msgstr "Salir"
 
-#: yithlibraryserver/templates/base.pt:90 yithlibraryserver/templates/tos.pt:9
+#: yithlibraryserver/templates/base.pt:90
+msgid "FAQ"
+msgstr "Preguntas frecuentes"
+
+#: yithlibraryserver/templates/base.pt:91 yithlibraryserver/templates/tos.pt:9
 #: yithlibraryserver/templates/tos.pt:13
 msgid "Terms of service"
 msgstr "Términos de servicio"
 
-#: yithlibraryserver/templates/base.pt:91
+#: yithlibraryserver/templates/base.pt:92
 #: yithlibraryserver/templates/contact.pt:9
 msgid "Contact"
 msgstr "Contacto"
 
-#: yithlibraryserver/templates/base.pt:92
-#: yithlibraryserver/templates/base.pt:104
+#: yithlibraryserver/templates/base.pt:93
+#: yithlibraryserver/templates/base.pt:105
 msgid "Credits"
 msgstr "Créditos"
 
-#: yithlibraryserver/templates/base.pt:95
+#: yithlibraryserver/templates/base.pt:96
 msgid "Follow us on Twitter!"
 msgstr "¡Síguenos en Twitter!"
 
-#: yithlibraryserver/templates/base.pt:96
+#: yithlibraryserver/templates/base.pt:97
 #: yithlibraryserver/templates/home.pt:14
 msgid "Fork us on GitHub!"
 msgstr "¡Copianos en Github!"
 
-#: yithlibraryserver/templates/base.pt:107
+#: yithlibraryserver/templates/base.pt:108
 msgid "Yith Library is copyright of:"
 msgstr "El copyright de Yith Library es de:"
 
-#: yithlibraryserver/templates/base.pt:132
+#: yithlibraryserver/templates/base.pt:133
 #: yithlibraryserver/user/templates/email_verification_dialog.pt:20
 msgid "Close"
 msgstr "Cerrar"
@@ -1205,3 +1209,4 @@ msgid ""
 msgstr ""
 "Parece que tu código de verificación no es correcto. Por favor ve a tu\n"
 "${profile-page} y genera uno nuevo."
+

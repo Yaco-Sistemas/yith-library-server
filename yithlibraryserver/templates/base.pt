@@ -87,6 +87,7 @@
   <footer class="container-fluid">
     <div class="container">
       <ul class="pull-left">
+        <li><a href="${request.route_path('faq')}" i18n:translate="">FAQ</a> |</li>
         <li><a href="${request.route_path('tos')}" id="tosButton" i18n:translate="">Terms of service</a> |</li>
         <li><a href="${request.route_path('contact')}" i18n:translate="">Contact</a> |</li>
         <li><a href="#" id="creditsButton" i18n:translate="">Credits</a></li>

@@ -15,7 +15,7 @@
   <h2>Master password</h2>
 
   <h3>Where is stored my master password?</h3>
-  <p>Only in your brain. Yith Library doesn’t store the master passwords.</p>
+  <p>Only in your brain. Yith Library doesn’t store the master passwords. It is very important that you don't forget it because in this situation you won't be able to read your passwords and as Yith Library doesn't store the master password, it won't help you to reset it</p>
 
   <h3>Does my master password ever leave my computer?</h3>
   <p>No. The master password is only used locally in your browser.</p>

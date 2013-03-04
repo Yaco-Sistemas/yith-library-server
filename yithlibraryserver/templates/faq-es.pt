@@ -13,7 +13,7 @@
   <h2>Contraseña maestra</h2>
 
   <h3>¿Dónde se almacena mi contraseña maestra?</h3>
-  <p>Sólo en tu cerebro. Yith Library no almacena la contraseña maestra.</p>
+  <p>Sólo en tu cerebro. Yith Library no almacena la contraseña maestra. Es muy importante que no la olvides porque en tal caso no podrás recuperar tus contraseñas y como Yith Library no la almacena no podrá ayudarte a restablecer la contraseña maestra.</p>
 
   <h3>¿Sale mi contraseña maestra de mi ordenador alguna vez?</h3>
   <p>No. La contraseña maestra sólo se usa localmente en tú navegador</p>
@@ -30,7 +30,7 @@
   <p>Usamos el algoritmo <a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">Advanced Encryption Standard (AES)</a> con la implementación <a href=" http://crypto.stanford.edu/sjcl/">Stanford Javascript Crypto Library (SJCL)</a>.</p>
 
   <h3>Me han dicho que usar Javascript para cryptografía no es seguro. ¿Es verdad?</h3>
-  <p>Sí y no. Usar Javascript apra enviar una contraseña cifrada por un canal inseguro (como HTTP) no es seguro porque el código Javascript que llega a tu navegador puede haber sido alterado ya que viaja por un canal inseguro. Es por eso que usar Javascript para evitar tener que configurar un canal seguro usando TLS es una muy mala idea. Eso <strong>no</strong> es lo que hace Yith Library. Todos los recursos que se envían a tu navegador se envía por TLS por esta razón.</p>
+  <p>Sí y no. Usar Javascript para enviar una contraseña cifrada por un canal inseguro (como HTTP) no es seguro porque el código Javascript que llega a tu navegador puede haber sido alterado ya que viaja por un canal inseguro. Es por eso que usar Javascript para evitar tener que configurar un canal seguro usando TLS es una muy mala idea. Eso <strong>no</strong> es lo que hace Yith Library. Todos los recursos que se envían a tu navegador se envía por TLS por esta razón.</p>
 
   <p>Dicho esto, cualquier Javascript que se ejecuta en un navegador no es lo más seguro que se puede hacer ya que los navegadores actuales no disponen de un buen modo sandbox y un software malicioso instalado en tu ordenador podría hacer cosas malas. Esperamos disminuir este problema usando funciones criptográficas nativas del navegador como las que <a href="http://www.w3.org/2012/webcrypto/">se están estandarizando actualmente</a>.</p>
 
