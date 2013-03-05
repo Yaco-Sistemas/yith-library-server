@@ -28,25 +28,50 @@ README = open(os.path.join(here, 'README.rst')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 
 requires = [
+    # indirect dependencies
+    'Beaker==1.6.4',            # required by pyramid_beaker
+    'colander==1.0a2',          # required by deform
+    'Chameleon==2.11',          # required by deform, pyramid
+    'Mako==0.7.3',              # required by pyramid
+    'MarkupSafe==0.15',         # required by Mako
+    'nose==1.2.1',              # required by pymongo
+    'PasteDeploy==1.5.0',       # required by pyramid
+    'peppercorn==0.4',          # required by deform
+    'Pygments==1.6',            # required by pyramid_debugtoolbar
+    'repoze.lru==0.6',          # required by pyramid
+    'repoze.sendmail==3.2',     # required by pyramid_mailer
+    'transaction==1.4.1',       # required by pyramid_mailer
+    'translationstring==1.1',   # required by deform, pyramid
+    'venusian==1.0a7',          # required by pyramid
+    'WebOb==1.2.3',             # required by pyramid
+    'zope.deprecation==4.0.2',  # required by deform
+    'zope.interface==4.0.5',    # required by pyramid
+
+    # direct dependencies
     'deform==0.9.5',
     'pymongo==2.3',
     'pyramid==1.4',
     'pyramid_beaker==0.7',
-    'pyramid_debugtoolbar==1.0.2',
+    'pyramid_debugtoolbar==1.0.4',
     'pyramid_mailer==0.10',
-    'pyramid_tm==0.5',
-    'requests==0.14.0',
+    'pyramid_tm==0.7',
+    'requests==0.14.2',
     'waitress==0.8.2',
     ]
 
 if sys.version_info[0] < 3:
     # Babel does not work with Python 3
     requires.append('Babel==0.9.6')
-    requires.append('lingua==1.3')
+
+    requires.append('polib==1.0.3')  # required by lingua
+    requires.append('xlwt==0.7.4')   # required by lingua
+    requires.append('xlrd==0.9.0')   # required by lingua
+
+    requires.append('lingua==1.4')
 
 test_requires = [
-    'WebTest>=1.3.1',
-    'mock',
+    'WebTest==1.4.3',
+    'mock==1.0.1',
     ]
 
 # Until a new venusian (a pyramid dependency) version is released
@@ -57,14 +82,16 @@ test_requires = [
 requires = requires + test_requires
 
 docs_extras = [
-    'Sphinx',
-    'docutils',
+    'docutils==0.10',  # required by Sphinx
+    'Jinja2==2.6',     # required by Sphinx
+    'Sphinx==1.1.3',
     ]
 
 testing_extras = test_requires + [
-    'nose',
-    'coverage==3.5.3',
+    'nose==1.2.1',
+    'coverage==3.6',
     ]
+
 
 setup(name='yith-library-server',
       version='0.2',
