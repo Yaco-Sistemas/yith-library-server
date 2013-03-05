@@ -125,6 +125,20 @@ class ViewTests(testing.TestCase):
         self.assertEqual(res.status, '200 OK')
         res.mustcontain('Frequently Asked Questions')
 
-        res = self.testapp.get('/faq?_LOCALE_=es')
+        res = self.testapp.get('/faq', headers={
+                'Accept-Language': 'en',
+                })
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Frequently Asked Questions')
+
+        res = self.testapp.get('/faq', headers={
+                'Accept-Language': 'es',
+                })
         self.assertEqual(res.status, '200 OK')
         res.mustcontain('Preguntas Frecuentes')
+
+        res = self.testapp.get('/faq', headers={
+                'Accept-Language': 'de',  # German is not supported
+                })
+        self.assertEqual(res.status, '200 OK')
+        res.mustcontain('Frequently Asked Questions')

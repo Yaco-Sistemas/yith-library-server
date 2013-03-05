@@ -118,8 +118,6 @@ def tos(request):
 
 @view_config(route_name='faq', renderer='string')
 def faq(request):
-    settings = request.registry.settings
-
     # We don't want to mess up the gettext .po file
     # with a lot of strings which don't belong to the
     # application interface.
