@@ -355,6 +355,7 @@ class ViewTests(testing.TestCase):
         res.mustcontain('Name')
         res.mustcontain('Main URL')
         res.mustcontain('Callback URL')
+        res.mustcontain('Authorized Origins')
         res.mustcontain('Production ready')
         res.mustcontain('Image URL')
         res.mustcontain('Description')
@@ -363,6 +364,8 @@ class ViewTests(testing.TestCase):
                 'name': 'Test Application',
                 'main_url': 'http://example.com',
                 'callback_url': 'http://example.com/callback',
+                'authorized_origins': '''http://example.com
+https://example.com''',
                 'submit': 'submit',
                 })
         self.assertEqual(res.status, '302 Found')
@@ -372,6 +375,8 @@ class ViewTests(testing.TestCase):
                 'name': 'Test Application',
                 'main_url': 'http://example.com',
                 'callback_url': 'http://example.com/callback',
+                'authorized_origins': ['http://example.com',
+                                       'https://example.com'],
                 })
         self.assertNotEqual(app, None)
         self.assertTrue('client_id' in app)
@@ -380,6 +385,8 @@ class ViewTests(testing.TestCase):
         self.assertEqual(app['name'], 'Test Application')
         self.assertEqual(app['main_url'], 'http://example.com')
         self.assertEqual(app['callback_url'], 'http://example.com/callback')
+        self.assertEqual(app['authorized_origins'],
+                         ['http://example.com', 'https://example.com'])
         self.assertEqual(app['production_ready'], False)
         self.assertEqual(app['image_url'], '')
         self.assertEqual(app['description'], '')
@@ -491,6 +498,8 @@ class ViewTests(testing.TestCase):
                 'name': 'Test Application',
                 'main_url': 'http://example.com',
                 'callback_url': 'http://example.com/callback',
+                'authorized_origins': ['http://example.com',
+                                       'https://example.com'],
                 'production_ready': False,
                 'image_url': 'http://example.com/image.png',
                 'description': 'example description',
@@ -514,6 +523,9 @@ class ViewTests(testing.TestCase):
         res.mustcontain('http://example.com')
         res.mustcontain('Callback URL')
         res.mustcontain('http://example.com/callback')
+        res.mustcontain('Authorized Origins')
+        res.mustcontain("""http://example.com
+https://example.com""")
         res.mustcontain('Production ready')
         res.mustcontain('Image URL')
         res.mustcontain('http://example.com/image.png')
@@ -533,6 +545,7 @@ class ViewTests(testing.TestCase):
                 'name': 'Test Application 2',
                 'main_url': 'http://example.com/new',
                 'callback_url': 'http://example.com/new/callback',
+                'authorized_origins': 'http://client.example.com',
                 'production_ready': 'true',
                 'image_url': 'http://example.com/image2.png',
                 'description': 'example description 2',
@@ -548,6 +561,8 @@ class ViewTests(testing.TestCase):
                          'http://example.com/new')
         self.assertEqual(new_app['callback_url'],
                          'http://example.com/new/callback')
+        self.assertEqual(new_app['authorized_origins'],
+                         ['http://client.example.com'])
         self.assertEqual(new_app['production_ready'], True)
         self.assertEqual(new_app['image_url'], 'http://example.com/image2.png')
         self.assertEqual(new_app['description'], 'example description 2')
