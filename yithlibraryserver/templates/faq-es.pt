@@ -35,7 +35,7 @@
   <p>Dicho esto, cualquier Javascript que se ejecuta en un navegador no es lo más seguro que se puede hacer ya que los navegadores actuales no disponen de un buen modo sandbox y un software malicioso instalado en tu ordenador podría hacer cosas malas. Esperamos disminuir este problema usando funciones criptográficas nativas del navegador como las que <a href="http://www.w3.org/2012/webcrypto/">se están estandarizando actualmente</a>.</p>
 
   <h3>¿Cuáles son los parámetros exactos que usáis con AES?</h3>
-  <p>We first use <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2 (Password-Based Key Derivation Function 2)</a> key derivation on the master password with 1000 iterations and a salt value. Then we use the AES algorithm in <a href="http://en.wikipedia.org/wiki/CCM_mode">CCM (CTR mode with CBC MAC) mode</a> with an initialization vector, a key size of 128 bits and a tag length of 64 bits.</p>
+  <p>Primero usamos la función de derivación de clave <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2 (Password-Based Key Derivation Function 2)</a> en la contraseña maestra con 1000 iteraciones y un valor de sal. A continuación usamos el algoritmo AES en <a href="http://en.wikipedia.org/wiki/CCM_mode">modo CCM (CTR mode with CBC MAC)</a> con un vector de inicialización, un tamaño de clave de 128 bits y un tamaño de etiqueta de 64 bits.</p>
 
 </tal:block>
 
