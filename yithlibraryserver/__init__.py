@@ -123,6 +123,7 @@ def main(global_config, **settings):
 
     # Routes
     config.include('yithlibraryserver.backups')
+    config.include('yithlibraryserver.contributions')
     config.include('yithlibraryserver.oauth2')
     config.include('yithlibraryserver.password')
 

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title" i18n:translate="">Contribute</tal:block>
+
+<tal:block metal:fill-slot="content">
+
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=397650573627919";
+  fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <div class="hero-unit">
+    <h1 i18n:translate="">We need your help!</h1>
+    <p>We need your help to make Yith Library a truly awesome service. There are several things you can do to show your love.</p>
+  </div>
+
+  <h2 i18n:translate="">Spread the word</h2>
+
+  <div class="row">
+    <div class="span3">
+      <p i18n:translate="">Add a line about us in your favourite social network:</p>
+
+      <div class="row">
+        <div class="span1">
+          <!-- Twitter -->
+          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://yithlibrary.com" data-text="I keep my secrets in Yith Library. It's great and free, you should do the same!" data-via="YithLibrary" data-lang="${locale}" data-related="YithLibrary">Tweet</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </div>
+
+        <div class="span1">
+          <!-- Facebook -->
+          <div class="fb-like" data-href="http://yithlibrary.com/" data-send="false" data-show-faces="false" data-action="like" data-layout="button_count"></div>
+        </div>
+
+        <div class="span1">
+          <!-- Google Plus -->
+          <div class="g-plusone" data-size="medium" data-href="http://yithlibrary.com"></div>
+
+          <script type="text/javascript">
+          window.___gcfg = {lang: '${locale}'};
+
+          (function() {
+          var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+          po.src = 'https://apis.google.com/js/plusone.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+          })();
+          </script>
+        </div>
+      </div>
+    </div>
+
+    <div class="span9">
+      <p i18n:translate="">Or add a banner from your site:</p>
+    </div>
+  </div>
+
+  <h2 i18n:translate="">Translate</h2>
+
+  <h2 i18n:translate="">Write some code</h2>
+
+  <h2 i18n:translate="">Donate</h2>
+
+</tal:block>
+
+</html>
