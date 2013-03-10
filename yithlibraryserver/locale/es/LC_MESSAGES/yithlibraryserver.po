@@ -163,7 +163,7 @@ msgstr "Listo para producción"
 
 #: yithlibraryserver/oauth2/schemas.py:71
 msgid "Image URL"
-msgstr "URL de la imágen"
+msgstr "URL de la imagen"
 
 #: yithlibraryserver/oauth2/schemas.py:77
 msgid "Description"
