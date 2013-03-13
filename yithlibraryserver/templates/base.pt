@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="${request.static_path('yithlibraryserver:static/css/bootstrap-responsive.min.css')}"/>
     <link rel="stylesheet" href="${request.static_path('yithlibraryserver:static/css/style.css')}"/>
 
+    <tal:block metal:define-slot="extra-styles"></tal:block>
+
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->

@@ -8,33 +8,41 @@
 
 <tal:block metal:fill-slot="header-title" i18n:translate="">Contribute</tal:block>
 
+<tal:block metal:fill-slot="extra-styles">
+  <link rel="stylesheet" href="${request.static_path('yithlibraryserver:static/css/countries.css')}"/>
+</tal:block>
+
 <tal:block metal:fill-slot="content">
 
   <div id="fb-root"></div>
-  <script>(function(d, s, id) {
+  <script type="text/javascript">
+  //<![CDATA[
+  (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
   js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=397650573627919";
   fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
+  }(document, 'script', 'facebook-jssdk'));
+  //]]>
+  </script>
 
   <div class="hero-unit">
     <h1 i18n:translate="">We need your help!</h1>
-    <p>We need your help to make Yith Library a truly awesome service. There are several things you can do to show your love.</p>
+    <p i18n:translate="">We need your help to make Yith Library a truly awesome service. There are several things you can do to show your love.</p>
   </div>
 
   <h2 i18n:translate="">Spread the word</h2>
 
-  <div class="row">
-    <div class="span3">
+  <div class="row bottom-spacer">
+    <div class="span6">
       <p i18n:translate="">Add a line about us in your favourite social network:</p>
 
       <div class="row">
         <div class="span1">
           <!-- Twitter -->
           <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://yithlibrary.com" data-text="I keep my secrets in Yith Library. It's great and free, you should do the same!" data-via="YithLibrary" data-lang="${locale}" data-related="YithLibrary">Tweet</a>
-          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+          <script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
         </div>
 
         <div class="span1">
@@ -59,16 +67,54 @@
       </div>
     </div>
 
-    <div class="span9">
+    <div class="span6">
       <p i18n:translate="">Or add a banner from your site:</p>
     </div>
   </div>
 
-  <h2 i18n:translate="">Translate</h2>
+  <div class="row bottom-spacer">
+    <div class="span6">
+      <h2 i18n:translate="">Translate</h2>
+      <p i18n:translate="">Yith Library is currently available in English and Spanish. If you speak any other languages it would be awesome if you could contribute a translation for that language.</p>
+      <table class="table">
+        <caption i18n:translate="">Current translations</caption>
+        <tbody>
+          <tr>
+            <td class="flag-cell">
+              <div class="sprite-countries-us" title="en-US"></div>
+            </td>
+            <td i18n:translate="">English (USA)</td>
+            <td class="progress-cell">
+              <div class="progress progress-striped"><div class="bar" style="width: 100%">100%</div></div>
+            </td>
+            <td><span i18n:translate="">By</span> Lorenzo Gil</td>
+          </tr>
+          <tr>
+            <td class="flag-cell">
+              <div class="sprite-countries-es" title="es-ES"></div>
+            </td>
+            <td i18n:translate="">Spanish (Spain)</td>
+            <td class="progress-cell">
+              <div class="progress progress-striped"><div class="bar" style="width: 100%">100%</div></div>
+            </td>
+            <td><span i18n:translate="">By</span> Lorenzo Gil</td>
+          </tr>
+        </tbody>
+      </table>
 
-  <h2 i18n:translate="">Write some code</h2>
+      <p i18n:translate=""><a href="https://github.com/Yaco-Sistemas/yith-library-server/blob/master/yithlibraryserver/locale/yithlibraryserver.pot" i18n:name="this-is-the-file" i18n:translate="">This is the file</a> you need to translate. Please <a href="${request.route_path('contact')}" i18n:name="contact-us" i18n:translate="">contact us</a> if you need any help!</p>
+    </div>
 
-  <h2 i18n:translate="">Donate</h2>
+    <div class="span6">
+      <h2 i18n:translate="">Write some code</h2>
+    </div>
+  </div>
+
+  <div class="row bottom-spacer">
+    <div class="span12">
+      <h2 i18n:translate="">Donate</h2>
+    </div>
+  </div>
 
 </tal:block>
 

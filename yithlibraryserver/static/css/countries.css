@@ -1,0 +1,5 @@
+/* glue: 0.2.9 hash: 11fe31dd01 */
+.sprite-countries-us,
+.sprite-countries-es{background-image:url('countries.png');background-repeat:no-repeat}
+.sprite-countries-us{background-position:0px 0px;width:16px;height:11px;}
+.sprite-countries-es{background-position:-16px 0px;width:16px;height:11px;}

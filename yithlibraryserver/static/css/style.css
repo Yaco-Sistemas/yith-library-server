@@ -212,3 +212,20 @@ footer ul li {
 .personal-info ul {
     margin-left: 180px;
 }
+
+/* Contribute styles */
+.bottom-spacer {
+    margin-bottom: 20px;
+}
+
+.table .flag-cell {
+    vertical-align: middle;
+}
+
+.table .progress-cell {
+    width: 40%;
+}
+
+.table .progress-cell .progress {
+    margin-bottom: 0;
+}

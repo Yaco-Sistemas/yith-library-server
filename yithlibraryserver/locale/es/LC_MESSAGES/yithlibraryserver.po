@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-03-04 22:51+0100\n"
-"PO-Revision-Date: 2013-03-04 22:52+0100\n"
+"POT-Creation-Date: 2013-03-11 21:52+0100\n"
+"PO-Revision-Date: 2013-03-11 21:53+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -138,6 +138,89 @@ msgstr "Esta acción no se puede deshacer."
 #: yithlibraryserver/oauth2/templates/developer_application_delete.pt:17
 msgid "Yes, I am sure"
 msgstr "Sí, estoy seguro"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:9
+msgid "Contribute"
+msgstr "Contribuye"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:31
+msgid "We need your help!"
+msgstr "¡Necesitamos tu ayuda!"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:32
+msgid ""
+"We need your help to make Yith Library a truly awesome service. There are"
+" several things you can do to show your love."
+msgstr ""
+"Necesitamos tu ayuda para hacer de Yith Library un servicio verdaderamente increible. Hay\n"
+"varias cosas que puedes hacer para mostrar tu amor."
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:35
+msgid "Spread the word"
+msgstr "Corre la voz"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:39
+msgid "Add a line about us in your favourite social network:"
+msgstr "Escribe una linea sobre nosotros en tu red social favorita:"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:71
+msgid "Or add a banner from your site:"
+msgstr "O añade un banner en tu sitio:"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:77
+msgid "Translate"
+msgstr "Traduce"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:78
+msgid ""
+"Yith Library is currently available in English and Spanish. If you speak "
+"any other languages it would be awesome if you could contribute a "
+"translation for that language."
+msgstr ""
+"Yith Library está disponible en Inglés y en Español. Si hablas cualquier\n"
+"otro idioma sería increible si pudieras contribuir una traducción para\n"
+"ese idioma."
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:80
+msgid "Current translations"
+msgstr "Traducciones actuales"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:86
+msgid "English (USA)"
+msgstr "Inglés (EEUU)"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:90
+#: yithlibraryserver/contributions/templates/contributions_index.pt:100
+msgid "By"
+msgstr "Por"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:96
+msgid "Spanish (Spain)"
+msgstr "Español (España)"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:105
+msgid "This is the file"
+msgstr "Este es el fichero"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:105
+msgid "contact us"
+msgstr "contacta con nosotros"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:105
+msgid ""
+"${this-is-the-file} you need to translate. Please ${contact-us} if you "
+"need any help!"
+msgstr ""
+"${this-is-the-file} que tienes que traducir. ¡Por favor ${contact-us} si\n"
+"necesitas ayuda!"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:109
+msgid "Write some code"
+msgstr "Escribe código"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:113
+msgid "Donate"
+msgstr "Dona"
 
 #: yithlibraryserver/oauth2/schemas.py:49
 #: yithlibraryserver/oauth2/templates/developer_applications.pt:18
@@ -327,15 +410,15 @@ msgstr "Aplicaciones de Desarrolladores"
 msgid "Register new application"
 msgstr "Registrar nueva aplicación"
 
-#: yithlibraryserver/templates/base.pt:34
+#: yithlibraryserver/templates/base.pt:36
 msgid "Welcome, new visitor!"
 msgstr "¡Bienvenido, visitante!"
 
-#: yithlibraryserver/templates/base.pt:35
+#: yithlibraryserver/templates/base.pt:37
 msgid "Welcome ${current-user}"
 msgstr "Bienvenido ${current-user}"
 
-#: yithlibraryserver/templates/base.pt:36
+#: yithlibraryserver/templates/base.pt:38
 msgid ""
 "We are using cookies to get statistics about the usage of Yith Library. "
 "This is completely optional and we want to ask you if this is ok with "
@@ -346,61 +429,61 @@ msgstr ""
 "Esto es completamente opcional y nos gustaría preguntarte si te parece "
 "bien."
 
-#: yithlibraryserver/templates/base.pt:38
+#: yithlibraryserver/templates/base.pt:40
 msgid "Ok, I can handle one more cookie"
 msgstr "Ok, puedo soportar otra cookie"
 
-#: yithlibraryserver/templates/base.pt:39
+#: yithlibraryserver/templates/base.pt:41
 msgid "No, I don't want to be tracked"
 msgstr "No, no quiero ser rastreado"
 
-#: yithlibraryserver/templates/base.pt:50
+#: yithlibraryserver/templates/base.pt:52
 #: yithlibraryserver/user/templates/login.pt:9
 #: yithlibraryserver/user/templates/login.pt:13
 msgid "Log in"
 msgstr "Entrar"
 
-#: yithlibraryserver/templates/base.pt:59
+#: yithlibraryserver/templates/base.pt:61
 msgid "My passwords"
 msgstr "Mis contraseñas"
 
-#: yithlibraryserver/templates/base.pt:62
+#: yithlibraryserver/templates/base.pt:64
 msgid "Log out"
 msgstr "Salir"
 
-#: yithlibraryserver/templates/base.pt:90
+#: yithlibraryserver/templates/base.pt:92
 msgid "FAQ"
 msgstr "Preguntas frecuentes"
 
-#: yithlibraryserver/templates/base.pt:91 yithlibraryserver/templates/tos.pt:9
+#: yithlibraryserver/templates/base.pt:93 yithlibraryserver/templates/tos.pt:9
 #: yithlibraryserver/templates/tos.pt:13
 msgid "Terms of service"
 msgstr "Términos de servicio"
 
-#: yithlibraryserver/templates/base.pt:92
+#: yithlibraryserver/templates/base.pt:94
 #: yithlibraryserver/templates/contact.pt:9
 msgid "Contact"
 msgstr "Contacto"
 
-#: yithlibraryserver/templates/base.pt:93
-#: yithlibraryserver/templates/base.pt:105
+#: yithlibraryserver/templates/base.pt:95
+#: yithlibraryserver/templates/base.pt:107
 msgid "Credits"
 msgstr "Créditos"
 
-#: yithlibraryserver/templates/base.pt:96
+#: yithlibraryserver/templates/base.pt:98
 msgid "Follow us on Twitter!"
 msgstr "¡Síguenos en Twitter!"
 
-#: yithlibraryserver/templates/base.pt:97
+#: yithlibraryserver/templates/base.pt:99
 #: yithlibraryserver/templates/home.pt:14
 msgid "Fork us on GitHub!"
 msgstr "¡Copianos en Github!"
 
-#: yithlibraryserver/templates/base.pt:108
+#: yithlibraryserver/templates/base.pt:110
 msgid "Yith Library is copyright of:"
 msgstr "El copyright de Yith Library es de:"
 
-#: yithlibraryserver/templates/base.pt:133
+#: yithlibraryserver/templates/base.pt:135
 #: yithlibraryserver/user/templates/email_verification_dialog.pt:20
 msgid "Close"
 msgstr "Cerrar"
