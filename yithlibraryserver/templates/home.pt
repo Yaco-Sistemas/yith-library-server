@@ -14,7 +14,7 @@
     <img src="${request.static_path('yithlibraryserver:static/img/forkme_right_gray_6d6d6d.png')}" alt="Fork us on GitHub!" i18n:attributes="alt" />
   </a>
 
-  <div class="hero-unit main-banner">
+  <div class="hero-unit main-banner banner">
     <h1 i18n:translate="">Web password manager</h1>
     <p i18n:translate="">Yith Library is an online password manager. It will help you to keep
       your secrets under control in a secure and easy way. Your online data is

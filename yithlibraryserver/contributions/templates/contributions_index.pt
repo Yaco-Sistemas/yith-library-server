@@ -27,7 +27,7 @@
   //]]>
   </script>
 
-  <div class="hero-unit">
+  <div class="hero-unit contribute-banner banner">
     <h1 i18n:translate="">We need your help!</h1>
     <p i18n:translate="">We need your help to make Yith Library a truly awesome service. There are several things you can do to show your love.</p>
   </div>

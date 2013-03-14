@@ -62,14 +62,17 @@ footer ul li {
     display: block;
 }
 
-.main-banner {
-    padding-right: 40%;
-    background: #eeeeee url(../img/yithian.png) no-repeat center right;
+.banner {
     border: 1px solid #d4d4d4;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+    padding-right: 40%;
 }
 
-.main-banner h1 {
+.main-banner {
+    background: #eeeeee url(../img/yithian.png) no-repeat center right;
+}
+
+.banner h1 {
     font-size: 40px;
     letter-spacing: normal;
     margin: 10px 0;
@@ -214,6 +217,10 @@ footer ul li {
 }
 
 /* Contribute styles */
+.contribute-banner {
+    background: #eeeeee url(../img/raised-hand.png) no-repeat 95% center;
+}
+
 .bottom-spacer {
     margin-bottom: 20px;
 }
