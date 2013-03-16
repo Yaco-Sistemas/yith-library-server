@@ -95,3 +95,6 @@ Try typing `make help` to get a glimpse at them.
 
    For more information about Sphinx and their output formats, read its
    documentation at http://sphinx.pocoo.org/
+
+.. todo::
+   Contributing guide

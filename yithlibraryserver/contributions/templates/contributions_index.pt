@@ -107,12 +107,24 @@
 
     <div class="span6">
       <h2 i18n:translate="">Write some code</h2>
+      <p i18n:translate="">If you know how to program your help will be very much appreciated since there a lot of room for improvement in Yith Library. The source code is on Github and you can read the documentation to get you started.</p>
+      <div class="row">
+        <div class="span2">
+          <a href="https://github.com/Yaco-Sistemas/yith-library-server">Yith Library Server</a>
+        </div>
+        <div class="span2">
+          <a href="https://github.com/Yaco-Sistemas/yith-library-webclient">Yith Library Web Client</a>
+        </div>
+        <div class="span2">
+          <a href="">Yith Library backup reader</a>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="row bottom-spacer">
     <div class="span12">
-      <h2 i18n:translate="">Donate</h2>
+      <h2 i18n:translate="">Give us your money</h2>
     </div>
   </div>
 

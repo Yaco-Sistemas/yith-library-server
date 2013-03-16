@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-03-11 21:52+0100\n"
-"PO-Revision-Date: 2013-03-11 21:53+0100\n"
+"POT-Creation-Date: 2013-03-16 08:49+0100\n"
+"PO-Revision-Date: 2013-03-16 08:50+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -152,7 +152,8 @@ msgid ""
 "We need your help to make Yith Library a truly awesome service. There are"
 " several things you can do to show your love."
 msgstr ""
-"Necesitamos tu ayuda para hacer de Yith Library un servicio verdaderamente increible. Hay\n"
+"Necesitamos tu ayuda para hacer de Yith Library un servicio "
+"verdaderamente increible. Hay\n"
 "varias cosas que puedes hacer para mostrar tu amor."
 
 #: yithlibraryserver/contributions/templates/contributions_index.pt:35
@@ -218,9 +219,19 @@ msgstr ""
 msgid "Write some code"
 msgstr "Escribe código"
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:113
-msgid "Donate"
-msgstr "Dona"
+#: yithlibraryserver/contributions/templates/contributions_index.pt:110
+msgid ""
+"If you know how to program your help will be very much appreciated since "
+"there a lot of room for improvement in Yith Library. The source code is "
+"on Github and you can read the documentation to get you started."
+msgstr ""
+"Si sabes programar tu ayuda será más que bienvenida ya que hay mucho\n"
+"que mejorar en Yith Library. El código fuente está en Github y puedes\n"
+"leer la documentación para poder empezar fácilmente."
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:127
+msgid "Give us your money"
+msgstr "Danos tú dinero"
 
 #: yithlibraryserver/oauth2/schemas.py:49
 #: yithlibraryserver/oauth2/templates/developer_applications.pt:18
@@ -483,7 +494,7 @@ msgstr "¡Copianos en Github!"
 msgid "Yith Library is copyright of:"
 msgstr "El copyright de Yith Library es de:"
 
-#: yithlibraryserver/templates/base.pt:135
+#: yithlibraryserver/templates/base.pt:136
 #: yithlibraryserver/user/templates/email_verification_dialog.pt:20
 msgid "Close"
 msgstr "Cerrar"

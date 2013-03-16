@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-03-11 21:52+0100\n"
+"POT-Creation-Date: 2013-03-16 08:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -201,8 +201,15 @@ msgstr ""
 msgid "Write some code"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:113
-msgid "Donate"
+#: yithlibraryserver/contributions/templates/contributions_index.pt:110
+msgid ""
+"If you know how to program your help will be very much appreciated since "
+"there a lot of room for improvement in Yith Library. The source code is on "
+"Github and you can read the documentation to get you started."
+msgstr ""
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:127
+msgid "Give us your money"
 msgstr ""
 
 #: yithlibraryserver/oauth2/schemas.py:49
@@ -449,7 +456,7 @@ msgstr ""
 msgid "Yith Library is copyright of:"
 msgstr ""
 
-#: yithlibraryserver/templates/base.pt:135
+#: yithlibraryserver/templates/base.pt:136
 #: yithlibraryserver/user/templates/email_verification_dialog.pt:20
 msgid "Close"
 msgstr ""
