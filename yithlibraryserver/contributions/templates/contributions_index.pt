@@ -110,13 +110,22 @@
       <p i18n:translate="">If you know how to program your help will be very much appreciated since there a lot of room for improvement in Yith Library. The source code is on Github and you can read the documentation to get you started.</p>
       <div class="row">
         <div class="span2">
-          <a href="https://github.com/Yaco-Sistemas/yith-library-server">Yith Library Server</a>
+          <a href="https://github.com/Yaco-Sistemas/yith-library-server" class="thumbnail">
+            <img src="${request.static_path('yithlibraryserver:static/img/octocat.png')}" width="150" height="125" />
+            <p class="caption">Yith Library server</p>
+          </a>
         </div>
         <div class="span2">
-          <a href="https://github.com/Yaco-Sistemas/yith-library-webclient">Yith Library Web Client</a>
+          <a href="https://github.com/Yaco-Sistemas/yith-library-webclient" class="thumbnail">
+            <img src="${request.static_path('yithlibraryserver:static/img/octocat.png')}" width="150" height="125" />
+            <p class="caption">Yith Library web client</p>
+          </a>
         </div>
         <div class="span2">
-          <a href="">Yith Library backup reader</a>
+          <a href="https://github.com/ablanco/yith-library-cli" class="thumbnail">
+            <img src="${request.static_path('yithlibraryserver:static/img/octocat.png')}" width="150" height="125" />
+            <p class="caption">Yith Library backup reader</p>
+          </a>
         </div>
       </div>
     </div>
