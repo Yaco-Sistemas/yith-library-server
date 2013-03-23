@@ -183,7 +183,7 @@
         <div class="span2">
           <div class="well">
             <h5 i18n:translate="">Big</h5>
-            <p>A cool Yith Library sticker, a personal thank you from the yithians and daily backups of your passwords if you want them</p>
+            <p i18n:translate="">A cool Yith Library sticker, a personal thank you from the yithians and daily backups of your passwords if you want them</p>
 
             <a href="" class="btn btn-primary" i18n:translate="">Donate $10</a>
           </div>

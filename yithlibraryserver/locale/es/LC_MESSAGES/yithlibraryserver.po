@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-03-23 13:05+0100\n"
-"PO-Revision-Date: 2013-03-23 13:05+0100\n"
+"POT-Creation-Date: 2013-03-23 13:21+0100\n"
+"PO-Revision-Date: 2013-03-23 13:27+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -386,6 +386,15 @@ msgstr "Donar $5"
 #: yithlibraryserver/contributions/templates/contributions_index.pt:185
 msgid "Big"
 msgstr "Grande"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:186
+#| yithians"
+msgid ""
+"A cool Yith Library sticker, a personal thank you from the yithians and "
+"daily backups of your passwords if you want them"
+msgstr ""
+"Una pegatina chula de Yith Library, un agradecimiento personal de los yithians\n"
+"y copias de seguridad de tus contraseñas diarias si así lo quieres"
 
 #: yithlibraryserver/contributions/templates/contributions_index.pt:188
 msgid "Donate $10"

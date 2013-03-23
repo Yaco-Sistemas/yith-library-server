@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-03-23 13:05+0100\n"
+"POT-Creation-Date: 2013-03-23 13:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -323,6 +323,12 @@ msgstr ""
 
 #: yithlibraryserver/contributions/templates/contributions_index.pt:185
 msgid "Big"
+msgstr ""
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:186
+msgid ""
+"A cool Yith Library sticker, a personal thank you from the yithians and daily"
+" backups of your passwords if you want them"
 msgstr ""
 
 #: yithlibraryserver/contributions/templates/contributions_index.pt:188
