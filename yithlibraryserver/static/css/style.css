@@ -236,3 +236,17 @@ footer ul li {
 .table .progress-cell .progress {
     margin-bottom: 0;
 }
+
+.sticker {
+    display: block;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.deck {
+    position: relative;
+    padding: 20px 0;
+}
+
+.deck img {
+    position: absolute;
+}

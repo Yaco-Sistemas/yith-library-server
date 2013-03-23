@@ -134,6 +134,70 @@
   <div class="row bottom-spacer">
     <div class="span12">
       <h2 i18n:translate="">Give us your money</h2>
+      <p i18n:translate="">Well, not all of them, but it would be great if you could contribute a very small amount of money to maintain this service.</p>
+      <p i18n:translate="">This is how we will spend that money:</p>
+      <dl>
+        <dt i18n:translate="">Hosting</dt>
+        <dd i18n:translate="">Right now we are using <a href="http://www.heroku.com" i18n:name="heroku">Heroku</a> as our hosting provider because their starter plan is free. We are really grateful to them but we realize that we are slowly growing up and at some point that plan will not be enough for us.</dd>
+        <dt i18n:translate="">SSL Certificate</dt>
+        <dd i18n:translate="">Having a strong SSL Certificate to serve all Yith Library resources is quite important in an application like this. We are using Heroku's wildcard certificate because Yith Library is being served as a subdomain of the herokuapp.com domain. This is great to get started in a secure and free way but we'd like to use the yithlibrary.com domain (which is just a redirection right now).</dd>
+        <dt i18n:translate="">Email services</dt>
+        <dd i18n:translate="">Yith Library can email you with a ciphered backup of your password collection once a month. We need to thank <a href="http://sendgrid.com" i18n:name="sendgrid">SendGrid</a> for allowing us to do this using their free plan. But as with Heroku, we'd like to improve this feature but allowing our users to decide how frequently they want this email to be sent. Unfortunately the free plan is not enough for this and we would need to switch to a bigger plan.</dd>
+        <dt i18n:translate="">Branding assets</dt>
+        <dd i18n:translate="">We would like Yith Library to look really awesome and unfortunately the two yithians that run the service are not very good with brushes and pencils. We bought the famous <a href="${request.static_path('yithlibraryserver:static/img/yithian.png')}" i18n:name="yithian-image" i18n:translate="">yithian image</a> but we'd like to get it more friends.</dd>
+        <dt i18n:translate="">Domain</dt>
+        <dd i18n:translate="">Once a year the domain yithlibrary.com must be renewed. It's not a big expense but it adds :-)</dd>
+      </dl>
+
+      <p i18n:translate="">We also have some cool stickers waiting to be placed on your laptop, your car or maybe your boss' back. All our donation packages include a sticker unless you say so to use the full amount in Yith itself.</p>
+
+    </div>
+  </div>
+
+  <div class="row bottom-spacer">
+
+    <div class="span6">
+
+      <h4 i18n:translate="">Packages</h4>
+
+      <div class="row">
+
+        <div class="span2">
+          <div class="well">
+            <h5 i18n:translate="">Small</h5>
+            <p i18n:translate="">A cool Yith Library sticker</p>
+
+            <a href="" class="btn btn-primary" i18n:translate="">Donate $2</a>
+          </div>
+        </div>
+
+        <div class="span2">
+          <div class="well">
+            <h5 i18n:translate="">Medium</h5>
+            <p i18n:translate="">A cool Yith Library sticker and a personal thank you from the yithians</p>
+
+            <a href="" class="btn btn-primary" i18n:translate="">Donate $5</a>
+          </div>
+        </div>
+
+        <div class="span2">
+          <div class="well">
+            <h5 i18n:translate="">Big</h5>
+            <p>A cool Yith Library sticker, a personal thank you from the yithians and daily backups of your passwords if you want them</p>
+
+            <a href="" class="btn btn-primary" i18n:translate="">Donate $10</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="span6">
+      <h4 i18n:translate="">Stickers</h4>
+      <div class="deck">
+        <img tal:repeat="idx python:range(40)" style="transform: rotate(${random.randint(-10, 10)}deg); -webkit-transform: rotate(${random.randint(-10, 10)}deg); left: ${random.randint(10, 300)}px;" class="sticker" src="${request.static_path('yithlibraryserver:static/img/sticker.png')}" width="204" height="288" />
+      </div>
     </div>
   </div>
 

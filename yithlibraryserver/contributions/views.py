@@ -16,6 +16,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
+import random
+
 from pyramid.i18n import get_locale_name
 from pyramid.view import view_config
 
@@ -24,4 +26,4 @@ from pyramid.view import view_config
              renderer='templates/contributions_index.pt')
 def contributions_index(request):
     locale_name = get_locale_name(request)
-    return {'locale': locale_name}
+    return {'locale': locale_name, 'random': random}

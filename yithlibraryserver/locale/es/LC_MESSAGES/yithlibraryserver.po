@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-03-16 08:49+0100\n"
-"PO-Revision-Date: 2013-03-16 08:50+0100\n"
+"POT-Creation-Date: 2013-03-23 13:05+0100\n"
+"PO-Revision-Date: 2013-03-23 13:05+0100\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -229,9 +229,171 @@ msgstr ""
 "que mejorar en Yith Library. El código fuente está en Github y puedes\n"
 "leer la documentación para poder empezar fácilmente."
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:127
+#: yithlibraryserver/contributions/templates/contributions_index.pt:136
 msgid "Give us your money"
 msgstr "Danos tú dinero"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:137
+msgid ""
+"Well, not all of them, but it would be great if you could contribute a "
+"very small amount of money to maintain this service."
+msgstr ""
+"Bueno, no todo, pero sería estupendo si pudieras contribuir un poco de\n"
+"dinero para mantener este servicio."
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:138
+msgid "This is how we will spend that money:"
+msgstr "Así es como nos gastaremos ese dinero:"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:140
+msgid "Hosting"
+msgstr "Alojamiento"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:141
+msgid ""
+"Right now we are using ${heroku} as our hosting provider because their "
+"starter plan is free. We are really grateful to them but we realize that "
+"we are slowly growing up and at some point that plan will not be enough "
+"for us."
+msgstr ""
+"Ahora mismo estamos usando ${heroku} como nuestro proveedor de hosting\n"
+"porque su plan inicial es gratis. Estamos muy agradecidos a ellos pero\n"
+"somos conscientes de que estamos creciendo lentamente y en algún punto\n"
+"ese plan no será suficiente para nosotros."
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:142
+msgid "SSL Certificate"
+msgstr "Certificado SSL"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:143
+msgid ""
+"Having a strong SSL Certificate to serve all Yith Library resources is "
+"quite important in an application like this. We are using Heroku's "
+"wildcard certificate because Yith Library is being served as a subdomain "
+"of the herokuapp.com domain. This is great to get started in a secure and"
+" free way but we'd like to use the yithlibrary.com domain (which is just "
+"a redirection right now)."
+msgstr ""
+"Tener un Certificado SSL fuerte para servir todos los recursos de Yith "
+"Library\n"
+"es bastante importante en una aplicación como esta. Estamos usando los\n"
+"certificados comodín de Heroku porque Yith Library se está sirviendo en "
+"un\n"
+"subdominio del dominio herokuapp.com. Esto está muy bien para empezar de\n"
+"una forma segura y gratuita pero nos gustaría usar el dominio "
+"yithlibrary.com\n"
+"(el cuál es simplemente una redirección ahora mismo)."
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:144
+msgid "Email services"
+msgstr "Servicios de correo electrónico"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:145
+msgid ""
+"Yith Library can email you with a ciphered backup of your password "
+"collection once a month. We need to thank ${sendgrid} for allowing us to "
+"do this using their free plan. But as with Heroku, we'd like to improve "
+"this feature but allowing our users to decide how frequently they want "
+"this email to be sent. Unfortunately the free plan is not enough for this"
+" and we would need to switch to a bigger plan."
+msgstr ""
+"Yith Library puede mandarte un email con tu colección de contraseñas\n"
+"cifradas una vez al mes. Agradecemos a ${sendgrid} permitirnos hacer\n"
+"esto con su plan gratuito. Pero como con Heroku, nos gustaría mejorar "
+"esta\n"
+"característica permitiendo que nuestros usuarios decidan la frecuencia\n"
+"de estos emails. Desgraciadamente el plan gratuito no es suficiente\n"
+"para esto y tendríamos que cambiarnos a un plan superior."
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:146
+msgid "Branding assets"
+msgstr "Activos de marca"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:147
+msgid "yithian image"
+msgstr "imágen del yithian"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:147
+msgid ""
+"We would like Yith Library to look really awesome and unfortunately the "
+"two yithians that run the service are not very good with brushes and "
+"pencils. We bought the famous ${yithian-image} but we'd like to get it "
+"more friends."
+msgstr ""
+"Nos gustaría que Yith Library se viera muy chula pero desgraciadamente\n"
+"los dos yithians que llevan el servicio no son muy buenos con los "
+"pinceles y\n"
+"lápices. Compramos la famosa ${yithian-image} pero nos gustaría "
+"conseguirle\n"
+"más amigos."
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:148
+msgid "Domain"
+msgstr "Dominio"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:149
+msgid ""
+"Once a year the domain yithlibrary.com must be renewed. It's not a big "
+"expense but it adds :-)"
+msgstr ""
+"Una vez al año hay que renovar el dominio yithlibrary.com. No es un gran\n"
+"gastos pero suma :-) "
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:152
+msgid ""
+"We also have some cool stickers waiting to be placed on your laptop, your"
+" car or maybe your boss' back. All our donation packages include a "
+"sticker unless you say so to use the full amount in Yith itself."
+msgstr ""
+"Tenemos unas pegatinas muy chulas esperando a ser colocadas en tu "
+"portátil,\n"
+"tu coche o la espalda de tu jefe. Todos nuestros paquetes de donación "
+"incluyen\n"
+"una pegatina a no ser que digas lo contrario para utilizar todo el "
+"importe\n"
+"de tu donación en Yith Library."
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:161
+msgid "Packages"
+msgstr "Paquetes"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:167
+msgid "Small"
+msgstr "Pequeño"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:168
+msgid "A cool Yith Library sticker"
+msgstr "Una pegatina chula de Yith Library"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:170
+msgid "Donate $2"
+msgstr "Donar $2"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:176
+msgid "Medium"
+msgstr "Mediano"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:177
+msgid "A cool Yith Library sticker and a personal thank you from the yithians"
+msgstr ""
+"Una pegatina chula de Yith Library y un agradecimiento personal de los "
+"yithians"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:179
+msgid "Donate $5"
+msgstr "Donar $5"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:185
+msgid "Big"
+msgstr "Grande"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:188
+msgid "Donate $10"
+msgstr "Donar $10"
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:197
+msgid "Stickers"
+msgstr "Pegatinas"
 
 #: yithlibraryserver/oauth2/schemas.py:49
 #: yithlibraryserver/oauth2/templates/developer_applications.pt:18
