@@ -111,19 +111,19 @@
       <div class="row">
         <div class="span2">
           <a href="https://github.com/Yaco-Sistemas/yith-library-server" class="thumbnail">
-            <img src="${request.static_path('yithlibraryserver:static/img/octocat.png')}" width="150" height="125" />
+            <img src="${request.static_path('yithlibraryserver:static/img/socialite.png')}" width="150" height="125" />
             <p class="caption">Yith Library server</p>
           </a>
         </div>
         <div class="span2">
           <a href="https://github.com/Yaco-Sistemas/yith-library-webclient" class="thumbnail">
-            <img src="${request.static_path('yithlibraryserver:static/img/octocat.png')}" width="150" height="125" />
+            <img src="${request.static_path('yithlibraryserver:static/img/baracktocat.png')}" width="150" height="125" />
             <p class="caption">Yith Library web client</p>
           </a>
         </div>
         <div class="span2">
           <a href="https://github.com/ablanco/yith-library-cli" class="thumbnail">
-            <img src="${request.static_path('yithlibraryserver:static/img/octocat.png')}" width="150" height="125" />
+            <img src="${request.static_path('yithlibraryserver:static/img/jenktocat.png')}" width="150" height="125" />
             <p class="caption">Yith Library backup reader</p>
           </a>
         </div>
