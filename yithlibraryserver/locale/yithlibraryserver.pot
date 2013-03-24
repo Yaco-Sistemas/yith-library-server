@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-03-23 13:21+0100\n"
+"POT-Creation-Date: 2013-03-24 10:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -148,96 +148,117 @@ msgid "Spread the word"
 msgstr ""
 
 #: yithlibraryserver/contributions/templates/contributions_index.pt:39
-msgid "Add a line about us in your favourite social network:"
+msgid "Add a banner from your site ..."
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:71
-msgid "Or add a banner from your site:"
+#: yithlibraryserver/contributions/templates/contributions_index.pt:42
+msgid "1. Pick a banner type:"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:77
+#: yithlibraryserver/contributions/templates/contributions_index.pt:44
+msgid "Small 1"
+msgstr ""
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:45
+msgid "Small 2"
+msgstr ""
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:46
+#: yithlibraryserver/contributions/templates/contributions_index.pt:192
+msgid "Medium"
+msgstr ""
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:51
+msgid "2. Copy and paste this into your website:"
+msgstr ""
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:58
+msgid "... or add a line about us in your favourite social network:"
+msgstr ""
+
+#: yithlibraryserver/contributions/templates/contributions_index.pt:93
 msgid "Translate"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:78
+#: yithlibraryserver/contributions/templates/contributions_index.pt:94
 msgid ""
 "Yith Library is currently available in English and Spanish. If you speak any "
 "other languages it would be awesome if you could contribute a translation for"
 " that language."
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:80
+#: yithlibraryserver/contributions/templates/contributions_index.pt:96
 msgid "Current translations"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:86
+#: yithlibraryserver/contributions/templates/contributions_index.pt:102
 msgid "English (USA)"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:90
-#: yithlibraryserver/contributions/templates/contributions_index.pt:100
+#: yithlibraryserver/contributions/templates/contributions_index.pt:106
+#: yithlibraryserver/contributions/templates/contributions_index.pt:116
 msgid "By"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:96
+#: yithlibraryserver/contributions/templates/contributions_index.pt:112
 msgid "Spanish (Spain)"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:105
+#: yithlibraryserver/contributions/templates/contributions_index.pt:121
 msgid "This is the file"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:105
+#: yithlibraryserver/contributions/templates/contributions_index.pt:121
 msgid "contact us"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:105
+#: yithlibraryserver/contributions/templates/contributions_index.pt:121
 msgid ""
 "${this-is-the-file} you need to translate. Please ${contact-us} if you need "
 "any help!"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:109
+#: yithlibraryserver/contributions/templates/contributions_index.pt:125
 msgid "Write some code"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:110
+#: yithlibraryserver/contributions/templates/contributions_index.pt:126
 msgid ""
 "If you know how to program your help will be very much appreciated since "
 "there a lot of room for improvement in Yith Library. The source code is on "
 "Github and you can read the documentation to get you started."
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:136
+#: yithlibraryserver/contributions/templates/contributions_index.pt:152
 msgid "Give us your money"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:137
+#: yithlibraryserver/contributions/templates/contributions_index.pt:153
 msgid ""
 "Well, not all of them, but it would be great if you could contribute a very "
 "small amount of money to maintain this service."
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:138
+#: yithlibraryserver/contributions/templates/contributions_index.pt:154
 msgid "This is how we will spend that money:"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:140
+#: yithlibraryserver/contributions/templates/contributions_index.pt:156
 msgid "Hosting"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:141
+#: yithlibraryserver/contributions/templates/contributions_index.pt:157
 msgid ""
 "Right now we are using ${heroku} as our hosting provider because their "
 "starter plan is free. We are really grateful to them but we realize that we "
 "are slowly growing up and at some point that plan will not be enough for us."
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:142
+#: yithlibraryserver/contributions/templates/contributions_index.pt:158
 msgid "SSL Certificate"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:143
+#: yithlibraryserver/contributions/templates/contributions_index.pt:159
 msgid ""
 "Having a strong SSL Certificate to serve all Yith Library resources is quite "
 "important in an application like this. We are using Heroku's wildcard "
@@ -247,11 +268,11 @@ msgid ""
 "right now)."
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:144
+#: yithlibraryserver/contributions/templates/contributions_index.pt:160
 msgid "Email services"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:145
+#: yithlibraryserver/contributions/templates/contributions_index.pt:161
 msgid ""
 "Yith Library can email you with a ciphered backup of your password collection"
 " once a month. We need to thank ${sendgrid} for allowing us to do this using "
@@ -261,81 +282,77 @@ msgid ""
 "switch to a bigger plan."
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:146
+#: yithlibraryserver/contributions/templates/contributions_index.pt:162
 msgid "Branding assets"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:147
+#: yithlibraryserver/contributions/templates/contributions_index.pt:163
 msgid "yithian image"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:147
+#: yithlibraryserver/contributions/templates/contributions_index.pt:163
 msgid ""
 "We would like Yith Library to look really awesome and unfortunately the two "
 "yithians that run the service are not very good with brushes and pencils. We "
 "bought the famous ${yithian-image} but we'd like to get it more friends."
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:148
+#: yithlibraryserver/contributions/templates/contributions_index.pt:164
 msgid "Domain"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:149
+#: yithlibraryserver/contributions/templates/contributions_index.pt:165
 msgid ""
 "Once a year the domain yithlibrary.com must be renewed. It's not a big "
 "expense but it adds :-)"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:152
+#: yithlibraryserver/contributions/templates/contributions_index.pt:168
 msgid ""
 "We also have some cool stickers waiting to be placed on your laptop, your car"
 " or maybe your boss' back. All our donation packages include a sticker unless"
 " you say so to use the full amount in Yith itself."
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:161
+#: yithlibraryserver/contributions/templates/contributions_index.pt:177
 msgid "Packages"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:167
+#: yithlibraryserver/contributions/templates/contributions_index.pt:183
 msgid "Small"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:168
+#: yithlibraryserver/contributions/templates/contributions_index.pt:184
 msgid "A cool Yith Library sticker"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:170
+#: yithlibraryserver/contributions/templates/contributions_index.pt:186
 msgid "Donate $2"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:176
-msgid "Medium"
-msgstr ""
-
-#: yithlibraryserver/contributions/templates/contributions_index.pt:177
+#: yithlibraryserver/contributions/templates/contributions_index.pt:193
 msgid "A cool Yith Library sticker and a personal thank you from the yithians"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:179
+#: yithlibraryserver/contributions/templates/contributions_index.pt:195
 msgid "Donate $5"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:185
+#: yithlibraryserver/contributions/templates/contributions_index.pt:201
 msgid "Big"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:186
+#: yithlibraryserver/contributions/templates/contributions_index.pt:202
 msgid ""
 "A cool Yith Library sticker, a personal thank you from the yithians and daily"
 " backups of your passwords if you want them"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:188
+#: yithlibraryserver/contributions/templates/contributions_index.pt:204
 msgid "Donate $10"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_index.pt:197
+#: yithlibraryserver/contributions/templates/contributions_index.pt:213
 msgid "Stickers"
 msgstr ""
 

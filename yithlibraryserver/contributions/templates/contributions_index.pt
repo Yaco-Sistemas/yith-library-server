@@ -36,7 +36,26 @@
 
   <div class="row bottom-spacer">
     <div class="span6">
-      <p i18n:translate="">Add a line about us in your favourite social network:</p>
+      <p i18n:translate="">Add a banner from your site ...</p>
+      <div class="row">
+        <div class="span3">
+          <p i18n:translate="">1. Pick a banner type:</p>
+          <div id="banner-selector" class="btn-group" data-toggle="buttons-radio">
+            <button type="button" class="btn active" data-src="${request.static_url('yithlibraryserver:static/img/banners/banner1.png')}" i18n:translate="">Small 1</button>
+            <button type="button" class="btn" data-src="${request.static_url('yithlibraryserver:static/img/banners/banner2.png')}" i18n:translate="">Small 2</button>
+            <button type="button" class="btn" data-src="${request.static_url('yithlibraryserver:static/img/banners/banner3.png')}" i18n:translate="">Medium</button>
+          </div>
+          <img id="banner-preview" src="${request.static_path('yithlibraryserver:static/img/banners/banner1.png')}" />
+        </div>
+        <div class="span3">
+          <p i18n:translate="">2. Copy and paste this into your website:</p>
+          <textarea id="banner-source" class="input-block-level" rows="4"><a href="${request.registry.settings.public_url_root}"><img src="${request.static_url('yithlibraryserver:static/img/banners/banner1.png')}" alt="Yith Library" title="Yith Library"/></a></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="span6">
+      <p i18n:translate="">... or add a line about us in your favourite social network:</p>
 
       <div class="row">
         <div class="span1">
@@ -67,24 +86,6 @@
       </div>
     </div>
 
-    <div class="span6">
-      <p i18n:translate="">Or add a banner from your site:</p>
-      <div class="row">
-        <div class="span3">
-          <p>1. Pick a banner type:</p>
-          <div id="banner-selector" class="btn-group" data-toggle="buttons-radio">
-            <button type="button" class="btn active" data-src="${request.static_url('yithlibraryserver:static/img/banners/banner1.png')}">Small 1</button>
-            <button type="button" class="btn" data-src="${request.static_url('yithlibraryserver:static/img/banners/banner2.png')}">Small 2</button>
-            <button type="button" class="btn" data-src="${request.static_url('yithlibraryserver:static/img/banners/banner3.png')}">Medium</button>
-          </div>
-          <img id="banner-preview" src="${request.static_path('yithlibraryserver:static/img/banners/banner1.png')}" />
-        </div>
-        <div class="span3">
-          <p>2. Copy and paste this into your website:</p>
-          <textarea id="banner-source" class="input-block-level" rows="4"><a href="${request.registry.settings.public_url_root}"><img src="${request.static_url('yithlibraryserver:static/img/banners/banner1.png')}" alt="Yith Library" title="Yith Library"/></a></textarea>
-        </div>
-      </div>
-    </div>
   </div>
 
   <div class="row bottom-spacer">
