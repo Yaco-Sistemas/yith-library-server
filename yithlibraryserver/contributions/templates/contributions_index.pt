@@ -49,7 +49,7 @@
         </div>
         <div class="span3">
           <p i18n:translate="">2. Copy and paste this into your website:</p>
-          <textarea id="banner-source" class="input-block-level" rows="4"><a href="${request.registry.settings.public_url_root}"><img src="${request.static_url('yithlibraryserver:static/img/banners/banner1.png')}" alt="Yith Library" title="Yith Library"/></a></textarea>
+          <textarea id="banner-source" class="input-block-level" rows="7" readonly="readonly"><a href="${request.registry.settings.public_url_root}"><img src="${request.static_url('yithlibraryserver:static/img/banners/banner1.png')}" alt="Yith Library" title="Yith Library"/></a></textarea>
         </div>
       </div>
     </div>
