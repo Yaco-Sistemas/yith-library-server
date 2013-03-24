@@ -221,6 +221,10 @@ footer ul li {
     background: #eeeeee url(../img/raised-hand.png) no-repeat 95% center;
 }
 
+#banner-preview {
+    margin-top: 10px;
+}
+
 .bottom-spacer {
     margin-bottom: 20px;
 }
