@@ -21,6 +21,7 @@
 import colander
 from deform.widget import TextAreaWidget, TextInputWidget
 
+from yithlibraryserver.compat import string_types
 from yithlibraryserver.i18n import TranslationString as _
 
 
@@ -34,7 +35,7 @@ class AuthorizedOriginsNode(colander.SchemaNode):
 
     def deserialize(self, cstruct=colander.null):
         result = super(AuthorizedOriginsNode, self).deserialize(cstruct)
-        if not result is colander.null and isinstance(result, basestring):
+        if not result is colander.null and isinstance(result, string_types):
             result = [item.strip() for item in result.split('\n')
                       if item.strip()]
 

@@ -56,7 +56,7 @@ class FakeDatetimeServiceTests(unittest.TestCase):
     def test_fakedatetimeservice(self):
         ds = FakeDatetimeService(None)
         os.environ['YITH_FAKE_DATETIME'] = '2012-1-10-14-23-01'
-        fake_utcnow = datetime.datetime(2012, 1, 10, 14, 23, 01, 0)
+        fake_utcnow = datetime.datetime(2012, 1, 10, 14, 23, 1, 0)
         self.assertTrue(isinstance(ds.utcnow(), datetime.datetime))
         self.assertDatetimeEqual(ds.utcnow(), fake_utcnow)
         del os.environ['YITH_FAKE_DATETIME']
