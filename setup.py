@@ -42,7 +42,7 @@ requires = [
     'repoze.sendmail==3.2',     # required by pyramid_mailer
     'transaction==1.4.1',       # required by pyramid_mailer
     'translationstring==1.1',   # required by deform, pyramid
-    'venusian==1.0a7',          # required by pyramid
+    'venusian==1.0a8',          # required by pyramid
     'WebOb==1.2.3',             # required by pyramid
     'zope.deprecation==4.0.2',  # required by deform
     'zope.interface==4.0.5',    # required by pyramid
@@ -73,13 +73,6 @@ test_requires = [
     'WebTest==1.4.3',
     'mock==1.0.1',
     ]
-
-# Until a new venusian (a pyramid dependency) version is released
-# we need to include our test dependencies since the test_*
-# modules are imported by the Pyramid configuration engine
-# See https://github.com/Pylons/venusian/commit/5ef6f4cf68a4062d7ff18638bf15910769445c4f
-# for more information
-requires = requires + test_requires
 
 docs_extras = [
     'docutils==0.10',  # required by Sphinx
