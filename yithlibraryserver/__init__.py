@@ -144,7 +144,8 @@ def main(global_config, **settings):
     # Subscribers
     config.include('yithlibraryserver.subscribers')
 
-    config.scan(ignore=[re.compile('.*tests.*').search, '.testing'])
+    config.scan(ignore=[re.compile('.*tests.*').search,
+                        re.compile('.*testing.*').search])
     return config.make_wsgi_app()
 
 
