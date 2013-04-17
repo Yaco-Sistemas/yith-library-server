@@ -44,7 +44,7 @@ class ViewTests(testing.TestCase):
 
         with patch('requests.post') as fake_post:
             fake_post.return_value.ok = True
-            fake_post.return_value.json = {
+            fake_post.return_value.json = lambda: {
                 'status': 'failure',
                 }
             res = self.testapp.post('/persona/login', {
@@ -56,7 +56,7 @@ class ViewTests(testing.TestCase):
 
         with patch('requests.post') as fake_post:
             fake_post.return_value.ok = True
-            fake_post.return_value.json = {
+            fake_post.return_value.json = lambda: {
                 'status': 'okay',
                 'email': 'john@example.com',
                 }

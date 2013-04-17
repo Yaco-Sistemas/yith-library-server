@@ -125,7 +125,7 @@ class ViewTests(testing.TestCase):
             with patch('requests.get') as fake2:
                 response2 = fake2.return_value
                 response2.status_code = 200
-                response2.json = {'name': 'John Doe'}
+                response2.json = lambda: {'name': 'John Doe'}
 
                 res = self.testapp.get(good_url, status=302)
                 self.assertEqual(res.status, '302 Found')
@@ -149,7 +149,7 @@ class ViewTests(testing.TestCase):
             with patch('requests.get') as fake2:
                 response2 = fake2.return_value
                 response2.status_code = 200
-                response2.json = {'name': 'John Doe'}
+                response2.json = lambda: {'name': 'John Doe'}
 
                 res = self.testapp.get(good_url, status=302)
                 self.assertEqual(res.status, '302 Found')
@@ -175,7 +175,7 @@ class ViewTests(testing.TestCase):
             with patch('requests.get') as fake2:
                 response2 = fake2.return_value
                 response2.status_code = 200
-                response2.json = {'name': 'John Doe'}
+                response2.json = lambda: {'name': 'John Doe'}
 
                 res = self.testapp.get(good_url, status=302)
                 self.assertEqual(res.status, '302 Found')

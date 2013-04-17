@@ -45,7 +45,7 @@ def persona_login(request):
                              data=data, verify=True)
 
     if response.ok:
-        verification_data = response.json
+        verification_data = response.json()
         if verification_data['status'] == 'okay':
             email = verification_data['email']
             info = {'email': email}

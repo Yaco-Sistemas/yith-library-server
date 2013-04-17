@@ -59,12 +59,12 @@ class ViewTests(testing.TestCase):
 
         with patch('requests.post') as fake_post:
             fake_post.return_value.status_code = 200
-            fake_post.return_value.json = {
+            fake_post.return_value.json = lambda: {
                 'access_token': '1234',
                 }
             with patch('requests.get') as fake_get:
                 fake_get.return_value.status_code = 200
-                fake_get.return_value.json = {
+                fake_get.return_value.json = lambda: {
                     'id': '789',
                     'name': 'John Doe',
                     'given_name': 'John',

@@ -38,7 +38,7 @@ class InformationTests(unittest.TestCase):
         with patch('requests.get') as fake:
             response = fake.return_value
             response.status_code = 200
-            response.json = {'screen_name': 'John Doe'}
+            response.json = lambda: {'screen_name': 'John Doe'}
 
             info = get_user_info(settings, '1234', 'token')
             self.assertEqual(info, {'screen_name': 'John Doe'})
@@ -46,7 +46,7 @@ class InformationTests(unittest.TestCase):
         with patch('requests.get') as fake:
             response = fake.return_value
             response.status_code = 400
-            response.json = {'screen_name': 'John Doe'}
+            response.json = lambda: {'screen_name': 'John Doe'}
 
             self.assertRaises(HTTPUnauthorized,
                               get_user_info, settings, '1234', 'token')

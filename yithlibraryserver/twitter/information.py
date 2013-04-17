@@ -43,4 +43,4 @@ def get_user_info(settings, user_id, oauth_token):
     if response.status_code != 200:
         raise HTTPUnauthorized(response.text)
 
-    return response.json
+    return response.json()
