@@ -16,12 +16,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-from pyramid.renderers import render
-from pyramid_mailer import get_mailer
-from pyramid_mailer.message import Attachment, Message
+from pyramid_mailer.message import Attachment
 
 from yithlibraryserver.backups.utils import get_backup_filename
 from yithlibraryserver.backups.utils import get_user_passwords, compress
+from yithlibraryserver.email import send_email
 
 
 def get_day_to_send(user, days_of_month):
@@ -34,36 +33,24 @@ def send_passwords(request, user, preferences_link, backups_link):
     if not passwords:
         return False
 
-    text_body = render(
-        'yithlibraryserver.backups:templates/email_passwords.txt',
-        {'user': user,
-         'preferences_link': preferences_link,
-         'backups_link': backups_link},
-        request=request,
-        )
-    # chamaleon txt templates are rendered as utf-8 bytestrings
-    text_body = text_body.decode('utf-8')
-
-    html_body = render(
-        'yithlibraryserver.backups:templates/email_passwords.pt',
-        {'user': user,
-         'preferences_link': preferences_link,
-         'backups_link': backups_link},
-        request=request,
-        )
-
-    message = Message(subject="Your Yith Library's passwords",
-                      recipients=[user['email']],
-                      body=text_body,
-                      html=html_body)
+    context = {
+        'user': user,
+        'preferences_link': preferences_link,
+        'backups_link': backups_link,
+    }
 
     today = request.date_service.today()
     attachment = Attachment(get_backup_filename(today),
                             "application/yith",
                             compress(passwords))
 
-    message.attach(attachment)
+    send_email(
+        request,
+        'yithlibraryserver.backups:templates/email_passwords',
+        context,
+        "Your Yith Library's passwords",
+        [user['email']],
+        attachments=[attachment],
+    )
 
-    mailer = get_mailer(request)
-    mailer.send(message)
     return True

@@ -192,10 +192,7 @@ def destroy(request):
             return context
 
         reason = appstruct['reason']
-        admin_emails = request.registry.settings['admin_emails']
-        if admin_emails:
-            notify_admins_of_account_removal(request, request.user,
-                                             reason, admin_emails)
+        notify_admins_of_account_removal(request, request.user, reason)
 
         passwords_manager.delete(request.user)
         # TODO: remove user's applications

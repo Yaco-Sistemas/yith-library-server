@@ -20,10 +20,7 @@
 
 import uuid
 
-from pyramid.renderers import render
-
-from pyramid_mailer import get_mailer
-from pyramid_mailer.message import Message
+from yithlibraryserver.email import send_email
 
 
 class EmailVerificationCode(object):
@@ -61,23 +58,14 @@ class EmailVerificationCode(object):
         return result is not None
 
     def send(self, request, user, url):
-        link = '%s?code=%s&email=%s' % (url, self.code, user['email'])
-        text_body = render(
-            'yithlibraryserver.user:templates/email_verification_code.txt',
-            {'link': link, 'user': user},
-            request=request,
-            )
-        # chamaleon txt templates are rendered as utf-8 bytestrings
-        text_body = text_body.decode('utf-8')
-
-        html_body = render(
-            'yithlibraryserver.user:templates/email_verification_code.pt',
-            {'link': link, 'user': user},
-            request=request,
-            )
-        message = Message(subject='Please verify your email address',
-                          recipients=[user['email']],
-                          body=text_body,
-                          html=html_body)
-
-        get_mailer(request).send(message)
+        context = {
+            'link': '%s?code=%s&email=%s' % (url, self.code, user['email']),
+            'user': user,
+        }
+        return send_email(
+            request,
+            'yithlibraryserver.user:templates/email_verification_code',
+            context,
+            'Please verify your email address',
+            [user['email']],
+        )

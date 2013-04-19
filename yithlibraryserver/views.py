@@ -24,12 +24,10 @@ from deform import Button, Form, ValidationFailure
 
 from pyramid.i18n import get_locale_name
 from pyramid.httpexceptions import HTTPFound
-from pyramid.renderers import render, render_to_response
+from pyramid.renderers import render_to_response
 from pyramid.view import view_config
 
-from pyramid_mailer import get_mailer
-from pyramid_mailer.message import Message
-
+from yithlibraryserver.email import send_email_to_admins
 from yithlibraryserver.i18n import TranslationString as _
 from yithlibraryserver.schemas import ContactSchema
 
@@ -59,30 +57,18 @@ def contact(request):
 
         context = {'link': request.route_url('contact')}
         context.update(appstruct)
+        subject= ("%s sent a message from Yith's contact form"
+                  % appstruct['name'])
 
-        text_body = render('yithlibraryserver:templates/email_contact.txt',
-                           context, request=request)
+        result = send_email_to_admins(
+            request,
+            'yithlibraryserver:templates/email_contact',
+            context,
+            subject,
+            extra_headers={'Reply-To': appstruct['email']},
+        )
 
-        # chamaleon txt templates are rendered as utf-8 bytestrings
-        text_body = text_body.decode('utf-8')
-
-        html_body = render('yithlibraryserver:templates/email_contact.pt',
-                           context, request=request)
-
-        admin_emails = request.registry.settings['admin_emails']
-
-        if admin_emails:
-            message = Message(
-                subject=("%s sent a message from Yith's contact form" %
-                         appstruct['name']),
-                recipients=request.registry.settings['admin_emails'],
-                body=text_body,
-                html=html_body,
-                extra_headers={'Reply-To': appstruct['email']},
-                )
-
-            get_mailer(request).send(message)
-        else:
+        if result is None:
             log.error(
                 '%s <%s> tried to send a message from the contact form but no '
                 'admin emails were configured. Message: %s' % (

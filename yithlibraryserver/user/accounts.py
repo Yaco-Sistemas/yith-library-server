@@ -20,10 +20,7 @@
 
 import bson
 
-from pyramid.renderers import render
-
-from pyramid_mailer import get_mailer
-from pyramid_mailer.message import Message
+from yithlibraryserver.email import send_email_to_admins
 
 
 def get_available_providers():
@@ -125,26 +122,15 @@ def merge_users(db, user1, user2):
     db.users.remove(user2['_id'])
 
 
-def notify_admins_of_account_removal(request, user, reason, admin_emails):
-    home_link = request.route_url('home')
-    reason = reason or 'no reason was given'
-
-    text_body = render(
-        'yithlibraryserver.user:templates/account_removal_notification.txt',
-        {'reason': reason, 'user': user, 'home_link': home_link},
-        request=request,
-        )
-    # chamaleon txt templates are rendered as utf-8 bytestrings
-    text_body = text_body.decode('utf-8')
-
-    html_body = render(
-        'yithlibraryserver.user:templates/account_removal_notification.pt',
-        {'reason': reason, 'user': user, 'home_link': home_link},
-        request=request,
-        )
-
-    message = Message(subject='A user has destroyed his Yith Library account',
-                      recipients=admin_emails,
-                      body=text_body,
-                      html=html_body)
-    get_mailer(request).send(message)
+def notify_admins_of_account_removal(request, user, reason):
+    context = {
+        'reason': reason or 'no reason was given',
+        'user': user,
+        'home_link': request.route_url('home'),
+    }
+    return send_email_to_admins(
+        request,
+        'yithlibraryserver.user:templates/account_removal_notification',
+        context,
+        'A user has destroyed his Yith Library account',
+    )

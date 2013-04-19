@@ -23,12 +23,11 @@ import sys
 import transaction
 
 from pyramid.paster import bootstrap
-from pyramid.renderers import render
 
 from pyramid_mailer import get_mailer
-from pyramid_mailer.message import Message
 
 from yithlibraryserver.compat import urlparse
+from yithlibraryserver.email import create_message
 from yithlibraryserver.scripts.reports import get_passwords_map
 from yithlibraryserver.scripts.utils import safe_print
 from yithlibraryserver.scripts.utils import get_user_display_name
@@ -51,26 +50,14 @@ def get_all_users_with_passwords_and_email(db):
 
 def send_email(request, email_template, user, preferences_link):
     safe_print('Sending email to %s' % get_user_display_name(user))
-
-    text_body = render(
-        'yithlibraryserver.scripts:templates/%s.txt' % email_template,
-        {'user': user, 'preferences_link': preferences_link},
-        request=request,
-        )
-    # chamaleon txt templates are rendered as utf-8 bytestrings
-    text_body = text_body.decode('utf-8')
-
-    html_body = render(
-        'yithlibraryserver.scripts:templates/%s.pt' % email_template,
-        {'user': user, 'preferences_link': preferences_link},
-        request=request,
-        )
-
-    message = Message(subject="Yith Library announcement",
-                      recipients=[user['email']],
-                      body=text_body,
-                      html=html_body)
-    return message
+    context = {'user': user, 'preferences_link': preferences_link}
+    return create_message(
+        request,
+        'yithlibraryserver.scripts:templates/%s' % email_template,
+        context,
+        "Yith Library announcement",
+        [user['email']],
+    )
 
 
 def announce():

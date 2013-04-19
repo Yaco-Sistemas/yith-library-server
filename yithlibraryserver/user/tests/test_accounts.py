@@ -318,7 +318,10 @@ class AccountTests(unittest.TestCase):
 class AccountRemovalNotificationTests(TestCase):
 
     def setUp(self):
-        self.config = testing.setUp()
+        self.admin_emails = ['admin1@example.com', 'admin2@example.com']
+        self.config = testing.setUp(settings={
+                'admin_emails': self.admin_emails,
+                })
         self.config.include('pyramid_mailer.testing')
         self.config.include('yithlibraryserver')
         super(AccountRemovalNotificationTests, self).setUp()
@@ -331,12 +334,11 @@ class AccountRemovalNotificationTests(TestCase):
         user = {'first_name': 'John', 'last_name': 'Doe',
                 'email': 'john@example.com'}
         reason = 'I do not trust free services'
-        admin_emails = ['admin1@example.com', 'admin2@example.com']
-        notify_admins_of_account_removal(request, user, reason, admin_emails)
+        notify_admins_of_account_removal(request, user, reason)
 
         self.assertEqual(len(mailer.outbox), 1)
         self.assertEqual(mailer.outbox[0].subject,
                         'A user has destroyed his Yith Library account')
-        self.assertEqual(mailer.outbox[0].recipients, admin_emails)
+        self.assertEqual(mailer.outbox[0].recipients, self.admin_emails)
         self.assertTrue('John Doe <john@example.com' in mailer.outbox[0].body)
         self.assertTrue('I do not trust free services' in mailer.outbox[0].body)
