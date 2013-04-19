@@ -63,9 +63,9 @@ class PayPalExpressCheckout(object):
         response = requests.post(self.nvp_url, data=payload)
         if response.ok:
             data = urlparse.parse_qs(response.text)
-            ack = data[u'ACK'][0]
-            if ack == u'Success':
-                return data[u'TOKEN'][0]
+            ack = data['ACK'][0]
+            if ack == 'Success':
+                return data['TOKEN'][0]
 
     def get_express_checkout_url(self, token):
         url = self.express_checkout_url + '?cmd=_express-checkout&token=%s'
@@ -79,8 +79,8 @@ class PayPalExpressCheckout(object):
 
         if response.ok:
             data = urlparse.parse_qs(response.text)
-            ack = data[u'ACK'][0]
-            if ack == u'Success':
+            ack = data['ACK'][0]
+            if ack == 'Success':
                 amount = data['AMT'][0]
                 amount = int(amount.split('.')[0])
                 return {
@@ -104,8 +104,8 @@ class PayPalExpressCheckout(object):
 
         if response.ok:
             data = urlparse.parse_qs(response.text)
-            ack = data[u'ACK'][0]
-            if ack == u'Success':
+            ack = data['ACK'][0]
+            if ack == 'Success':
                 return True
 
         return False
