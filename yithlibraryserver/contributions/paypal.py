@@ -16,8 +16,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Yith Library Server.  If not, see <http://www.gnu.org/licenses/>.
 
-import urlparse
+
 import requests
+
+from yithlibraryserver.compat import urlparse
 
 
 class PayPalPayload(dict):
