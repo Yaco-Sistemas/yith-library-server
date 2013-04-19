@@ -1,0 +1,19 @@
+The user ${firstname} has donated $${amount}!
+
+This is the information regarding this donation:
+
+Personal information:
+${firstname} ${lastname}
+${email}
+
+Address
+${street}
+${zip} ${city}
+${state} ${country}
+
+Should we send a sticker? ${send_sticker}
+
+Is there a Yith Library user associated with this donation? ${user}
+
+You are receiving this email because you are an administrator
+of the Yith Library instance at ${home_link}

@@ -1,0 +1,5 @@
+Hi ${firstname}
+
+Thanks a lot for donating $${amount} to Yith Library.
+
+- The Yith Library team

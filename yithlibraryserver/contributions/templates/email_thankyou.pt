@@ -1,0 +1,13 @@
+<p>Hi ${firstname}</p>
+
+<p>Thanks a lot for donating $${amount} to Yith Library.</p>
+
+<div tal:condition="send_sticker" tal:omit-tag="">
+<p>We will send you the sticker to this address:</p>
+
+<p>${street}</p>
+<p>${zip} ${city}</p>
+<p>${state} ${country}</p>
+</div>
+
+<p>- The Yith Library team</p>

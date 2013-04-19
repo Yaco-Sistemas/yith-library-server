@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="yithlibraryserver"
+      metal:use-macro="base.macros['base']">
+
+<tal:block metal:fill-slot="header-title" i18n:translate="">Confirm donation</tal:block>
+
+<tal:block metal:fill-slot="content">
+
+  <h2>Confirm your donation</h2>
+
+  <form method="post" action="">
+
+    <p>Hey ${firstname}, this is the final step for your donation.
+      Thanks a lot for your patiente and generosity</p>
+
+    <div tal:condition="include_sticker">
+      <p>We are going to send you a cool sticker to this address:</p>
+      <address>
+        <p><strong>Shipping address</strong></p>
+        <p>${street}</p>
+        <p>${zip} ${city}</p>
+        <p>${state} ${country}</p>
+      </address>
+      <label class="checkbox" for="no-sticker">
+        <input type="checkbox" name="no-sticker" id="no-sticker" />
+        No thanks, use all my money to make Yith Library awesome.
+      </label>
+    </div>
+
+    <input type="hidden" name="token" value="${token}" />
+    <input type="hidden" name="payerid" value="${payerid}" />
+    <input type="hidden" name="amount" value="${amount}" />
+    <input type="hidden" name="firstname" value="${firstname}" />
+    <input type="hidden" name="lastname" value="${lastname}" />
+    <input type="hidden" name="city" value="${city}" />
+    <input type="hidden" name="country" value="${country}" />
+    <input type="hidden" name="state" value="${state}" />
+    <input type="hidden" name="street" value="${street}" />
+    <input type="hidden" name="zip" value="${zip}" />
+    <input type="hidden" name="email" value="${email}" />
+
+    <div class="buttons form-actions">
+      <input type="submit" class="btn btn-primary" value="Ok, take my $${amount}" name="submit" />
+      <input type="submit" class="btn" value="No, maybe later" name="cancel" />
+    </div>
+  </form>
+
+</tal:block>
+
+</html>
