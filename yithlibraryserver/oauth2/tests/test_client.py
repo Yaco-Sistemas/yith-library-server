@@ -99,7 +99,7 @@ class Oauth2ClientTests(unittest.TestCase):
 
         with patch('requests.post') as fake:
             fake.return_value.status_code = 200
-            fake.return_value.json = {
+            fake.return_value.json = lambda: {
                 'access_token': 'qwerty'
                 }
             request.session['state'] = 'random-string'
@@ -110,7 +110,7 @@ class Oauth2ClientTests(unittest.TestCase):
 
         with patch('requests.post') as fake:
             fake.return_value.status_code = 200
-            fake.return_value.json = None
+            fake.return_value.json = lambda: None
             fake.return_value.text = 'access_token=qwerty'
             request.session['state'] = 'random-string'
             response = oauth2_step2(request, token_uri,
@@ -129,7 +129,7 @@ class Oauth2ClientTests(unittest.TestCase):
 
         with patch('requests.get') as fake:
             fake.return_value.status_code = 200
-            fake.return_value.json = {
+            fake.return_value.json = lambda: {
                 'name': 'John',
                 'surname': 'Doe',
                 }

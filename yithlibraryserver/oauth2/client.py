@@ -82,10 +82,9 @@ def oauth2_step2(request, token_uri, client_id, client_secret, redirect_url,
     if response.status_code != 200:
         return HTTPUnauthorized(response.text)
 
-    if response.json is None:
+    response_json = response.json()
+    if response_json is None:
         response_json = dict(urlparse.parse_qsl(response.text))
-    else:
-        response_json = response.json
 
     return response_json['access_token']
 
@@ -100,4 +99,4 @@ def get_user_info(info_uri, access_token):
     if response.status_code != 200:
         return HTTPUnauthorized(response.text)
 
-    return response.json
+    return response.json()
