@@ -224,41 +224,6 @@
       </div>
     </div>
   </div>
-
-<!--
-  <div class="modal hide" id="donate-dialog">
-    <form method="post" action="${request.route_path('contributions_donate')}">
-      <div class="modal-header" i18n:translate="">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Ok, I'll give you my money</h3>
-      </div>
-
-      <div class="modal-body">
-        <fieldset>
-          <legend>Options</legend>
-          <label for="want-sticker" class="checkbox">
-            <input id="want-sticker" name="want-sticker" type="checkbox" checked="checked">
-            I want the sticker
-            <span class="help-block">If you uncheck this box all your money will be used to improve Yith Library</span>
-          </label>
-        </fieldset>
-        <fieldset>
-          <legend>Amount</legend>
-          <div class="btn-group" data-toggle="buttons-radio">
-            <button type="button" class="btn btn-large">$2</button>
-            <button type="button" class="btn btn-large">$5</button>
-            <button type="button" class="btn btn-large">$10</button>
-          </div>
-        </fieldset>
-      </div>
-
-      <div class="modal-footer">
-        <input type="submit" class="btn btn-primary" value="Donate via PayPal" />
-        <a href="#" class="btn" data-dismiss="modal" i18n:translate="">Maybe later</a>
-      </div>
-    </form>
-  </div>
--->
 </tal:block>
 
 <script type="text/javascript" metal:fill-slot="extra-scripts">

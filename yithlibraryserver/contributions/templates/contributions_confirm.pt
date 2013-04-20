@@ -10,24 +10,24 @@
 
 <tal:block metal:fill-slot="content">
 
-  <h2>Confirm your donation</h2>
+  <h2 i18n:translate="">Confirm your donation</h2>
 
   <form method="post" action="">
 
-    <p>Hey ${firstname}, this is the final step for your donation.
+    <p i18n:translate="">Hey <span i18n:name="firstname">${firstname}</span>, this is the final step for your donation.
       Thanks a lot for your patiente and generosity</p>
 
     <div tal:condition="include_sticker">
-      <p>We are going to send you a cool sticker to this address:</p>
+      <p i18n:translate="">We are going to send you a cool sticker to this address:</p>
       <address>
-        <p><strong>Shipping address</strong></p>
+        <p><strong i18n:translate="">Shipping address</strong></p>
         <p>${street}</p>
         <p>${zip} ${city}</p>
         <p>${state} ${country}</p>
       </address>
       <label class="checkbox" for="no-sticker">
         <input type="checkbox" name="no-sticker" id="no-sticker" />
-        No thanks, use all my money to make Yith Library awesome.
+        <span  i18n:translate="" tal:omit-tag="">I want to use all the money to make Yith Library awesome. Do not send me the sticker</span>
       </label>
     </div>
 
