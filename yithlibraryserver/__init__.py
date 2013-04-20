@@ -52,9 +52,7 @@ def main(global_config, **settings):
         settings[option] = read_setting_from_env(settings, option, default)
 
     # read admin_emails option
-    settings['admin_emails'] = read_setting_from_env(settings, 'admin_emails')
-    if settings['admin_emails'] is not None:
-        settings['admin_emails'] = settings['admin_emails'].split()
+    settings['admin_emails'] = read_setting_from_env(settings, 'admin_emails', '').split()
 
     # read Google Analytics code
     settings['google_analytics_code'] = read_setting_from_env(

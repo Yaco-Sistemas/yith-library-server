@@ -1,0 +1,3 @@
+<p>Hello ${name},</p>
+
+<p>this is your email address: ${email}</p>
