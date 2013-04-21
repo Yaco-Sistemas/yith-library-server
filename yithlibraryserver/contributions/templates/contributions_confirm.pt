@@ -14,8 +14,7 @@
 
   <form method="post" action="">
 
-    <p i18n:translate="">Hey <span i18n:name="firstname">${firstname}</span>, this is the final step for your donation.
-      Thanks a lot for your patiente and generosity</p>
+    <p i18n:translate="">Hey <span i18n:name="firstname">${firstname}</span>, this is the final step for your donation. Thanks a lot for your patiente and generosity. <strong i18n:name="you-are-donating" i18n:translate="">You are donating <span i18n:name="amount">$${amount}</span>.</strong></p>
 
     <div tal:condition="include_sticker">
       <p i18n:translate="">We are going to send you a cool sticker to this address:</p>
@@ -27,7 +26,7 @@
       </address>
       <label class="checkbox" for="no-sticker">
         <input type="checkbox" name="no-sticker" id="no-sticker" />
-        <span  i18n:translate="" tal:omit-tag="">I want to use all the money to make Yith Library awesome. Do not send me the sticker</span>
+        <span i18n:translate="" tal:omit-tag="">I want to use all the money to make Yith Library awesome. Do not send me the sticker</span>
       </label>
     </div>
 
@@ -44,8 +43,8 @@
     <input type="hidden" name="email" value="${email}" />
 
     <div class="buttons form-actions">
-      <input type="submit" class="btn btn-primary" value="Ok, take my $${amount}" name="submit" />
-      <input type="submit" class="btn" value="No, maybe later" name="cancel" />
+      <input type="submit" class="btn btn-primary" i18n:attributes="value" value="Ok, take my money" name="submit" />
+      <input type="submit" class="btn" i18n:attributes="value" value="No, maybe later" name="cancel" />
     </div>
   </form>
 

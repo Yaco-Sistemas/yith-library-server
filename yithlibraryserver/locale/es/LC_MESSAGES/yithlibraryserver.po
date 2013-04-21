@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.gil.sanchez@gmail.com\n"
-"POT-Creation-Date: 2013-04-20 19:06+0200\n"
-"PO-Revision-Date: 2013-04-20 19:07+0200\n"
+"POT-Creation-Date: 2013-04-21 20:32+0200\n"
+"PO-Revision-Date: 2013-04-21 20:33+0200\n"
 "Last-Translator: Lorenzo Gil Sanchez <lorenzo.gil.sanchez@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -139,7 +139,7 @@ msgstr "Esta acción no se puede deshacer."
 msgid "Yes, I am sure"
 msgstr "Sí, estoy seguro"
 
-#: yithlibraryserver/contributions/views.py:55
+#: yithlibraryserver/contributions/views.py:59
 msgid ""
 "There was a problem in the confirmation process. Please start the "
 "checkout again"
@@ -147,11 +147,11 @@ msgstr ""
 "Hubo un problema en el proceso de confirmación. Por favor, empieza\n"
 "la compra de nuevo"
 
-#: yithlibraryserver/contributions/views.py:74
+#: yithlibraryserver/contributions/views.py:83
 msgid "Thank you very much for your great contribution"
 msgstr "Muchas gracias por tu gran contribución"
 
-#: yithlibraryserver/contributions/views.py:107
+#: yithlibraryserver/contributions/views.py:120
 msgid ""
 "Thanks for considering donating to Yith Library. We will be ready if you "
 "change your mind"
@@ -168,28 +168,41 @@ msgid "Confirm your donation"
 msgstr "Confirma tu donación"
 
 #: yithlibraryserver/contributions/templates/contributions_confirm.pt:17
+msgid "You are donating ${amount}."
+msgstr "Estas donando ${amount}."
+
+#: yithlibraryserver/contributions/templates/contributions_confirm.pt:17
 msgid ""
 "Hey ${firstname}, this is the final step for your donation. Thanks a lot "
-"for your patiente and generosity"
+"for your patiente and generosity. ${you-are-donating}"
 msgstr ""
-"Oye ${firstname}, este es el última paso de tu donación. Muchas gracias\n"
-"por tu paciencia y generosidad "
+"Oye ${firstname}, este es el último paso de tu donación. Muchas gracias\n"
+"por tu paciencia y generosidad. ${you-are-donating}"
 
-#: yithlibraryserver/contributions/templates/contributions_confirm.pt:21
+#: yithlibraryserver/contributions/templates/contributions_confirm.pt:20
 msgid "We are going to send you a cool sticker to this address:"
 msgstr "Vamos a mandarte una pegatina guay a esta dirección:"
 
-#: yithlibraryserver/contributions/templates/contributions_confirm.pt:23
+#: yithlibraryserver/contributions/templates/contributions_confirm.pt:22
 msgid "Shipping address"
 msgstr "Dirección de envío"
 
-#: yithlibraryserver/contributions/templates/contributions_confirm.pt:30
+#: yithlibraryserver/contributions/templates/contributions_confirm.pt:29
 msgid ""
 "I want to use all the money to make Yith Library awesome. Do not send me "
 "the sticker"
 msgstr ""
-"Quiero usar todo el dinero para hacer Yith Library increíble. No me envies\n"
+"Quiero usar todo el dinero para hacer Yith Library increíble. No me "
+"envies\n"
 "la pegatina"
+
+#: yithlibraryserver/contributions/templates/contributions_confirm.pt:46
+msgid "Ok, take my money"
+msgstr "Ok, coge mi dinero"
+
+#: yithlibraryserver/contributions/templates/contributions_confirm.pt:47
+msgid "No, maybe later"
+msgstr "No, quizás después"
 
 #: yithlibraryserver/contributions/templates/contributions_index.pt:9
 msgid "Contribute"
@@ -311,7 +324,8 @@ msgid ""
 "Well, not all of them, but it would be great if you could contribute a "
 "very small amount of money to maintain this service."
 msgstr ""
-"Bueno, no todo, pero sería estupendo si pudieras contribuir un poco de\n"
+"Bueno, no todo, pero sería estupendo si pudieras contribuir con un poco "
+"de\n"
 "dinero para mantener este servicio."
 
 #: yithlibraryserver/contributions/templates/contributions_index.pt:153

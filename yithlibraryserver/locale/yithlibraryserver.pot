@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yith-library-server 0.2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-04-20 19:06+0200\n"
+"POT-Creation-Date: 2013-04-21 20:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,17 +129,17 @@ msgstr ""
 msgid "Yes, I am sure"
 msgstr ""
 
-#: yithlibraryserver/contributions/views.py:55
+#: yithlibraryserver/contributions/views.py:59
 msgid ""
 "There was a problem in the confirmation process. Please start the checkout "
 "again"
 msgstr ""
 
-#: yithlibraryserver/contributions/views.py:74
+#: yithlibraryserver/contributions/views.py:83
 msgid "Thank you very much for your great contribution"
 msgstr ""
 
-#: yithlibraryserver/contributions/views.py:107
+#: yithlibraryserver/contributions/views.py:120
 msgid ""
 "Thanks for considering donating to Yith Library. We will be ready if you "
 "change your mind"
@@ -154,23 +154,35 @@ msgid "Confirm your donation"
 msgstr ""
 
 #: yithlibraryserver/contributions/templates/contributions_confirm.pt:17
-msgid ""
-"Hey ${firstname}, this is the final step for your donation. Thanks a lot for "
-"your patiente and generosity"
+msgid "You are donating ${amount}."
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_confirm.pt:21
+#: yithlibraryserver/contributions/templates/contributions_confirm.pt:17
+msgid ""
+"Hey ${firstname}, this is the final step for your donation. Thanks a lot for "
+"your patiente and generosity. ${you-are-donating}"
+msgstr ""
+
+#: yithlibraryserver/contributions/templates/contributions_confirm.pt:20
 msgid "We are going to send you a cool sticker to this address:"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_confirm.pt:23
+#: yithlibraryserver/contributions/templates/contributions_confirm.pt:22
 msgid "Shipping address"
 msgstr ""
 
-#: yithlibraryserver/contributions/templates/contributions_confirm.pt:30
+#: yithlibraryserver/contributions/templates/contributions_confirm.pt:29
 msgid ""
 "I want to use all the money to make Yith Library awesome. Do not send me the "
 "sticker"
+msgstr ""
+
+#: yithlibraryserver/contributions/templates/contributions_confirm.pt:46
+msgid "Ok, take my money"
+msgstr ""
+
+#: yithlibraryserver/contributions/templates/contributions_confirm.pt:47
+msgid "No, maybe later"
 msgstr ""
 
 #: yithlibraryserver/contributions/templates/contributions_index.pt:9

@@ -101,8 +101,12 @@ def contributions_paypal_success(request):
         if token and payerid:
             paypal = PayPalExpressCheckout(request)
             details = paypal.get_express_checkout_details(token, payerid)
-            details.update({'token': token, 'payerid': payerid})
-            details['include_sticker'] = include_sticker(details['amount'])
+            details.update({
+                    'token': token,
+                    'payerid': payerid,
+                    })
+            amount = details['amount']
+            details['include_sticker'] = include_sticker(amount)
             return details
         else:
             request.session.flash(error_msg, 'error')
