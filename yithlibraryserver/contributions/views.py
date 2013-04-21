@@ -43,6 +43,10 @@ def contributions_donate(request):
     if 'submit' in request.POST:
         paypal = PayPalExpressCheckout(request)
         amount = request.POST.get('amount', '1')
+        try:
+            amount = int(amount)
+        except ValueError:
+            return HTTPBadRequest('Amount must be an integer')
         token = paypal.get_express_checkout_token(amount)
         return HTTPFound(paypal.get_express_checkout_url(token))
 
