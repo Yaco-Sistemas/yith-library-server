@@ -66,6 +66,11 @@ def contributions_paypal_success(request):
             success = False
 
             if token and payerid and amount:
+                try:
+                    amount = int(amount)
+                except ValueError:
+                    return HTTPBadRequest('Amount must be an integer')
+
                 paypal = PayPalExpressCheckout(request)
                 success = paypal.do_express_checkout_payment(token, payerid,
                                                              amount)
