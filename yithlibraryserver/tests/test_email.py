@@ -41,12 +41,12 @@ class CreateMessageTests(unittest.TestCase):
             {'name': 'John', 'email': 'john@example.com'},
             'Testing message', ['john@example.com'],
         )
-        self.assertEquals(message.subject, 'Testing message')
-        self.assertEquals(message.html, '<p>Hello John,</p>\n\n<p>this is your email address: john@example.com</p>')
-        self.assertEquals(message.body, 'Hello John,\n\nthis is your email address: john@example.com\n')
-        self.assertEquals(message.recipients, ['john@example.com'])
-        self.assertEquals(message.attachments, [])
-        self.assertEquals(message.extra_headers, {})
+        self.assertEqual(message.subject, 'Testing message')
+        self.assertEqual(message.html, '<p>Hello John,</p>\n\n<p>this is your email address: john@example.com</p>')
+        self.assertEqual(message.body, 'Hello John,\n\nthis is your email address: john@example.com\n')
+        self.assertEqual(message.recipients, ['john@example.com'])
+        self.assertEqual(message.attachments, [])
+        self.assertEqual(message.extra_headers, {})
 
     def test_create_message_with_attachments(self):
         request = testing.DummyRequest()
@@ -60,16 +60,16 @@ class CreateMessageTests(unittest.TestCase):
             'Testing message', ['john@example.com'],
             attachments=[attachment],
         )
-        self.assertEquals(message.subject, 'Testing message')
-        self.assertEquals(message.html, '<p>Hello John,</p>\n\n<p>this is your email address: john@example.com</p>')
-        self.assertEquals(message.body, 'Hello John,\n\nthis is your email address: john@example.com\n')
-        self.assertEquals(message.recipients, ['john@example.com'])
-        self.assertEquals(message.extra_headers, {})
-        self.assertEquals(len(message.attachments), 1)
+        self.assertEqual(message.subject, 'Testing message')
+        self.assertEqual(message.html, '<p>Hello John,</p>\n\n<p>this is your email address: john@example.com</p>')
+        self.assertEqual(message.body, 'Hello John,\n\nthis is your email address: john@example.com\n')
+        self.assertEqual(message.recipients, ['john@example.com'])
+        self.assertEqual(message.extra_headers, {})
+        self.assertEqual(len(message.attachments), 1)
         a = message.attachments[0]
-        self.assertEquals(a.filename, 'foo.txt')
-        self.assertEquals(a.content_type, 'text/plain')
-        self.assertEquals(a.data, 'test')
+        self.assertEqual(a.filename, 'foo.txt')
+        self.assertEqual(a.content_type, 'text/plain')
+        self.assertEqual(a.data, 'test')
 
     def test_create_message_with_extra_headers(self):
         request = testing.DummyRequest()
@@ -81,12 +81,12 @@ class CreateMessageTests(unittest.TestCase):
             'Testing message', ['john@example.com'],
             extra_headers={'foo': 'bar'},
         )
-        self.assertEquals(message.subject, 'Testing message')
-        self.assertEquals(message.html, '<p>Hello John,</p>\n\n<p>this is your email address: john@example.com</p>')
-        self.assertEquals(message.body, 'Hello John,\n\nthis is your email address: john@example.com\n')
-        self.assertEquals(message.recipients, ['john@example.com'])
-        self.assertEquals(message.attachments, [])
-        self.assertEquals(message.extra_headers, {'foo': 'bar'})
+        self.assertEqual(message.subject, 'Testing message')
+        self.assertEqual(message.html, '<p>Hello John,</p>\n\n<p>this is your email address: john@example.com</p>')
+        self.assertEqual(message.body, 'Hello John,\n\nthis is your email address: john@example.com\n')
+        self.assertEqual(message.recipients, ['john@example.com'])
+        self.assertEqual(message.attachments, [])
+        self.assertEqual(message.extra_headers, {'foo': 'bar'})
 
 
 class SendEmailTests(TestCase):
@@ -113,12 +113,12 @@ class SendEmailTests(TestCase):
 
         self.assertEqual(len(mailer.outbox), 1)
         message = mailer.outbox[0]
-        self.assertEquals(message.subject, 'Testing message')
-        self.assertEquals(message.html, '<p>Hello John,</p>\n\n<p>this is your email address: john@example.com</p>')
-        self.assertEquals(message.body, 'Hello John,\n\nthis is your email address: john@example.com\n')
-        self.assertEquals(message.recipients, ['john@example.com'])
-        self.assertEquals(message.attachments, [])
-        self.assertEquals(message.extra_headers, {})
+        self.assertEqual(message.subject, 'Testing message')
+        self.assertEqual(message.html, '<p>Hello John,</p>\n\n<p>this is your email address: john@example.com</p>')
+        self.assertEqual(message.body, 'Hello John,\n\nthis is your email address: john@example.com\n')
+        self.assertEqual(message.recipients, ['john@example.com'])
+        self.assertEqual(message.attachments, [])
+        self.assertEqual(message.extra_headers, {})
 
     def test_send_email_to_admins(self):
         request = testing.DummyRequest()
@@ -133,12 +133,12 @@ class SendEmailTests(TestCase):
 
         self.assertEqual(len(mailer.outbox), 1)
         message = mailer.outbox[0]
-        self.assertEquals(message.subject, 'Testing message')
-        self.assertEquals(message.html, '<p>Hello John,</p>\n\n<p>this is your email address: john@example.com</p>')
-        self.assertEquals(message.body, 'Hello John,\n\nthis is your email address: john@example.com\n')
-        self.assertEquals(message.recipients, self.admin_emails)
-        self.assertEquals(message.attachments, [])
-        self.assertEquals(message.extra_headers, {})
+        self.assertEqual(message.subject, 'Testing message')
+        self.assertEqual(message.html, '<p>Hello John,</p>\n\n<p>this is your email address: john@example.com</p>')
+        self.assertEqual(message.body, 'Hello John,\n\nthis is your email address: john@example.com\n')
+        self.assertEqual(message.recipients, self.admin_emails)
+        self.assertEqual(message.attachments, [])
+        self.assertEqual(message.extra_headers, {})
 
 
 class SendEmailNoAdminsTests(TestCase):
