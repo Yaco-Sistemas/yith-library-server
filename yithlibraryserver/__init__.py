@@ -82,6 +82,12 @@ def main(global_config, **settings):
     settings['public_url_root'] = read_setting_from_env(
         settings, 'public_url_root', 'http://localhost:6543/')
 
+    # Google and Facebook settings for pyramid_sna
+    settings['google_scope'] = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
+    settings['google_callback'] = 'yithlibraryserver.sna_callbacks.google_callback'
+    settings['facebook_scope'] = 'email'
+    settings['facebook_callback'] = 'yithlibraryserver.sna_callbacks.facebook_callback'
+
     # main config object
     config = Configurator(
         settings=settings,
@@ -108,6 +114,9 @@ def main(global_config, **settings):
         config.include('pyramid_mailer')
         config.include('yithlibraryserver.datetimeservice')
 
+    # Google/Facebook authentication
+    config.include('pyramid_sna')
+
     config.include('pyramid_tm')
 
     # Mongodb setup
@@ -133,8 +142,13 @@ def main(global_config, **settings):
     config.include('yithlibraryserver.user')
 
     config.include('yithlibraryserver.twitter')
-    config.include('yithlibraryserver.facebook')
-    config.include('yithlibraryserver.google')
+
+    if config.registry.settings['facebook_auth_enabled']:
+        config.add_identity_provider('facebook')
+
+    if config.registry.settings['google_auth_enabled']:
+        config.add_identity_provider('google')
+
     config.include('yithlibraryserver.persona')
 
     includeme(config)
