@@ -55,6 +55,7 @@ requires = [
     'pyramid_debugtoolbar==1.0.4',
     'pyramid_mailer==0.11',
     'pyramid_tm==0.7',
+    'pyramid_sna==0.1',
     'requests==1.2.0',
     'waitress==0.8.2',
     ]
