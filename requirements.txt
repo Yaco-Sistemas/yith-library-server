@@ -23,6 +23,7 @@ pyramid==1.4
 pyramid-beaker==0.7
 pyramid-debugtoolbar==1.0.4
 pyramid-mailer==0.11
+pyramid_sna==0.1.1
 pyramid-tm==0.7
 repoze.lru==0.6
 repoze.sendmail==3.2
