@@ -25,6 +25,7 @@ pyramid-debugtoolbar==1.0.4
 pyramid-mailer==0.11
 pyramid_sna==0.1.1
 pyramid-tm==0.7
+raven==3.3.4
 repoze.lru==0.6
 repoze.sendmail==3.2
 requests==1.2.0

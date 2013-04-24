@@ -56,6 +56,7 @@ requires = [
     'pyramid_mailer==0.11',
     'pyramid_tm==0.7',
     'pyramid_sna==0.1.1',
+    'raven==3.3.4',
     'requests==1.2.0',
     'waitress==0.8.2',
     ]
