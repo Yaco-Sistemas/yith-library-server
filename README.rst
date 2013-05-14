@@ -1,3 +1,9 @@
+Notice
+======
+
+**THIS REPOSITORY IS OBSOLETE, DEVELOPMENT IS TAKING PLACE NOW AT** https://github.com/lorenzogil/yith-library-server
+
+
 Yith Library server
 ===================
 
