@@ -32,7 +32,7 @@ requests==1.2.0
 transaction==1.4.1
 translationstring==1.1
 venusian==1.0a8
-waitress==0.8.2
+waitress==1.4.2
 wsgiref==0.1.2
 xlrd==0.9.0
 xlwt==0.7.4
