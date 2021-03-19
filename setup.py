@@ -78,7 +78,7 @@ test_requires = [
 
 docs_extras = [
     'docutils==0.10',  # required by Sphinx
-    'Jinja2==2.6',     # required by Sphinx
+    'Jinja2==2.11.3',     # required by Sphinx
     'Sphinx==1.1.3',
     ]
 
