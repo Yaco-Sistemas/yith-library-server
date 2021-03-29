@@ -37,7 +37,7 @@ requires = [
     'nose==1.2.1',              # required by pymongo
     'PasteDeploy==1.5.0',       # required by pyramid
     'peppercorn==0.4',          # required by deform
-    'Pygments==1.6',            # required by pyramid_debugtoolbar
+    'Pygments==2.7.4',            # required by pyramid_debugtoolbar
     'repoze.lru==0.6',          # required by pyramid
     'repoze.sendmail==3.2',     # required by pyramid_mailer
     'transaction==1.4.1',       # required by pyramid_mailer
