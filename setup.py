@@ -58,7 +58,7 @@ requires = [
     'pyramid_sna==0.2',
     'raven==3.3.4',
     'requests==1.2.0',
-    'waitress==0.8.2',
+    'waitress==2.1.1',
     ]
 
 if sys.version_info[0] < 3:
