@@ -28,7 +28,7 @@ pyramid-tm==0.7
 raven==3.3.4
 repoze.lru==0.6
 repoze.sendmail==3.2
-requests==1.2.0
+requests==2.20.0
 transaction==1.4.1
 translationstring==1.1
 venusian==1.0a8
