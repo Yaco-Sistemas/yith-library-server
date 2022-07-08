@@ -49,7 +49,7 @@ requires = [
 
     # direct dependencies
     'deform==0.9.5',
-    'pymongo==2.3',
+    'pymongo==2.5.2',
     'pyramid==1.4',
     'pyramid_beaker==0.7',
     'pyramid_debugtoolbar==1.0.4',

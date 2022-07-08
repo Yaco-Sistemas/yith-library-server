@@ -18,7 +18,7 @@ mock==1.0.1
 nose==1.2.1
 peppercorn==0.4
 polib==1.0.3
-pymongo==2.3
+pymongo==2.5.2
 pyramid==1.4
 pyramid-beaker==0.7
 pyramid-debugtoolbar==1.0.4
