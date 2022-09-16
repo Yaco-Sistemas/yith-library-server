@@ -32,7 +32,7 @@ requires = [
     'Beaker==1.6.4',            # required by pyramid_beaker
     'colander==1.0a2',          # required by deform
     'Chameleon==2.11',          # required by deform, pyramid
-    'Mako==0.7.3',              # required by pyramid
+    'Mako==1.2.2',              # required by pyramid
     'MarkupSafe==0.15',         # required by Mako
     'nose==1.2.1',              # required by pymongo
     'PasteDeploy==1.5.0',       # required by pyramid
